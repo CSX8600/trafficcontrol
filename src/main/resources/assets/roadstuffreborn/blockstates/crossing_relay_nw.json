@@ -1,0 +1,14 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "roadstuffreborn:crossing_relay_nw"
+    },
+    "variants": {
+        "normal": [{}],
+        "inventory": [{}],
+        "facing=north": { "model": "roadstuffreborn:crossing_relay_nw" },
+        "facing=west": { "model": "roadstuffreborn:crossing_relay_nw", "y": 270 },
+        "facing=south": { "model": "roadstuffreborn:crossing_relay_nw", "y": 180 },
+        "facing=east": { "model": "roadstuffreborn:crossing_relay_nw", "y": 90 }
+    }
+}

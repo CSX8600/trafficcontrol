@@ -1,0 +1,8 @@
+#blocks
+tile.roadstuffreborn.crossing_gate_base.name=Crossing Base
+tile.roadstuffreborn.crossing_gate_gate.name=Crossing Gate
+tile.roadstuffreborn.crossing_gate_lamps.name=Crossing Lamps
+tile.roadstuffreborn.crossing_gate_pole.name=Crossing Pole
+tile.roadstuffreborn.crossing_gate_crossbuck.name=Crossbuck (Pole)
+
+itemGroup.Roadstuff Reborn=RoadStuff Reborn

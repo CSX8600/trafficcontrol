@@ -1,0 +1,14 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "roadstuffreborn:crossing_gate_crossbuck"
+    },
+    "variants": {
+        "normal": [{}],
+        "inventory": [{}],
+        "facing=north": { "model": "roadstuffreborn:crossing_gate_crossbuck" },
+        "facing=west": { "model": "roadstuffreborn:crossing_gate_crossbuck", "y": 270 },
+        "facing=south": { "model": "roadstuffreborn:crossing_gate_crossbuck", "y": 180 },
+        "facing=east": { "model": "roadstuffreborn:crossing_gate_crossbuck", "y": 90 }
+    }
+}

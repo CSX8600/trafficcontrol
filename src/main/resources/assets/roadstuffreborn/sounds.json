@@ -1,0 +1,12 @@
+{
+    "gate": 
+    {
+        "category": "block",
+        "sounds": [ "roadstuffreborn:gate" ]
+    },
+    "safetran_type_3":
+    {
+        "category": "block",
+        "sounds": [ "roadstuffreborn:safetran_type_3" ]
+    }
+}

@@ -1,0 +1,40 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "roadstuffreborn:crossing_gate_lamps",
+        "textures":
+        {
+            "leftlamp": "roadstuffreborn:blocks/black",
+            "rightlamp": "roadstuffreborn:blocks/black"
+        }
+    },
+    "variants": {
+        "normal": [{}],
+        "inventory": [{}],
+        "facing":
+        {
+            "north": {},
+            "west": { "y": 90 },
+            "south": {},
+            "east": { "y": 90 }
+        },
+        "state":
+        {
+            "off": {},
+            "flash1": 
+            {
+                "textures":
+                {
+                    "leftlamp": "roadstuffreborn:blocks/red" 
+                }
+            },
+            "flash2": 
+            {
+                "textures":
+                {
+                     "rightlamp": "roadstuffreborn:blocks/red"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,146 @@
+package com.clussmanproductions.roadstuffreborn.blocks;
+
+import com.clussmanproductions.roadstuffreborn.ModRoadStuffReborn;
+import com.clussmanproductions.roadstuffreborn.tileentity.CrossingGateLampsTileEntity;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
+
+public class BlockCrossingGateLamps extends Block implements ITileEntityProvider {
+	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+	public static final PropertyEnum<EnumState> STATE = PropertyEnum.create("state", EnumState.class);
+	
+	public BlockCrossingGateLamps()
+	{
+		super(Material.IRON);
+		setRegistryName("crossing_gate_lamps");
+		setUnlocalizedName(ModRoadStuffReborn.MODID + ".crossing_gate_lamps");
+		setCreativeTab(ModRoadStuffReborn.CREATIVE_TAB);
+	}
+	
+	public void initModel()
+	{
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+	}
+	
+	@Override
+	public boolean isFullCube(IBlockState state) {
+		return false;
+	}
+	
+	@Override
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
+	}
+	
+	@Override
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, FACING, STATE);
+	}
+	
+	@Override
+	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,
+			float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+		return getDefaultState().withProperty(FACING, placer.getHorizontalFacing()).withProperty(STATE, EnumState.Off);
+	}
+	
+	@Override
+	public int getMetaFromState(IBlockState state) {
+		int modifier = 0;
+		
+		switch(state.getValue(STATE))
+		{
+			case Flash1:
+				modifier = 4;
+				break;
+			case Flash2:
+				modifier = 8;
+				break;
+			default:
+				modifier = 0;
+		}
+		
+		return state.getValue(FACING).getHorizontalIndex() + modifier;
+	}
+	
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		int workingMeta = meta;
+		EnumState state = EnumState.Off;
+		if (workingMeta >= 4)
+		{
+			if (workingMeta >= 8)
+			{
+				state = EnumState.Flash2;
+				workingMeta -= 8;
+			}
+			else
+			{
+				state = EnumState.Flash1;
+				workingMeta -= 4;
+			}
+		}
+		
+		return getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(workingMeta)).withProperty(STATE, state);
+	}
+
+	@Override
+	public TileEntity createNewTileEntity(World worldIn, int meta) {
+		return new CrossingGateLampsTileEntity();
+	}
+
+	public enum EnumState implements IStringSerializable
+	{
+		Off(0, "off"),
+		Flash1(1, "flash1"),
+		Flash2(2, "flash2");
+		
+		private int id;
+		private String name;
+		private EnumState(int id, String name)
+		{
+			this.id = id;
+			this.name= name;
+		}
+
+		@Override
+		public String getName() {
+			return name;
+		}
+		
+		@Override
+		public String toString() {
+			return getName();
+		}
+	}
+
+	@Override
+	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+		EnumState enumState = state.getValue(STATE);
+		
+		if (enumState == EnumState.Flash1 || enumState == EnumState.Flash2)
+		{
+			return 15;
+		}
+		
+		return 0;
+	}
+}
