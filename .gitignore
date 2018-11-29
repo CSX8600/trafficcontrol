@@ -20,11 +20,7 @@ build
 # other
 eclipse
 run
-gradlew.bat
-gradlew
-gradle.properties
 forge-1.12-14.21.1.2443-changelog.txt
-README.txt
 Paulscode SoundSystem CodecIBXM License.txt
 Paulscode IBXM Library License.txt
 MinecraftForge-Credits.txt
