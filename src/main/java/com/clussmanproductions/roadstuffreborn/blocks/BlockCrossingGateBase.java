@@ -39,54 +39,48 @@ public class BlockCrossingGateBase extends Block {
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
-	
-	@Override
-	public boolean canConnectRedstone(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
-		return false;
-	}
-	
 	@Override
 	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
 		super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
-		if (worldIn.isRemote)
-		{
-			return;
-		}
-		
-		Boolean powered = worldIn.isBlockPowered(pos);
-		BlockPos nextPos = pos.offset(EnumFacing.UP);
-		while(true)
-		{
-			Block block = worldIn.getBlockState(nextPos).getBlock();
-			if (block instanceof BlockCrossingGateGate)
-			{
-				CrossingGateGateTileEntity gateTE = (CrossingGateGateTileEntity)worldIn.getTileEntity(nextPos);
-				gateTE.setStatusByIsPowered(powered);
-			}
-			else if (block instanceof BlockCrossingGateLamps)
-			{
-				CrossingGateLampsTileEntity lampsTE = (CrossingGateLampsTileEntity)worldIn.getTileEntity(nextPos);
-				lampsTE.setFlashOverride(powered);
-			}
-			else if (block instanceof BlockCrossingGatePole)
-			{
-				// do nothing
-			} 
-			else if (block instanceof BlockCrossingGateCrossbuck)
-			{
-				// do nothing
-			}
-			else if (block instanceof BlockSafetranType3)
-			{
-				SafetranType3TileEntity safetranType3 = (SafetranType3TileEntity)worldIn.getTileEntity(nextPos);
-				safetranType3.setIsRinging(powered);
-			}
-			else
-			{
-				break;
-			}
-			
-			nextPos = nextPos.offset(EnumFacing.UP);
-		}
+//		if (worldIn.isRemote)
+//		{
+//			return;
+//		}
+//		
+//		Boolean powered = worldIn.isBlockPowered(pos);
+//		BlockPos nextPos = pos.offset(EnumFacing.UP);
+//		while(true)
+//		{
+//			Block block = worldIn.getBlockState(nextPos).getBlock();
+//			if (block instanceof BlockCrossingGateGate)
+//			{
+//				CrossingGateGateTileEntity gateTE = (CrossingGateGateTileEntity)worldIn.getTileEntity(nextPos);
+//				gateTE.setStatusByIsPowered(powered);
+//			}
+//			else if (block instanceof BlockCrossingGateLamps)
+//			{
+//				CrossingGateLampsTileEntity lampsTE = (CrossingGateLampsTileEntity)worldIn.getTileEntity(nextPos);
+//				lampsTE.setFlashOverride(powered);
+//			}
+//			else if (block instanceof BlockCrossingGatePole)
+//			{
+//				// do nothing
+//			} 
+//			else if (block instanceof BlockCrossingGateCrossbuck)
+//			{
+//				// do nothing
+//			}
+//			else if (block instanceof BlockSafetranType3)
+//			{
+//				SafetranType3TileEntity safetranType3 = (SafetranType3TileEntity)worldIn.getTileEntity(nextPos);
+//				safetranType3.setIsRinging(powered);
+//			}
+//			else
+//			{
+//				break;
+//			}
+//			
+//			nextPos = nextPos.offset(EnumFacing.UP);
+//		}
 	}
 }

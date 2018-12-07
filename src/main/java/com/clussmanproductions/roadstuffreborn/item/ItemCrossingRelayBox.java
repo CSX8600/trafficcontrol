@@ -10,6 +10,7 @@ import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingRelayTopNE;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingRelayTopNW;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingRelayTopSE;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingRelayTopSW;
+import com.clussmanproductions.roadstuffreborn.tileentity.RelayTileEntity;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
@@ -114,42 +115,52 @@ public class ItemCrossingRelayBox extends Item {
 	{
 		BlockPos placingPos = pos.offset(EnumFacing.UP);
 		EnumFacing lastFacing = facing;
+		BlockPos masterTEPos = new BlockPos(placingPos.getX(), placingPos.getY(), placingPos.getZ());
 		
 		world.setBlockState(placingPos, ModBlocks.crossing_relay_se.getDefaultState().withProperty(BlockCrossingRelaySE.FACING, facing));
+		RelayTileEntity te = (RelayTileEntity)world.getTileEntity(placingPos); 
+		te.setMaster();
 		
 		lastFacing = rotateLeft(lastFacing);
 		placingPos = placingPos.offset(lastFacing);
 		
 		world.setBlockState(placingPos, ModBlocks.crossing_relay_sw.getDefaultState().withProperty(BlockCrossingRelaySW.FACING, facing));
+		((RelayTileEntity)world.getTileEntity(placingPos)).setMasterLocation(masterTEPos);
 		
 		lastFacing = rotateRight(lastFacing);
 		placingPos = placingPos.offset(lastFacing);
 		
 		world.setBlockState(placingPos, ModBlocks.crossing_relay_nw.getDefaultState().withProperty(BlockCrossingRelayNW.FACING, facing));
+		((RelayTileEntity)world.getTileEntity(placingPos)).setMasterLocation(masterTEPos);
 		
 		lastFacing = rotateRight(lastFacing);
 		placingPos = placingPos.offset(lastFacing);
 		
 		world.setBlockState(placingPos, ModBlocks.crossing_relay_ne.getDefaultState().withProperty(BlockCrossingRelayNE.FACING, facing));
+		((RelayTileEntity)world.getTileEntity(placingPos)).setMasterLocation(masterTEPos);
 		
 		placingPos = placingPos.offset(EnumFacing.UP);
 		
 		world.setBlockState(placingPos, ModBlocks.crossing_relay_top_ne.getDefaultState().withProperty(BlockCrossingRelayTopNE.FACING, facing));
+		((RelayTileEntity)world.getTileEntity(placingPos)).setMasterLocation(masterTEPos);
 		
 		lastFacing = rotateRight(lastFacing);
 		placingPos = placingPos.offset(lastFacing);
 		
 		world.setBlockState(placingPos, ModBlocks.crossing_relay_top_se.getDefaultState().withProperty(BlockCrossingRelayTopSE.FACING, facing));
+		((RelayTileEntity)world.getTileEntity(placingPos)).setMasterLocation(masterTEPos);
 		
 		lastFacing = rotateRight(lastFacing);
 		placingPos = placingPos.offset(lastFacing);
 		
 		world.setBlockState(placingPos, ModBlocks.crossing_relay_top_sw.getDefaultState().withProperty(BlockCrossingRelayTopSW.FACING, facing));
+		((RelayTileEntity)world.getTileEntity(placingPos)).setMasterLocation(masterTEPos);
 		
 		lastFacing = rotateRight(lastFacing);
 		placingPos = placingPos.offset(lastFacing);
 		
 		world.setBlockState(placingPos, ModBlocks.crossing_relay_top_nw.getDefaultState().withProperty(BlockCrossingRelayTopNW.FACING, facing));
+		((RelayTileEntity)world.getTileEntity(placingPos)).setMasterLocation(masterTEPos);
 	}
 	
 	private EnumFacing rotateLeft(EnumFacing in)

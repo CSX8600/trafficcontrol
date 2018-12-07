@@ -18,8 +18,10 @@ import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingRelayTopSE;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingRelayTopSW;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockSafetranType3;
 import com.clussmanproductions.roadstuffreborn.item.ItemCrossingRelayBox;
+import com.clussmanproductions.roadstuffreborn.item.ItemCrossingRelayTuner;
 import com.clussmanproductions.roadstuffreborn.tileentity.CrossingGateGateTileEntity;
 import com.clussmanproductions.roadstuffreborn.tileentity.CrossingGateLampsTileEntity;
+import com.clussmanproductions.roadstuffreborn.tileentity.RelayTileEntity;
 import com.clussmanproductions.roadstuffreborn.tileentity.SafetranType3TileEntity;
 
 import net.minecraft.block.Block;
@@ -57,12 +59,14 @@ public class CommonProxy {
 		GameRegistry.registerTileEntity(CrossingGateGateTileEntity.class, ModRoadStuffReborn.MODID + "_crossinggategate");
 		GameRegistry.registerTileEntity(CrossingGateLampsTileEntity.class, ModRoadStuffReborn.MODID + "_crossinggatelamps");
 		GameRegistry.registerTileEntity(SafetranType3TileEntity.class, ModRoadStuffReborn.MODID + "_safetrantyp3");
+		GameRegistry.registerTileEntity(RelayTileEntity.class, ModRoadStuffReborn.MODID + "_relay");
 	}
 	
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> e)
 	{
 		e.getRegistry().register(new ItemCrossingRelayBox());
+		e.getRegistry().register(new ItemCrossingRelayTuner());
 		
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_base).setRegistryName(ModBlocks.crossing_gate_base.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_gate).setRegistryName(ModBlocks.crossing_gate_gate.getRegistryName()));

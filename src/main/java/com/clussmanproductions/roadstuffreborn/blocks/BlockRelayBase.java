@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.clussmanproductions.roadstuffreborn.ModItems;
 import com.clussmanproductions.roadstuffreborn.ModRoadStuffReborn;
+import com.clussmanproductions.roadstuffreborn.tileentity.RelayTileEntity;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
@@ -160,6 +161,26 @@ public abstract class BlockRelayBase extends Block implements ITileEntityProvide
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
+		return new RelayTileEntity();
+	}
+
+	@Override
+	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+		super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
 		
+		if(worldIn.isRemote)
+		{
+			return;
+		}
+		
+		if (worldIn.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock() instanceof BlockRelayBase)
+		{
+			return;
+		}
+		
+		RelayTileEntity te = (RelayTileEntity)worldIn.getTileEntity(pos);
+		te = te.getMaster(worldIn);
+		
+		te.setPowered(worldIn.isBlockPowered(pos));
 	}
 }

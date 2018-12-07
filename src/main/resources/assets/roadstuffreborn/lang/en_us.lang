@@ -5,4 +5,8 @@ tile.roadstuffreborn.crossing_gate_lamps.name=Crossing Lamps
 tile.roadstuffreborn.crossing_gate_pole.name=Crossing Pole
 tile.roadstuffreborn.crossing_gate_crossbuck.name=Crossbuck (Pole)
 
+#items
+item.roadstuffreborn.crossing_relay_box.name=Crossing Gate Relay
+item.roadstuffreborn.crossing_relay_tuner.name=Crossing Gate Tuner
+
 itemGroup.Roadstuff Reborn=RoadStuff Reborn
