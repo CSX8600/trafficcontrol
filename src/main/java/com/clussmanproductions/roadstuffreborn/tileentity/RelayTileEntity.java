@@ -1,9 +1,15 @@
 package com.clussmanproductions.roadstuffreborn.tileentity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
+import com.clussmanproductions.roadstuffreborn.ModRoadStuffReborn;
+import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingGateLamps;
+import com.clussmanproductions.roadstuffreborn.blocks.BlockLampBase;
+import com.clussmanproductions.roadstuffreborn.blocks.BlockLampBase.EnumState;
+import com.clussmanproductions.roadstuffreborn.tileentity.CrossingGateGateTileEntity.EnumStatuses;
+import com.clussmanproductions.roadstuffreborn.util.AnyStatement;
+
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
@@ -19,15 +25,19 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 	private int masterZ;
 	
 	// Gate information
-	private double gateDelay = 0;
-	private float gateRotation = -60;
-	private EnumGateStatuses gateStatus = EnumGateStatuses.Open;
-	
+	private boolean alreadyNotifiedGates;
+		
 	// Lamp information
+	private int lastFlash = 19;
+	private EnumState state = EnumState.Off;
 	
+	// Bell information
+	private boolean alreadyNotifiedBells;
 	
-
-	private ArrayList<CrossingGateLampsTileEntity> crossingLamps = new ArrayList<CrossingGateLampsTileEntity>();
+	private ArrayList<BlockPos> crossingLampLocations = new ArrayList<BlockPos>();
+	private ArrayList<BlockPos> crossingGateLocations = new ArrayList<BlockPos>();
+	private ArrayList<BlockPos> bellLocations = new ArrayList<BlockPos>();
+	
 	private ArrayList<CrossingGateGateTileEntity> crossingGates = new ArrayList<CrossingGateGateTileEntity>();
 	private ArrayList<BellBaseTileEntity> bells = new ArrayList<BellBaseTileEntity>();
 
@@ -46,53 +56,52 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 		masterZ = compound.getInteger("masterz");
 		
 		// Gate information
-		gateDelay = compound.getDouble("gatedelay");
-		gateRotation = compound.getFloat("gaterotation");
-		gateStatus = EnumGateStatuses.getStatus(compound.getInteger("gatestatus"));
+		alreadyNotifiedGates = compound.getBoolean("alreadynotifiedgates");
+		
+		// Lamp information
+		lastFlash = compound.getInteger("lastflash");
+		state = EnumState.getStateByID(compound.getInteger("state"));
+		
+		// Bell information
+		alreadyNotifiedBells = compound.getBoolean("alreadynotifiedbells");
 
-		if (!world.isRemote) {
-			int i = 0;
-			while (true) {
-				if (!compound.hasKey("lamps" + i)) {
-					break;
-				}
-
-				int[] blockPos = compound.getIntArray("lamps" + i);
-				BlockPos lampPos = new BlockPos(blockPos[0], blockPos[1], blockPos[2]);
-				TileEntity te = world.getTileEntity(lampPos);
-
-				if (te instanceof CrossingGateLampsTileEntity) {
-					crossingLamps.add((CrossingGateLampsTileEntity) te);
-				}
+		int i = 0;
+		while (true) {
+			if (!compound.hasKey("lamps" + i)) {
+				break;
 			}
 
-			while (true) {
-				if (!compound.hasKey("gate" + i)) {
-					break;
-				}
+			int[] blockPos = compound.getIntArray("lamps" + i);
+			BlockPos lampPos = new BlockPos(blockPos[0], blockPos[1], blockPos[2]);
+			crossingLampLocations.add(lampPos);
+			
+			i++;
+		}
 
-				int[] blockPos = compound.getIntArray("gate" + i);
-				BlockPos gatePos = new BlockPos(blockPos[0], blockPos[1], blockPos[2]);
-				TileEntity te = world.getTileEntity(gatePos);
-
-				if (te instanceof CrossingGateGateTileEntity) {
-					crossingGates.add((CrossingGateGateTileEntity) te);
-				}
+		i = 0;
+		while (true) {
+			if (!compound.hasKey("gate" + i)) {
+				break;
 			}
 
-			while (true) {
-				if (!compound.hasKey("bell" + i)) {
-					break;
-				}
+			int[] blockPos = compound.getIntArray("gate" + i);
+			BlockPos gatePos = new BlockPos(blockPos[0], blockPos[1], blockPos[2]);
+			crossingGateLocations.add(gatePos);
+			
+			i++;
+		}
 
-				int[] blockPos = compound.getIntArray("bell" + i);
-				BlockPos bellPos = new BlockPos(blockPos[0], blockPos[1], blockPos[2]);
-				TileEntity te = world.getTileEntity(bellPos);
-
-				if (te instanceof BellBaseTileEntity) {
-					bells.add((BellBaseTileEntity) te);
-				}
+		i = 0;
+		while (true) {
+			if (!compound.hasKey("bell" + i)) {
+				break;
 			}
+
+			int[] blockPos = compound.getIntArray("bell" + i);
+			BlockPos bellPos = new BlockPos(blockPos[0], blockPos[1], blockPos[2]);
+			bellLocations.add(bellPos);
+			
+			i++;
 		}
 	}
 
@@ -107,14 +116,19 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 		nbt.setInteger("masterz", masterZ);
 		
 		// Gate information
-		nbt.setDouble("gatedelay", gateDelay);
-		nbt.setFloat("gaterotation", gateRotation);
-		nbt.setInteger("gatestatus", gateStatus.index);
+		nbt.setBoolean("alreadynotifiedgates", alreadyNotifiedGates);
+		
+		// Lamp information
+		nbt.setInteger("lastflash", lastFlash);
+		nbt.setInteger("state", state.getID());
+		
+		// Bell information
+		nbt.setBoolean("alreadynotifiedbells", alreadyNotifiedBells);
 
-		for (int i = 0; i < crossingLamps.size(); i++) {
-			CrossingGateLampsTileEntity lamps = crossingLamps.get(i);
+		for (int i = 0; i < crossingLampLocations.size(); i++) {
+			BlockPos lamps = crossingLampLocations.get(i);
 
-			int[] lampPos = new int[] { lamps.getPos().getX(), lamps.getPos().getY(), lamps.getPos().getZ() };
+			int[] lampPos = new int[] { lamps.getX(), lamps.getY(), lamps.getZ() };
 			nbt.setIntArray("lamps" + i, lampPos);
 		}
 
@@ -137,16 +151,178 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 
 	@Override
 	public void update() {
-		if (isPowered)
+		if (world.isRemote)
 		{
-			
+			return;
 		}
-		else
+		
+		verifyLocations();
+		notifyGates();
+		updateLamps();
+		updateBells();
+	}
+	
+	private void verifyLocations()
+	{
+		ArrayList<BlockPos> posToRemove = new ArrayList<BlockPos>();
+		if (crossingGateLocations.size() != crossingGates.size() || 
+				AnyStatement.Any(crossingGates, gate -> gate.isInvalid()))
 		{
+			crossingGates.clear();
 			
+			for(BlockPos crossingGatePos : crossingGateLocations)
+			{
+				TileEntity gate = world.getTileEntity(crossingGatePos);
+				
+				if (gate == null || !(gate instanceof CrossingGateGateTileEntity))
+				{
+					posToRemove.add(crossingGatePos);
+				}
+				else
+				{
+					crossingGates.add((CrossingGateGateTileEntity)gate);
+				}
+			}
+			
+			for (BlockPos gateLocationToRemove : posToRemove)
+			{
+				crossingGateLocations.remove(gateLocationToRemove);
+			}
+		}
+				
+		if (bellLocations.size() != bells.size() ||
+				AnyStatement.Any(bells, bell -> bell.isInvalid()))
+		{
+			bells.clear();
+			
+			posToRemove.clear();
+			for(BlockPos bellPos : bellLocations)
+			{
+				TileEntity bell = world.getTileEntity(bellPos);
+				
+				if (bell == null || !(bell instanceof BellBaseTileEntity))
+				{
+					posToRemove.add(bellPos);
+				}
+				else
+				{
+					bells.add((BellBaseTileEntity)bell);
+				}
+			}
+			
+			for (BlockPos bellLocationToRemove : posToRemove)
+			{
+				bellLocations.remove(bellLocationToRemove);
+			}
+		}
+	}
+	
+	private void notifyGates()
+	{
+		if (!alreadyNotifiedGates)
+		{
+			for(CrossingGateGateTileEntity gate : crossingGates)
+			{
+				gate.setStatus(isPowered ? EnumStatuses.Closing : EnumStatuses.Opening);
+			}
+			
+			alreadyNotifiedGates = true;
 		}
 	}
 
+	private void updateLamps()
+	{
+		if (!isPowered && state != EnumState.Off)
+		{
+			if (crossingGates.size() == 0)
+			{
+				lastFlash = 19;
+				state = EnumState.Off;
+				
+				notifyLamps();
+				
+				markDirty();
+			}
+			else
+			{
+				if (crossingGates.get(0).getStatus() == EnumStatuses.Open)
+				{
+					lastFlash = 19;
+					state = EnumState.Off;
+					
+					notifyLamps();
+					
+					markDirty();
+				}
+			}
+		}
+		else if (!isPowered && state == EnumState.Off)
+		{
+			return;
+		}
+		
+		if (lastFlash < 20)
+		{
+			lastFlash++;
+			
+			markDirty();
+			
+			return;
+		}
+		
+		lastFlash = 0;
+		
+		if (state == EnumState.Flash2 || state == EnumState.Off)
+		{
+			state = EnumState.Flash1;
+		}
+		else
+		{
+			state = EnumState.Flash2;
+		}
+		
+		notifyLamps();
+		
+		markDirty();
+	}
+	
+	private void notifyLamps()
+	{
+		ArrayList<BlockPos> positionsToRemove = new ArrayList<BlockPos>();
+		for(BlockPos lampLocation : crossingLampLocations)
+		{
+			try
+			{
+				IBlockState lampState = world.getBlockState(lampLocation);
+				world.setBlockState(lampLocation, lampState.withProperty(BlockLampBase.STATE, state));
+			}
+			catch (Exception ex)
+			{
+				positionsToRemove.add(lampLocation);
+			}
+		}
+		
+		for(BlockPos positionToRemove : positionsToRemove)
+		{
+			crossingLampLocations.remove(positionToRemove);
+			
+			ModRoadStuffReborn.logger.error("Crossing Lamp at " + positionToRemove.getX() + ", " + positionToRemove.getY() + ", " + positionToRemove.getZ() + " has been unpaired due to an error");
+		}
+	}
+	
+	private void updateBells()
+	{
+		if (!alreadyNotifiedBells)
+		{
+			for(BellBaseTileEntity bell : bells)
+			{
+				bell.setIsRinging(isPowered);
+			}
+			
+			alreadyNotifiedBells = true;
+		}
+	}
+	
 	public void setMaster() {
 		isMaster = true;
 		markDirty();
@@ -176,49 +352,24 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 		return new BlockPos(masterX, masterY, masterZ);
 	}
 
-	public void addCrossingGateLamp(CrossingGateLampsTileEntity lamps) {
-		crossingLamps.add(lamps);
+	public void addCrossingGateLamp(BlockPos lampPos) {
+		crossingLampLocations.add(lampPos);
 	}
 
 	public void addCrossingGateGate(CrossingGateGateTileEntity gate) {
-		crossingGates.add(gate);
+		crossingGateLocations.add(gate.getPos());
 	}
 
 	public void addBell(BellBaseTileEntity bell) {
-		bells.add(bell);
+		bellLocations.add(bell.getPos());
 	}
 
 	public void setPowered(boolean isPowered)
 	{
 		this.isPowered = isPowered;
+		alreadyNotifiedGates = false;
+		alreadyNotifiedBells = false;
+		
+		markDirty();
 	}
-	
-	public enum EnumGateStatuses
-	{
-		Open(0),
-		Closing(1),
-		Closed(2),
-		Opening(3);
-		
-		private int index;
-		
-		EnumGateStatuses(int index)
-		{
-			this.index = index;
-		}
-		
-		public static EnumGateStatuses getStatus(int index)
-		{
-			for(EnumGateStatuses status : EnumGateStatuses.values())
-			{
-				if (status.index == index)
-				{
-					return status;
-				}
-			}
-			
-			return null;
-		}
-	}
-	
 }

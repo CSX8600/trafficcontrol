@@ -4,6 +4,12 @@ tile.roadstuffreborn.crossing_gate_gate.name=Crossing Gate
 tile.roadstuffreborn.crossing_gate_lamps.name=Crossing Lamps
 tile.roadstuffreborn.crossing_gate_pole.name=Crossing Pole
 tile.roadstuffreborn.crossing_gate_crossbuck.name=Crossbuck (Pole)
+tile.roadstuffreborn.safetran_type_3.name=SafeTran Type 3
+tile.roadstuffreborn.overhead_pole.name=Overhead (Pole)
+tile.roadstuffreborn.overhead.name=Overhead
+tile.roadstuffreborn.overhead_lamps.name=Overhead Lamps
+tile.roadstuffreborn.overhead_crossbuck.name=Overhead Crossbuck
+tile.roadstuffreborn.safetran_mechanical.name=SafeTran Mechanical
 
 #items
 item.roadstuffreborn.crossing_relay_box.name=Crossing Gate Relay

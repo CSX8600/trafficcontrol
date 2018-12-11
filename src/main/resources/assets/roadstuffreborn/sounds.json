@@ -8,5 +8,10 @@
     {
         "category": "block",
         "sounds": [ "roadstuffreborn:safetran_type_3" ]
+    },
+    "safetran_mechanical":
+    {
+        "category": "block",
+        "sounds": [ "roadstuffreborn:safetran_mechanical" ]
     }
 }

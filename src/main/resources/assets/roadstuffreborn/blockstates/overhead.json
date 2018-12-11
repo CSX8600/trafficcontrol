@@ -1,0 +1,14 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "roadstuffreborn:overhead"
+    },
+    "variants": {
+        "normal": [{}],
+        "inventory": [{}],
+        "facing=north": { "model": "roadstuffreborn:overhead" },
+        "facing=west": { "model": "roadstuffreborn:overhead", "y": 90 },
+        "facing=south": { "model": "roadstuffreborn:overhead" },
+        "facing=east": { "model": "roadstuffreborn:overhead", "y": 90 }
+    }
+}

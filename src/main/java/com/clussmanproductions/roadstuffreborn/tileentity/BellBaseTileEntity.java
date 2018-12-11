@@ -16,8 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class BellBaseTileEntity extends TileEntity implements ILoopableSoundTileEntity {
 	private boolean isRinging = false;
-	@SideOnly(Side.CLIENT)
-	private ISound bellSound;
+	private boolean soundPlaying = false;
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
@@ -49,23 +48,29 @@ public abstract class BellBaseTileEntity extends TileEntity implements ILoopable
 	public void handleUpdateTag(NBTTagCompound tag) {
 		isRinging = tag.getBoolean("ringing");
 		
-		if (world.isRemote && isRinging)
+		if (world.isRemote)
 		{
-			handlePlaySound();
+			if (isRinging)
+			{
+				handlePlaySound();
+			}
+			else
+			{
+				soundPlaying = false;
+			}
 		}
 	}
 	
+	@SideOnly(Side.CLIENT)
 	private void handlePlaySound()
 	{
-		if (bellSound == null)
+		if (!soundPlaying)
 		{
-			bellSound = new LoopableTileEntitySound(getSoundEvent(), this, pos, 1F, 1);
-		}
-		
-		SoundHandler handler = Minecraft.getMinecraft().getSoundHandler();
-		if (handler != null & !handler.isSoundPlaying(bellSound))
-		{
-			handler.playSound(bellSound);
+			LoopableTileEntitySound sound = new LoopableTileEntitySound(getSoundEvent(), this, pos, 1F, 1);
+			
+			Minecraft.getMinecraft().getSoundHandler().playSound(sound);
+			
+			soundPlaying = true;
 		}
 	}
 	
@@ -82,8 +87,14 @@ public abstract class BellBaseTileEntity extends TileEntity implements ILoopable
 
 	@Override
 	public boolean isDonePlayingSound() {
-		return !isRinging;
+		return !soundPlaying;
 	}
 	
+	@Override
+	public void onChunkUnload() {
+		soundPlaying = false;
+	}
+	
+	@SideOnly(Side.CLIENT)
 	protected abstract SoundEvent getSoundEvent();
 }

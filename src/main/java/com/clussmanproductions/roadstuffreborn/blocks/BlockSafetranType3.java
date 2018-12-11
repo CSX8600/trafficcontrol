@@ -11,6 +11,9 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 
@@ -46,5 +49,10 @@ public class BlockSafetranType3 extends Block implements ITileEntityProvider {
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		return new SafetranType3TileEntity();
+	}
+	
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return new AxisAlignedBB(0.375, 0, 0.375, 0.625, 0.8125, 0.625);
 	}
 }

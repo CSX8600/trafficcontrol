@@ -181,6 +181,9 @@ public abstract class BlockRelayBase extends Block implements ITileEntityProvide
 		RelayTileEntity te = (RelayTileEntity)worldIn.getTileEntity(pos);
 		te = te.getMaster(worldIn);
 		
-		te.setPowered(worldIn.isBlockPowered(pos));
+		if (te != null)
+		{
+			te.setPowered(worldIn.isBlockPowered(pos));
+		}
 	}
 }

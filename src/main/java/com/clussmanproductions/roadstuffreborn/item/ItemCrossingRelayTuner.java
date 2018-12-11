@@ -1,11 +1,12 @@
 package com.clussmanproductions.roadstuffreborn.item;
 
 import com.clussmanproductions.roadstuffreborn.ModRoadStuffReborn;
+import com.clussmanproductions.roadstuffreborn.blocks.BlockLampBase;
 import com.clussmanproductions.roadstuffreborn.tileentity.BellBaseTileEntity;
 import com.clussmanproductions.roadstuffreborn.tileentity.CrossingGateGateTileEntity;
-import com.clussmanproductions.roadstuffreborn.tileentity.CrossingGateLampsTileEntity;
 import com.clussmanproductions.roadstuffreborn.tileentity.RelayTileEntity;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -66,7 +67,14 @@ public class ItemCrossingRelayTuner extends Item {
 	
 	private void checkUseOnBlock(World world, BlockPos pos, RelayTileEntity te, EntityPlayer player)
 	{
+		IBlockState state = world.getBlockState(pos);
 		
+		if (state.getBlock() instanceof BlockLampBase)
+		{
+			te.addCrossingGateLamp(pos);
+			
+			player.sendMessage(new TextComponentString("Paired Crossing Lamps to Relay Box"));
+		}
 	}
 	
 	private boolean performPairCheck(EntityPlayer player, World world, TileEntity te)
@@ -160,14 +168,7 @@ public class ItemCrossingRelayTuner extends Item {
 	}
 	
 	private void checkUseOnTileEntity(World world, TileEntity te, RelayTileEntity relay, EntityPlayer player)
-	{
-		if (te instanceof CrossingGateLampsTileEntity)
-		{
-			relay.addCrossingGateLamp((CrossingGateLampsTileEntity)te);
-			
-			player.sendMessage(new TextComponentString("Paired Crossing Lamps to Relay Box"));
-		}
-		
+	{		
 		if (te instanceof CrossingGateGateTileEntity)
 		{
 			relay.addCrossingGateGate((CrossingGateGateTileEntity)te);

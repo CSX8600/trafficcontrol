@@ -26,15 +26,14 @@ import scala.Tuple3;
 
 public class CrossingGateGateTileEntity extends TileEntity implements ITickable, ILoopableSoundTileEntity {
 	private float gateRotation = -60;
-	private double gateDelay = 0;
+	private float gateDelay = 0;
 	private EnumStatuses status = EnumStatuses.Open;
-	@SideOnly(Side.CLIENT)
-	private ISound gateSound;
+	private boolean soundPlaying = false;
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setFloat("gateRotation", gateRotation);
-		compound.setDouble("gateDelay", gateDelay);
+		compound.setFloat("gateDelay", gateDelay);
 		compound.setInteger("status", getCodeFromEnum(status));
 		return super.writeToNBT(compound);
 	}
@@ -43,7 +42,7 @@ public class CrossingGateGateTileEntity extends TileEntity implements ITickable,
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		gateRotation = compound.getFloat("gateRotation");
-		gateDelay = compound.getDouble("gateDelay");
+		gateDelay = compound.getFloat("gateDelay");
 		status = getStatusFromCode(compound.getInteger("status"));
 	}
 	
@@ -129,18 +128,6 @@ public class CrossingGateGateTileEntity extends TileEntity implements ITickable,
 		return new AxisAlignedBB(startX, 0, startZ, x, 1, z);
 	}
 	
-	public void setStatusByIsPowered(Boolean powered)
-	{
-		if (powered && status != EnumStatuses.Closed)
-		{
-			status = EnumStatuses.Closing;
-		}
-		else if (status != EnumStatuses.Open)
-		{
-			status = EnumStatuses.Opening;
-		}
-	}
-	
 	private int getCodeFromEnum(EnumStatuses status)
 	{
 		switch(status)
@@ -185,41 +172,62 @@ public class CrossingGateGateTileEntity extends TileEntity implements ITickable,
 
 	@Override
 	public void update() {
-		if (world.isRemote)
-		{
-			return;
-		}
-		
 		switch(status)
 		{
 			case Closing:
-				if (gateDelay < 80)
+				if (gateDelay <= 80)
 				{
 					gateDelay++;
-					sendUpdates(true);
+					
+					if (!world.isRemote)
+					{
+						markDirty();
+					}
+					
 					return;
 				}
 				
 				if (gateRotation >= 0)
 				{
 					status = EnumStatuses.Closed;
-					sendUpdates(true);
+					if (!world.isRemote)
+					{
+						markDirty();
+					}
 					return;
 				}
 				
-				gateRotation += 0.5F;				
-				sendUpdates(true);
+				if (world.isRemote)
+				{
+					handlePlaySound();
+				}
+				
+				gateRotation += 0.5F;
 				break;
 			case Opening:
 				if (gateRotation <= -60)
 				{
 					gateDelay = 0;
 					status = EnumStatuses.Open;
-					sendUpdates(true);
+					if (!world.isRemote)
+					{
+						markDirty();
+					}
+				}
+				
+				if (world.isRemote)
+				{
+					handlePlaySound();
 				}
 				
 				gateRotation -= 0.5F;
-				sendUpdates(true);
+				break;
+			case Open:
+			case Closed:
+				if (world.isRemote)
+				{
+					soundPlaying = false;
+				}
 				break;
 			default:
 				return;
@@ -233,15 +241,14 @@ public class CrossingGateGateTileEntity extends TileEntity implements ITickable,
 			markDirty();
 		}
 		
-		world.markBlockRangeForRenderUpdate(pos, pos);
 		world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
-		world.scheduleBlockUpdate(pos, getBlockType(), 0, 0);
 	}
 	
 	@Override
 	public NBTTagCompound getUpdateTag() {
 		NBTTagCompound nbt = super.getUpdateTag();
 		nbt.setFloat("gateRotation", gateRotation);
+		nbt.setFloat("gateDelay", gateDelay);
 		nbt.setInteger("status", getCodeFromEnum(status));
 		
 		return nbt;
@@ -250,26 +257,20 @@ public class CrossingGateGateTileEntity extends TileEntity implements ITickable,
 	@Override
 	public void handleUpdateTag(NBTTagCompound tag) {
 		gateRotation = tag.getFloat("gateRotation");
+		gateDelay = tag.getFloat("gateDelay");
 		status = getStatusFromCode(tag.getInteger("status"));
-		
-		if (world.isRemote && status == EnumStatuses.Opening || (status == EnumStatuses.Closing && gateRotation > -60))
-		{
-			handlePlaySound();
-		}
 	}
 	
 	@SideOnly(Side.CLIENT)
 	public void handlePlaySound()
 	{
-		if (gateSound == null)
+		if (!soundPlaying)
 		{
-			gateSound = new LoopableTileEntitySound(ModSounds.gateEvent, this, pos, 0.3f, 1);
-		} 
-		
-		SoundHandler handler = Minecraft.getMinecraft().getSoundHandler();
-		if (handler != null && !handler.isSoundPlaying(gateSound))
-		{
-			handler.playSound(gateSound);
+			LoopableTileEntitySound gateSound = new LoopableTileEntitySound(ModSounds.gateEvent, this, pos, 0.3f, 1);
+			
+			Minecraft.getMinecraft().getSoundHandler().playSound(gateSound);
+			
+			soundPlaying = true;
 		}
 	}
 
@@ -286,11 +287,28 @@ public class CrossingGateGateTileEntity extends TileEntity implements ITickable,
 
 	@Override
 	public boolean isDonePlayingSound() {
-		return status == EnumStatuses.Closed || status == EnumStatuses.Open;
+		return !soundPlaying;
 	}
 
 	public EnumStatuses getStatus()
 	{
 		return status;
+	}
+
+	public void setStatus(EnumStatuses status)
+	{
+		if ((status == EnumStatuses.Opening && this.status == EnumStatuses.Open) ||
+				(status == EnumStatuses.Closing && this.status == EnumStatuses.Closed))
+		{
+			return;
+		}
+		
+		this.status = status;
+		sendUpdates(true);
+	}
+
+	@Override
+	public void onChunkUnload() {
+		soundPlaying = false;
 	}
 }

@@ -13,6 +13,11 @@ import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingRelayTopNE;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingRelayTopNW;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingRelayTopSE;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingRelayTopSW;
+import com.clussmanproductions.roadstuffreborn.blocks.BlockOverhead;
+import com.clussmanproductions.roadstuffreborn.blocks.BlockOverheadCrossbuck;
+import com.clussmanproductions.roadstuffreborn.blocks.BlockOverheadLamps;
+import com.clussmanproductions.roadstuffreborn.blocks.BlockOverheadPole;
+import com.clussmanproductions.roadstuffreborn.blocks.BlockSafetranMechanical;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockSafetranType3;
 
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -50,6 +55,16 @@ public class ModBlocks {
 	public static BlockCrossingRelayTopNW crossing_relay_top_nw;
 	@ObjectHolder("crossing_relay_top_ne")
 	public static BlockCrossingRelayTopNE crossing_relay_top_ne;
+	@ObjectHolder("overhead_pole")
+	public static BlockOverheadPole overhead_pole;
+	@ObjectHolder("overhead")
+	public static BlockOverhead overhead;
+	@ObjectHolder("overhead_lamps")
+	public static BlockOverheadLamps overhead_lamps;
+	@ObjectHolder("overhead_crossbuck")
+	public static BlockOverheadCrossbuck overhead_crossbuck;
+	@ObjectHolder("safetran_mechanical")
+	public static BlockSafetranMechanical safetran_mechanical;
 	
 	@SideOnly(Side.CLIENT)
 	public static void initModels(ModelRegistryEvent e)
@@ -60,5 +75,10 @@ public class ModBlocks {
 		crossing_gate_pole.initModel();
 		crossing_gate_crossbuck.initModel();
 		safetran_type_3.initModel();
+		overhead_pole.initModel();
+		overhead.initModel();
+		overhead_lamps.initModel();
+		overhead_crossbuck.initModel();
+		safetran_mechanical.initModel();
 	}
 }
