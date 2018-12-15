@@ -19,6 +19,7 @@ import com.clussmanproductions.roadstuffreborn.blocks.BlockOverheadLamps;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockOverheadPole;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockSafetranMechanical;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockSafetranType3;
+import com.clussmanproductions.roadstuffreborn.blocks.BlockSign;
 
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
@@ -65,6 +66,8 @@ public class ModBlocks {
 	public static BlockOverheadCrossbuck overhead_crossbuck;
 	@ObjectHolder("safetran_mechanical")
 	public static BlockSafetranMechanical safetran_mechanical;
+	@ObjectHolder("sign")
+	public static BlockSign sign;
 	
 	@SideOnly(Side.CLIENT)
 	public static void initModels(ModelRegistryEvent e)
@@ -80,5 +83,6 @@ public class ModBlocks {
 		overhead_lamps.initModel();
 		overhead_crossbuck.initModel();
 		safetran_mechanical.initModel();
+		sign.initModel();
 	}
 }

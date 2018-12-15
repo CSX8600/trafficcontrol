@@ -65,7 +65,7 @@ public class RendererCrossingGateGate extends TileEntitySpecialRenderer<Crossing
 				new TextureInfo(gate, 0, 1, 16, 1.7),
 				new TextureInfo(gate, 0, 2, 3, 4),
 				new TextureInfo(gate, 0, 2, 3, 4));
-		Box gateBox = new Box(-60, -1, 4, 56, 2, -1, collection);
+		Box gateBox = new Box(-76, -1, 4, 72, 2, -1, collection);
 		gateBox.render(builder);
 	}
 	

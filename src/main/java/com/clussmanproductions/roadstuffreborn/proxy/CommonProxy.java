@@ -22,6 +22,7 @@ import com.clussmanproductions.roadstuffreborn.blocks.BlockOverheadLamps;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockOverheadPole;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockSafetranMechanical;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockSafetranType3;
+import com.clussmanproductions.roadstuffreborn.blocks.BlockSign;
 import com.clussmanproductions.roadstuffreborn.item.ItemCrossingRelayBox;
 import com.clussmanproductions.roadstuffreborn.item.ItemCrossingRelayTuner;
 import com.clussmanproductions.roadstuffreborn.tileentity.CrossingGateGateTileEntity;
@@ -65,6 +66,7 @@ public class CommonProxy {
 		e.getRegistry().register(new BlockOverheadLamps());
 		e.getRegistry().register(new BlockOverheadCrossbuck());
 		e.getRegistry().register(new BlockSafetranMechanical());
+		e.getRegistry().register(new BlockSign());
 		
 		GameRegistry.registerTileEntity(CrossingGateGateTileEntity.class, ModRoadStuffReborn.MODID + "_crossinggategate");
 		GameRegistry.registerTileEntity(SafetranType3TileEntity.class, ModRoadStuffReborn.MODID + "_safetrantyp3");

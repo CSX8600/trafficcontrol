@@ -89,23 +89,4 @@ public class BlockCrossingGateGate extends Block implements ITileEntityProvider 
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, FACING);
 	}
-	
-	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		CrossingGateGateTileEntity te = (CrossingGateGateTileEntity)source.getTileEntity(pos);
-		
-		if (te != null)
-		{
-			return te.getBoundingBox();
-		}
-		else
-		{
-			return FULL_BLOCK_AABB;
-		}
-	}
-	
-	@Override
-	public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World worldIn, BlockPos pos) {
-		return new AxisAlignedBB(pos);
-	}
 }

@@ -90,44 +90,7 @@ public class CrossingGateGateTileEntity extends TileEntity implements ITickable,
 	{
 		return gateRotation;
 	}
-	
-	public AxisAlignedBB getBoundingBox()
-	{
-		if (status != EnumStatuses.Closed)
-		{
-			return new AxisAlignedBB(0, 0, 0, 1, 1, 1);
-		}
 		
-		double startX = 0, startZ = 0, x = 0, z = 0;
-		
-		EnumFacing facing = world.getBlockState(pos).getValue(BlockCrossingGateGate.FACING);
-		switch(facing)
-		{
-			case NORTH:
-				x = -3;
-				startX = 1;
-				z = 1;
-				startZ = 0;
-				break;
-			case SOUTH:
-				x = 4;
-				z = 1;
-				break;
-			case EAST:
-				x = 1;
-				z = -3;
-				startZ = 1;
-				break;
-			case WEST:
-				x = 1;
-				z = 4;
-			default:
-				break;
-		}
-		
-		return new AxisAlignedBB(startX, 0, startZ, x, 1, z);
-	}
-	
 	private int getCodeFromEnum(EnumStatuses status)
 	{
 		switch(status)
@@ -310,5 +273,37 @@ public class CrossingGateGateTileEntity extends TileEntity implements ITickable,
 	@Override
 	public void onChunkUnload() {
 		soundPlaying = false;
+	}
+
+	@Override
+	public AxisAlignedBB getRenderBoundingBox() {
+		int width = 1;
+		int height = 1;
+		
+		if (status != EnumStatuses.Open)
+		{
+			width = 4;
+		}
+		
+		if (status != EnumStatuses.Closed)
+		{
+			height = 4;
+		}
+		
+		AxisAlignedBB base = super.getRenderBoundingBox();
+		EnumFacing facing = world.getBlockState(getPos()).getValue(BlockCrossingGateGate.FACING);
+		switch(facing)
+		{
+			case SOUTH:
+				return base.expand(width, height, 0);
+			case EAST:
+				return base.expand(0, height, width * -1);
+			case NORTH:
+				return base.expand(width * -1, height, 0);
+			case WEST:
+				return base.expand(0, height, width);
+		}
+		
+		return super.getRenderBoundingBox();
 	}
 }

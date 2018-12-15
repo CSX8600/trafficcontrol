@@ -71,9 +71,14 @@ public class ItemCrossingRelayTuner extends Item {
 		
 		if (state.getBlock() instanceof BlockLampBase)
 		{
-			te.addCrossingGateLamp(pos);
-			
-			player.sendMessage(new TextComponentString("Paired Crossing Lamps to Relay Box"));
+			if (te.addOrRemoveCrossingGateLamp(pos))
+			{
+				player.sendMessage(new TextComponentString("Paired Crossing Lamps to Relay Box"));
+			}
+			else
+			{
+				player.sendMessage(new TextComponentString("Unpaired Crossing Lamps from Relay Box"));
+			}
 		}
 	}
 	
@@ -171,16 +176,26 @@ public class ItemCrossingRelayTuner extends Item {
 	{		
 		if (te instanceof CrossingGateGateTileEntity)
 		{
-			relay.addCrossingGateGate((CrossingGateGateTileEntity)te);
-			
-			player.sendMessage(new TextComponentString("Paired Crossing Gate to Relay Box"));
+			if (relay.addOrRemoveCrossingGateGate((CrossingGateGateTileEntity)te))
+			{
+				player.sendMessage(new TextComponentString("Paired Crossing Gate to Relay Box"));
+			}
+			else
+			{
+				player.sendMessage(new TextComponentString("Unpaired Crossing Gate from Relay Box"));
+			}
 		}
 		
 		if (te instanceof BellBaseTileEntity)
 		{
-			relay.addBell((BellBaseTileEntity)te);
-			
-			player.sendMessage(new TextComponentString("Paired Bell to Relay Box"));
+			if (relay.addOrRemoveBell((BellBaseTileEntity)te))
+			{
+				player.sendMessage(new TextComponentString("Paired Bell to Relay Box"));
+			}
+			else
+			{
+				player.sendMessage(new TextComponentString("Unpaired Bell from Relay Box"));
+			}
 		}
 	}
 }

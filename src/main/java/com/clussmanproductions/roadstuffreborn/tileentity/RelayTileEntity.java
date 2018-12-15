@@ -352,16 +352,69 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 		return new BlockPos(masterX, masterY, masterZ);
 	}
 
-	public void addCrossingGateLamp(BlockPos lampPos) {
+	public boolean addOrRemoveCrossingGateLamp(BlockPos lampPos) {
+		BlockPos posToRemove = null;
+		for(BlockPos existingLampPos : crossingLampLocations)
+		{
+			if (lampPos.equals(existingLampPos))
+			{
+				posToRemove = existingLampPos;
+				break;
+			}
+		}
+		
+		if (posToRemove != null)
+		{
+			crossingLampLocations.remove(posToRemove);
+			return false;
+		}
+		
 		crossingLampLocations.add(lampPos);
+		return true;
 	}
 
-	public void addCrossingGateGate(CrossingGateGateTileEntity gate) {
+	public boolean addOrRemoveCrossingGateGate(CrossingGateGateTileEntity gate) {
+		BlockPos posToRemove = null;
+		
+		for(BlockPos pos : crossingGateLocations)
+		{
+			if (pos.equals(gate.getPos()))
+			{
+				posToRemove = pos;
+				break;
+			}
+		}
+		
+		if (posToRemove != null)
+		{
+			crossingGateLocations.remove(posToRemove);
+			return false;
+		}
+		
 		crossingGateLocations.add(gate.getPos());
+		return true;
 	}
 
-	public void addBell(BellBaseTileEntity bell) {
+	public boolean addOrRemoveBell(BellBaseTileEntity bell) {
+		BlockPos posToRemove = null;
+		
+		for(BlockPos pos : bellLocations)
+		{
+			if (pos.equals(bell.getPos()))
+			{
+				posToRemove = pos;
+				break;
+			}
+		}
+		
+		if (posToRemove != null)
+		{
+			bellLocations.remove(posToRemove);
+			return false;
+		}
+		
 		bellLocations.add(bell.getPos());
+		return true;
 	}
 
 	public void setPowered(boolean isPowered)
