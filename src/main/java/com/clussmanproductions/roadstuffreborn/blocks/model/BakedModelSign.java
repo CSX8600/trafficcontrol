@@ -1,6 +1,7 @@
 package com.clussmanproductions.roadstuffreborn.blocks.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.clussmanproductions.roadstuffreborn.ModRoadStuffReborn;
@@ -19,6 +20,7 @@ import net.minecraftforge.client.model.pipeline.UnpackedBakedQuad;
 public class BakedModelSign implements IBakedModel {
 	private VertexFormat format;
 	private TextureAtlasSprite generic;
+	HashMap<String, TextureAtlasSprite> signTextures = new HashMap<>();
 	
 	private TextureAtlasSprite getGeneric()
 	{
@@ -28,6 +30,20 @@ public class BakedModelSign implements IBakedModel {
 		}
 		
 		return generic;
+	}
+	
+	private TextureAtlasSprite getSign(String type, String name)
+	{
+		String fullName = type + "/" + name;
+		
+		if (!signTextures.containsKey(fullName))
+		{
+			String resourceName = ModRoadStuffReborn.MODID + ":blocks/sign/" + fullName;
+			
+			signTextures.put(fullName, Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(resourceName));
+		}
+		
+		return signTextures.get(fullName);
 	}
 	
 	public BakedModelSign(VertexFormat format)
@@ -50,16 +66,24 @@ public class BakedModelSign implements IBakedModel {
 				2, 2,
 				0, 2,
 				0, 0);
+		
+		UVMapping signBackGeneric = new UVMapping(
+				0,0,
+				0,16,
+				16,16,
+				16,0);
 				
+		// Post
+		retval.add(createQuad(v(9, 16, 7), v(9, 0, 7), v(7, 0, 7), v(7, 16, 7), getGeneric(), twoBy16Generic));
+		retval.add(createQuad(v(9, 16, 9), v(9, 0, 9), v(9, 0, 7), v(9, 16, 7), getGeneric(), twoBy16Generic));
+		retval.add(createQuad(v(7, 16, 9), v(7, 0, 9), v(9, 0, 9), v(9, 16, 9), getGeneric(), twoBy16Generic));
+		retval.add(createQuad(v(7, 16, 7), v(7, 0, 7), v(7, 0, 9), v(7, 16, 9), getGeneric(), twoBy16Generic));
+		retval.add(createQuad(v(9, 16, 9), v(9, 16, 7), v(7, 16, 7), v(7, 16, 9), getGeneric(), twoBy2Generic));
+		retval.add(createQuad(v(9, 0, 7), v(9, 0, 9), v(7, 0, 9), v(7, 0, 7), getGeneric(), twoBy2Generic));
 		
-		retval.add(createQuad(v(0.5625, 1, 0.4375), v(0.5625, 0, 0.4375), v(0.4375, 0, 0.4375), v(0.4375, 1, 0.4375), getGeneric(), twoBy16Generic));
-		retval.add(createQuad(v(0.5625, 1, 0.5625), v(0.5625, 0, 0.5625), v(0.5625, 0, 0.4375), v(0.5625, 1, 0.4375), getGeneric(), twoBy16Generic));
-		retval.add(createQuad(v(0.4375, 1, 0.5625), v(0.4375, 0, 0.5625), v(0.5625, 0, 0.5625), v(0.5625, 1, 0.5625), getGeneric(), twoBy16Generic));
-		retval.add(createQuad(v(0.4375, 1, 0.4375), v(0.4375, 0, 0.4375), v(0.4375, 0, 0.5625), v(0.4375, 1, 0.5625), getGeneric(), twoBy16Generic));
-		retval.add(createQuad(v(0.5625, 1, 0.5625), v(0.5625, 1, 0.4375), v(0.4375, 1, 0.4375), v(0.4375, 1, 0.5625), getGeneric(), twoBy2Generic));
-		retval.add(createQuad(v(0.5625, 0, 0.4375), v(0.5625, 0, 0.5625), v(0.4375, 0, 0.5625), v(0.4375, 0, 0.4375), getGeneric(), twoBy2Generic));
-		
-		
+		// Sign
+		retval.add(createQuad(v(16, 16, 6.9), v(16, 0, 6.9), v(0, 0, 6.9), v(0, 16, 6.9), getSign("diamond", "diamond16"), signBackGeneric));
+		retval.add(createQuad(v(0, 16, 6.9), v(0, 0, 6.9), v(16, 0, 6.9), v(16, 16, 6.9), getSign("diamond", "diamond0"), signBackGeneric));
 		
 		return retval;		
 	}
@@ -108,7 +132,7 @@ public class BakedModelSign implements IBakedModel {
 	}
 	
 	private static Vec3d v(double x, double y, double z) {
-		return new Vec3d(x, y, z);
+		return new Vec3d(x / 16, y / 16, z / 16);
 	}
 
 	@Override

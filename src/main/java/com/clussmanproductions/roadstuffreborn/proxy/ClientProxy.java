@@ -21,6 +21,7 @@ public class ClientProxy extends CommonProxy {
 	@SubscribeEvent
 	public void preInit(FMLPreInitializationEvent e)
 	{
+		super.preInit(e);
 		ModelLoaderRegistry.registerLoader(new com.clussmanproductions.roadstuffreborn.blocks.model.ModelLoader());
 	}
 	
