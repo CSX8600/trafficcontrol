@@ -29,6 +29,9 @@ public class ModRoadStuffReborn {
 	@SidedProxy(clientSide = "com.clussmanproductions.roadstuffreborn.proxy.ClientProxy", serverSide = "com.clussmanproductions.roadstuffreborn.proxy.ServerProxy")
 	public static CommonProxy proxy;
 	
+	@Mod.Instance
+	public static ModRoadStuffReborn instance;
+	
 	public static Logger logger;
 	
 	@Mod.EventHandler

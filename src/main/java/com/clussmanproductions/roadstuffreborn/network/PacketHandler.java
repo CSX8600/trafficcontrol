@@ -2,6 +2,7 @@ package com.clussmanproductions.roadstuffreborn.network;
 
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
 
 public class PacketHandler {
 	private static int packetId = 0;
@@ -23,6 +24,6 @@ public class PacketHandler {
 	
 	private static void registerMessages()
 	{
-		
+		INSTANCE.registerMessage(PacketUpdateSign.Handler.class, PacketUpdateSign.class, nextID(), Side.SERVER);
 	}
 }

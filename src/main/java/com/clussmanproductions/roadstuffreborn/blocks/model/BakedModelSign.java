@@ -1,13 +1,17 @@
 package com.clussmanproductions.roadstuffreborn.blocks.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 import com.clussmanproductions.roadstuffreborn.ModRoadStuffReborn;
+import com.clussmanproductions.roadstuffreborn.blocks.BlockSign;
+import com.clussmanproductions.roadstuffreborn.tileentity.SignTileEntity;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
@@ -16,6 +20,7 @@ import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.model.pipeline.UnpackedBakedQuad;
+import net.minecraftforge.common.property.IExtendedBlockState;
 
 public class BakedModelSign implements IBakedModel {
 	private VertexFormat format;
@@ -53,6 +58,11 @@ public class BakedModelSign implements IBakedModel {
 	
 	@Override
 	public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, long rand) {
+		if (side != null)
+		{
+			return Collections.emptyList();
+		}
+		
 		List<BakedQuad> retval = new ArrayList<BakedQuad>();
 		
 		UVMapping twoBy16Generic = new UVMapping(
@@ -82,8 +92,44 @@ public class BakedModelSign implements IBakedModel {
 		retval.add(createQuad(v(9, 0, 7), v(9, 0, 9), v(7, 0, 9), v(7, 0, 7), getGeneric(), twoBy2Generic));
 		
 		// Sign
-		retval.add(createQuad(v(16, 16, 6.9), v(16, 0, 6.9), v(0, 0, 6.9), v(0, 16, 6.9), getSign("diamond", "diamond16"), signBackGeneric));
-		retval.add(createQuad(v(0, 16, 6.9), v(0, 0, 6.9), v(16, 0, 6.9), v(16, 16, 6.9), getSign("diamond", "diamond0"), signBackGeneric));
+		if (state != null && state instanceof IExtendedBlockState)
+		{
+			try
+			{
+				IExtendedBlockState extendedState = (IExtendedBlockState)state;
+				int type = extendedState.getValue(BlockSign.TYPE);
+				int variant = extendedState.getValue(BlockSign.SELECTION);
+				EnumFacing facing = extendedState.getValue(BlockSign.FACING);
+				
+				String typeName = SignTileEntity.getSignTypeName(type);
+				String frontName = typeName + variant;
+				String backName = SignTileEntity.getBackSignName(type, variant);
+				
+				switch(facing)
+				{
+					case SOUTH:
+						retval.add(createQuad(v(16, 16, 6.9), v(16, 0, 6.9), v(0, 0, 6.9), v(0, 16, 6.9), getSign(typeName, frontName), signBackGeneric));
+						retval.add(createQuad(v(0, 16, 6.9), v(0, 0, 6.9), v(16, 0, 6.9), v(16, 16, 6.9), getSign(typeName, backName), signBackGeneric));
+						break;
+					case NORTH:
+						retval.add(createQuad(v(16, 16, 9.1), v(16, 0, 9.1), v(0, 0, 9.1), v(0, 16, 9.1), getSign(typeName, backName), signBackGeneric));
+						retval.add(createQuad(v(0, 16, 9.1), v(0, 0, 9.1), v(16, 0, 9.1), v(16, 16, 9.1), getSign(typeName, frontName), signBackGeneric));
+						break;
+					case WEST:
+						retval.add(createQuad(v(9.1, 16, 16), v(9.1, 0, 16), v(9.1, 0, 0), v(9.1, 16, 0), getSign(typeName, frontName), signBackGeneric));
+						retval.add(createQuad(v(9.1, 16, 0), v(9.1, 0, 0), v(9.1, 0, 16), v(9.1, 16, 16), getSign(typeName, backName), signBackGeneric));
+						break;
+					case EAST:
+						retval.add(createQuad(v(6.9, 16, 16), v(6.9, 0, 16), v(6.9, 0, 0), v(6.9, 16, 0), getSign(typeName, backName), signBackGeneric));
+						retval.add(createQuad(v(6.9, 16, 0), v(6.9, 0, 0), v(6.9, 0, 16), v(6.9, 16, 16), getSign(typeName, frontName), signBackGeneric));
+						break;
+				}
+			}
+			catch (Exception e)
+			{
+				
+			}
+		}
 		
 		return retval;		
 	}

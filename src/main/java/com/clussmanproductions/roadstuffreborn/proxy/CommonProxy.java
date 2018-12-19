@@ -23,12 +23,15 @@ import com.clussmanproductions.roadstuffreborn.blocks.BlockOverheadPole;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockSafetranMechanical;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockSafetranType3;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockSign;
+import com.clussmanproductions.roadstuffreborn.gui.GuiProxy;
 import com.clussmanproductions.roadstuffreborn.item.ItemCrossingRelayBox;
 import com.clussmanproductions.roadstuffreborn.item.ItemCrossingRelayTuner;
+import com.clussmanproductions.roadstuffreborn.network.PacketHandler;
 import com.clussmanproductions.roadstuffreborn.tileentity.CrossingGateGateTileEntity;
 import com.clussmanproductions.roadstuffreborn.tileentity.RelayTileEntity;
 import com.clussmanproductions.roadstuffreborn.tileentity.SafetranMechanicalTileEntity;
 import com.clussmanproductions.roadstuffreborn.tileentity.SafetranType3TileEntity;
+import com.clussmanproductions.roadstuffreborn.tileentity.SignTileEntity;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -40,9 +43,8 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.registries.ForgeRegistry;
 
 @EventBusSubscriber
 public class CommonProxy {
@@ -74,6 +76,7 @@ public class CommonProxy {
 		GameRegistry.registerTileEntity(SafetranType3TileEntity.class, ModRoadStuffReborn.MODID + "_safetrantyp3");
 		GameRegistry.registerTileEntity(RelayTileEntity.class, ModRoadStuffReborn.MODID + "_relay");
 		GameRegistry.registerTileEntity(SafetranMechanicalTileEntity.class, ModRoadStuffReborn.MODID + "_safetranmechanical");
+		GameRegistry.registerTileEntity(SignTileEntity.class, ModRoadStuffReborn.MODID + "_sign");
 	}
 	
 	@SubscribeEvent
@@ -106,11 +109,12 @@ public class CommonProxy {
 	public void preInit(FMLPreInitializationEvent e)
 	{
 		ModSounds.initSounds();
+		PacketHandler.registerMessages("roadstuffreborn");
 	}
 	
 	public void init(FMLInitializationEvent e)
 	{
-		
+		NetworkRegistry.INSTANCE.registerGuiHandler(ModRoadStuffReborn.instance, new GuiProxy());
 	}
 	
 	public void postInit(FMLPostInitializationEvent e)

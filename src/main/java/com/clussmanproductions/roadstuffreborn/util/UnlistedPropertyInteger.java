@@ -29,5 +29,4 @@ public class UnlistedPropertyInteger implements IUnlistedProperty<Integer> {
 	public String valueToString(Integer value) {
 		return value.toString();
 	}
-
 }
