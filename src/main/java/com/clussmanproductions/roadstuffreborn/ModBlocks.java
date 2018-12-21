@@ -1,5 +1,6 @@
 package com.clussmanproductions.roadstuffreborn;
 
+import com.clussmanproductions.roadstuffreborn.blocks.BlockChannelizer;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCone;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingGateBase;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingGateCrossbuck;
@@ -14,6 +15,7 @@ import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingRelayTopNE;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingRelayTopNW;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingRelayTopSE;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingRelayTopSW;
+import com.clussmanproductions.roadstuffreborn.blocks.BlockDrum;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockOverhead;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockOverheadCrossbuck;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockOverheadLamps;
@@ -71,6 +73,10 @@ public class ModBlocks {
 	public static BlockSign sign;
 	@ObjectHolder("cone")
 	public static BlockCone cone;
+	@ObjectHolder("channelizer")
+	public static BlockChannelizer channelizer;
+	@ObjectHolder("drum")
+	public static BlockDrum drum;
 	
 	@SideOnly(Side.CLIENT)
 	public static void initModels(ModelRegistryEvent e)
@@ -88,5 +94,7 @@ public class ModBlocks {
 		safetran_mechanical.initModel();
 		sign.initModel();
 		cone.initModel();
+		channelizer.initModel();
+		drum.initModel();
 	}
 }

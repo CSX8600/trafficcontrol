@@ -1,0 +1,14 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "roadstuffreborn:drum"
+	},
+	"variants": {
+		"normal": [{}],
+		"inventory": [{}],
+		"facing=north": {"model": "roadstuffreborn:drum"},
+		"facing=west": { "model": "roadstuffreborn:drum", "y": 90 },
+		"facing=south": { "model": "roadstuffreborn:drum" },
+		"facing=east": { "model": "roadstuffreborn:drum", "y": 90 }
+	}
+}

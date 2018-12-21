@@ -3,6 +3,7 @@ package com.clussmanproductions.roadstuffreborn.proxy;
 import com.clussmanproductions.roadstuffreborn.ModBlocks;
 import com.clussmanproductions.roadstuffreborn.ModRoadStuffReborn;
 import com.clussmanproductions.roadstuffreborn.ModSounds;
+import com.clussmanproductions.roadstuffreborn.blocks.BlockChannelizer;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCone;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingGateBase;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingGateCrossbuck;
@@ -17,6 +18,7 @@ import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingRelayTopNE;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingRelayTopNW;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingRelayTopSE;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingRelayTopSW;
+import com.clussmanproductions.roadstuffreborn.blocks.BlockDrum;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockOverhead;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockOverheadCrossbuck;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockOverheadLamps;
@@ -73,6 +75,8 @@ public class CommonProxy {
 		e.getRegistry().register(new BlockSafetranMechanical());
 		e.getRegistry().register(new BlockSign());
 		e.getRegistry().register(new BlockCone());
+		e.getRegistry().register(new BlockChannelizer());
+		e.getRegistry().register(new BlockDrum());
 		
 		GameRegistry.registerTileEntity(CrossingGateGateTileEntity.class, ModRoadStuffReborn.MODID + "_crossinggategate");
 		GameRegistry.registerTileEntity(SafetranType3TileEntity.class, ModRoadStuffReborn.MODID + "_safetrantyp3");
@@ -100,6 +104,8 @@ public class CommonProxy {
 		e.getRegistry().register(new ItemBlock(ModBlocks.safetran_mechanical).setRegistryName(ModBlocks.safetran_mechanical.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.sign).setRegistryName(ModBlocks.sign.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.cone).setRegistryName(ModBlocks.cone.getRegistryName()));
+		e.getRegistry().register(new ItemBlock(ModBlocks.channelizer).setRegistryName(ModBlocks.channelizer.getRegistryName()));
+		e.getRegistry().register(new ItemBlock(ModBlocks.drum).setRegistryName(ModBlocks.drum.getRegistryName()));
 	}
 	
 	public static void registerSounds(RegistryEvent.Register<SoundEvent> e)

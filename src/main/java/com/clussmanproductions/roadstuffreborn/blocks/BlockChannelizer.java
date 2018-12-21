@@ -12,12 +12,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.model.ModelLoader;
 
-public class BlockCone extends Block {
-	public BlockCone()
+public class BlockChannelizer extends Block {
+	public BlockChannelizer()
 	{
 		super(Material.ROCK);
-		setRegistryName("cone");
-		setUnlocalizedName(ModRoadStuffReborn.MODID + ".cone");
+		setRegistryName("channelizer");
+		setUnlocalizedName(ModRoadStuffReborn.MODID + ".channelizer");
 		setLightOpacity(1);
 		setCreativeTab(ModRoadStuffReborn.CREATIVE_TAB);
 	}
@@ -33,13 +33,13 @@ public class BlockCone extends Block {
 	}
 	
 	@Override
-	public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
+	public boolean isNormalCube(IBlockState state) {
 		return false;
 	}
 	
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		return new AxisAlignedBB(0.3,0,0.3,0.7,1,0.7);
+		return new AxisAlignedBB(0.4375, 0, 0.4375, 0.5625, 1.125, 0.5625);
 	}
 	
 	@Override

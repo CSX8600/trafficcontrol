@@ -12,6 +12,8 @@ tile.roadstuffreborn.overhead_crossbuck.name=Overhead Crossbuck
 tile.roadstuffreborn.safetran_mechanical.name=SafeTran Mechanical
 tile.roadstuffreborn.sign.name=Sign
 tile.roadstuffreborn.cone.name=Cone
+tile.roadstuffreborn.channelizer.name=Channelizer
+tile.roadstuffreborn.drum.name=Drum
 
 #items
 item.roadstuffreborn.crossing_relay_box.name=Crossing Gate Relay

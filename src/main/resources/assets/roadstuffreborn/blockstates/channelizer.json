@@ -1,0 +1,10 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "roadstuffreborn:channelizer"
+	},
+	"variants": {
+		"normal": [{}],
+		"inventory": [{}]
+	}
+}
