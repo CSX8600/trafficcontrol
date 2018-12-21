@@ -209,7 +209,7 @@ public class SignTileEntity extends TileEntity {
 			variant++;
 		}
 	}
-
+	
 	@Override
 	public NBTTagCompound getUpdateTag() {
 		NBTTagCompound compound = super.getUpdateTag();

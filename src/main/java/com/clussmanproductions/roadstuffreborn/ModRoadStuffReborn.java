@@ -22,7 +22,7 @@ public class ModRoadStuffReborn {
 		@Override
 		public ItemStack getTabIconItem() {
 			// TODO Auto-generated method stub
-			return new ItemStack(Blocks.STONE);
+			return new ItemStack(ModBlocks.cone);
 		}
 	};
 	

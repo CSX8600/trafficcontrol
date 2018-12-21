@@ -1,5 +1,6 @@
 package com.clussmanproductions.roadstuffreborn;
 
+import com.clussmanproductions.roadstuffreborn.blocks.BlockCone;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingGateBase;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingGateCrossbuck;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingGateGate;
@@ -68,6 +69,8 @@ public class ModBlocks {
 	public static BlockSafetranMechanical safetran_mechanical;
 	@ObjectHolder("sign")
 	public static BlockSign sign;
+	@ObjectHolder("cone")
+	public static BlockCone cone;
 	
 	@SideOnly(Side.CLIENT)
 	public static void initModels(ModelRegistryEvent e)
@@ -84,5 +87,6 @@ public class ModBlocks {
 		overhead_crossbuck.initModel();
 		safetran_mechanical.initModel();
 		sign.initModel();
+		cone.initModel();
 	}
 }

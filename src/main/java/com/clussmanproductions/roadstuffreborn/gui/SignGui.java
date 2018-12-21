@@ -2,13 +2,16 @@ package com.clussmanproductions.roadstuffreborn.gui;
 
 import java.io.IOException;
 
+import com.clussmanproductions.roadstuffreborn.ModRoadStuffReborn;
 import com.clussmanproductions.roadstuffreborn.network.PacketHandler;
 import com.clussmanproductions.roadstuffreborn.network.PacketUpdateSign;
 import com.clussmanproductions.roadstuffreborn.tileentity.SignTileEntity;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
 public class SignGui extends GuiScreen {
@@ -20,6 +23,15 @@ public class SignGui extends GuiScreen {
 	GuiButton cmdNextVariant;
 	GuiButton cmdSkipPrevVariant;
 	GuiButton cmdSkipNextVariant;
+	private final ImmutableMap<Integer, Integer> U_POSITIONS_BY_TYPE =ImmutableMap.<Integer, Integer>builder()
+			.put(0, 96)
+			.put(1, 160)
+			.put(2, 224)
+			.put(3, 192)
+			.put(4, 64)
+			.put(5, 128)
+			.build();
+	private ResourceLocation signConfigResourceLocation = new ResourceLocation(ModRoadStuffReborn.MODID, "textures/gui/signconfig.png");
 	
 	public SignGui(SignTileEntity te, BlockPos pos)
 	{
@@ -38,7 +50,7 @@ public class SignGui extends GuiScreen {
 		cmdSkipPrevVariant = new GuiButton(4, 55, verticalCenter, 20, 20, "<<");
 		cmdSkipNextVariant = new GuiButton(5, width - 55, verticalCenter, 20, 20, ">>");
 		
-		buttonList.addAll(ImmutableSet.of(cmdPrevType, cmdNextType, cmdPrevVariant, cmdNextVariant));
+		buttonList.addAll(ImmutableSet.of(cmdPrevType, cmdNextType, cmdPrevVariant, cmdNextVariant, cmdSkipPrevVariant, cmdSkipNextVariant));
 	}
 	
 	@Override
@@ -52,10 +64,12 @@ public class SignGui extends GuiScreen {
 		int verticalCenter = height / 2;
 		drawDefaultBackground();
 		
-		drawCenteredString(fontRenderer, te.getFriendlySignName(), horizontalCenter, 20, 16777215);
+		drawCenteredString(fontRenderer, "Type: " + te.getVariant(), horizontalCenter, verticalCenter - 84, 16777215);
+		
+		mc.getTextureManager().bindTexture(signConfigResourceLocation);
+		drawModalRectWithCustomSizedTexture(horizontalCenter - 16, 20, U_POSITIONS_BY_TYPE.get(te.getType()), 0, 32, 32, 256, 256);
 		
 		mc.getTextureManager().bindTexture(te.getTexture());
-		
 		drawModalRectWithCustomSizedTexture(horizontalCenter - 64, verticalCenter - 64, 0, 0, 128, 128, 128, 128);
 		
 		super.drawScreen(mouseX, mouseY, partialTicks);
@@ -76,7 +90,19 @@ public class SignGui extends GuiScreen {
 				break;
 			case 3:
 				te.nextVariant();
-				break;				
+				break;
+			case 4:
+				for(int i = 0; i < 5; i++)
+				{
+					te.prevVariant();
+				}
+				break;
+			case 5:
+				for(int i = 0; i < 5; i++)
+				{
+					te.nextVariant();
+				}
+				break;
 		}
 	}
 

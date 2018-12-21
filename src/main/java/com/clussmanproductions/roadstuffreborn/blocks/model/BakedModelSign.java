@@ -130,6 +130,10 @@ public class BakedModelSign implements IBakedModel {
 				
 			}
 		}
+		else
+		{
+			retval.add(createQuad(v(0, 16, 9.1), v(0, 0, 9.1), v(16, 0, 9.1), v(16, 16, 9.1), getSign("circle", "circle0"), signBackGeneric));
+		}
 		
 		return retval;		
 	}
