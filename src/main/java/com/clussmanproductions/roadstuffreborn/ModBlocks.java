@@ -23,6 +23,7 @@ import com.clussmanproductions.roadstuffreborn.blocks.BlockOverheadPole;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockSafetranMechanical;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockSafetranType3;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockSign;
+import com.clussmanproductions.roadstuffreborn.blocks.BlockStreetLightSingle;
 
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
@@ -77,6 +78,8 @@ public class ModBlocks {
 	public static BlockChannelizer channelizer;
 	@ObjectHolder("drum")
 	public static BlockDrum drum;
+	@ObjectHolder("street_light_single")
+	public static BlockStreetLightSingle street_light_single;
 	
 	@SideOnly(Side.CLIENT)
 	public static void initModels(ModelRegistryEvent e)
@@ -96,5 +99,6 @@ public class ModBlocks {
 		cone.initModel();
 		channelizer.initModel();
 		drum.initModel();
+		street_light_single.initModel();
 	}
 }

@@ -10,26 +10,22 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 
-public class BlockDrum extends Block {
-
+public class BlockStreetLightSingle extends Block {
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
-	
-	public BlockDrum()
+	public BlockStreetLightSingle()
 	{
 		super(Material.ROCK);
-		setRegistryName("drum");
-		setUnlocalizedName(ModRoadStuffReborn.MODID + ".drum");
-		setLightOpacity(1);
+		setRegistryName("street_light_single");
+		setUnlocalizedName(ModRoadStuffReborn.MODID + ".street_light_single");
 		setCreativeTab(ModRoadStuffReborn.CREATIVE_TAB);
+		
+		setLightLevel(4);
 	}
 	
 	public void initModel()
@@ -48,17 +44,6 @@ public class BlockDrum extends Block {
 	}
 	
 	@Override
-	public EnumBlockRenderType getRenderType(IBlockState state) {
-		// TODO Auto-generated method stub
-		return EnumBlockRenderType.MODEL;
-	}
-	
-	@Override
-	public BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, FACING);
-	}
-	
-	@Override
 	public int getMetaFromState(IBlockState state) {
 		return state.getValue(FACING).getHorizontalIndex();
 	}
@@ -69,13 +54,13 @@ public class BlockDrum extends Block {
 	}
 	
 	@Override
-	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,
-			float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-		return getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, FACING);
 	}
 	
 	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		return new AxisAlignedBB(0.25, 0, 0.25, 0.75, 0.875, 0.75);
+	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,
+			float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+		return getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
 	}
 }

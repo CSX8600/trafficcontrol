@@ -12,7 +12,8 @@ import net.minecraftforge.client.model.ICustomModelLoader;
 import net.minecraftforge.client.model.IModel;
 
 public class ModelLoader implements ICustomModelLoader {
-	private final Set<String> HANDLEABLE_NAMES = ImmutableSet.of("sign");
+	private final Set<String> HANDLEABLE_NAMES = ImmutableSet.of("sign", "street_light_single");
+	private final Set<String> HANDLEABLE_INVENTORY_MODELS = ImmutableSet.of("sign");
 
 	@Override
 	public void onResourceManagerReload(IResourceManager resourceManager) {
@@ -27,9 +28,9 @@ public class ModelLoader implements ICustomModelLoader {
 		}
 		
 		ModelResourceLocation modelResourceLocation = (ModelResourceLocation)modelLocation;
-		if (modelResourceLocation.getVariant() == "inventory")
+		if (modelResourceLocation.getVariant().equals("inventory"))
 		{
-			return false;
+			return HANDLEABLE_INVENTORY_MODELS.contains(modelResourceLocation.getResourcePath());
 		}
 		
 		return HANDLEABLE_NAMES.contains(modelResourceLocation.getResourcePath());
@@ -37,7 +38,16 @@ public class ModelLoader implements ICustomModelLoader {
 
 	@Override
 	public IModel loadModel(ResourceLocation modelLocation) throws Exception {
-		return new ModelSign();
+		ModelResourceLocation resourceLocation = (ModelResourceLocation)modelLocation;
+		switch(resourceLocation.getResourcePath())
+		{
+			case "sign":
+				return new ModelSign();
+			case "street_light_single":
+				return new ModelStreetLightSingle();
+		}
+		
+		throw new Exception("Model not found");
 	}
 
 }
