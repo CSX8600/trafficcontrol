@@ -1,12 +1,14 @@
 package com.clussmanproductions.roadstuffreborn.blocks;
 
 import com.clussmanproductions.roadstuffreborn.ModRoadStuffReborn;
+import com.clussmanproductions.roadstuffreborn.util.MaterialCustomTransparency;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -39,9 +41,8 @@ public class BlockCone extends Block {
 	}
 	
 	@Override
-	public EnumBlockRenderType getRenderType(IBlockState state) {
-		// TODO Auto-generated method stub
-		return EnumBlockRenderType.MODEL;
+	public float getAmbientOcclusionLightValue(IBlockState state) {
+		return 1;
 	}
 	
 	@Override

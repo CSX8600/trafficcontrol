@@ -4,7 +4,8 @@
         "0": "roadstuffreborn:blocks/generic",
         "1": "roadstuffreborn:blocks/black",
         "leftlamptex": "#leftlamp",
-        "rightlamptex": "#rightlamp"
+        "rightlamptex": "#rightlamp",
+        "particle": "roadstuffreborn:blocks/generic"
     },
     "elements": [
         {

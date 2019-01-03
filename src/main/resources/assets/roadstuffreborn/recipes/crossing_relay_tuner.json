@@ -1,0 +1,28 @@
+{ 
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " R ",
+    "IGI",
+    " I "  ],
+  "key": {
+  "I":
+	  {
+	  	"type": "forge:ore_dict",
+	  	"ore": "ingotIron"
+	  },
+  "R":
+  	{
+  		"type": "forge:ore_dict",
+  		"ore": "dustRedstone"
+  	},
+	"G":
+	{
+		"type": "forge:ore_dict",
+		"ore": "ingotGold"
+	}
+  },
+  "result": {
+    "item": "roadstuffreborn:crossing_relay_tuner",
+    "count": 1
+  }
+}

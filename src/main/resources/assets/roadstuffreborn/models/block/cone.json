@@ -3,7 +3,8 @@
     "textures": {
         "0": "roadstuffreborn:blocks/cone/cone",
         "1": "roadstuffreborn:blocks/cone/coneBaseTop",
-        "2": "roadstuffreborn:blocks/cone/coneBaseBottom"
+        "2": "roadstuffreborn:blocks/cone/coneBaseBottom",
+        "particle": "roadstuffreborn:blocks/cone/cone"
     },
     "elements": [
         {

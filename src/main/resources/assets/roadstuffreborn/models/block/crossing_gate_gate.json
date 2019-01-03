@@ -2,7 +2,8 @@
     "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
     "textures": {
         "0": "roadstuffreborn:blocks/generic",
-        "1": "roadstuffreborn:blocks/gearbox_east"
+        "1": "roadstuffreborn:blocks/gearbox_east",
+        "particle": "roadstuffreborn:blocks/generic"
     },
     "elements": [
         {

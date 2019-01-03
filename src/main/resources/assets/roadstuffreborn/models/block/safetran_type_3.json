@@ -3,7 +3,8 @@
     "textures": {
         "0": "roadstuffreborn:blocks/generic",
         "1": "roadstuffreborn:blocks/transparent",
-        "2": "roadstuffreborn:blocks/bell_cage"
+        "2": "roadstuffreborn:blocks/bell_cage",
+        "particle": "roadstuffreborn:blocks/generic"
     },
     "elements": [
         {

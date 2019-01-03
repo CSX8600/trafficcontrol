@@ -16,6 +16,7 @@ import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingRelayTopNW;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingRelayTopSE;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingRelayTopSW;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockDrum;
+import com.clussmanproductions.roadstuffreborn.blocks.BlockLightSource;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockOverhead;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockOverheadCrossbuck;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockOverheadLamps;
@@ -23,6 +24,7 @@ import com.clussmanproductions.roadstuffreborn.blocks.BlockOverheadPole;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockSafetranMechanical;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockSafetranType3;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockSign;
+import com.clussmanproductions.roadstuffreborn.blocks.BlockStreetLightDouble;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockStreetLightSingle;
 
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -80,6 +82,10 @@ public class ModBlocks {
 	public static BlockDrum drum;
 	@ObjectHolder("street_light_single")
 	public static BlockStreetLightSingle street_light_single;
+	@ObjectHolder("light_source")
+	public static BlockLightSource light_source;
+	@ObjectHolder("street_light_double")
+	public static BlockStreetLightDouble street_light_double;
 	
 	@SideOnly(Side.CLIENT)
 	public static void initModels(ModelRegistryEvent e)
@@ -100,5 +106,6 @@ public class ModBlocks {
 		channelizer.initModel();
 		drum.initModel();
 		street_light_single.initModel();
+		street_light_double.initModel();
 	}
 }

@@ -48,4 +48,9 @@ public class BlockChannelizer extends Block {
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return new AxisAlignedBB(0.4375, 0, 0.4375, 0.5625, 1.125, 0.5625);
 	}
+
+	@Override
+	public float getAmbientOcclusionLightValue(IBlockState state) {
+		return 1F;
+	}
 }

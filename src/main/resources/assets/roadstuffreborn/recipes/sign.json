@@ -1,0 +1,23 @@
+{ 
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    " P ",
+    " I "  ],
+  "key": {
+  "I":
+	  {
+	  	"type": "forge:ore_dict",
+	  	"ore": "ingotIron"
+	  },
+  "P":
+  	{
+  		"item": "minecraft:painting",
+  		"data": 0
+  	}
+  },
+  "result": {
+    "item": "roadstuffreborn:sign",
+    "count": 1
+  }
+}

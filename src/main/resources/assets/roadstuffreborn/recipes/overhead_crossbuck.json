@@ -1,0 +1,17 @@
+{ 
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+	  {
+	    "item": "roadstuffreborn:overhead",
+	    "data": 0
+	  },
+	  {
+	  	"item": "roadstuffreborn:crossing_gate_crossbuck",
+	  	"data": 0
+	  }
+  ],
+  "result": {
+    "item": "roadstuffreborn:overhead_crossbuck",
+    "count": 1
+  }
+}

@@ -6,7 +6,8 @@
         "2": "roadstuffreborn:blocks/catwalk_side",
         "3": "roadstuffreborn:blocks/catwalk",
         "leftlamptex": "#leftlamp",
-        "rightlamptex": "#rightlamp"
+        "rightlamptex": "#rightlamp",
+        "particle": "roadstuffreborn:blocks/generic"
     },
     "elements": [
         {

@@ -74,7 +74,7 @@ public abstract class BaseBakedModel implements IBakedModel {
 		return retVal;
 	}
 
-	protected ArrayList<BakedQuad> createBoxWithXRotation(int lowerX, int lowerY, int lowerZ, double width, double height, int depth, int rotation, BoxTextureCollection collection)
+	protected ArrayList<BakedQuad> createBoxWithXRotation(double lowerX, double lowerY, double lowerZ, double width, double height, int depth, int rotation, BoxTextureCollection collection)
 	{
 		ArrayList<BakedQuad> retVal = new ArrayList<BakedQuad>();
 		

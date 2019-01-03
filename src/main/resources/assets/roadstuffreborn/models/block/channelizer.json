@@ -4,7 +4,8 @@
         "0": "roadstuffreborn:blocks/cone/channelizerbase",
         "1": "roadstuffreborn:blocks/cone/conebasebottom",
         "2": "roadstuffreborn:blocks/cone/barreltop",
-        "3": "roadstuffreborn:blocks/cone/cone"
+        "3": "roadstuffreborn:blocks/cone/cone",
+        "particle": "roadstuffreborn:blocks/cone/cone"
     },
     "elements": [
         {

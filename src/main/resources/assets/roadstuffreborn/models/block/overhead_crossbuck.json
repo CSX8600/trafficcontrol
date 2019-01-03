@@ -4,7 +4,8 @@
         "0": "roadstuffreborn:blocks/generic",
         "1": "roadstuffreborn:blocks/crossbuck",
         "2": "roadstuffreborn:blocks/catwalk_side",
-        "3": "roadstuffreborn:blocks/catwalk"
+        "3": "roadstuffreborn:blocks/catwalk",
+        "particle": "roadstuffreborn:blocks/generic"
     },
     "elements": [
         {

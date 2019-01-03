@@ -1,0 +1,33 @@
+{ 
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "W I",
+    " RI",
+    "  G"  ],
+  "key": {
+  "R":
+  	{
+  		"item": "minecraft:stained_hardened_clay",
+  		"data": 14
+  	},
+	"W":
+	{
+		"item": "minecraft:stained_hardened_clay",
+		"data": 0
+	},
+  "I":
+	  {
+	  	"type": "forge:ore_dict",
+	  	"ore": "ingotIron"
+	  },
+  "G":
+  	{
+  		"type": "forge:ore_dict",
+  		"ore": "ingotGold"
+  	}
+  },
+  "result": {
+    "item": "roadstuffreborn:crossing_gate_gate",
+    "count": 1
+  }
+}

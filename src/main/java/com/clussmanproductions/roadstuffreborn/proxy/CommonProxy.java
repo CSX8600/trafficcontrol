@@ -19,6 +19,7 @@ import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingRelayTopNW;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingRelayTopSE;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockCrossingRelayTopSW;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockDrum;
+import com.clussmanproductions.roadstuffreborn.blocks.BlockLightSource;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockOverhead;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockOverheadCrossbuck;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockOverheadLamps;
@@ -26,6 +27,7 @@ import com.clussmanproductions.roadstuffreborn.blocks.BlockOverheadPole;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockSafetranMechanical;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockSafetranType3;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockSign;
+import com.clussmanproductions.roadstuffreborn.blocks.BlockStreetLightDouble;
 import com.clussmanproductions.roadstuffreborn.blocks.BlockStreetLightSingle;
 import com.clussmanproductions.roadstuffreborn.gui.GuiProxy;
 import com.clussmanproductions.roadstuffreborn.item.ItemCrossingRelayBox;
@@ -36,6 +38,8 @@ import com.clussmanproductions.roadstuffreborn.tileentity.RelayTileEntity;
 import com.clussmanproductions.roadstuffreborn.tileentity.SafetranMechanicalTileEntity;
 import com.clussmanproductions.roadstuffreborn.tileentity.SafetranType3TileEntity;
 import com.clussmanproductions.roadstuffreborn.tileentity.SignTileEntity;
+import com.clussmanproductions.roadstuffreborn.tileentity.StreetLightDoubleTileEntity;
+import com.clussmanproductions.roadstuffreborn.tileentity.StreetLightSingleTileEntity;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -79,12 +83,16 @@ public class CommonProxy {
 		e.getRegistry().register(new BlockChannelizer());
 		e.getRegistry().register(new BlockDrum());
 		e.getRegistry().register(new BlockStreetLightSingle());
+		e.getRegistry().register(new BlockLightSource());
+		e.getRegistry().register(new BlockStreetLightDouble());
 		
 		GameRegistry.registerTileEntity(CrossingGateGateTileEntity.class, ModRoadStuffReborn.MODID + "_crossinggategate");
 		GameRegistry.registerTileEntity(SafetranType3TileEntity.class, ModRoadStuffReborn.MODID + "_safetrantyp3");
 		GameRegistry.registerTileEntity(RelayTileEntity.class, ModRoadStuffReborn.MODID + "_relay");
 		GameRegistry.registerTileEntity(SafetranMechanicalTileEntity.class, ModRoadStuffReborn.MODID + "_safetranmechanical");
 		GameRegistry.registerTileEntity(SignTileEntity.class, ModRoadStuffReborn.MODID + "_sign");
+		GameRegistry.registerTileEntity(StreetLightSingleTileEntity.class, ModRoadStuffReborn.MODID + "_streetsignsingle");
+		GameRegistry.registerTileEntity(StreetLightDoubleTileEntity.class, ModRoadStuffReborn.MODID + "_streetlightdouble");
 	}
 	
 	@SubscribeEvent
@@ -109,6 +117,7 @@ public class CommonProxy {
 		e.getRegistry().register(new ItemBlock(ModBlocks.channelizer).setRegistryName(ModBlocks.channelizer.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.drum).setRegistryName(ModBlocks.drum.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.street_light_single).setRegistryName(ModBlocks.street_light_single.getRegistryName()));
+		e.getRegistry().register(new ItemBlock(ModBlocks.street_light_double).setRegistryName(ModBlocks.street_light_double.getRegistryName()));
 	}
 	
 	public static void registerSounds(RegistryEvent.Register<SoundEvent> e)

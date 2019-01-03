@@ -3,7 +3,8 @@
     "textures": {
         "0": "roadstuffreborn:blocks/silver",
         "1": "roadstuffreborn:blocks/relay_sw_south",
-        "2": "roadstuffreborn:blocks/generic"
+        "2": "roadstuffreborn:blocks/generic",
+        "particle": "roadstuffreborn:blocks/silver"
     },
     "elements": [
         {

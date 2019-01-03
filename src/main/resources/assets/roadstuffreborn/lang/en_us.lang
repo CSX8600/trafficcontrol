@@ -14,7 +14,8 @@ tile.roadstuffreborn.sign.name=Sign
 tile.roadstuffreborn.cone.name=Cone
 tile.roadstuffreborn.channelizer.name=Channelizer
 tile.roadstuffreborn.drum.name=Drum
-
+tile.roadstuffreborn.street_light_single.name=Street Light (Single)
+tile.roadstuffreborn.street_light_double.name=Street Light (Double)
 #items
 item.roadstuffreborn.crossing_relay_box.name=Crossing Gate Relay
 item.roadstuffreborn.crossing_relay_tuner.name=Crossing Gate Tuner

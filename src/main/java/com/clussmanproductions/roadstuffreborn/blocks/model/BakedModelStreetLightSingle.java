@@ -104,7 +104,24 @@ public class BakedModelStreetLightSingle extends BaseBakedModel {
 				quads.addAll(createBox(7, 64.83, -22.2, 2, 0.5, 12, lampBoxTextureCollection)); // lamp
 				break;
 			case WEST:
-				quads.addAll(createBoxWithXRotation(2, 60, 2, 2, 2, 2, 20, armBoxTextureCollection)); // rotated arm
+				quads.addAll(createBoxWithXRotation(9, 60, 7, 16, 2, 2, 20, armBoxTextureCollection)); // rotated arm
+				quads.addAll(createBox(23.2, 65.35, 7, 16, 2, 2, armBoxTextureCollection)); // main arm
+				quads.addAll(createBox(25.2, 64.35, 5, 14, 1, 1, armBoxTextureCollection)); // side
+				quads.addAll(createBox(25.2, 64.35, 10, 14, 1, 1, armBoxTextureCollection)); // side
+				quads.addAll(createBox(25.2, 64.36, 6, 1, 1, 4, armBoxTextureCollection)); // inside
+				quads.addAll(createBox(38.2, 64.36, 6, 1, 1, 4, armBoxTextureCollection)); // outside
+				quads.addAll(createBox(25.2, 65.34, 6, 14, 0, 4, armBoxTextureCollection)); // cover
+				quads.addAll(createBox(26.2, 64.83, 7, 12, 0.5, 2, lampBoxTextureCollection)); // lamp
+				break;
+			case EAST:
+				quads.addAll(createBoxWithXRotation(-8, 65.5, 7, 16, 2, 2, -20, armBoxTextureCollection)); // rotated arm
+				quads.addAll(createBox(-23.2, 65.35, 7, 16, 2, 2, armBoxTextureCollection)); // main arm
+				quads.addAll(createBox(-23.2, 64.35, 5, 14, 1, 1, armBoxTextureCollection)); // side
+				quads.addAll(createBox(-23.2, 64.35, 10, 14, 1, 1, armBoxTextureCollection)); // side
+				quads.addAll(createBox(-10.2, 64.36, 6, 1, 1, 4, armBoxTextureCollection)); // inside
+				quads.addAll(createBox(-23.2, 64.36, 6, 1, 1, 4, armBoxTextureCollection)); // outside
+				quads.addAll(createBox(-23.2, 65.34, 6, 14, 0, 4, armBoxTextureCollection)); // cover
+				quads.addAll(createBox(-22.2, 64.83, 7, 12, 0.5, 2, lampBoxTextureCollection)); // lamp
 				break;
 		}
 		

@@ -1,0 +1,23 @@
+{ 
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    "OI ",
+    " I "  ],
+  "key": {
+	"O":
+	  {
+	    "item": "roadstuffreborn:overhead",
+	    "data": 0
+	  },
+  "I":
+	  {
+	  	"type": "forge:ore_dict",
+	  	"ore": "ingotIron"
+	  }
+  },
+  "result": {
+    "item": "roadstuffreborn:overhead_pole",
+    "count": 1
+  }
+}
