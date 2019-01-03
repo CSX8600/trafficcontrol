@@ -124,16 +124,30 @@ public class BlockSign extends Block implements ITileEntityProvider {
 
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		double poleHeight = 1;
+		SignTileEntity te = (SignTileEntity)source.getTileEntity(pos);
+		if (te != null)
+		{
+			int type = te.getType();
+			int variant = te.getVariant();
+			
+			if (type == 2 &&
+					(variant >= 33 && variant <= 40))
+			{
+				poleHeight = 0.5;
+			}
+		}
+		
 		switch(state.getValue(FACING))
 		{
 			case NORTH:
-				return new AxisAlignedBB(0, 0, 0.43125, 1, 1, 0.5625);
+				return new AxisAlignedBB(0, 0, 0.43125, 1, poleHeight, 0.5625);
 			case SOUTH:
-				return new AxisAlignedBB(0, 0, 0.4375, 1, 1, 0.56875);
+				return new AxisAlignedBB(0, 0, 0.4375, 1, poleHeight, 0.56875);
 			case WEST:
-				return new AxisAlignedBB(0.4375, 0, 0, 0.56875, 1, 1);
+				return new AxisAlignedBB(0.4375, 0, 0, 0.56875, poleHeight, 1);
 			case EAST:
-				return new AxisAlignedBB(0.43125, 0, 0, 0.5625, 1, 1);
+				return new AxisAlignedBB(0.43125, 0, 0, 0.5625, poleHeight, 1);
 		}
 		
 		return FULL_BLOCK_AABB;

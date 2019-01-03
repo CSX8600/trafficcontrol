@@ -52,15 +52,9 @@ public class BakedModelSign extends BaseBakedModel {
 				0,16,
 				16,16,
 				16,0);
-				
-		// Post
-		retval.add(createQuad(v(9, 16, 7), v(9, 0, 7), v(7, 0, 7), v(7, 16, 7), getGeneric(), twoBy16Generic));
-		retval.add(createQuad(v(9, 16, 9), v(9, 0, 9), v(9, 0, 7), v(9, 16, 7), getGeneric(), twoBy16Generic));
-		retval.add(createQuad(v(7, 16, 9), v(7, 0, 9), v(9, 0, 9), v(9, 16, 9), getGeneric(), twoBy16Generic));
-		retval.add(createQuad(v(7, 16, 7), v(7, 0, 7), v(7, 0, 9), v(7, 16, 9), getGeneric(), twoBy16Generic));
-		retval.add(createQuad(v(9, 16, 9), v(9, 16, 7), v(7, 16, 7), v(7, 16, 9), getGeneric(), twoBy2Generic));
-		retval.add(createQuad(v(9, 0, 7), v(9, 0, 9), v(7, 0, 9), v(7, 0, 7), getGeneric(), twoBy2Generic));
 		
+
+		int poleHeight = 16;
 		// Sign
 		if (state != null && state instanceof IExtendedBlockState)
 		{
@@ -74,6 +68,12 @@ public class BakedModelSign extends BaseBakedModel {
 				String typeName = SignTileEntity.getSignTypeName(type);
 				String frontName = typeName + variant;
 				String backName = SignTileEntity.getBackSignName(type, variant);
+				
+				if (type == 2 &&
+						(variant >= 33 && variant <= 40))
+				{
+					poleHeight = 8;
+				}
 				
 				switch(facing)
 				{
@@ -104,6 +104,14 @@ public class BakedModelSign extends BaseBakedModel {
 		{
 			retval.add(createQuad(v(0, 16, 9.1), v(0, 0, 9.1), v(16, 0, 9.1), v(16, 16, 9.1), getSign("circle", "circle0"), signBackGeneric));
 		}
+				
+		// Post
+		retval.add(createQuad(v(9, poleHeight, 7), v(9, 0, 7), v(7, 0, 7), v(7, poleHeight, 7), getGeneric(), twoBy16Generic));
+		retval.add(createQuad(v(9, poleHeight, 9), v(9, 0, 9), v(9, 0, 7), v(9, poleHeight, 7), getGeneric(), twoBy16Generic));
+		retval.add(createQuad(v(7, poleHeight, 9), v(7, 0, 9), v(9, 0, 9), v(9, poleHeight, 9), getGeneric(), twoBy16Generic));
+		retval.add(createQuad(v(7, poleHeight, 7), v(7, 0, 7), v(7, 0, 9), v(7, poleHeight, 9), getGeneric(), twoBy16Generic));
+		retval.add(createQuad(v(9, poleHeight, 9), v(9, poleHeight, 7), v(7, poleHeight, 7), v(7, poleHeight, 9), getGeneric(), twoBy2Generic));
+		retval.add(createQuad(v(9, 0, 7), v(9, 0, 9), v(7, 0, 9), v(7, 0, 7), getGeneric(), twoBy2Generic));
 		
 		return retval;		
 	}
