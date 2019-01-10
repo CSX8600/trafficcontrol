@@ -1,0 +1,14 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "trafficcontrol:crossing_relay_sw"
+    },
+    "variants": {
+        "normal": [{}],
+        "inventory": [{}],
+        "facing=north": { "model": "trafficcontrol:crossing_relay_sw" },
+        "facing=west": { "model": "trafficcontrol:crossing_relay_sw", "y": 270 },
+        "facing=south": { "model": "trafficcontrol:crossing_relay_sw", "y": 180 },
+        "facing=east": { "model": "trafficcontrol:crossing_relay_sw", "y": 90 }
+    }
+}

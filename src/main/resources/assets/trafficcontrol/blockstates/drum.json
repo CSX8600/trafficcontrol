@@ -1,0 +1,14 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "trafficcontrol:drum"
+	},
+	"variants": {
+		"normal": [{}],
+		"inventory": [{}],
+		"facing=north": {"model": "trafficcontrol:drum"},
+		"facing=west": { "model": "trafficcontrol:drum", "y": 90 },
+		"facing=south": { "model": "trafficcontrol:drum" },
+		"facing=east": { "model": "trafficcontrol:drum", "y": 90 }
+	}
+}

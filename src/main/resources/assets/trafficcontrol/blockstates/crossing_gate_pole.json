@@ -1,0 +1,10 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "trafficcontrol:crossing_gate_pole"
+    },
+    "variants": {
+        "normal": [{}],
+        "inventory": [{}]
+    }
+}

@@ -1,0 +1,23 @@
+{ 
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    "   ",
+    " G "  ],
+  "key": {
+	"G":
+	  {
+	    "type": "forge:ore_dict",
+	    "ore": "ingotGold"
+	  },
+  "I":
+	  {
+	  	"type": "forge:ore_dict",
+	  	"ore": "ingotIron"
+	  }
+  },
+  "result": {
+    "item": "trafficcontrol:safetran_type_3",
+    "count": 1
+  }
+}

@@ -1,0 +1,28 @@
+{ 
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RIR",
+    " I ",
+    " E "  ],
+  "key": {
+	"R":
+	  {
+	    "item": "minecraft:redstone_lamp",
+	    "data": 0
+	  },
+  "I":
+	  {
+	  	"type": "forge:ore_dict",
+	  	"ore": "ingotIron"
+	  },
+  "E":
+	  	{
+	  		"type": "forge:ore_dict",
+	  		"ore": "dustRedstone"
+	  	}
+  },
+  "result": {
+    "item": "trafficcontrol:street_light_double",
+    "count": 1
+  }
+}

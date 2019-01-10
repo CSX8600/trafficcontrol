@@ -1,0 +1,17 @@
+{ 
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+	  {
+	    "item": "trafficcontrol:overhead",
+	    "data": 0
+	  },
+	  {
+	  	"item": "trafficcontrol:crossing_gate_lamps",
+	  	"data": 0
+	  }
+  ],
+  "result": {
+    "item": "trafficcontrol:overhead_lamps",
+    "count": 1
+  }
+}

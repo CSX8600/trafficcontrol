@@ -1,0 +1,23 @@
+{ 
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "RIR",
+    " I "  ],
+  "key": {
+	"R":
+	  {
+	    "item": "minecraft:redstone_lamp",
+	    "data": 0
+	  },
+  "I":
+	  {
+	  	"type": "forge:ore_dict",
+	  	"ore": "ingotIron"
+	  }
+  },
+  "result": {
+    "item": "trafficcontrol:crossing_gate_lamps",
+    "count": 1
+  }
+}

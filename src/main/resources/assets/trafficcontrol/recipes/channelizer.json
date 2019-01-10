@@ -1,0 +1,28 @@
+{ 
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " O ",
+    " W ",
+    " C "  ],
+  "key": {
+  	"O":
+	{
+		"item": "minecraft:stained_hardened_clay",
+		"data": 1
+	},
+  	"W":
+	{
+		"item": "minecraft:stained_hardened_clay",
+		"data": 0
+	},
+    "C":
+	  {
+	    "type": "forge:ore_dict",
+	    "ore": "cobblestone"
+	  }
+  },
+  "result": {
+    "item": "trafficcontrol:channelizer",
+    "count": 8
+  }
+}

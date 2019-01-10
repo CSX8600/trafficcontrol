@@ -1,0 +1,9 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "trafficcontrol:street_light_double"
+	},
+	"variants": {
+		"inventory": [{}]
+	}
+}

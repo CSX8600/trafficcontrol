@@ -1,0 +1,23 @@
+{ 
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    " I ",
+    " C "  ],
+  "key": {
+	"C":
+	  {
+	    "type": "forge:ore_dict",
+	    "ore": "cobblestone"
+	  },
+  "I":
+	  {
+	  	"type": "forge:ore_dict",
+	  	"ore": "ingotIron"
+	  }
+  },
+  "result": {
+    "item": "trafficcontrol:crossing_gate_base",
+    "count": 1
+  }
+}

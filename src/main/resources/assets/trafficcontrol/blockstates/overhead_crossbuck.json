@@ -1,0 +1,14 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "trafficcontrol:overhead_crossbuck"
+    },
+    "variants": {
+        "normal": [{}],
+        "inventory": [{}],
+        "facing=north": { "model": "trafficcontrol:overhead_crossbuck" },
+        "facing=west": { "model": "trafficcontrol:overhead_crossbuck", "y": 270 },
+        "facing=south": { "model": "trafficcontrol:overhead_crossbuck", "y": 180 },
+        "facing=east": { "model": "trafficcontrol:overhead_crossbuck", "y": 90 }
+    }
+}

@@ -1,0 +1,23 @@
+#blocks
+tile.trafficcontrol.crossing_gate_base.name=Crossing Base
+tile.trafficcontrol.crossing_gate_gate.name=Crossing Gate
+tile.trafficcontrol.crossing_gate_lamps.name=Crossing Lamps
+tile.trafficcontrol.crossing_gate_pole.name=Pole
+tile.trafficcontrol.crossing_gate_crossbuck.name=Crossbuck (Pole)
+tile.trafficcontrol.safetran_type_3.name=SafeTran Type 3
+tile.trafficcontrol.overhead_pole.name=Overhead (Pole)
+tile.trafficcontrol.overhead.name=Overhead
+tile.trafficcontrol.overhead_lamps.name=Overhead Lamps
+tile.trafficcontrol.overhead_crossbuck.name=Overhead Crossbuck
+tile.trafficcontrol.safetran_mechanical.name=SafeTran Mechanical
+tile.trafficcontrol.sign.name=Sign
+tile.trafficcontrol.cone.name=Cone
+tile.trafficcontrol.channelizer.name=Channelizer
+tile.trafficcontrol.drum.name=Drum
+tile.trafficcontrol.street_light_single.name=Street Light (Single)
+tile.trafficcontrol.street_light_double.name=Street Light (Double)
+#items
+item.trafficcontrol.crossing_relay_box.name=Crossing Gate Relay
+item.trafficcontrol.crossing_relay_tuner.name=Crossing Gate Tuner
+
+itemGroup.Roadstuff Reborn=RoadStuff Reborn

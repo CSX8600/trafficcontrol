@@ -1,14 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "trafficcontrol",
+  "name": "Traffic Control",
+  "description": "Control traffic in Minecraft using signs, railroad crossings, and more!",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["CSX8600", "KillerMapper"],
+  "credits": "KillerMapper for making this the first time and creating all of the wonderful road sign textures",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

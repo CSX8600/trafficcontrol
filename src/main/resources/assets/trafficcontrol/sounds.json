@@ -1,0 +1,17 @@
+{
+    "gate": 
+    {
+        "category": "block",
+        "sounds": [ "trafficcontrol:gate" ]
+    },
+    "safetran_type_3":
+    {
+        "category": "block",
+        "sounds": [ "trafficcontrol:safetran_type_3" ]
+    },
+    "safetran_mechanical":
+    {
+        "category": "block",
+        "sounds": [ "trafficcontrol:safetran_mechanical" ]
+    }
+}

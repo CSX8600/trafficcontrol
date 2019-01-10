@@ -1,0 +1,14 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "trafficcontrol:crossing_gate_gate"
+    },
+    "variants": {
+        "normal": [{}],
+        "inventory": [{}],
+        "facing=north": { "model": "trafficcontrol:crossing_gate_gate" },
+        "facing=west": { "model": "trafficcontrol:crossing_gate_gate", "y": 270 },
+        "facing=south": { "model": "trafficcontrol:crossing_gate_gate", "y": 180 },
+        "facing=east": { "model": "trafficcontrol:crossing_gate_gate", "y": 90 }
+    }
+}

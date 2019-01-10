@@ -1,0 +1,10 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "trafficcontrol:safetran_type_3"
+    },
+    "variants": {
+        "normal": [{}],
+        "inventory": [{}]
+    }
+}
