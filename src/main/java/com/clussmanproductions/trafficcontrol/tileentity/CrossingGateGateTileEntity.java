@@ -291,7 +291,14 @@ public class CrossingGateGateTileEntity extends TileEntity implements ITickable,
 		}
 		
 		AxisAlignedBB base = super.getRenderBoundingBox();
-		EnumFacing facing = world.getBlockState(getPos()).getValue(BlockCrossingGateGate.FACING);
+		IBlockState state = world.getBlockState(getPos());
+		
+		if (state == null || !(state.getBlock() instanceof BlockCrossingGateGate))
+		{
+			return super.getRenderBoundingBox();
+		}
+		
+		EnumFacing facing = state.getValue(BlockCrossingGateGate.FACING);
 		switch(facing)
 		{
 			case SOUTH:
