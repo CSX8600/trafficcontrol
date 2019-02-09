@@ -181,6 +181,12 @@ public class StateWatcherData extends WorldSavedData {
 			for(BlockPos tePos : preloadInformation.get(key))
 			{
 				TileEntity te = world.getTileEntity(tePos);
+				
+				if (te == null || !(te instanceof IStateWatchable))
+				{
+					continue;
+				}
+				
 				IStateWatchable watchable = (IStateWatchable)te;
 				
 				if (watchable != null)
