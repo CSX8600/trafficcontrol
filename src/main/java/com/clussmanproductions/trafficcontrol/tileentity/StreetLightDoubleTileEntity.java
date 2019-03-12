@@ -1,23 +1,17 @@
 package com.clussmanproductions.trafficcontrol.tileentity;
 
 import com.clussmanproductions.trafficcontrol.ModBlocks;
-import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLightSource;
 import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightDouble;
-import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightSingle;
-import com.clussmanproductions.trafficcontrol.statewatcher.IStateWatchable;
-import com.clussmanproductions.trafficcontrol.statewatcher.StateWatcher;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.event.world.BlockEvent;
 
-public class StreetLightDoubleTileEntity extends TileEntity implements IStateWatchable {
+public class StreetLightDoubleTileEntity extends TileEntity  {
 	private int[] blockPos1 = new int[] { 0, -1, 0 };
 	private int[] blockPos2 = new int[] { 0, -1, 0 };
 	private int[] blockPos3 = new int[] { 0, -1, 0 };
@@ -55,8 +49,6 @@ public class StreetLightDoubleTileEntity extends TileEntity implements IStateWat
 		if (!state.getValue(BlockStreetLightDouble.POWERED))
 		{
 			addLightSources();
-			
-			addStateWatchers();
 		}
 	}
 	
@@ -143,55 +135,6 @@ public class StreetLightDoubleTileEntity extends TileEntity implements IStateWat
 		}
 	}
 
-	@Override
-	public void onBlockPlace(BlockEvent.PlaceEvent e) {
-		if (isInvalid())
-		{
-			StateWatcher.removeStateWatcherAtBlockPos(getBlockPos(1), this, world);
-			StateWatcher.removeStateWatcherAtBlockPos(getBlockPos(2), this, world);
-			StateWatcher.removeStateWatcherAtBlockPos(getBlockPos(3), this, world);
-			StateWatcher.removeStateWatcherAtBlockPos(getBlockPos(4), this, world);
-		}
-	}
-
-	@Override
-	public void onBlockBreak(BlockEvent.BreakEvent e) {
-		if (isInvalid())
-		{
-			StateWatcher.removeStateWatcherAtBlockPos(getBlockPos(1), this, world);
-			StateWatcher.removeStateWatcherAtBlockPos(getBlockPos(2), this, world);
-			StateWatcher.removeStateWatcherAtBlockPos(getBlockPos(3), this, world);
-			StateWatcher.removeStateWatcherAtBlockPos(getBlockPos(4), this, world);
-		}
-		
-		int posX = e.getPos().getX();
-		int posY = e.getPos().getY();
-		int posZ = e.getPos().getZ();
-		
-		if (
-				(blockPos1[0] == posX &&
-				blockPos1[1] == posY &&
-				blockPos1[2] == posZ)
-			||
-				(blockPos2[0] == posX &&
-				blockPos2[1] == posY &&
-				blockPos2[2] == posZ)
-			||
-				(blockPos3[0] == posX &&
-				blockPos3[1] == posY &&
-				blockPos3[2] == posZ)
-			||
-				(blockPos4[0] == posX &&
-				blockPos4[1] == posY &&
-				blockPos4[2] == posZ)
-			)
-		{
-			System.out.println("Is remote: " + world.isRemote);
-			world.setBlockState(e.getPos(), ModBlocks.light_source.getDefaultState());
-			e.setCanceled(true);
-		}
-	}
-	
 	private BlockPos getBlockPos(int index)
 	{
 		switch(index)
@@ -233,22 +176,6 @@ public class StreetLightDoubleTileEntity extends TileEntity implements IStateWat
 		tryPlaceLightSource(pos);
 		pos = pos.west(4);
 		tryPlaceLightSource(pos);
-	}
-
-	public void removeStateWatchers()
-	{
-		StateWatcher.removeStateWatcherAtBlockPos(getBlockPos(1), this, world);
-		StateWatcher.removeStateWatcherAtBlockPos(getBlockPos(2), this, world);
-		StateWatcher.removeStateWatcherAtBlockPos(getBlockPos(3), this, world);
-		StateWatcher.removeStateWatcherAtBlockPos(getBlockPos(4), this, world);
-	}
-	
-	public void addStateWatchers()
-	{
-		StateWatcher.addStateWatcher(getBlockPos(1), this, world);
-		StateWatcher.addStateWatcher(getBlockPos(2), this, world);
-		StateWatcher.addStateWatcher(getBlockPos(3), this, world);
-		StateWatcher.addStateWatcher(getBlockPos(4), this, world);
 	}
 
 	@Override

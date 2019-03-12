@@ -1,5 +1,6 @@
 package com.clussmanproductions.trafficcontrol.blocks;
 
+import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.tileentity.StreetLightSingleTileEntity;
 
@@ -13,17 +14,21 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ChunkCache;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+@EventBusSubscriber
 public class BlockStreetLightSingle extends Block implements ITileEntityProvider {
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 	public static final PropertyBool POWERED = PropertyBool.create("powered");
@@ -111,7 +116,6 @@ public class BlockStreetLightSingle extends Block implements ITileEntityProvider
 		{
 			StreetLightSingleTileEntity sls = (StreetLightSingleTileEntity)te;
 			sls.removeLightSources();
-			sls.removeStateWatchers();
 		}
 		
 		super.onBlockHarvested(worldIn, pos, state, player);
@@ -124,7 +128,6 @@ public class BlockStreetLightSingle extends Block implements ITileEntityProvider
 		if (te instanceof StreetLightSingleTileEntity)
 		{
 			StreetLightSingleTileEntity watchable = (StreetLightSingleTileEntity)te;
-			watchable.removeStateWatchers();
 		}
 		
 		super.breakBlock(worldIn, pos, state);
@@ -151,14 +154,12 @@ public class BlockStreetLightSingle extends Block implements ITileEntityProvider
 			if (worldIn.isBlockPowered(pos))
 			{
 				sls.removeLightSources();
-				sls.removeStateWatchers();
 				
 				shouldUpdate = !state.getValue(POWERED);
 			}
 			else
 			{
 				sls.addLightSources();
-				sls.addStateWatchers();
 				
 				shouldUpdate = state.getValue(POWERED);
 			}
@@ -168,6 +169,48 @@ public class BlockStreetLightSingle extends Block implements ITileEntityProvider
 				worldIn.setBlockState(pos, state.withProperty(POWERED, worldIn.isBlockPowered(pos)));
 			}
 		}
-		super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
+	}
+
+	@SubscribeEvent
+	public static void onBlockBreak(BlockEvent.BreakEvent e)
+	{
+		if (e.getWorld().isRemote)
+		{
+			return;
+		}
+		
+		BlockPos workingPos = new BlockPos(e.getPos().getX(), e.getPos().getY(), e.getPos().getZ());
+		
+		workingPos = workingPos.north(2).west(2);
+		IBlockState state = e.getWorld().getBlockState(workingPos);
+		if (state.getBlock() == ModBlocks.street_light_single && state.getValue(FACING) != EnumFacing.EAST && state.getValue(FACING) != EnumFacing.SOUTH)
+		{
+			e.getWorld().setBlockState(e.getPos(), ModBlocks.light_source.getDefaultState());
+			e.setCanceled(true);
+		}
+		
+		workingPos = workingPos.east(4);
+		state = e.getWorld().getBlockState(workingPos);
+		if (state.getBlock() == ModBlocks.street_light_single && state.getValue(FACING) != EnumFacing.SOUTH && state.getValue(FACING) != EnumFacing.WEST)
+		{
+			e.getWorld().setBlockState(e.getPos(), ModBlocks.light_source.getDefaultState());
+			e.setCanceled(true);
+		}
+		
+		workingPos = workingPos.south(4);
+		state = e.getWorld().getBlockState(workingPos);
+		if (state.getBlock() == ModBlocks.street_light_single && state.getValue(FACING) != EnumFacing.WEST && state.getValue(FACING) != EnumFacing.NORTH)
+		{
+			e.getWorld().setBlockState(e.getPos(), ModBlocks.light_source.getDefaultState());
+			e.setCanceled(true);
+		}
+		
+		workingPos = workingPos.west(4);
+		state = e.getWorld().getBlockState(workingPos);
+		if (state.getBlock() == ModBlocks.street_light_single && state.getValue(FACING) != EnumFacing.NORTH && state.getValue(FACING) != EnumFacing.EAST)
+		{
+			e.getWorld().setBlockState(e.getPos(), ModBlocks.light_source.getDefaultState());
+			e.setCanceled(true);
+		}
 	}
 }
