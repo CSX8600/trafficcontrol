@@ -49,8 +49,13 @@ public class CrossingGateGateTileEntity extends TileEntity implements ITickable,
 	public float getFacingRotation()
 	{
 		IBlockState blockState = world.getBlockState(getPos());
+		EnumFacing facing = null;
 		
-		EnumFacing facing = blockState.getValue(BlockCrossingGateGate.FACING);
+		if (blockState.getBlock() instanceof BlockCrossingGateGate)
+		{
+			facing = blockState.getValue(BlockCrossingGateGate.FACING);
+		}
+		
 		switch(facing)
 		{
 			case NORTH:
@@ -69,8 +74,13 @@ public class CrossingGateGateTileEntity extends TileEntity implements ITickable,
 	public Tuple3<Double, Double, Double> getTranslation(double x, double y, double z)
 	{
 		IBlockState blockState = world.getBlockState(getPos());
+		EnumFacing facing = null;
 		
-		EnumFacing facing = blockState.getValue(BlockCrossingGateGate.FACING);
+		if (blockState.getBlock() instanceof BlockCrossingGateGate)
+		{
+			facing = blockState.getValue(BlockCrossingGateGate.FACING);
+		}
+		
 		switch(facing)
 		{
 			case NORTH:
