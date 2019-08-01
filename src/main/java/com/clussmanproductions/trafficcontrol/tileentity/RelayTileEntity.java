@@ -6,6 +6,7 @@ import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateLamps;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase.EnumState;
+import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity.EnumStatuses;
 import com.clussmanproductions.trafficcontrol.util.AnyStatement;
 
@@ -34,9 +35,13 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 	// Bell information
 	private boolean alreadyNotifiedBells;
 	
+	// Wig Wag information
+	private boolean alreadyNotifiedWigWags;
+	
 	private ArrayList<BlockPos> crossingLampLocations = new ArrayList<BlockPos>();
 	private ArrayList<BlockPos> crossingGateLocations = new ArrayList<BlockPos>();
 	private ArrayList<BlockPos> bellLocations = new ArrayList<BlockPos>();
+	private ArrayList<BlockPos> wigWagLocations = new ArrayList<BlockPos>();
 	
 	private ArrayList<CrossingGateGateTileEntity> crossingGates = new ArrayList<CrossingGateGateTileEntity>();
 	private ArrayList<BellBaseTileEntity> bells = new ArrayList<BellBaseTileEntity>();
@@ -65,41 +70,23 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 		// Bell information
 		alreadyNotifiedBells = compound.getBoolean("alreadynotifiedbells");
 
+		fillArrayListFromNBT("lamps", bellLocations, compound);
+		fillArrayListFromNBT("gate", bellLocations, compound);
+		fillArrayListFromNBT("bell", bellLocations, compound);
+		fillArrayListFromNBT("wigwags", wigWagLocations, compound);
+	}
+	
+	private void fillArrayListFromNBT(String key, ArrayList<BlockPos> list, NBTTagCompound tag)
+	{
 		int i = 0;
 		while (true) {
-			if (!compound.hasKey("lamps" + i)) {
+			if (!tag.hasKey(key + i)) {
 				break;
 			}
 
-			int[] blockPos = compound.getIntArray("lamps" + i);
-			BlockPos lampPos = new BlockPos(blockPos[0], blockPos[1], blockPos[2]);
-			crossingLampLocations.add(lampPos);
-			
-			i++;
-		}
-
-		i = 0;
-		while (true) {
-			if (!compound.hasKey("gate" + i)) {
-				break;
-			}
-
-			int[] blockPos = compound.getIntArray("gate" + i);
-			BlockPos gatePos = new BlockPos(blockPos[0], blockPos[1], blockPos[2]);
-			crossingGateLocations.add(gatePos);
-			
-			i++;
-		}
-
-		i = 0;
-		while (true) {
-			if (!compound.hasKey("bell" + i)) {
-				break;
-			}
-
-			int[] blockPos = compound.getIntArray("bell" + i);
-			BlockPos bellPos = new BlockPos(blockPos[0], blockPos[1], blockPos[2]);
-			bellLocations.add(bellPos);
+			int[] blockPos = tag.getIntArray(key + i);
+			BlockPos pos = new BlockPos(blockPos[0], blockPos[1], blockPos[2]);
+			list.add(pos);
 			
 			i++;
 		}
@@ -124,6 +111,9 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 		
 		// Bell information
 		nbt.setBoolean("alreadynotifiedbells", alreadyNotifiedBells);
+		
+		// Wig Wag information
+		nbt.setBoolean("alreadynotifiedwigwags", alreadyNotifiedWigWags);
 
 		for (int i = 0; i < crossingLampLocations.size(); i++) {
 			BlockPos lamps = crossingLampLocations.get(i);
@@ -145,6 +135,13 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 			int[] bellPos = new int[] { bell.getPos().getX(), bell.getPos().getY(), bell.getPos().getZ() };
 			nbt.setIntArray("bell" + i, bellPos);
 		}
+		
+		for (int i = 0; i < wigWagLocations.size(); i++) {
+			BlockPos wigWag = wigWagLocations.get(i);
+
+			int[] wigWagPos = new int[] { wigWag.getX(), wigWag.getY(), wigWag.getZ() };
+			nbt.setIntArray("wigwags" + i, wigWagPos);
+		}
 
 		return nbt;
 	}
@@ -160,6 +157,7 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 		notifyGates();
 		updateLamps();
 		updateBells();
+		notifyWigWags();
 	}
 	
 	private void verifyLocations()
@@ -323,6 +321,35 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 		}
 	}
 	
+	private void notifyWigWags()
+	{
+		if (!alreadyNotifiedWigWags)
+		{
+			ArrayList<BlockPos> positionsToRemove = new ArrayList<BlockPos>();
+			for(BlockPos pos : wigWagLocations)
+			{
+				try
+				{
+					IBlockState currentState = world.getBlockState(pos);
+					world.setBlockState(pos, currentState.withProperty(BlockWigWag.ACTIVE, isPowered));
+				}
+				catch (Exception ex)
+				{
+					positionsToRemove.add(pos);
+				}
+			}
+			
+			for(BlockPos pos : positionsToRemove)
+			{
+				wigWagLocations.remove(pos);
+				
+				ModTrafficControl.logger.error("Wig Wag at " + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + " has been unpaired due to an error");
+			}
+			
+			alreadyNotifiedWigWags = true;
+		}
+	}
+	
 	public void setMaster() {
 		isMaster = true;
 		markDirty();
@@ -417,11 +444,26 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 		return true;
 	}
 
+	public boolean addOrRemoveWigWag(BlockPos wigWagPos)
+	{
+		if (wigWagLocations.contains(wigWagPos))
+		{
+			wigWagLocations.remove(wigWagPos);
+			return false;
+		}
+		else
+		{
+			wigWagLocations.add(wigWagPos);
+			return true;
+		}
+	}
+	
 	public void setPowered(boolean isPowered)
 	{
 		this.isPowered = isPowered;
 		alreadyNotifiedGates = false;
 		alreadyNotifiedBells = false;
+		alreadyNotifiedWigWags = false;
 		
 		markDirty();
 	}

@@ -1,0 +1,91 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "trafficcontrol:wig_wag"
+    },
+    "variants": {
+        "active=false,facing=north": 
+        [{
+        	"textures":
+        	{
+        		"lamp": "trafficcontrol:blocks/black"
+        	}
+        }],
+        "active=false,facing=west": 
+        {
+        	"y": 270,
+        	"textures":
+        	{
+        		"lamp": "trafficcontrol:blocks/black"
+        	}
+    	},
+        "active=false,facing=south":
+         {
+         	"y": 180,
+        	"textures":
+        	{
+        		"lamp": "trafficcontrol:blocks/black"
+        	}
+     	},
+        "active=false,facing=east": 
+        {
+        	"y": 90,
+        	"textures":
+        	{
+        		"lamp": "trafficcontrol:blocks/black"
+        	}
+    	},
+        "active=true,facing=north":
+        [{
+        	"textures":
+        	{
+        		"lamp": "trafficcontrol:blocks/red"
+        	}
+    	}],
+        "active=true,facing=west": 
+        {
+        	"y": 270,
+        	"textures":
+        	{
+        		"lamp": "trafficcontrol:blocks/red"
+        	}
+    	},
+        "active=true,facing=south": 
+        {
+        	"y": 180,
+        	"textures":
+        	{
+        		"lamp": "trafficcontrol:blocks/red"
+        	}
+    	},
+        "active=true,facing=east":
+        {
+        	"y": 90,
+        	"textures":
+        	{
+        		"lamp": "trafficcontrol:blocks/red"
+        	}
+    	},
+        "inventory": 
+        {
+        	"model": "trafficcontrol:wig_wag",
+        	"transform":
+        	{
+        		"firstperson":
+        		{
+        			"scale": 0.5
+        		},
+        		"firstperson_lefthand":
+        		{
+        			"scale": 0.5
+        		},
+        		"gui":
+        		{
+        			"scale": [0.75, 0.8, 1],
+        			"translation": [0.25, -0.1, 0]
+        		}
+        	}
+        },
+        "normal": [{}]
+    }
+}

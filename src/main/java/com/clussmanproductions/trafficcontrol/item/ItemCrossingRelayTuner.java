@@ -5,6 +5,7 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase;
 import com.clussmanproductions.trafficcontrol.tileentity.BellBaseTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.RelayTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.WigWagTileEntity;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -195,6 +196,18 @@ public class ItemCrossingRelayTuner extends Item {
 			else
 			{
 				player.sendMessage(new TextComponentString("Unpaired Bell from Relay Box"));
+			}
+		}
+		
+		if (te instanceof WigWagTileEntity)
+		{
+			if (relay.addOrRemoveWigWag(te.getPos()))
+			{
+				player.sendMessage(new TextComponentString("Paired Wig Wag to Relay Box"));
+			}
+			else
+			{
+				player.sendMessage(new TextComponentString("Unpaired Wig Wag from Relay Box"));
 			}
 		}
 	}
