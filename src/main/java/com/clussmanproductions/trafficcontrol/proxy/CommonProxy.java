@@ -1,8 +1,11 @@
 package com.clussmanproductions.trafficcontrol.proxy;
 
+import java.io.File;
+
+import com.clussmanproductions.trafficcontrol.Config;
 import com.clussmanproductions.trafficcontrol.ModBlocks;
-import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.ModSounds;
+import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockChannelizer;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCone;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateBase;
@@ -26,6 +29,8 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockOverheadLamps;
 import com.clussmanproductions.trafficcontrol.blocks.BlockOverheadPole;
 import com.clussmanproductions.trafficcontrol.blocks.BlockSafetranMechanical;
 import com.clussmanproductions.trafficcontrol.blocks.BlockSafetranType3;
+import com.clussmanproductions.trafficcontrol.blocks.BlockShuntBorder;
+import com.clussmanproductions.trafficcontrol.blocks.BlockShuntIsland;
 import com.clussmanproductions.trafficcontrol.blocks.BlockSign;
 import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightDouble;
 import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightSingle;
@@ -37,6 +42,8 @@ import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEnt
 import com.clussmanproductions.trafficcontrol.tileentity.RelayTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.SafetranMechanicalTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.SafetranType3TileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.ShuntBorderTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.ShuntIslandTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.StreetLightDoubleTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.StreetLightSingleTileEntity;
@@ -45,6 +52,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.SoundEvent;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -56,6 +64,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @EventBusSubscriber
 public class CommonProxy {
+	public static Configuration config;
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> e)
 	{
@@ -85,6 +94,8 @@ public class CommonProxy {
 		e.getRegistry().register(new BlockStreetLightSingle());
 		e.getRegistry().register(new BlockLightSource());
 		e.getRegistry().register(new BlockStreetLightDouble());
+		e.getRegistry().register(new BlockShuntBorder());
+		e.getRegistry().register(new BlockShuntIsland());
 		
 		GameRegistry.registerTileEntity(CrossingGateGateTileEntity.class, ModTrafficControl.MODID + "_crossinggategate");
 		GameRegistry.registerTileEntity(SafetranType3TileEntity.class, ModTrafficControl.MODID + "_safetrantyp3");
@@ -93,6 +104,8 @@ public class CommonProxy {
 		GameRegistry.registerTileEntity(SignTileEntity.class, ModTrafficControl.MODID + "_sign");
 		GameRegistry.registerTileEntity(StreetLightSingleTileEntity.class, ModTrafficControl.MODID + "_streetsignsingle");
 		GameRegistry.registerTileEntity(StreetLightDoubleTileEntity.class, ModTrafficControl.MODID + "_streetlightdouble");
+		GameRegistry.registerTileEntity(ShuntBorderTileEntity.class, ModTrafficControl.MODID + "_shuntborder");
+		GameRegistry.registerTileEntity(ShuntIslandTileEntity.class, ModTrafficControl.MODID + "_shuntisland");
 	}
 	
 	@SubscribeEvent
@@ -118,6 +131,8 @@ public class CommonProxy {
 		e.getRegistry().register(new ItemBlock(ModBlocks.drum).setRegistryName(ModBlocks.drum.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.street_light_single).setRegistryName(ModBlocks.street_light_single.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.street_light_double).setRegistryName(ModBlocks.street_light_double.getRegistryName()));
+		e.getRegistry().register(new ItemBlock(ModBlocks.shunt_border).setRegistryName(ModBlocks.shunt_border.getRegistryName()));
+		e.getRegistry().register(new ItemBlock(ModBlocks.shunt_island).setRegistryName(ModBlocks.shunt_island.getRegistryName()));
 	}
 	
 	public static void registerSounds(RegistryEvent.Register<SoundEvent> e)
@@ -129,6 +144,10 @@ public class CommonProxy {
 	
 	public void preInit(FMLPreInitializationEvent e)
 	{
+		File directory = e.getModConfigurationDirectory();
+		config = new Configuration(new File(directory.getPath(), "trafficcontrol.cfg"));
+		Config.readConfig();
+		
 		ModSounds.initSounds();
 		PacketHandler.registerMessages("trafficcontrol");
 	}
