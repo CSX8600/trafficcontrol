@@ -579,11 +579,12 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 	
 	private class AutomatedRelaySystem
 	{
+		private final int noMotionTimeout = 200;
 		private HashMap<BlockPos, ShuntIslandTileEntity> islandOrigins = new HashMap<BlockPos, ShuntIslandTileEntity>();
 		private ShuntBorderTileEntity lastEntity = null;
 		private Vec3d lastPosition = null;
 		private Vec3d lastMotion = null;
-		private int ticksSinceIslandCheck = 0;
+		private int ticksSinceLastMotion = 0;
 		
  		public void tick()
 		{
@@ -592,12 +593,7 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 			// we will need to reload our caches
 			reloadCaches();
 			
-			boolean doOverride = false;
-			//if (ticksSinceIslandCheck >= 20)
-			//{
-				doOverride = checkIslands();
-				ticksSinceIslandCheck = 0;
-			//}
+			boolean doOverride = checkIslands();
 			
 			if (!doOverride)
 			{
@@ -670,73 +666,88 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 		{
 			int blocksCheckedThisTick = 0;
 			int entityIndex = shuntBorders.indexOf(lastEntity);
-			if (entityIndex == -1)
-			{
-				entityIndex = 0;
-			}
 			
 			while (true)
-			{
+			{				
 				if (shuntBorders.size() <= 0)
 				{
 					return false;
 				}
 				
-				for(; entityIndex < shuntBorders.size(); entityIndex++)
+				if (entityIndex == -1 || entityIndex == shuntBorders.size())
 				{
-					lastEntity = shuntBorders.get(entityIndex);
-					if (blocksCheckedThisTick >= Config.borderTick)
-					{
-						return false;
-					}
-					
-					if (lastPosition == null)
-					{
-						BlockPos origin = shuntBorders.get(entityIndex).getTrackOrigin();
-						lastPosition = new Vec3d(origin.getX(), origin.getY(), origin.getZ());
-						EnumFacing facing = world.getBlockState(shuntBorders.get(entityIndex).getPos()).getValue(BlockShuntBorder.FACING);
-						lastMotion = new Vec3d(facing.getDirectionVec());
-					}
-					
-					Vec3d nextPosition = ImmersiveRailroadingHelper.getNextPosition(lastPosition, lastMotion, world);
-					blocksCheckedThisTick++;
-					if (nextPosition == lastPosition)
-					{
-						lastPosition = null;
-						lastMotion = null;
-						continue;
-					}
-					
-					if (islandOrigins.containsKey(new BlockPos(nextPosition.x, nextPosition.y, nextPosition.z)))
-					{
-						lastPosition = null;
-						lastMotion = null;
-						continue;
-					}
-					
-					Tuple<UUID, Vec3d> stock = ImmersiveRailroadingHelper.getStockNearby(nextPosition, world);
-					if (stock != null)
-					{
-						EnumFacing stockMovement = EnumFacing.getFacingFromVector((float)stock.getSecond().x, (float)stock.getSecond().y, (float)stock.getSecond().z);
-						EnumFacing motionDirection = EnumFacing.getFacingFromVector((float)lastMotion.x, (float)lastMotion.y, (float)lastMotion.z);
-						
-						if (stockMovement.equals(motionDirection))
-						{
-							return true;
-						}
-						else
-						{
-							lastPosition = null;
-							lastMotion = null;
-							continue;
-						}
-					}
-					
-					lastMotion = new Vec3d(nextPosition.x - lastPosition.x, nextPosition.y - lastPosition.y, nextPosition.z - lastPosition.z);
-					lastPosition = nextPosition;
+					entityIndex = 0;
 				}
 				
-				entityIndex = 0;
+				lastEntity = shuntBorders.get(entityIndex);
+				if (blocksCheckedThisTick >= Config.borderTick)
+				{
+					return false;
+				}
+				
+				if (lastPosition == null)
+				{
+					BlockPos origin = shuntBorders.get(entityIndex).getTrackOrigin();
+					lastPosition = new Vec3d(origin.getX(), origin.getY(), origin.getZ());
+					EnumFacing facing = world.getBlockState(shuntBorders.get(entityIndex).getPos()).getValue(BlockShuntBorder.FACING);
+					lastMotion = new Vec3d(facing.getDirectionVec());
+				}
+				
+				Vec3d nextPosition = ImmersiveRailroadingHelper.getNextPosition(lastPosition, lastMotion, world);
+				blocksCheckedThisTick++;
+				if (nextPosition == lastPosition)
+				{
+					lastPosition = null;
+					lastMotion = null;
+					entityIndex++;
+					continue;
+				}
+				
+				if (islandOrigins.containsKey(new BlockPos(nextPosition.x, nextPosition.y, nextPosition.z)))
+				{
+					lastPosition = null;
+					lastMotion = null;
+					entityIndex++;
+					continue;
+				}
+				
+				Tuple<UUID, Vec3d> stock = ImmersiveRailroadingHelper.getStockNearby(nextPosition, world);
+				if (stock != null)
+				{
+					Vec3d stockMotion = stock.getSecond();
+					
+					boolean noMotion = stockMotion.equals(new Vec3d(0, 0, 0));
+					
+					if (noMotion)
+					{
+						if (ticksSinceLastMotion < noMotionTimeout)
+						{
+							ticksSinceLastMotion++;
+						}
+					}
+					else
+					{
+						ticksSinceLastMotion = 0;
+					}
+					
+					EnumFacing stockMovement = EnumFacing.getFacingFromVector((float)stockMotion.x, (float)stockMotion.y, (float)stockMotion.z);
+					EnumFacing motionDirection = EnumFacing.getFacingFromVector((float)lastMotion.x, (float)lastMotion.y, (float)lastMotion.z);
+					
+					if (stockMovement.equals(motionDirection) || (noMotion && ticksSinceLastMotion < noMotionTimeout))
+					{
+						return true;
+					}
+					else
+					{
+						lastPosition = null;
+						lastMotion = null;
+						entityIndex++;
+						continue;
+					}
+				}
+				
+				lastMotion = new Vec3d(nextPosition.x - lastPosition.x, nextPosition.y - lastPosition.y, nextPosition.z - lastPosition.z);
+				lastPosition = nextPosition;
 			}
 		}
 	}
