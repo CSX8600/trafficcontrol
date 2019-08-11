@@ -84,10 +84,10 @@ public class WigWagTileEntity extends TileEntity implements ITickable {
 		switch(mode)
 		{
 			case SwingNegative:
-				rotation -= 3;
+				rotation -= 5;
 				break;
 			case SwingPositive:
-				rotation += 3;
+				rotation += 5;
 				break;
 		}
 	}

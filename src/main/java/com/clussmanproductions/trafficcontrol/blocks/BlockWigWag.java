@@ -76,13 +76,13 @@ public class BlockWigWag extends Block implements ITileEntityProvider {
 		switch(state.getValue(FACING))
 		{
 			case WEST:
-				return new AxisAlignedBB(0.375,0,0.375,0.625,1.25,1.3125);
+				return new AxisAlignedBB(0.375,0,0.375,0.625,1,1.3125);
 			case EAST:
-				return new AxisAlignedBB(0.375,0,0.5625,0.625,1.25,-0.375);
+				return new AxisAlignedBB(0.375,0,0.5625,0.625,1,-0.375);
 			case NORTH:
-				return new AxisAlignedBB(-0.375,0,0.625,0.5625,1.25,0.375);
+				return new AxisAlignedBB(-0.375,0,0.625,0.5625,1,0.375);
 			case SOUTH:
-				return new AxisAlignedBB(0.4375,0,0.625,1.375,1.25,0.375);
+				return new AxisAlignedBB(0.4375,0,0.625,1.375,1,0.375);
 		}
 		return super.getBoundingBox(state, source, pos);
 	}
