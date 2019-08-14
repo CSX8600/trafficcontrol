@@ -617,7 +617,7 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 				
 				for(ShuntIslandTileEntity island : shuntIslands)
 				{
-					islandOrigins.put(island.getPos(), island);
+					islandOrigins.put(island.getTrackOrigin(), island);
 				}
 			}
 		}
@@ -733,7 +733,7 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 					EnumFacing stockMovement = EnumFacing.getFacingFromVector((float)stockMotion.x, (float)stockMotion.y, (float)stockMotion.z);
 					EnumFacing motionDirection = EnumFacing.getFacingFromVector((float)lastMotion.x, (float)lastMotion.y, (float)lastMotion.z);
 					
-					if (stockMovement.equals(motionDirection) || (noMotion && ticksSinceLastMotion < noMotionTimeout))
+					if ((!noMotion && stockMovement.equals(motionDirection)) || (noMotion && ticksSinceLastMotion < noMotionTimeout))
 					{
 						return true;
 					}
