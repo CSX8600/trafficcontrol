@@ -16,6 +16,8 @@ tile.trafficcontrol.channelizer.name=Channelizer
 tile.trafficcontrol.drum.name=Drum
 tile.trafficcontrol.street_light_single.name=Street Light (Single)
 tile.trafficcontrol.street_light_double.name=Street Light (Double)
+tile.trafficcontrol.shunt_island.name=Island Shunt
+tile.trafficcontrol.shunt_border.name=Border Shunt
 #items
 item.trafficcontrol.crossing_relay_box.name=Crossing Gate Relay
 item.trafficcontrol.crossing_relay_tuner.name=Crossing Gate Tuner
