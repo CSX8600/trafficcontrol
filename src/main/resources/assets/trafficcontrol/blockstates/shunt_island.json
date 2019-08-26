@@ -1,0 +1,24 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "trafficcontrol:shunt_island"
+    },
+    "variants": {
+        "normal": [{}],
+        "inventory": 
+        {
+        	"model": "trafficcontrol:shunt_border",
+        	"transform":
+        	{
+        		"gui":
+        		{
+        			"translation": [0.375, 0, 0]
+        		}
+        	}
+        },
+        "facing=north": [{}],
+        "facing=west": { "y": 270 },
+        "facing=south": { "y": 180 },
+        "facing=east": { "y": 90 }
+    }
+}
