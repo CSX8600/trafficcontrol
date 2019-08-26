@@ -90,6 +90,8 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 		fillArrayListFromNBT("gate", bellLocations, compound);
 		fillArrayListFromNBT("bell", bellLocations, compound);
 		fillArrayListFromNBT("wigwags", wigWagLocations, compound);
+		fillArrayListFromNBT("shuntBorder", shuntBorderLocations, compound);
+		fillArrayListFromNBT("shuntIsland", shuntIslandLocations, compound);
 	}
 	
 	private void fillArrayListFromNBT(String key, ArrayList<BlockPos> list, NBTTagCompound tag)
@@ -103,32 +105,6 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 			int[] blockPos = tag.getIntArray(key + i);
 			BlockPos pos = new BlockPos(blockPos[0], blockPos[1], blockPos[2]);
 			list.add(pos);
-			
-			i++;
-		}
-		
-		i = 0;
-		while (true) {
-			if (!compound.hasKey("shuntBorder" + i)) {
-				break;
-			}
-
-			int[] blockPos = compound.getIntArray("shuntBorder" + i);
-			BlockPos shuntPos = new BlockPos(blockPos[0], blockPos[1], blockPos[2]);
-			shuntBorderLocations.add(shuntPos);
-			
-			i++;
-		}
-		
-		i = 0;
-		while (true) {
-			if (!compound.hasKey("shuntIsland" + i)) {
-				break;
-			}
-
-			int[] blockPos = compound.getIntArray("shuntIsland" + i);
-			BlockPos shuntPos = new BlockPos(blockPos[0], blockPos[1], blockPos[2]);
-			shuntIslandLocations.add(shuntPos);
 			
 			i++;
 		}
@@ -185,11 +161,11 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 			nbt.setIntArray("wigwags" + i, wigWagPos);
 		}
 		
-		for (int i = 0; i < shuntIslands.size(); i++) {
-			ShuntIslandTileEntity shunt = shuntIslands.get(i);
+		for (int i = 0; i < shuntBorders.size(); i++) {
+			ShuntBorderTileEntity shunt = shuntBorders.get(i);
 
 			int[] shuntPos = new int[] { shunt.getPos().getX(), shunt.getPos().getY(), shunt.getPos().getZ() };
-			nbt.setIntArray("shuntIsland" + i, shuntPos);
+			nbt.setIntArray("shuntBorder" + i, shuntPos);
 		}
 
 		for (int i = 0; i < shuntIslands.size(); i++) {
@@ -449,7 +425,7 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 				try
 				{
 					IBlockState currentState = world.getBlockState(pos);
-					world.setBlockState(pos, currentState.withProperty(BlockWigWag.ACTIVE, isPowered));
+					world.setBlockState(pos, currentState.withProperty(BlockWigWag.ACTIVE, getPowered()));
 				}
 				catch (Exception ex)
 				{
@@ -646,6 +622,7 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 			{
 				alreadyNotifiedGates = false;
 				alreadyNotifiedBells = false;
+				alreadyNotifiedWigWags = false;
 			}
 			
 			automatedPowerOverride = doOverride;
