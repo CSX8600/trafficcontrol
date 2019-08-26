@@ -70,12 +70,12 @@ public class WigWagTileEntity extends TileEntity implements ITickable {
 		
 		if (active)
 		{
-			if (rotation > 45)
+			if (rotation > 30)
 			{
 				mode = AnimationMode.SwingNegative;
 			}
 			
-			if (rotation < -45)
+			if (rotation < -30)
 			{
 				mode = AnimationMode.SwingPositive;
 			}
@@ -84,10 +84,10 @@ public class WigWagTileEntity extends TileEntity implements ITickable {
 		switch(mode)
 		{
 			case SwingNegative:
-				rotation -= 5;
+				rotation -= 4;
 				break;
 			case SwingPositive:
-				rotation += 5;
+				rotation += 4;
 				break;
 		}
 	}

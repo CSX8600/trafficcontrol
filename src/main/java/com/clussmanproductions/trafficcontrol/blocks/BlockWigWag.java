@@ -112,4 +112,9 @@ public class BlockWigWag extends Block implements ITileEntityProvider {
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		return new WigWagTileEntity();
 	}
+
+	@Override
+	public boolean causesSuffocation(IBlockState state) {
+		return false;
+	}
 }
