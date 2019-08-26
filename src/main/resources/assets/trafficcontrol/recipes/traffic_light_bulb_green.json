@@ -1,0 +1,25 @@
+{ 
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GL ",
+    "   ",
+    "   "  ],
+  "key": {
+  "G":
+	  {
+	  	"type": "forge:ore_dict",
+	  	"ore": "dye",
+	  	"data": 2
+	  },
+	"L":
+	  {
+	    "item": "minecraft:redstone_lamp",
+	    "data": 0
+	  }
+  },
+  "result": {
+    "item": "trafficcontrol:traffic_light_bulb",
+    "count": 1,
+    "data": 2
+  }
+}

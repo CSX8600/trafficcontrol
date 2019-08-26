@@ -1,6 +1,7 @@
 package com.clussmanproductions.trafficcontrol.blocks;
 
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
+import com.clussmanproductions.trafficcontrol.gui.GuiProxy;
 import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity;
 import com.clussmanproductions.trafficcontrol.util.UnlistedPropertyInteger;
 
@@ -112,7 +113,7 @@ public class BlockSign extends Block implements ITileEntityProvider {
 			return false;
 		}
 		
-		playerIn.openGui(ModTrafficControl.instance, 1, worldIn, pos.getX(), pos.getY(), pos.getZ());
+		playerIn.openGui(ModTrafficControl.instance, GuiProxy.GUI_IDs.SIGN, worldIn, pos.getX(), pos.getY(), pos.getZ());
 		return true;
 	}
 

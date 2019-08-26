@@ -1,8 +1,8 @@
 package com.clussmanproductions.trafficcontrol.proxy;
 
 import com.clussmanproductions.trafficcontrol.ModBlocks;
-import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.ModSounds;
+import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockChannelizer;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCone;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateBase;
@@ -32,6 +32,8 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightSingle;
 import com.clussmanproductions.trafficcontrol.gui.GuiProxy;
 import com.clussmanproductions.trafficcontrol.item.ItemCrossingRelayBox;
 import com.clussmanproductions.trafficcontrol.item.ItemCrossingRelayTuner;
+import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightBulb;
+import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightFrame;
 import com.clussmanproductions.trafficcontrol.network.PacketHandler;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.RelayTileEntity;
@@ -100,6 +102,8 @@ public class CommonProxy {
 	{
 		e.getRegistry().register(new ItemCrossingRelayBox());
 		e.getRegistry().register(new ItemCrossingRelayTuner());
+		e.getRegistry().register(new ItemTrafficLightBulb());
+		e.getRegistry().register(new ItemTrafficLightFrame());
 		
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_base).setRegistryName(ModBlocks.crossing_gate_base.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_gate).setRegistryName(ModBlocks.crossing_gate_gate.getRegistryName()));
@@ -126,7 +130,7 @@ public class CommonProxy {
 		e.getRegistry().register(ModSounds.safetranType3Event);
 		e.getRegistry().register(ModSounds.safetranMechanicalEvent);
 	}
-	
+		
 	public void preInit(FMLPreInitializationEvent e)
 	{
 		ModSounds.initSounds();

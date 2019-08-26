@@ -16,7 +16,9 @@ public class ModelLoader implements ICustomModelLoader {
 			"sign",
 			"street_light_single",
 			"street_light_double");
-	private final Set<String> HANDLEABLE_INVENTORY_MODELS = ImmutableSet.of("sign");
+	private final Set<String> HANDLEABLE_INVENTORY_MODELS = ImmutableSet.of(
+			"sign"
+			/*"traffic_light_bulb"*/);
 
 	@Override
 	public void onResourceManagerReload(IResourceManager resourceManager) {
