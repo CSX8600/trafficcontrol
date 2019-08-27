@@ -7,6 +7,9 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 
 public class TrafficLightFrameContainer extends Container {
 
@@ -33,11 +36,16 @@ public class TrafficLightFrameContainer extends Container {
 			
 			addSlotToContainer(new Slot(inventory, i, 7 + column * 18, 119 + 18 * row));
 		}
+		
+		// Item inventory
+		IItemHandler handler = frameStack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+		addSlotToContainer(new SlotItemHandler(handler, 0, 79, 13));
+		addSlotToContainer(new SlotItemHandler(handler, 1, 79, 44));
+		addSlotToContainer(new SlotItemHandler(handler, 2, 79, 76));
 	}
 	
 	@Override
 	public boolean canInteractWith(EntityPlayer playerIn) {
 		return playerIn.getHeldItemMainhand().getItem() == ModItems.traffic_light_frame;
 	}
-
 }
