@@ -18,7 +18,7 @@ public class ModelTrafficLightFrame implements IModel {
 	@Override
 	public IBakedModel bake(IModelState state, VertexFormat format,
 			Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
-		return new BakedModelTrafficLightFrame();
+		return new BakedModelTrafficLightFrame(state, format, bakedTextureGetter);
 	}
 	
 	@Override

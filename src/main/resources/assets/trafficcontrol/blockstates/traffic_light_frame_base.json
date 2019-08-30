@@ -1,0 +1,12 @@
+{
+	"forge_marker": 1,
+	"defaults": 
+	{
+		"model": "trafficcontrol:item/traffic_light_frame_base"
+	},
+	"variants":
+	{
+		"normal": [{}],
+		"inventory": [{}]
+	}
+}
