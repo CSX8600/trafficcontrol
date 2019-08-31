@@ -24,6 +24,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockWigWag extends Block implements ITileEntityProvider {
 	public static PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
@@ -37,6 +39,7 @@ public class BlockWigWag extends Block implements ITileEntityProvider {
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
 	
+	@SideOnly(Side.CLIENT)
 	public void initModel()
 	{
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
