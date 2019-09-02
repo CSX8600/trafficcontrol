@@ -3,7 +3,6 @@ package com.clussmanproductions.trafficcontrol.blocks.model;
 import java.util.Set;
 
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
-import com.clussmanproductions.trafficcontrol.item.model.ModelTrafficLightFrame;
 import com.google.common.collect.ImmutableSet;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -18,8 +17,7 @@ public class ModelLoader implements ICustomModelLoader {
 			"street_light_single",
 			"street_light_double");
 	private final Set<String> HANDLEABLE_INVENTORY_MODELS = ImmutableSet.of(
-			"sign",
-			"traffic_light_frame");
+			"sign");
 
 	@Override
 	public void onResourceManagerReload(IResourceManager resourceManager) {
@@ -53,8 +51,6 @@ public class ModelLoader implements ICustomModelLoader {
 				return new ModelStreetLightSingle();
 			case "street_light_double":
 				return new ModelStreetLightDouble();
-			case "traffic_light_frame":
-				return new ModelTrafficLightFrame();
 		}
 		
 		throw new Exception("Model not found");
