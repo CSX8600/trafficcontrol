@@ -86,8 +86,8 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 		// Bell information
 		alreadyNotifiedBells = compound.getBoolean("alreadynotifiedbells");
 
-		fillArrayListFromNBT("lamps", bellLocations, compound);
-		fillArrayListFromNBT("gate", bellLocations, compound);
+		fillArrayListFromNBT("lamps", crossingLampLocations, compound);
+		fillArrayListFromNBT("gate", crossingGateLocations, compound);
 		fillArrayListFromNBT("bell", bellLocations, compound);
 		fillArrayListFromNBT("wigwags", wigWagLocations, compound);
 		fillArrayListFromNBT("shuntBorder", shuntBorderLocations, compound);
