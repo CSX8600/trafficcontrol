@@ -29,8 +29,19 @@ public class TrafficLightTileEntity extends TileEntity {
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
-		// TODO Auto-generated method stub
 		super.readFromNBT(compound);
+		
+		bulbsBySlot = new HashMap<Integer, EnumTrafficLightBulbTypes>(3);
+		activeBySlot = new HashMap<Integer, Boolean>(3);
+		
+		int[] bulbTypes = compound.getIntArray("bulbTypes");
+		bulbsBySlot.put(0, EnumTrafficLightBulbTypes.get(bulbTypes[0]));
+		bulbsBySlot.put(1, EnumTrafficLightBulbTypes.get(bulbTypes[1]));
+		bulbsBySlot.put(2, EnumTrafficLightBulbTypes.get(bulbTypes[2]));
+		
+		activeBySlot.put(0, compound.getBoolean("active0"));
+		activeBySlot.put(1, compound.getBoolean("active1"));
+		activeBySlot.put(2, compound.getBoolean("active2"));
 	}
 	
 	public void setBulbsBySlot(HashMap<Integer, EnumTrafficLightBulbTypes> bulbsBySlot)
@@ -47,5 +58,18 @@ public class TrafficLightTileEntity extends TileEntity {
 	public boolean hasBulb(EnumTrafficLightBulbTypes bulbType)
 	{
 		return bulbsBySlot.containsValue(bulbType);
+	}
+	
+	public void setActive(EnumTrafficLightBulbTypes bulbType, boolean active)
+	{
+		bulbsBySlot.forEach((slot, type) -> 
+		{
+			if (type == bulbType)
+			{
+				activeBySlot.put(slot, active);
+			}
+		});
+		
+		markDirty();
 	}
 }
