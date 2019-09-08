@@ -1,9 +1,13 @@
 package com.clussmanproductions.trafficcontrol.item;
 
+import java.util.HashMap;
 import java.util.List;
 
+import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.gui.GuiProxy;
+import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightTileEntity;
+import com.clussmanproductions.trafficcontrol.util.EnumTrafficLightBulbTypes;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
@@ -12,7 +16,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -65,5 +72,30 @@ public class ItemTrafficLightFrame extends Item {
 		{
 			tooltip.add("Bottom: " + subStack.getItem().getItemStackDisplayName(subStack));
 		}
+	}
+
+	@Override
+	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand,
+			EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (worldIn.isRemote)
+		{
+			return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+		}
+		
+		if (!worldIn.getBlockState(pos).getBlock().isReplaceable(worldIn, pos))
+		{
+			pos = pos.offset(player.getHorizontalFacing().getOpposite());		
+		}
+		
+		worldIn.setBlockState(pos, ModBlocks.traffic_light.getDefaultState());
+		TrafficLightTileEntity trafficLight = (TrafficLightTileEntity)worldIn.getTileEntity(pos);
+		
+		HashMap<Integer, EnumTrafficLightBulbTypes> bulbsBySlot = new HashMap<Integer, EnumTrafficLightBulbTypes>(3);
+		IItemHandler handler = player.getHeldItem(hand).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+		bulbsBySlot.put(0, EnumTrafficLightBulbTypes.get(handler.getStackInSlot(0).getMetadata()));
+		bulbsBySlot.put(1, EnumTrafficLightBulbTypes.get(handler.getStackInSlot(1).getMetadata()));
+		bulbsBySlot.put(2, EnumTrafficLightBulbTypes.get(handler.getStackInSlot(2).getMetadata()));
+		
+		trafficLight.setBulbsBySlot(bulbsBySlot);
 	}
 }

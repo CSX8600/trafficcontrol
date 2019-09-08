@@ -5,6 +5,8 @@ import java.util.HashMap;
 import com.clussmanproductions.trafficcontrol.util.EnumTrafficLightBulbTypes;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 public class TrafficLightTileEntity extends TileEntity {
@@ -44,6 +46,49 @@ public class TrafficLightTileEntity extends TileEntity {
 		activeBySlot.put(2, compound.getBoolean("active2"));
 	}
 	
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		NBTTagCompound tag = new NBTTagCompound();
+		int[] bulbTypes = new int[3];
+		
+		bulbsBySlot.forEach((key, value) ->
+		{
+			bulbTypes[key] = value.getIndex();
+		});
+		
+		tag.setIntArray("bulbTypes", bulbTypes);
+		tag.setBoolean("active0", activeBySlot.get(0));
+		tag.setBoolean("active1", activeBySlot.get(1));
+		tag.setBoolean("active2", activeBySlot.get(2));
+		
+		return tag;
+	}
+	
+	@Override
+	public void handleUpdateTag(NBTTagCompound tag) {
+		bulbsBySlot = new HashMap<Integer, EnumTrafficLightBulbTypes>();
+		
+		int[] bulbTypes = tag.getIntArray("bulbTypes");
+		for(int i = 0; i < bulbTypes.length; i++)
+		{
+			bulbsBySlot.put(0, EnumTrafficLightBulbTypes.get(bulbTypes[i]));
+		}
+		
+		activeBySlot.put(0, tag.getBoolean("active0"));
+		activeBySlot.put(1, tag.getBoolean("active1"));
+		activeBySlot.put(2, tag.getBoolean("active2"));
+	}
+	
+	@Override
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		return new SPacketUpdateTileEntity(getPos(), 0, getUpdateTag());
+	}
+	
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+		handleUpdateTag(pkt.getNbtCompound());
+	}
+	
 	public void setBulbsBySlot(HashMap<Integer, EnumTrafficLightBulbTypes> bulbsBySlot)
 	{
 		bulbsBySlot = this.bulbsBySlot;
@@ -71,5 +116,10 @@ public class TrafficLightTileEntity extends TileEntity {
 		});
 		
 		markDirty();
+	}
+	
+	public EnumTrafficLightBulbTypes getBulbTypeBySlot(int slot)
+	{
+		return bulbsBySlot.get(slot);
 	}
 }
