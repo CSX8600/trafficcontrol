@@ -1,0 +1,24 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "trafficcontrol:traffic_light_control_box"
+    },
+    "variants": {
+        "normal": [{}],
+        "inventory": 
+        {
+        	"model": "trafficcontrol:traffic_light_control_box",
+        	"transform":
+        	{
+        		"gui": 
+        		{
+        			"scale": [1, 0.5, 1]
+        		}
+        	}
+        },
+        "facing=north": [{}],
+        "facing=west": { "y": 270 },
+        "facing=south": { "y": 180 },
+        "facing=east": { "y": 90 }
+    }
+}

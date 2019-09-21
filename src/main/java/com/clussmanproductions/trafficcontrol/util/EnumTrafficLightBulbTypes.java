@@ -29,6 +29,6 @@ public enum EnumTrafficLightBulbTypes {
 			}
 		}
 		
-		return EnumTrafficLightBulbTypes.Red;
+		return null;
 	}
 }

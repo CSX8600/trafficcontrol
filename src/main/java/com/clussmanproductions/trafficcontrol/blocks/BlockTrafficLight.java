@@ -3,23 +3,32 @@ package com.clussmanproductions.trafficcontrol.blocks;
 import com.clussmanproductions.trafficcontrol.ModItems;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.render.TrafficLightRenderer;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 public class BlockTrafficLight extends Block implements ITileEntityProvider {
+
+	public static PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 	public BlockTrafficLight()
 	{
 		super(Material.IRON);
@@ -27,6 +36,27 @@ public class BlockTrafficLight extends Block implements ITileEntityProvider {
 		setUnlocalizedName(ModTrafficControl.MODID + ".traffic_light");
 		setHardness(2F);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public void initModel()
+	{
+		ClientRegistry.bindTileEntitySpecialRenderer(TrafficLightTileEntity.class, new TrafficLightRenderer());
+	}
+	
+	@Override
+	public int getMetaFromState(IBlockState state) {
+		return state.getValue(FACING).getHorizontalIndex();
+	}
+	
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		return getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta));
+	}
+	
+	@Override
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, FACING);
 	}
 	
 	@Override

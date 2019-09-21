@@ -30,6 +30,7 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockSign;
 import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightDouble;
 import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightSingle;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightControlBox;
 import com.clussmanproductions.trafficcontrol.gui.GuiProxy;
 import com.clussmanproductions.trafficcontrol.item.ItemCrossingRelayBox;
 import com.clussmanproductions.trafficcontrol.item.ItemCrossingRelayTuner;
@@ -43,6 +44,7 @@ import com.clussmanproductions.trafficcontrol.tileentity.SafetranType3TileEntity
 import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.StreetLightDoubleTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.StreetLightSingleTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightControlBoxTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightTileEntity;
 
 import net.minecraft.block.Block;
@@ -90,6 +92,7 @@ public class CommonProxy {
 		e.getRegistry().register(new BlockLightSource());
 		e.getRegistry().register(new BlockStreetLightDouble());
 		e.getRegistry().register(new BlockTrafficLight());
+		e.getRegistry().register(new BlockTrafficLightControlBox());
 		
 		GameRegistry.registerTileEntity(CrossingGateGateTileEntity.class, ModTrafficControl.MODID + "_crossinggategate");
 		GameRegistry.registerTileEntity(SafetranType3TileEntity.class, ModTrafficControl.MODID + "_safetrantyp3");
@@ -99,6 +102,7 @@ public class CommonProxy {
 		GameRegistry.registerTileEntity(StreetLightSingleTileEntity.class, ModTrafficControl.MODID + "_streetsignsingle");
 		GameRegistry.registerTileEntity(StreetLightDoubleTileEntity.class, ModTrafficControl.MODID + "_streetlightdouble");
 		GameRegistry.registerTileEntity(TrafficLightTileEntity.class, ModTrafficControl.MODID + "_trafficlight");
+		GameRegistry.registerTileEntity(TrafficLightControlBoxTileEntity.class, ModTrafficControl.MODID + "_trafficlightcontrolbox");
 	}
 	
 	@SubscribeEvent
@@ -126,6 +130,7 @@ public class CommonProxy {
 		e.getRegistry().register(new ItemBlock(ModBlocks.drum).setRegistryName(ModBlocks.drum.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.street_light_single).setRegistryName(ModBlocks.street_light_single.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.street_light_double).setRegistryName(ModBlocks.street_light_double.getRegistryName()));
+		e.getRegistry().register(new ItemBlock(ModBlocks.traffic_light_control_box).setRegistryName(ModBlocks.traffic_light_control_box.getRegistryName()));
 	}
 	
 	public static void registerSounds(RegistryEvent.Register<SoundEvent> e)

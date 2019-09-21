@@ -27,6 +27,7 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockSign;
 import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightDouble;
 import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightSingle;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightControlBox;
 
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
@@ -89,6 +90,8 @@ public class ModBlocks {
 	public static BlockStreetLightDouble street_light_double;
 	@ObjectHolder("traffic_light")
 	public static BlockTrafficLight traffic_light;
+	@ObjectHolder("traffic_light_control_box")
+	public static BlockTrafficLightControlBox traffic_light_control_box;
 	
 	@SideOnly(Side.CLIENT)
 	public static void initModels(ModelRegistryEvent e)
@@ -110,5 +113,7 @@ public class ModBlocks {
 		drum.initModel();
 		street_light_single.initModel();
 		street_light_double.initModel();
+		traffic_light.initModel();
+		traffic_light_control_box.initModel();
 	}
 }

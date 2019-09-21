@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight;
 import com.clussmanproductions.trafficcontrol.gui.GuiProxy;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightTileEntity;
 import com.clussmanproductions.trafficcontrol.util.EnumTrafficLightBulbTypes;
@@ -20,6 +21,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -43,7 +45,10 @@ public class ItemTrafficLightFrame extends Item {
 	
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-		playerIn.openGui(ModTrafficControl.instance, GuiProxy.GUI_IDs.TRAFFIC_LIGHT_FRAME, worldIn, 0, 0, 0);
+		if (playerIn.rayTrace(EntityPlayer.REACH_DISTANCE.getDefaultValue(), 0).typeOfHit != Type.BLOCK)
+		{
+			playerIn.openGui(ModTrafficControl.instance, GuiProxy.GUI_IDs.TRAFFIC_LIGHT_FRAME, worldIn, 0, 0, 0);
+		}
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
 	
@@ -79,15 +84,15 @@ public class ItemTrafficLightFrame extends Item {
 			EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (worldIn.isRemote)
 		{
-			return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+			return EnumActionResult.SUCCESS;
 		}
 		
 		if (!worldIn.getBlockState(pos).getBlock().isReplaceable(worldIn, pos))
 		{
-			pos = pos.offset(player.getHorizontalFacing().getOpposite());		
+			pos = pos.offset(facing);
 		}
 		
-		worldIn.setBlockState(pos, ModBlocks.traffic_light.getDefaultState());
+		worldIn.setBlockState(pos, ModBlocks.traffic_light.getDefaultState().withProperty(BlockTrafficLight.FACING, player.getHorizontalFacing()));
 		TrafficLightTileEntity trafficLight = (TrafficLightTileEntity)worldIn.getTileEntity(pos);
 		
 		HashMap<Integer, EnumTrafficLightBulbTypes> bulbsBySlot = new HashMap<Integer, EnumTrafficLightBulbTypes>(3);
@@ -97,5 +102,7 @@ public class ItemTrafficLightFrame extends Item {
 		bulbsBySlot.put(2, EnumTrafficLightBulbTypes.get(handler.getStackInSlot(2).getMetadata()));
 		
 		trafficLight.setBulbsBySlot(bulbsBySlot);
+		
+		return EnumActionResult.SUCCESS;
 	}
 }

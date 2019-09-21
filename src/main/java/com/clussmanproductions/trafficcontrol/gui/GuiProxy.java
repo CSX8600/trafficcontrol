@@ -2,6 +2,7 @@ package com.clussmanproductions.trafficcontrol.gui;
 
 import com.clussmanproductions.trafficcontrol.ModItems;
 import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightControlBoxTileEntity;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -46,6 +47,15 @@ public class GuiProxy implements IGuiHandler {
 					return new TrafficLightFrameGui(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
+			case GUI_IDs.TRAFFIC_LIGHT_CONTROL_BOX:
+				BlockPos preControlBoxPos = new BlockPos(x, y, z);
+				TileEntity preControlBoxTE = world.getTileEntity(preControlBoxPos);
+				if (preControlBoxTE instanceof TrafficLightControlBoxTileEntity)
+				{
+					TrafficLightControlBoxTileEntity controlBoxTE = (TrafficLightControlBoxTileEntity)preControlBoxTE;
+					return new TrafficLightControlBoxGui(controlBoxTE);
+				}
+				break;
 		}
 		
 		return null;
@@ -55,5 +65,6 @@ public class GuiProxy implements IGuiHandler {
 	{
 		public static final int SIGN = 1;
 		public static final int TRAFFIC_LIGHT_FRAME = 2;
+		public static final int TRAFFIC_LIGHT_CONTROL_BOX = 3;
 	}
 }
