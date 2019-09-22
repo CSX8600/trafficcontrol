@@ -16,8 +16,16 @@ tile.trafficcontrol.channelizer.name=Channelizer
 tile.trafficcontrol.drum.name=Drum
 tile.trafficcontrol.street_light_single.name=Street Light (Single)
 tile.trafficcontrol.street_light_double.name=Street Light (Double)
+tile.trafficcontrol.traffic_light_control_box.name=Traffic Light Control Box
 #items
 item.trafficcontrol.crossing_relay_box.name=Crossing Gate Relay
-item.trafficcontrol.crossing_relay_tuner.name=Crossing Gate Tuner
+item.trafficcontrol.crossing_relay_tuner.name=Tuner
+item.trafficcontrol.traffic_light_frame.name=Traffic Light Frame
+trafficcontrol.traffic_light_bulb.green.name=Bulb (Green)
+trafficcontrol.traffic_light_bulb.yellow.name=Bulb (Yellow)
+trafficcontrol.traffic_light_bulb.red.name=Bulb (Red)
+trafficcontrol.traffic_light_bulb.greenArrowLeft.name=Left Arrow Bulb (Green)
+trafficcontrol.traffic_light_bulb.yellowArrowLeft.name=Left Arrow Bulb (Yellow)
+trafficcontrol.traffic_light_bulb.redArrowLeft.name=Left Arrow Bulb (Red)
 
 itemGroup.Traffic Control=Traffic Control

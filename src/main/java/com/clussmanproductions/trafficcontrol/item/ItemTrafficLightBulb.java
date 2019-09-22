@@ -1,5 +1,7 @@
 package com.clussmanproductions.trafficcontrol.item;
 
+import org.apache.logging.log4j.core.pattern.AbstractStyleNameConverter.Yellow;
+
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.util.EnumTrafficLightBulbTypes;
 
@@ -18,7 +20,6 @@ public class ItemTrafficLightBulb extends Item {
 	public ItemTrafficLightBulb()
 	{
 		setRegistryName("traffic_light_bulb");
-		setUnlocalizedName(ModTrafficControl.MODID + ".traffic_light_bulb");
 		setMaxStackSize(1);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
@@ -41,5 +42,42 @@ public class ItemTrafficLightBulb extends Item {
 		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.RedArrowLeft.getIndex()));
 		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.YellowArrowLeft.getIndex()));
 		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.GreenArrowLeft.getIndex()));
+	}
+	
+	@Override
+	public String getUnlocalizedName(ItemStack stack) {
+		String unlocalizedName = ModTrafficControl.MODID + ".traffic_light_bulb.";
+		int meta = stack.getMetadata();
+		
+		if (meta == EnumTrafficLightBulbTypes.Red.getIndex())
+		{
+			unlocalizedName += "red";
+		}
+		else if (meta == EnumTrafficLightBulbTypes.Yellow.getIndex())
+		{
+			unlocalizedName += "yellow";
+		}
+		else if (meta == EnumTrafficLightBulbTypes.Green.getIndex())
+		{
+			unlocalizedName += "green";
+		}
+		else if (meta == EnumTrafficLightBulbTypes.RedArrowLeft.getIndex())
+		{
+			unlocalizedName += "redArrowLeft";
+		}
+		else if (meta == EnumTrafficLightBulbTypes.YellowArrowLeft.getIndex())
+		{
+			unlocalizedName += "yellowArrowLeft";
+		}
+		else if (meta == EnumTrafficLightBulbTypes.GreenArrowLeft.getIndex())
+		{
+			unlocalizedName += "greenArrowLeft";
+		}
+		else
+		{
+			unlocalizedName += "unknown";
+		}
+		
+		return unlocalizedName;
 	}
 }

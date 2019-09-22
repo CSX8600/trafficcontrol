@@ -1,15 +1,14 @@
 { 
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "GL ",
-    "   ",
-    "   "  ],
+    "ILI",
+    "ILI",
+    "ILI"  ],
   "key": {
-  	"G":
+  "I":
 	  {
 	  	"type": "forge:ore_dict",
-	  	"ore": "dye",
-	  	"data": 2
+	  	"ore": "ingotIron"
 	  },
 	"L":
 	  {
@@ -18,8 +17,7 @@
 	  }
   },
   "result": {
-    "item": "trafficcontrol:traffic_light_bulb",
-    "count": 1,
-    "data": 2
+    "item": "trafficcontrol:traffic_light_frame",
+    "count": 1
   }
 }

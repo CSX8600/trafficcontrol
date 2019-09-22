@@ -33,7 +33,7 @@ public class TrafficLightRenderer extends TileEntitySpecialRenderer<TrafficLight
 		
 		// Render black textures first
 		bindTexture(black);
-		if (!te.getActiveBySlot(0))
+		if (!te.getActiveBySlot(0) || (te.getFlashBySlot(0) && !te.getFlashCurrentBySlot(0)))
 		{
 			GL11.glTranslated(5.2, 9, 10.1);
 			builder.pos(5.6, 0, 0).tex(1, 0).endVertex();
@@ -45,7 +45,7 @@ public class TrafficLightRenderer extends TileEntitySpecialRenderer<TrafficLight
 			builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
 			GL11.glTranslated(-5.2, -9, -10.1);
 		}
-		if (!te.getActiveBySlot(1))
+		if (!te.getActiveBySlot(1) || (te.getFlashBySlot(1) && !te.getFlashCurrentBySlot(1)))
 		{
 			GL11.glTranslated(5.2, 2.5, 10.1);
 			builder.pos(5.6, 0, 0).tex(1, 0).endVertex();
@@ -57,7 +57,7 @@ public class TrafficLightRenderer extends TileEntitySpecialRenderer<TrafficLight
 			builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
 			GL11.glTranslated(-5.2, -2.5, -10.1);
 		}
-		if (!te.getActiveBySlot(2))
+		if (!te.getActiveBySlot(2) || (te.getFlashBySlot(2) && !te.getFlashCurrentBySlot(2)))
 		{
 			GL11.glTranslated(5.2, -4, 10.1);
 			builder.pos(5.6, 0, 0).tex(1, 0).endVertex();
@@ -75,7 +75,7 @@ public class TrafficLightRenderer extends TileEntitySpecialRenderer<TrafficLight
 		// Render specific arrows
 		ResourceLocation lastRL = null;
 		
-		if (te.getActiveBySlot(0))
+		if (te.getActiveBySlot(0) && (!te.getFlashBySlot(0) || te.getFlashCurrentBySlot(0)))
 		{
 			EnumTrafficLightBulbTypes bulb = te.getBulbTypeBySlot(0);
 			ResourceLocation thisRL = getResourceLocation(bulb);
@@ -93,7 +93,7 @@ public class TrafficLightRenderer extends TileEntitySpecialRenderer<TrafficLight
 			GL11.glTranslated(-5.2, -9, -10.1);
 		}
 		
-		if (te.getActiveBySlot(1))
+		if (te.getActiveBySlot(1) && (!te.getFlashBySlot(1) || te.getFlashCurrentBySlot(1)))
 		{
 			EnumTrafficLightBulbTypes bulb = te.getBulbTypeBySlot(1);
 			
@@ -116,7 +116,7 @@ public class TrafficLightRenderer extends TileEntitySpecialRenderer<TrafficLight
 			GL11.glTranslated(-5.2, -2.5, -10.1);
 		}
 		
-		if (te.getActiveBySlot(2))
+		if (te.getActiveBySlot(2) && (!te.getFlashBySlot(2) || te.getFlashCurrentBySlot(2)))
 		{
 			EnumTrafficLightBulbTypes bulb = te.getBulbTypeBySlot(2);
 			

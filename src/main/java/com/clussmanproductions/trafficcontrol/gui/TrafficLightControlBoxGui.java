@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightControlBoxTileEntity;
+import com.clussmanproductions.trafficcontrol.util.EnumTrafficLightBulbTypes;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -117,6 +118,37 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		buttonList.add(greenArrowLeftOnFlash);
 		buttonList.add(greenArrowLeftOff);
 		buttonList.add(greenArrowLeftOffFlash);
+		
+		setManualChecked();
+	}
+	
+	private void setManualChecked()
+	{
+		greenOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Green, false, true));
+		yellowOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Yellow, false, true));
+		redOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Red, false, true));
+		greenArrowLeftOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.GreenArrowLeft, false, true));
+		yellowArrowLeftOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.YellowArrowLeft, false, true));
+		redArrowLeftOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.RedArrowLeft, false, true));
+		greenOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Green, false, false));
+		yellowOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Yellow, false, false));
+		redOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Red, false, false));
+		greenArrowLeftOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.GreenArrowLeft, false, false));
+		yellowArrowLeftOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.YellowArrowLeft, false, false));
+		redArrowLeftOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.RedArrowLeft, false, false));
+		
+		greenOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Green, true, true));
+		yellowOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Yellow, true, true));
+		redOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Red, true, true));
+		greenArrowLeftOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.GreenArrowLeft, true, true));
+		yellowArrowLeftOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.YellowArrowLeft, true, true));
+		redArrowLeftOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.RedArrowLeft, true, true));
+		greenOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Green, true, false));
+		yellowOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Yellow, true, false));
+		redOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Red, true, false));
+		greenArrowLeftOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.GreenArrowLeft, true, false));
+		yellowArrowLeftOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.YellowArrowLeft, true, false));
+		redArrowLeftOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.RedArrowLeft, true, false));
 	}
 	
 	@Override
@@ -167,16 +199,134 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 			case ELEMENT_IDS.manualMode:
 			case ELEMENT_IDS.manualModeNS:
 				setCurrentMode(Modes.ManualNorthSouth);
+				setManualChecked();
 				break;
 			case ELEMENT_IDS.manualModeWE:
-				setCurrentMode(Modes.ManualWestEast);;
+				setCurrentMode(Modes.ManualWestEast);
+				setManualChecked();
 				break;
+			case ELEMENT_IDS.greenOn:
+				handleManualClick(button, EnumTrafficLightBulbTypes.Green, false, true);
+				break;
+			case ELEMENT_IDS.greenOnFlash:
+				handleManualClick(button, EnumTrafficLightBulbTypes.Green, true, true);
+				break;
+			case ELEMENT_IDS.yellowOn:
+				handleManualClick(button, EnumTrafficLightBulbTypes.Yellow, false, true);
+				break;
+			case ELEMENT_IDS.yellowOnFlash:
+				handleManualClick(button, EnumTrafficLightBulbTypes.Yellow, true, true);
+				break;
+			case ELEMENT_IDS.redOn:
+				handleManualClick(button, EnumTrafficLightBulbTypes.Red, false, true);
+				break;
+			case ELEMENT_IDS.redOnFlash:
+				handleManualClick(button, EnumTrafficLightBulbTypes.Red, true, true);
+				break;
+			case ELEMENT_IDS.greenArrowLeftOn:
+				handleManualClick(button, EnumTrafficLightBulbTypes.GreenArrowLeft, false, true);
+				break;
+			case ELEMENT_IDS.yellowArrowLeftOn:
+				handleManualClick(button, EnumTrafficLightBulbTypes.YellowArrowLeft, false, true);
+				break;
+			case ELEMENT_IDS.redArrowLeftOn:
+				handleManualClick(button, EnumTrafficLightBulbTypes.RedArrowLeft, false, true);
+				break;
+			case ELEMENT_IDS.greenArrowLeftOnFlash:
+				handleManualClick(button, EnumTrafficLightBulbTypes.GreenArrowLeft, true, true);
+				break;
+			case ELEMENT_IDS.yellowArrowLeftOnFlash:
+				handleManualClick(button, EnumTrafficLightBulbTypes.YellowArrowLeft, true, true);
+				break;
+			case ELEMENT_IDS.redArrowLeftOnFlash:
+				handleManualClick(button, EnumTrafficLightBulbTypes.RedArrowLeft, true, true);
+				break;
+			case ELEMENT_IDS.greenOff:
+				handleManualClick(button, EnumTrafficLightBulbTypes.Green, false, false);
+				break;
+			case ELEMENT_IDS.greenOffFlash:
+				handleManualClick(button, EnumTrafficLightBulbTypes.Green, true, false);
+				break;
+			case ELEMENT_IDS.yellowOff:
+				handleManualClick(button, EnumTrafficLightBulbTypes.Yellow, false, false);
+				break;
+			case ELEMENT_IDS.yellowOffFlash:
+				handleManualClick(button, EnumTrafficLightBulbTypes.Yellow, true, false);
+				break;
+			case ELEMENT_IDS.redOff:
+				handleManualClick(button, EnumTrafficLightBulbTypes.Red, false, false);
+				break;
+			case ELEMENT_IDS.redOffFlash:
+				handleManualClick(button, EnumTrafficLightBulbTypes.Red, true, false);
+				break;
+			case ELEMENT_IDS.greenArrowLeftOff:
+				handleManualClick(button, EnumTrafficLightBulbTypes.GreenArrowLeft, false, false);
+				break;
+			case ELEMENT_IDS.yellowArrowLeftOff:
+				handleManualClick(button, EnumTrafficLightBulbTypes.YellowArrowLeft, false, false);
+				break;
+			case ELEMENT_IDS.redArrowLeftOff:
+				handleManualClick(button, EnumTrafficLightBulbTypes.RedArrowLeft, false, false);
+				break;
+			case ELEMENT_IDS.greenArrowLeftOffFlash:
+				handleManualClick(button, EnumTrafficLightBulbTypes.GreenArrowLeft, true, false);
+				break;
+			case ELEMENT_IDS.yellowArrowLeftOffFlash:
+				handleManualClick(button, EnumTrafficLightBulbTypes.YellowArrowLeft, true, false);
+				break;
+			case ELEMENT_IDS.redArrowLeftOffFlash:
+				handleManualClick(button, EnumTrafficLightBulbTypes.RedArrowLeft, true, false);
+				break;
+		}
+	}
+	
+	@Override
+	public void onGuiClosed() {
+		_te.performClientToServerSync();
+	}
+	
+	private void handleManualClick(GuiButton button, EnumTrafficLightBulbTypes bulbType, boolean flash, boolean forActive)
+	{
+		GuiCheckBox box = (GuiCheckBox)button;
+		if (_currentMode == Modes.ManualNorthSouth)
+		{
+			if (forActive)
+			{
+				_te.addRemoveNorthSouthActive(bulbType, flash, box.isChecked());
+			}
+			else
+			{
+				_te.addRemoveNorthSouthInactive(bulbType, flash, box.isChecked());
+			}
+		}
+		else
+		{
+			if (forActive)
+			{
+				_te.addRemoveWestEastActive(bulbType, flash, box.isChecked());
+			}
+			else
+			{
+				_te.addRemoveWestEastInactive(bulbType, flash, box.isChecked());
+			}
 		}
 	}
 	
 	private void setCurrentMode(Modes mode)
 	{
 		_currentMode = mode;
+	}
+	
+	private boolean getChecked(EnumTrafficLightBulbTypes bulbType, boolean flash, boolean forActive)
+	{
+		if (_currentMode == Modes.ManualNorthSouth)
+		{
+			return _te.hasSpecificNorthSouthManualOption(bulbType, flash, forActive);
+		}
+		else
+		{
+			return _te.hasSpecificWestEastManualOption(bulbType, flash, forActive);
+		}
 	}
 	
 	public static class ELEMENT_IDS

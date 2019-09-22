@@ -13,6 +13,7 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class TrafficLightFrameContainer extends Container {
 
+	IItemHandler frameStackHandler;
 	public TrafficLightFrameContainer(InventoryPlayer inventory, ItemStack frameStack)
 	{
 		// Hot bar
@@ -38,14 +39,73 @@ public class TrafficLightFrameContainer extends Container {
 		}
 		
 		// Item inventory
-		IItemHandler handler = frameStack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-		addSlotToContainer(new SlotItemHandler(handler, 0, 79, 13));
-		addSlotToContainer(new SlotItemHandler(handler, 1, 79, 44));
-		addSlotToContainer(new SlotItemHandler(handler, 2, 79, 76));
+		frameStackHandler = frameStack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+		addSlotToContainer(new SlotItemHandler(frameStackHandler, 0, 79, 13));
+		addSlotToContainer(new SlotItemHandler(frameStackHandler, 1, 79, 44));
+		addSlotToContainer(new SlotItemHandler(frameStackHandler, 2, 79, 76));
 	}
 	
 	@Override
 	public boolean canInteractWith(EntityPlayer playerIn) {
 		return playerIn.getHeldItemMainhand().getItem() == ModItems.traffic_light_frame;
+	}
+
+	@Override
+	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
+		Slot slot = inventorySlots.get(index);
+		ItemStack originStack = null;
+		ItemStack destinationStack = ItemStack.EMPTY;
+		
+		if (slot.getHasStack())
+		{
+			originStack = slot.getStack();
+			destinationStack = originStack.copy();
+			
+			if (index > 35)
+			{
+				if (!mergeItemStack(originStack, 0, 35, false))
+				{
+					return ItemStack.EMPTY;
+				}
+			}
+			else
+			{
+				Slot upper = inventorySlots.get(36);
+				Slot middle = inventorySlots.get(37);
+				Slot lower = inventorySlots.get(38);
+				
+				if (!upper.getHasStack() && upper.isItemValid(originStack))
+				{
+					mergeItemStack(originStack, 36, 37, false);
+				}
+				else if (!middle.getHasStack() && middle.isItemValid(originStack))
+				{
+					mergeItemStack(originStack, 37, 38, false);
+				}
+				else if (!lower.getHasStack() && lower.isItemValid(originStack))
+				{
+					mergeItemStack(originStack, 38, 39, false);
+				}
+				else
+				{
+					return ItemStack.EMPTY;
+				}
+			}
+		}
+		else
+		{
+			return ItemStack.EMPTY;
+		}
+		
+		if (originStack.isEmpty())
+		{
+			slot.putStack(ItemStack.EMPTY);
+		}
+		else
+		{
+			slot.onSlotChanged();
+		}
+		
+		return destinationStack;
 	}
 }

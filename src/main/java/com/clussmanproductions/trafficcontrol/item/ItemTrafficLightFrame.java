@@ -103,6 +103,8 @@ public class ItemTrafficLightFrame extends Item {
 		
 		trafficLight.setBulbsBySlot(bulbsBySlot);
 		
+		player.getHeldItemMainhand().shrink(1);
+		
 		return EnumActionResult.SUCCESS;
 	}
 }

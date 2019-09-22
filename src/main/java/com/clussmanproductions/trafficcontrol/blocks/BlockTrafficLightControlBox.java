@@ -1,5 +1,6 @@
 package com.clussmanproductions.trafficcontrol.blocks;
 
+import com.clussmanproductions.trafficcontrol.ModItems;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.gui.GuiProxy;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightControlBoxTileEntity;
@@ -17,6 +18,7 @@ import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -98,6 +100,11 @@ public class BlockTrafficLightControlBox extends Block implements ITileEntityPro
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (playerIn.getHeldItemMainhand().getItem() == ModItems.crossing_relay_tuner)
+		{
+			return false;
+		}
+		
 		if (!worldIn.isRemote)
 		{
 			return true;
@@ -105,5 +112,21 @@ public class BlockTrafficLightControlBox extends Block implements ITileEntityPro
 		
 		playerIn.openGui(ModTrafficControl.instance, GuiProxy.GUI_IDs.TRAFFIC_LIGHT_CONTROL_BOX, worldIn, pos.getX(), pos.getY(), pos.getZ());
 		return true;
+	}
+
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		switch(state.getValue(FACING))
+		{
+			case EAST:
+				return new AxisAlignedBB(0.25, 0, 0, 0.75, 1.5, 1);
+			case NORTH:
+				return new AxisAlignedBB(0, 0, 0.25, 1, 1.5, 0.75);
+			case SOUTH:
+				return new AxisAlignedBB(0, 0, 0.25, 1, 1.5, 0.75);
+			case WEST:
+				return new AxisAlignedBB(0.25, 0, 0, 0.75, 1.5, 1);
+		}
+		return super.getBoundingBox(state, source, pos);
 	}
 }

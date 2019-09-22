@@ -3,7 +3,8 @@
     "textures": {
         "0": "trafficcontrol:blocks/black",
         "1": "trafficcontrol:blocks/black_textured",
-        "2": "trafficcontrol:blocks/generic"
+        "2": "trafficcontrol:blocks/generic",
+        "particle": "trafficcontrol:blocks/generic"
     },
     "elements": [
         {
