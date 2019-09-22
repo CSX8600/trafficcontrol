@@ -7,6 +7,7 @@ import com.clussmanproductions.trafficcontrol.proxy.CommonProxy;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -16,7 +17,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 @Mod(modid = ModTrafficControl.MODID, version = ModTrafficControl.VERSION, name = "Traffic Control", useMetadata = true)
 public class ModTrafficControl {
 	public static final String MODID = "trafficcontrol";
-	public static final String VERSION = "0.0.5a";
+	public static final String VERSION = "0.0.8";
+	public static boolean IR_INSTALLED = false;
 	public static CreativeTabs CREATIVE_TAB = new CreativeTabs("Traffic Control") {
 		
 		@Override
@@ -51,5 +53,7 @@ public class ModTrafficControl {
 	public void postInit(FMLPostInitializationEvent e)
 	{
 		proxy.postInit(e);
+		
+		IR_INSTALLED = Loader.isModLoaded("immersiverailroading");
 	}
 }

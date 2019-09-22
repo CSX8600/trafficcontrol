@@ -1,25 +1,38 @@
 package com.clussmanproductions.trafficcontrol.tileentity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 
+import com.clussmanproductions.trafficcontrol.Config;
+import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
-import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateLamps;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase.EnumState;
+import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
+import com.clussmanproductions.trafficcontrol.blocks.BlockShuntBorder;
+import com.clussmanproductions.trafficcontrol.blocks.BlockShuntIsland;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity.EnumStatuses;
 import com.clussmanproductions.trafficcontrol.util.AnyStatement;
+import com.clussmanproductions.trafficcontrol.util.ImmersiveRailroadingHelper;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class RelayTileEntity extends TileEntity implements ITickable {
 
+	private AutomatedRelaySystem relaySystem = null;
+	
 	private boolean isMaster;
 	private boolean isPowered;
+	private boolean automatedPowerOverride;
 	private int masterX;
 	private int masterY;
 	private int masterZ;
@@ -34,12 +47,20 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 	// Bell information
 	private boolean alreadyNotifiedBells;
 	
+	// Wig Wag information
+	private boolean alreadyNotifiedWigWags;
+	
 	private ArrayList<BlockPos> crossingLampLocations = new ArrayList<BlockPos>();
 	private ArrayList<BlockPos> crossingGateLocations = new ArrayList<BlockPos>();
 	private ArrayList<BlockPos> bellLocations = new ArrayList<BlockPos>();
+	private ArrayList<BlockPos> wigWagLocations = new ArrayList<BlockPos>();
+	private ArrayList<BlockPos> shuntBorderLocations = new ArrayList<BlockPos>();
+	private ArrayList<BlockPos> shuntIslandLocations = new ArrayList<BlockPos>();
 	
 	private ArrayList<CrossingGateGateTileEntity> crossingGates = new ArrayList<CrossingGateGateTileEntity>();
 	private ArrayList<BellBaseTileEntity> bells = new ArrayList<BellBaseTileEntity>();
+	private ArrayList<ShuntBorderTileEntity> shuntBorders = new ArrayList<ShuntBorderTileEntity>();
+	private ArrayList<ShuntIslandTileEntity> shuntIslands = new ArrayList<ShuntIslandTileEntity>();
 
 	public RelayTileEntity() {
 
@@ -65,41 +86,25 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 		// Bell information
 		alreadyNotifiedBells = compound.getBoolean("alreadynotifiedbells");
 
+		fillArrayListFromNBT("lamps", crossingLampLocations, compound);
+		fillArrayListFromNBT("gate", crossingGateLocations, compound);
+		fillArrayListFromNBT("bell", bellLocations, compound);
+		fillArrayListFromNBT("wigwags", wigWagLocations, compound);
+		fillArrayListFromNBT("shuntBorder", shuntBorderLocations, compound);
+		fillArrayListFromNBT("shuntIsland", shuntIslandLocations, compound);
+	}
+	
+	private void fillArrayListFromNBT(String key, ArrayList<BlockPos> list, NBTTagCompound tag)
+	{
 		int i = 0;
 		while (true) {
-			if (!compound.hasKey("lamps" + i)) {
+			if (!tag.hasKey(key + i)) {
 				break;
 			}
 
-			int[] blockPos = compound.getIntArray("lamps" + i);
-			BlockPos lampPos = new BlockPos(blockPos[0], blockPos[1], blockPos[2]);
-			crossingLampLocations.add(lampPos);
-			
-			i++;
-		}
-
-		i = 0;
-		while (true) {
-			if (!compound.hasKey("gate" + i)) {
-				break;
-			}
-
-			int[] blockPos = compound.getIntArray("gate" + i);
-			BlockPos gatePos = new BlockPos(blockPos[0], blockPos[1], blockPos[2]);
-			crossingGateLocations.add(gatePos);
-			
-			i++;
-		}
-
-		i = 0;
-		while (true) {
-			if (!compound.hasKey("bell" + i)) {
-				break;
-			}
-
-			int[] blockPos = compound.getIntArray("bell" + i);
-			BlockPos bellPos = new BlockPos(blockPos[0], blockPos[1], blockPos[2]);
-			bellLocations.add(bellPos);
+			int[] blockPos = tag.getIntArray(key + i);
+			BlockPos pos = new BlockPos(blockPos[0], blockPos[1], blockPos[2]);
+			list.add(pos);
 			
 			i++;
 		}
@@ -124,6 +129,9 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 		
 		// Bell information
 		nbt.setBoolean("alreadynotifiedbells", alreadyNotifiedBells);
+		
+		// Wig Wag information
+		nbt.setBoolean("alreadynotifiedwigwags", alreadyNotifiedWigWags);
 
 		for (int i = 0; i < crossingLampLocations.size(); i++) {
 			BlockPos lamps = crossingLampLocations.get(i);
@@ -145,13 +153,34 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 			int[] bellPos = new int[] { bell.getPos().getX(), bell.getPos().getY(), bell.getPos().getZ() };
 			nbt.setIntArray("bell" + i, bellPos);
 		}
+		
+		for (int i = 0; i < wigWagLocations.size(); i++) {
+			BlockPos wigWag = wigWagLocations.get(i);
+
+			int[] wigWagPos = new int[] { wigWag.getX(), wigWag.getY(), wigWag.getZ() };
+			nbt.setIntArray("wigwags" + i, wigWagPos);
+		}
+		
+		for (int i = 0; i < shuntBorders.size(); i++) {
+			ShuntBorderTileEntity shunt = shuntBorders.get(i);
+
+			int[] shuntPos = new int[] { shunt.getPos().getX(), shunt.getPos().getY(), shunt.getPos().getZ() };
+			nbt.setIntArray("shuntBorder" + i, shuntPos);
+		}
+
+		for (int i = 0; i < shuntIslands.size(); i++) {
+			ShuntIslandTileEntity shunt = shuntIslands.get(i);
+
+			int[] shuntPos = new int[] { shunt.getPos().getX(), shunt.getPos().getY(), shunt.getPos().getZ() };
+			nbt.setIntArray("shuntIsland" + i, shuntPos);
+		}
 
 		return nbt;
 	}
 
 	@Override
 	public void update() {
-		if (world.isRemote)
+		if (world.isRemote || !isMaster)
 		{
 			return;
 		}
@@ -160,6 +189,17 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 		notifyGates();
 		updateLamps();
 		updateBells();
+		notifyWigWags();
+		
+		if (ModTrafficControl.IR_INSTALLED)
+		{
+			if (relaySystem == null)
+			{
+				relaySystem = new AutomatedRelaySystem();
+			}
+			
+			relaySystem.tick();
+		}
 	}
 	
 	private void verifyLocations()
@@ -215,6 +255,58 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 				bellLocations.remove(bellLocationToRemove);
 			}
 		}
+		
+		if (shuntBorderLocations.size() != shuntBorders.size() ||
+				AnyStatement.Any(shuntBorders, (border) -> border.isInvalid()))
+		{
+			shuntBorders.clear();
+			
+			posToRemove.clear();
+			for(BlockPos shuntPos : shuntBorderLocations)
+			{
+				TileEntity shunt = world.getTileEntity(shuntPos);
+				
+				if (shunt == null || !(shunt instanceof ShuntBorderTileEntity))
+				{
+					posToRemove.add(shuntPos);
+				}
+				else
+				{
+					shuntBorders.add((ShuntBorderTileEntity)shunt);
+				}
+			}
+			
+			for (BlockPos shuntLocationToRemove : posToRemove)
+			{
+				shuntBorderLocations.remove(shuntLocationToRemove);
+			}
+		}
+		
+		if (shuntIslandLocations.size() != shuntIslands.size() ||
+				AnyStatement.Any(shuntIslands, (island) -> island.isInvalid()))
+		{
+			shuntIslands.clear();
+			
+			posToRemove.clear();
+			for(BlockPos shuntPos : shuntIslandLocations)
+			{
+				TileEntity shunt = world.getTileEntity(shuntPos);
+				
+				if (shunt == null || !(shunt instanceof ShuntIslandTileEntity))
+				{
+					posToRemove.add(shuntPos);
+				}
+				else
+				{
+					shuntIslands.add((ShuntIslandTileEntity)shunt);
+				}
+			}
+			
+			for (BlockPos shuntLocationToRemove : posToRemove)
+			{
+				shuntIslandLocations.remove(shuntLocationToRemove);
+			}
+		}
 	}
 	
 	private void notifyGates()
@@ -223,7 +315,7 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 		{
 			for(CrossingGateGateTileEntity gate : crossingGates)
 			{
-				gate.setStatus(isPowered ? EnumStatuses.Closing : EnumStatuses.Opening);
+				gate.setStatus(getPowered() ? EnumStatuses.Closing : EnumStatuses.Opening);
 			}
 			
 			alreadyNotifiedGates = true;
@@ -232,7 +324,7 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 
 	private void updateLamps()
 	{
-		if (!isPowered && state != EnumState.Off)
+		if (!getPowered() && state != EnumState.Off)
 		{
 			if (crossingGates.size() == 0)
 			{
@@ -256,7 +348,7 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 				}
 			}
 		}
-		else if (!isPowered && state == EnumState.Off)
+		else if (!getPowered() && state == EnumState.Off)
 		{
 			return;
 		}
@@ -316,10 +408,39 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 		{
 			for(BellBaseTileEntity bell : bells)
 			{
-				bell.setIsRinging(isPowered);
+				bell.setIsRinging(getPowered());
 			}
 			
 			alreadyNotifiedBells = true;
+		}
+	}
+	
+	private void notifyWigWags()
+	{
+		if (!alreadyNotifiedWigWags)
+		{
+			ArrayList<BlockPos> positionsToRemove = new ArrayList<BlockPos>();
+			for(BlockPos pos : wigWagLocations)
+			{
+				try
+				{
+					IBlockState currentState = world.getBlockState(pos);
+					world.setBlockState(pos, currentState.withProperty(BlockWigWag.ACTIVE, getPowered()));
+				}
+				catch (Exception ex)
+				{
+					positionsToRemove.add(pos);
+				}
+			}
+			
+			for(BlockPos pos : positionsToRemove)
+			{
+				wigWagLocations.remove(pos);
+				
+				ModTrafficControl.logger.error("Wig Wag at " + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + " has been unpaired due to an error");
+			}
+			
+			alreadyNotifiedWigWags = true;
 		}
 	}
 	
@@ -417,12 +538,236 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 		return true;
 	}
 
+	public boolean addOrRemoveWigWag(BlockPos wigWagPos)
+	{
+		if (wigWagLocations.contains(wigWagPos))
+		{
+			wigWagLocations.remove(wigWagPos);
+			return false;
+		}
+		else
+		{
+			wigWagLocations.add(wigWagPos);
+			return true;
+		}
+	}
+	
+	public boolean addOrRemoveShuntBorder(ShuntBorderTileEntity shuntBorder)
+	{
+		BlockPos borderPos = shuntBorder.getPos();
+		
+		if (shuntBorderLocations.contains(borderPos))
+		{
+			shuntBorderLocations.remove(borderPos);
+			return false;
+		}
+		
+		shuntBorderLocations.add(borderPos);
+		return true;
+	}
+	
+	public boolean addOrRemoveShuntIsland(ShuntIslandTileEntity shuntIsland)
+	{
+		BlockPos islandPos = shuntIsland.getPos();
+		
+		if (shuntIslandLocations.contains(islandPos))
+		{
+			shuntIslandLocations.remove(islandPos);
+			return false;
+		}
+		
+		shuntIslandLocations.add(islandPos);
+		return true;
+	}
+	
 	public void setPowered(boolean isPowered)
 	{
 		this.isPowered = isPowered;
 		alreadyNotifiedGates = false;
 		alreadyNotifiedBells = false;
+		alreadyNotifiedWigWags = false;
 		
 		markDirty();
+	}
+
+	private boolean getPowered()
+	{
+		return isPowered || automatedPowerOverride;
+	}
+	
+	private class AutomatedRelaySystem
+	{
+		private final int noMotionTimeout = 200;
+		private HashMap<BlockPos, ShuntIslandTileEntity> islandOrigins = new HashMap<BlockPos, ShuntIslandTileEntity>();
+		private ShuntBorderTileEntity lastEntity = null;
+		private Vec3d lastPosition = null;
+		private Vec3d lastMotion = null;
+		private int ticksSinceLastMotion = 0;
+		
+ 		public void tick()
+		{
+ 			//ticksSinceIslandCheck++;
+			// If there has been an addition or removal to our shunt lists,
+			// we will need to reload our caches
+			reloadCaches();
+			
+			boolean doOverride = checkIslands();
+			
+			if (!doOverride)
+			{
+				doOverride = checkBorders();
+			}
+			
+			if ((doOverride && !automatedPowerOverride) || (automatedPowerOverride && !doOverride))
+			{
+				alreadyNotifiedGates = false;
+				alreadyNotifiedBells = false;
+				alreadyNotifiedWigWags = false;
+			}
+			
+			automatedPowerOverride = doOverride;
+		}
+		
+		private void reloadCaches()
+		{
+			if (shuntIslands.size() != islandOrigins.size())
+			{
+				islandOrigins.clear();
+				
+				for(ShuntIslandTileEntity island : shuntIslands)
+				{
+					islandOrigins.put(island.getTrackOrigin(), island);
+				}
+			}
+		}
+		
+		private boolean checkIslands()
+		{
+			for(ShuntIslandTileEntity island : shuntIslands)
+			{
+				IBlockState blockState = world.getBlockState(island.getPos());
+				if (blockState.getBlock() != ModBlocks.shunt_island)
+				{
+					continue; // This will be cleaned up shortly
+				}
+				EnumFacing facing = blockState.getValue(BlockShuntIsland.FACING);
+				BlockPos originPos = island.getTrackOrigin();
+				Vec3d vecOrigin = new Vec3d(originPos.getX(), originPos.getY(), originPos.getZ());
+				Vec3d workingPos = new Vec3d(originPos.getX(), originPos.getY(), originPos.getZ());
+				Vec3d motion = new Vec3d(facing.getDirectionVec());
+				
+				for(int i = 0; i < Config.islandTimeout; i++)
+				{
+					Vec3d nextPos = ImmersiveRailroadingHelper.getNextPosition(workingPos, motion, world);
+					Vec3d thisMotion = new Vec3d(nextPos.x - workingPos.x, nextPos.y - workingPos.y, nextPos.z - workingPos.z);
+					Tuple<UUID, Vec3d> nearbyStock = ImmersiveRailroadingHelper.getStockNearby(nextPos, world);
+					if (nearbyStock != null)
+					{
+						return true;
+					}
+					
+					ShuntIslandTileEntity entity = islandOrigins.getOrDefault(new BlockPos(nextPos.x, nextPos.y, nextPos.z), null);
+					if (entity != null && entity != island)
+					{
+						ModTrafficControl.logger.debug("Breaking");
+						break;
+					}
+					
+					workingPos = nextPos;
+					motion = thisMotion;
+				}
+			}
+			
+			return false;
+		}
+	
+		private boolean checkBorders()
+		{
+			int blocksCheckedThisTick = 0;
+			int entityIndex = shuntBorders.indexOf(lastEntity);
+			
+			while (true)
+			{				
+				if (shuntBorders.size() <= 0)
+				{
+					return false;
+				}
+				
+				if (entityIndex == -1 || entityIndex == shuntBorders.size())
+				{
+					entityIndex = 0;
+				}
+				
+				lastEntity = shuntBorders.get(entityIndex);
+				if (blocksCheckedThisTick >= Config.borderTick)
+				{
+					return false;
+				}
+				
+				if (lastPosition == null)
+				{
+					BlockPos origin = shuntBorders.get(entityIndex).getTrackOrigin();
+					lastPosition = new Vec3d(origin.getX(), origin.getY(), origin.getZ());
+					EnumFacing facing = world.getBlockState(shuntBorders.get(entityIndex).getPos()).getValue(BlockShuntBorder.FACING);
+					lastMotion = new Vec3d(facing.getDirectionVec());
+				}
+				
+				Vec3d nextPosition = ImmersiveRailroadingHelper.getNextPosition(lastPosition, lastMotion, world);
+				blocksCheckedThisTick++;
+				if (nextPosition == lastPosition)
+				{
+					lastPosition = null;
+					lastMotion = null;
+					entityIndex++;
+					continue;
+				}
+				
+				if (islandOrigins.containsKey(new BlockPos(nextPosition.x, nextPosition.y, nextPosition.z)))
+				{
+					lastPosition = null;
+					lastMotion = null;
+					entityIndex++;
+					continue;
+				}
+				
+				Tuple<UUID, Vec3d> stock = ImmersiveRailroadingHelper.getStockNearby(nextPosition, world);
+				if (stock != null)
+				{
+					Vec3d stockMotion = stock.getSecond();
+					
+					boolean noMotion = stockMotion.equals(new Vec3d(0, 0, 0));
+					
+					if (noMotion)
+					{
+						if (ticksSinceLastMotion < noMotionTimeout)
+						{
+							ticksSinceLastMotion++;
+						}
+					}
+					else
+					{
+						ticksSinceLastMotion = 0;
+					}
+					
+					EnumFacing stockMovement = EnumFacing.getFacingFromVector((float)stockMotion.x, (float)stockMotion.y, (float)stockMotion.z);
+					EnumFacing motionDirection = EnumFacing.getFacingFromVector((float)lastMotion.x, (float)lastMotion.y, (float)lastMotion.z);
+					
+					if ((!noMotion && stockMovement.equals(motionDirection)) || (noMotion && ticksSinceLastMotion < noMotionTimeout))
+					{
+						return true;
+					}
+					else
+					{
+						lastPosition = null;
+						lastMotion = null;
+						entityIndex++;
+						continue;
+					}
+				}
+				
+				lastMotion = new Vec3d(nextPosition.x - lastPosition.x, nextPosition.y - lastPosition.y, nextPosition.z - lastPosition.z);
+				lastPosition = nextPosition;
+			}
+		}
 	}
 }

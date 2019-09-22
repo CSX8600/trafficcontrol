@@ -23,10 +23,13 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockOverheadLamps;
 import com.clussmanproductions.trafficcontrol.blocks.BlockOverheadPole;
 import com.clussmanproductions.trafficcontrol.blocks.BlockSafetranMechanical;
 import com.clussmanproductions.trafficcontrol.blocks.BlockSafetranType3;
+import com.clussmanproductions.trafficcontrol.blocks.BlockShuntBorder;
+import com.clussmanproductions.trafficcontrol.blocks.BlockShuntIsland;
 import com.clussmanproductions.trafficcontrol.blocks.BlockSign;
 import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightDouble;
 import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightSingle;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight;
+import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightControlBox;
 
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -92,6 +95,12 @@ public class ModBlocks {
 	public static BlockTrafficLight traffic_light;
 	@ObjectHolder("traffic_light_control_box")
 	public static BlockTrafficLightControlBox traffic_light_control_box;
+	@ObjectHolder("wig_wag")
+	public static BlockWigWag wig_wag;
+	@ObjectHolder("shunt_border")
+	public static BlockShuntBorder shunt_border;
+	@ObjectHolder("shunt_island")
+	public static BlockShuntIsland shunt_island;
 	
 	@SideOnly(Side.CLIENT)
 	public static void initModels(ModelRegistryEvent e)
@@ -115,5 +124,8 @@ public class ModBlocks {
 		street_light_double.initModel();
 		traffic_light.initModel();
 		traffic_light_control_box.initModel();
+		wig_wag.initModel();
+		shunt_border.initModel();
+		shunt_island.initModel();
 	}
 }
