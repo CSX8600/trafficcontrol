@@ -242,6 +242,42 @@ public class ItemCrossingRelayTuner extends Item {
 					player.sendMessage(new TextComponentString("Unpaired Bell from Relay Box"));
 				}
 			}
+			
+			if (te instanceof WigWagTileEntity)
+			{
+				if (relay.addOrRemoveWigWag(te.getPos()))
+				{
+					player.sendMessage(new TextComponentString("Paired Wig Wag to Relay Box"));
+				}
+				else
+				{
+					player.sendMessage(new TextComponentString("Unpaired Wig Wag from Relay Box"));
+				}
+			}
+			
+			if (te instanceof ShuntBorderTileEntity)
+			{
+				if (relay.addOrRemoveShuntBorder((ShuntBorderTileEntity)te))
+				{
+					player.sendMessage(new TextComponentString("Paired Border Shunt to Relay Box"));
+				}
+				else
+				{
+					player.sendMessage(new TextComponentString("Unpaired Border Shunt from Relay Box"));
+				}
+			}
+			
+			if (te instanceof ShuntIslandTileEntity)
+			{
+				if (relay.addOrRemoveShuntIsland((ShuntIslandTileEntity)te))
+				{
+					player.sendMessage(new TextComponentString("Paired Island Shunt to Relay Box"));
+				}
+				else
+				{
+					player.sendMessage(new TextComponentString("Unpaired Island Shunt from Relay Box"));
+				}
+			}
 		}
 		
 		if (pairedTE instanceof TrafficLightControlBoxTileEntity)
@@ -274,42 +310,6 @@ public class ItemCrossingRelayTuner extends Item {
 						player.sendMessage(new TextComponentString("Unpaired Traffic Light to Traffic Light Control Box"));
 					}
 				}
-			}
-		}
-		
-		if (te instanceof WigWagTileEntity)
-		{
-			if (relay.addOrRemoveWigWag(te.getPos()))
-			{
-				player.sendMessage(new TextComponentString("Paired Wig Wag to Relay Box"));
-			}
-			else
-			{
-				player.sendMessage(new TextComponentString("Unpaired Wig Wag from Relay Box"));
-			}
-		}
-		
-		if (te instanceof ShuntBorderTileEntity)
-		{
-			if (relay.addOrRemoveShuntBorder((ShuntBorderTileEntity)te))
-			{
-				player.sendMessage(new TextComponentString("Paired Border Shunt to Relay Box"));
-			}
-			else
-			{
-				player.sendMessage(new TextComponentString("Unpaired Border Shunt from Relay Box"));
-			}
-		}
-		
-		if (te instanceof ShuntIslandTileEntity)
-		{
-			if (relay.addOrRemoveShuntIsland((ShuntIslandTileEntity)te))
-			{
-				player.sendMessage(new TextComponentString("Paired Island Shunt to Relay Box"));
-			}
-			else
-			{
-				player.sendMessage(new TextComponentString("Unpaired Island Shunt from Relay Box"));
 			}
 		}
 	}
