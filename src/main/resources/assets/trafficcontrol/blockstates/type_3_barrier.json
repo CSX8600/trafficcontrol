@@ -1,0 +1,19 @@
+{
+	"forge_marker": 1,
+	"defaults":
+	{
+		"model": "trafficcontrol:type_3_barrier_bars"
+	},
+	"variants":
+	{
+		"normal": [{}],
+		"inventory": [{}],
+		"facing=north,isfurthestleft=false,isfurthestright=false": [{}],
+		"facing=north,isfurthestleft=true,isfurthestright=false": [{}],
+		"facing=north,isfurthestleft=false,isfurthestright=true": [{}],
+		"facing=north,isfurthestleft=true,isfurthestright=true": [{}],
+		"facing=east": { "y": 90 },
+		"facing=south": { "y": 180 },
+		"facing=west": { "y": 270 }
+	}
+}

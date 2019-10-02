@@ -28,6 +28,7 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockShuntIsland;
 import com.clussmanproductions.trafficcontrol.blocks.BlockSign;
 import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightDouble;
 import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightSingle;
+import com.clussmanproductions.trafficcontrol.blocks.BlockType3Barrier;
 import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
 
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -95,6 +96,8 @@ public class ModBlocks {
 	public static BlockShuntBorder shunt_border;
 	@ObjectHolder("shunt_island")
 	public static BlockShuntIsland shunt_island;
+	@ObjectHolder("type_3_barrier")
+	public static BlockType3Barrier type_3_barrier;
 	
 	@SideOnly(Side.CLIENT)
 	public static void initModels(ModelRegistryEvent e)
