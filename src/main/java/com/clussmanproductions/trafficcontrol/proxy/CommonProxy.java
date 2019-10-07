@@ -34,6 +34,7 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockShuntIsland;
 import com.clussmanproductions.trafficcontrol.blocks.BlockSign;
 import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightDouble;
 import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightSingle;
+import com.clussmanproductions.trafficcontrol.blocks.BlockType3Barrier;
 import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
 import com.clussmanproductions.trafficcontrol.gui.GuiProxy;
 import com.clussmanproductions.trafficcontrol.item.ItemCrossingRelayBox;
@@ -99,6 +100,7 @@ public class CommonProxy {
 		e.getRegistry().register(new BlockWigWag());
 		e.getRegistry().register(new BlockShuntBorder());
 		e.getRegistry().register(new BlockShuntIsland());
+		e.getRegistry().register(new BlockType3Barrier());
 		
 		GameRegistry.registerTileEntity(CrossingGateGateTileEntity.class, ModTrafficControl.MODID + "_crossinggategate");
 		GameRegistry.registerTileEntity(SafetranType3TileEntity.class, ModTrafficControl.MODID + "_safetrantyp3");
@@ -138,6 +140,7 @@ public class CommonProxy {
 		e.getRegistry().register(new ItemBlock(ModBlocks.wig_wag).setRegistryName(ModBlocks.wig_wag.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.shunt_border).setRegistryName(ModBlocks.shunt_border.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.shunt_island).setRegistryName(ModBlocks.shunt_island.getRegistryName()));
+		e.getRegistry().register(new ItemBlock(ModBlocks.type_3_barrier).setRegistryName(ModBlocks.type_3_barrier.getRegistryName()));
 	}
 	
 	public static void registerSounds(RegistryEvent.Register<SoundEvent> e)

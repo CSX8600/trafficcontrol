@@ -8,12 +8,131 @@
 	{
 		"normal": [{}],
 		"inventory": [{}],
+		
 		"facing=north,isfurthestleft=false,isfurthestright=false": [{}],
-		"facing=north,isfurthestleft=true,isfurthestright=false": [{}],
-		"facing=north,isfurthestleft=false,isfurthestright=true": [{}],
-		"facing=north,isfurthestleft=true,isfurthestright=true": [{}],
-		"facing=east": { "y": 90 },
-		"facing=south": { "y": 180 },
-		"facing=west": { "y": 270 }
+		"facing=north,isfurthestleft=true,isfurthestright=false": 
+		{
+			"model": "trafficcontrol:type_3_barrier_bars",
+			"submodel": 
+			{
+				"left": { "model": "trafficcontrol:type_3_barrier_stand_left" }
+			}
+		},
+		"facing=north,isfurthestleft=false,isfurthestright=true": 
+		{
+			"model": "trafficcontrol:type_3_barrier_bars",
+			"submodel": 
+			{
+				"right": { "model": "trafficcontrol:type_3_barrier_stand_right" }
+			}
+		},
+		"facing=north,isfurthestleft=true,isfurthestright=true":
+		{
+			"model": "trafficcontrol:type_3_barrier_bars",
+			"submodel": 
+			{
+				"left": { "model": "trafficcontrol:type_3_barrier_stand_left" },
+				"right": { "model": "trafficcontrol:type_3_barrier_stand_right" }
+			}
+		},
+		"facing=west,isfurthestleft=false,isfurthestright=false": 
+		{
+			"model": "trafficcontrol:type_3_barrier_bars",
+			"y": 270
+		},
+		"facing=west,isfurthestleft=true,isfurthestright=false":
+		{
+			"model": "trafficcontrol:type_3_barrier_bars",
+			"y": 270,
+			"submodel": 
+			{
+				"left": { "model": "trafficcontrol:type_3_barrier_stand_left" }
+			}
+		},
+		"facing=west,isfurthestleft=false,isfurthestright=true": 
+		{
+			"model": "trafficcontrol:type_3_barrier_bars",
+			"y": 270,
+			"submodel": 
+			{
+				"right": { "model": "trafficcontrol:type_3_barrier_stand_right" }
+			}
+		},
+		"facing=west,isfurthestleft=true,isfurthestright=true": 
+		{
+			"model": "trafficcontrol:type_3_barrier_bars",
+			"y": 270,
+			"submodel": 
+			{
+				"left": { "model": "trafficcontrol:type_3_barrier_stand_left" },
+				"right": { "model": "trafficcontrol:type_3_barrier_stand_right" }
+			}
+		},
+		"facing=south,isfurthestleft=false,isfurthestright=false": 
+		{
+			"model": "trafficcontrol:type_3_barrier_bars",
+			"y": 180
+		},
+		"facing=south,isfurthestleft=true,isfurthestright=false":
+		{
+			"model": "trafficcontrol:type_3_barrier_bars",
+			"y": 180,
+			"submodel": 
+			{
+				"left": { "model": "trafficcontrol:type_3_barrier_stand_left" }
+			}
+		},
+		"facing=south,isfurthestleft=false,isfurthestright=true": 
+		{
+			"model": "trafficcontrol:type_3_barrier_bars",
+			"y": 180,
+			"submodel": 
+			{
+				"right": { "model": "trafficcontrol:type_3_barrier_stand_right" }
+			}
+		},
+		"facing=south,isfurthestleft=true,isfurthestright=true": 
+		{
+			"model": "trafficcontrol:type_3_barrier_bars",
+			"y": 180,
+			"submodel": 
+			{
+				"left": { "model": "trafficcontrol:type_3_barrier_stand_left" },
+				"right": { "model": "trafficcontrol:type_3_barrier_stand_right" }
+			}
+		},
+		"facing=east,isfurthestleft=false,isfurthestright=false": 
+		{
+			"model": "trafficcontrol:type_3_barrier_bars",
+			"y": 90
+		},
+		"facing=east,isfurthestleft=true,isfurthestright=false":
+		{
+			"model": "trafficcontrol:type_3_barrier_bars",
+			"y": 90,
+			"submodel": 
+			{
+				"left": { "model": "trafficcontrol:type_3_barrier_stand_left" }
+			}
+		},
+		"facing=east,isfurthestleft=false,isfurthestright=true": 
+		{
+			"model": "trafficcontrol:type_3_barrier_bars",
+			"y": 90,
+			"submodel": 
+			{
+				"right": { "model": "trafficcontrol:type_3_barrier_stand_right" }
+			}
+		},
+		"facing=east,isfurthestleft=true,isfurthestright=true": 
+		{
+			"model": "trafficcontrol:type_3_barrier_bars",
+			"y": 90,
+			"submodel": 
+			{
+				"left": { "model": "trafficcontrol:type_3_barrier_stand_left" },
+				"right": { "model": "trafficcontrol:type_3_barrier_stand_right" }
+			}
+		}
 	}
 }

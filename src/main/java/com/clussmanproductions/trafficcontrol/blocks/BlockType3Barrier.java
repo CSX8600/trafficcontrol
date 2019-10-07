@@ -9,9 +9,15 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.property.IExtendedBlockState;
 
 public class BlockType3Barrier extends Block {
@@ -25,6 +31,11 @@ public class BlockType3Barrier extends Block {
 		setUnlocalizedName(ModTrafficControl.MODID + ".type_3_barrier");
 		setHardness(2f);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
+	}
+	
+	public void initModel()
+	{
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
 	
 	@Override
@@ -44,8 +55,8 @@ public class BlockType3Barrier extends Block {
 	
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-		boolean isFurthestLeft = false;
-		boolean isFurthestRight = false;
+		boolean isFurthestLeft = true;
+		boolean isFurthestRight = true;
 		EnumFacing currentFacing = state.getValue(FACING);
 		EnumFacing directionOfTravel = currentFacing.rotateY();
 		IBlockState borderState = worldIn.getBlockState(pos.offset(directionOfTravel));
@@ -61,8 +72,7 @@ public class BlockType3Barrier extends Block {
 			isFurthestLeft = borderState.getValue(FACING) != currentFacing;
 		}
 		
-		IExtendedBlockState currentState = (IExtendedBlockState)state;
-		return currentState.withProperty(ISFURTHESTLEFT, isFurthestLeft).withProperty(ISFURTHESTRIGHT, isFurthestRight);
+		return state.withProperty(ISFURTHESTLEFT, isFurthestLeft).withProperty(ISFURTHESTRIGHT, isFurthestRight);
 	}
 	
 	@Override
@@ -83,5 +93,11 @@ public class BlockType3Barrier extends Block {
 	@Override
 	public boolean causesSuffocation(IBlockState state) {
 		return false;
+	}
+	
+	@Override
+	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,
+			float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+		return getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
 	}
 }

@@ -122,5 +122,6 @@ public class ModBlocks {
 		wig_wag.initModel();
 		shunt_border.initModel();
 		shunt_island.initModel();
+		type_3_barrier.initModel();
 	}
 }
