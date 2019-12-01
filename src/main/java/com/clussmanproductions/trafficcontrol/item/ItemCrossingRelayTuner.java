@@ -173,7 +173,14 @@ public class ItemCrossingRelayTuner extends Item {
 					return false;
 				}
 				
-				addTileEntityPosToNBT(nbt, "pairingpos", te);
+				if (te instanceof RelayTileEntity)
+				{
+					addTileEntityPosToNBT(nbt, "pairingpos", ((RelayTileEntity)te).getMaster(world));
+				}
+				else
+				{
+					addTileEntityPosToNBT(nbt, "pairingpos", te);
+				}
 				
 				player.inventory.getCurrentItem().setTagCompound(nbt);
 				
