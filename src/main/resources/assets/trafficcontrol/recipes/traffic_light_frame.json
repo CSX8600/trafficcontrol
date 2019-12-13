@@ -1,0 +1,23 @@
+{ 
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ILI",
+    "ILI",
+    "ILI"  ],
+  "key": {
+  "I":
+	  {
+	  	"type": "forge:ore_dict",
+	  	"ore": "ingotIron"
+	  },
+	"L":
+	  {
+	    "item": "minecraft:redstone_lamp",
+	    "data": 0
+	  }
+  },
+  "result": {
+    "item": "trafficcontrol:traffic_light_frame",
+    "count": 1
+  }
+}

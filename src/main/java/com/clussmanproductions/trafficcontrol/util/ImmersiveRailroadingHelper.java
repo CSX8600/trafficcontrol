@@ -1,23 +1,26 @@
 package com.clussmanproductions.trafficcontrol.util;
-import java.util.List;
-import java.util.UUID;
 
-import cam72cam.immersiverailroading.blocks.BlockRailBase;
 import cam72cam.immersiverailroading.entity.EntityMoveableRollingStock;
-import cam72cam.immersiverailroading.tile.TileRailBase;
-import net.minecraft.tileentity.TileEntity;
+import cam72cam.mod.entity.ModdedEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Tuple;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import trackapi.lib.ITrack;
+import trackapi.lib.Util;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class ImmersiveRailroadingHelper {
 	public static Vec3d findOrigin(BlockPos currentPos, EnumFacing signalFacing, World world)
 	{
 		Vec3d retVal = new Vec3d(0, -1, 0);
-		
+
 		EnumFacing searchDirection = signalFacing.rotateY().rotateY().rotateY();
 		
 		BlockPos workingPos = new BlockPos(currentPos.getX(), currentPos.getY() - 3, currentPos.getZ());
@@ -26,22 +29,18 @@ public class ImmersiveRailroadingHelper {
 			for(int i = 0; i <= 10; i++)
 			{
 				workingPos = workingPos.offset(searchDirection);
-				
-				if (world.getBlockState(workingPos).getBlock() instanceof BlockRailBase)
-				{
-					TileRailBase tile = (TileRailBase)world.getTileEntity(workingPos);
-					if (tile == null)
-					{
-						continue;
-					}
-					
-					Vec3d current = new Vec3d(workingPos.getX(), workingPos.getY(), workingPos.getZ());
-					
-					Vec3d center = tile.getNextPosition(current, new Vec3d(0, 0, 0));
-					
-					retVal = new Vec3d(center.x, center.y, center.z);
-					break;
-				}
+				ITrack tile = Util.getTileEntity(world, new Vec3d(workingPos), false);
+                if (tile == null)
+                {
+                    continue;
+                }
+
+                Vec3d current = new Vec3d(workingPos.getX(), workingPos.getY(), workingPos.getZ());
+
+                Vec3d center = tile.getNextPosition(current, new Vec3d(0, 0, 0));
+
+                retVal = new Vec3d(center.x, center.y, center.z);
+                break;
 			}
 			
 			workingPos = new BlockPos(currentPos.getX(), workingPos.getY() + 1, currentPos.getZ());
@@ -53,7 +52,7 @@ public class ImmersiveRailroadingHelper {
 	public static Vec3d getNextPosition(Vec3d currentPosition, Vec3d motion, World world)
 	{
 		BlockPos currentBlockPos = new BlockPos(currentPosition.x, currentPosition.y, currentPosition.z);
-		TileEntity te = world.getTileEntity(currentBlockPos);
+		ITrack te = Util.getTileEntity(world, new Vec3d(currentBlockPos), false);
 		
 		int attempt = 0;
 		while(te == null && attempt < 8)
@@ -90,7 +89,7 @@ public class ImmersiveRailroadingHelper {
 					break;
 			}
 			
-			te = world.getTileEntity(currentBlockPos);
+			te = Util.getTileEntity(world, new Vec3d(currentBlockPos), false);
 			attempt++;
 		}
 		
@@ -99,31 +98,29 @@ public class ImmersiveRailroadingHelper {
 			return currentPosition;
 		}
 		
-		TileRailBase railBase = (TileRailBase)te;
-		
-		return railBase.getNextPosition(currentPosition, motion);
+
+		return te.getNextPosition(currentPosition, motion);
 	}
 	
 	public static Tuple<UUID, Vec3d> getStockNearby(Vec3d currentPosition, World world)
 	{
 		BlockPos currentBlockPos = new BlockPos(currentPosition.x, currentPosition.y, currentPosition.z);
-		
+
 		AxisAlignedBB bb = new AxisAlignedBB(currentBlockPos.south().west(), currentBlockPos.up(3).east().north());
-		List<EntityMoveableRollingStock> stocks = world.getEntitiesWithinAABB(EntityMoveableRollingStock.class, bb);
-		
+		List<EntityMoveableRollingStock> stocks = world.getEntitiesWithinAABB(ModdedEntity.class, bb)
+				.stream()
+				.map(x -> x.getSelf() instanceof EntityMoveableRollingStock ? (EntityMoveableRollingStock)x.getSelf() : null)
+				.filter(Objects::nonNull)
+				.collect(Collectors.toList());
+
 		if (!stocks.isEmpty())
 		{
 			EntityMoveableRollingStock stock = stocks.get(0);
-			return new Tuple<UUID, Vec3d>(stock.getPersistentID(), stock.getVelocity());
+			return new Tuple<UUID, Vec3d>(stock.getUUID(), stock.getVelocity().internal);
 		}
 		else
 		{
 			return null;
 		}
-	}
-
-	public static boolean blockPosIsRail(BlockPos pos, World world)
-	{
-		return world.getBlockState(pos).getBlock() instanceof BlockRailBase;
 	}
 }

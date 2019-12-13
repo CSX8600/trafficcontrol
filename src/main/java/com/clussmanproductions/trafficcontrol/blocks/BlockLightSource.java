@@ -31,7 +31,7 @@ public class BlockLightSource extends Block {
 	
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		return new AxisAlignedBB(0, 0, 0, 0, 0, 0);
+		return NULL_AABB;
 	}
 	
 	@Override
@@ -42,6 +42,11 @@ public class BlockLightSource extends Block {
 	@Override
 	public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos,
 			EnumFacing side) {
+		return false;
+	}
+	
+	@Override
+	public boolean isCollidable() {
 		return false;
 	}
 }

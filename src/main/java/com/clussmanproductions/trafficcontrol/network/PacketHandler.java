@@ -25,5 +25,6 @@ public class PacketHandler {
 	private static void registerMessages()
 	{
 		INSTANCE.registerMessage(PacketUpdateSign.Handler.class, PacketUpdateSign.class, nextID(), Side.SERVER);
+		INSTANCE.registerMessage(PacketSyncableTileEntity.Handler.class, PacketSyncableTileEntity.class, nextID(), Side.SERVER);
 	}
 }

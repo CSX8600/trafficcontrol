@@ -4,9 +4,9 @@ import org.lwjgl.opengl.GL11;
 
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
-import com.clussmanproductions.trafficcontrol.tileentity.render.RenderBoxHelper.Box;
-import com.clussmanproductions.trafficcontrol.tileentity.render.RenderBoxHelper.TextureInfo;
-import com.clussmanproductions.trafficcontrol.tileentity.render.RenderBoxHelper.TextureInfoCollection;
+import com.clussmanproductions.trafficcontrol.tileentity.render.TESRHelper.Box;
+import com.clussmanproductions.trafficcontrol.tileentity.render.TESRHelper.TextureInfo;
+import com.clussmanproductions.trafficcontrol.tileentity.render.TESRHelper.TextureInfoCollection;
 
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -53,7 +53,7 @@ public class RendererCrossingGateGate extends TileEntitySpecialRenderer<Crossing
 				new TextureInfo(generic, 0, 0, 1, 4),
 				new TextureInfo(generic, 0, 0, 1, 4));
 		Box weightBox = new Box(-4, -2, 4, 12, 4, -1, collection);
-		weightBox.render(builder, (rl) -> bindTexture(rl));
+		weightBox.render(builder, (tex) -> bindTexture(tex));
 	}
 	
 	private void renderGateVerticies(BufferBuilder builder)
@@ -67,6 +67,6 @@ public class RendererCrossingGateGate extends TileEntitySpecialRenderer<Crossing
 				new TextureInfo(gate, 0, 2, 3, 4),
 				new TextureInfo(gate, 0, 2, 3, 4));
 		Box gateBox = new Box(-76, -1, 4, 72, 2, -1, collection);
-		gateBox.render(builder, (rl) -> bindTexture(rl));
+		gateBox.render(builder, (tex) -> bindTexture(tex));
 	}
 }
