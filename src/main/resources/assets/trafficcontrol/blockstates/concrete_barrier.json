@@ -1,0 +1,38 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "trafficcontrol:concrete_barrier",
+        "textures":
+        {
+            "color": "minecraft:blocks/concrete_white"
+        }
+    },
+    "variants": {
+    	"facing":
+    	{
+    		"east": {},
+    		"west": {},
+    		"north": { "y": 90 },
+    		"south": { "y": 90 }
+    	},
+        "dye":
+        {
+            "0": {},
+            "1": { "textures": { "color": "minecraft:blocks/concrete_orange" } },
+            "2": { "textures": { "color": "minecraft:blocks/concrete_magenta" } },
+            "3": { "textures": { "color": "minecraft:blocks/concrete_light_blue" } },
+            "4": { "textures": { "color": "minecraft:blocks/concrete_yellow" } },
+            "5": { "textures": { "color": "minecraft:blocks/concrete_lime" } },
+            "6": { "textures": { "color": "minecraft:blocks/concrete_pink" } },
+            "7": { "textures": { "color": "minecraft:blocks/concrete_gray" } },
+            "8": { "textures": { "color": "minecraft:blocks/concrete_silver" } },
+            "9": { "textures": { "color": "minecraft:blocks/concrete_cyan" } },
+            "10": { "textures": { "color": "minecraft:blocks/concrete_purple" } },
+            "11": { "textures": { "color": "minecraft:blocks/concrete_blue" } },
+            "12": { "textures": { "color": "minecraft:blocks/concrete_brown" } },
+            "13": { "textures": { "color": "minecraft:blocks/concrete_green" } },
+            "14": { "textures": { "color": "minecraft:blocks/concrete_red" } },
+            "15": { "textures": { "color": "minecraft:blocks/concrete_black" } }
+        }
+    }
+}

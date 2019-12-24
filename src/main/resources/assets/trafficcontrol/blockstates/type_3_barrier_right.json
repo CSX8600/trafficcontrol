@@ -2,14 +2,14 @@
 	"forge_marker": 1,
 	"defaults":
 	{
-		"model": "trafficcontrol:type_3_barrier_bars"
+		"model": "trafficcontrol:type_3_barrier_bars_right"
 	},
 	"variants":
 	{
 		"normal": [{}],
 		"inventory":
 		{
-			"model": "trafficcontrol:type_3_barrier_bars",
+			"model": "trafficcontrol:type_3_barrier_bars_right",
 			"transform": 
 			{
 				"gui":
@@ -22,7 +22,7 @@
 		"facing=north,isfurthestleft=false,isfurthestright=false": [{}],
 		"facing=north,isfurthestleft=true,isfurthestright=false": 
 		{
-			"model": "trafficcontrol:type_3_barrier_bars",
+			"model": "trafficcontrol:type_3_barrier_bars_right",
 			"submodel": 
 			{
 				"left": { "model": "trafficcontrol:type_3_barrier_stand_left" }
@@ -30,7 +30,7 @@
 		},
 		"facing=north,isfurthestleft=false,isfurthestright=true": 
 		{
-			"model": "trafficcontrol:type_3_barrier_bars",
+			"model": "trafficcontrol:type_3_barrier_bars_right",
 			"submodel": 
 			{
 				"right": { "model": "trafficcontrol:type_3_barrier_stand_right" }
@@ -38,7 +38,7 @@
 		},
 		"facing=north,isfurthestleft=true,isfurthestright=true":
 		{
-			"model": "trafficcontrol:type_3_barrier_bars",
+			"model": "trafficcontrol:type_3_barrier_bars_right",
 			"submodel": 
 			{
 				"left": { "model": "trafficcontrol:type_3_barrier_stand_left" },
@@ -47,12 +47,12 @@
 		},
 		"facing=west,isfurthestleft=false,isfurthestright=false": 
 		{
-			"model": "trafficcontrol:type_3_barrier_bars",
+			"model": "trafficcontrol:type_3_barrier_bars_right",
 			"y": 270
 		},
 		"facing=west,isfurthestleft=true,isfurthestright=false":
 		{
-			"model": "trafficcontrol:type_3_barrier_bars",
+			"model": "trafficcontrol:type_3_barrier_bars_right",
 			"y": 270,
 			"submodel": 
 			{
@@ -61,7 +61,7 @@
 		},
 		"facing=west,isfurthestleft=false,isfurthestright=true": 
 		{
-			"model": "trafficcontrol:type_3_barrier_bars",
+			"model": "trafficcontrol:type_3_barrier_bars_right",
 			"y": 270,
 			"submodel": 
 			{
@@ -70,7 +70,7 @@
 		},
 		"facing=west,isfurthestleft=true,isfurthestright=true": 
 		{
-			"model": "trafficcontrol:type_3_barrier_bars",
+			"model": "trafficcontrol:type_3_barrier_bars_right",
 			"y": 270,
 			"submodel": 
 			{
@@ -80,12 +80,12 @@
 		},
 		"facing=south,isfurthestleft=false,isfurthestright=false": 
 		{
-			"model": "trafficcontrol:type_3_barrier_bars",
+			"model": "trafficcontrol:type_3_barrier_bars_right",
 			"y": 180
 		},
 		"facing=south,isfurthestleft=true,isfurthestright=false":
 		{
-			"model": "trafficcontrol:type_3_barrier_bars",
+			"model": "trafficcontrol:type_3_barrier_bars_right",
 			"y": 180,
 			"submodel": 
 			{
@@ -94,7 +94,7 @@
 		},
 		"facing=south,isfurthestleft=false,isfurthestright=true": 
 		{
-			"model": "trafficcontrol:type_3_barrier_bars",
+			"model": "trafficcontrol:type_3_barrier_bars_right",
 			"y": 180,
 			"submodel": 
 			{
@@ -103,7 +103,7 @@
 		},
 		"facing=south,isfurthestleft=true,isfurthestright=true": 
 		{
-			"model": "trafficcontrol:type_3_barrier_bars",
+			"model": "trafficcontrol:type_3_barrier_bars_right",
 			"y": 180,
 			"submodel": 
 			{
@@ -113,12 +113,12 @@
 		},
 		"facing=east,isfurthestleft=false,isfurthestright=false": 
 		{
-			"model": "trafficcontrol:type_3_barrier_bars",
+			"model": "trafficcontrol:type_3_barrier_bars_right",
 			"y": 90
 		},
 		"facing=east,isfurthestleft=true,isfurthestright=false":
 		{
-			"model": "trafficcontrol:type_3_barrier_bars",
+			"model": "trafficcontrol:type_3_barrier_bars_right",
 			"y": 90,
 			"submodel": 
 			{
@@ -127,7 +127,7 @@
 		},
 		"facing=east,isfurthestleft=false,isfurthestright=true": 
 		{
-			"model": "trafficcontrol:type_3_barrier_bars",
+			"model": "trafficcontrol:type_3_barrier_bars_right",
 			"y": 90,
 			"submodel": 
 			{
@@ -136,7 +136,7 @@
 		},
 		"facing=east,isfurthestleft=true,isfurthestright=true": 
 		{
-			"model": "trafficcontrol:type_3_barrier_bars",
+			"model": "trafficcontrol:type_3_barrier_bars_right",
 			"y": 90,
 			"submodel": 
 			{

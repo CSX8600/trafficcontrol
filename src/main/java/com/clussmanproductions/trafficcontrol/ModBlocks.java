@@ -1,6 +1,7 @@
 package com.clussmanproductions.trafficcontrol;
 
 import com.clussmanproductions.trafficcontrol.blocks.BlockChannelizer;
+import com.clussmanproductions.trafficcontrol.blocks.BlockConcreteBarrier;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCone;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateBase;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateCrossbuck;
@@ -29,9 +30,11 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockSign;
 import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightDouble;
 import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightSingle;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight;
-import com.clussmanproductions.trafficcontrol.blocks.BlockType3Barrier;
-import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightControlBox;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficRail;
+import com.clussmanproductions.trafficcontrol.blocks.BlockType3Barrier;
+import com.clussmanproductions.trafficcontrol.blocks.BlockType3BarrierRight;
+import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
 
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
@@ -104,6 +107,12 @@ public class ModBlocks {
 	public static BlockShuntIsland shunt_island;
 	@ObjectHolder("type_3_barrier")
 	public static BlockType3Barrier type_3_barrier;
+	@ObjectHolder("type_3_barrier_right")
+	public static BlockType3BarrierRight type_3_barrier_right;
+	@ObjectHolder("traffic_rail")
+	public static BlockTrafficRail traffic_rail;
+	@ObjectHolder("concrete_barrier")
+	public static BlockConcreteBarrier concrete_barrier;
 
 	@SideOnly(Side.CLIENT)
 	public static void initModels(ModelRegistryEvent e)
@@ -131,5 +140,8 @@ public class ModBlocks {
 		shunt_border.initModel();
 		shunt_island.initModel();
 		type_3_barrier.initModel();
+		type_3_barrier_right.initModel();
+		traffic_rail.initModel();
+		concrete_barrier.initModel();
 	}
 }

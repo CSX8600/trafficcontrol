@@ -3,6 +3,7 @@ package com.clussmanproductions.trafficcontrol.gui;
 import com.clussmanproductions.trafficcontrol.ModItems;
 import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightControlBoxTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.Type3BarrierTileEntity;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -56,6 +57,15 @@ public class GuiProxy implements IGuiHandler {
 					return new TrafficLightControlBoxGui(controlBoxTE);
 				}
 				break;
+			case GUI_IDs.TYPE_3_BARRIER:
+				BlockPos type3BarrierPos = new BlockPos(x, y, z);
+				TileEntity type3BarrierTE = world.getTileEntity(type3BarrierPos);
+				if (type3BarrierTE instanceof Type3BarrierTileEntity)
+				{
+					Type3BarrierTileEntity type3Barrier = (Type3BarrierTileEntity)type3BarrierTE;
+					return new GuiType3Barrier(type3Barrier);
+				}
+				break;
 		}
 		
 		return null;
@@ -66,5 +76,6 @@ public class GuiProxy implements IGuiHandler {
 		public static final int SIGN = 1;
 		public static final int TRAFFIC_LIGHT_FRAME = 2;
 		public static final int TRAFFIC_LIGHT_CONTROL_BOX = 3;
+		public static final int TYPE_3_BARRIER = 4;
 	}
 }

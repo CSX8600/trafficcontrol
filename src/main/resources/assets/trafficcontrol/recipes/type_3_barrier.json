@@ -1,0 +1,23 @@
+{ 
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " WO",
+    "WOW",
+    "OW "  ],
+  "key": {
+  	"O":
+	{
+		"item": "minecraft:stained_hardened_clay",
+		"data": 1
+	},
+  	"W":
+	{
+		"item": "minecraft:stained_hardened_clay",
+		"data": 0
+	}
+  },
+  "result": {
+    "item": "trafficcontrol:type_3_barrier",
+    "count": 8
+  }
+}

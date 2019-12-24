@@ -1,0 +1,24 @@
+{ 
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    "III",
+    " L "  ],
+  "key": {
+  	"I":
+	{
+		"type": "forge:ore_dict",
+		"ore": "ingotIron"
+	},
+  	"L":
+	{
+		"type": "forge:ore_dict",
+		"ore": "logWood",
+		"data": 0
+	}
+  },
+  "result": {
+    "item": "trafficcontrol:traffic_rail",
+    "count": 4
+  }
+}

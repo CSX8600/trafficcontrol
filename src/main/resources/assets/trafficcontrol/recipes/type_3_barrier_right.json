@@ -1,0 +1,11 @@
+{ 
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+        "item": "trafficcontrol:type_3_barrier"
+    }
+  ],
+  "result": {
+    "item": "trafficcontrol:type_3_barrier_right"
+  }
+}

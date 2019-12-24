@@ -7,6 +7,7 @@ import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModSounds;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockChannelizer;
+import com.clussmanproductions.trafficcontrol.blocks.BlockConcreteBarrier;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCone;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateBase;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateCrossbuck;
@@ -35,15 +36,18 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockSign;
 import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightDouble;
 import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightSingle;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight;
-import com.clussmanproductions.trafficcontrol.blocks.BlockType3Barrier;
-import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightControlBox;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficRail;
+import com.clussmanproductions.trafficcontrol.blocks.BlockType3Barrier;
+import com.clussmanproductions.trafficcontrol.blocks.BlockType3BarrierRight;
+import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
 import com.clussmanproductions.trafficcontrol.gui.GuiProxy;
 import com.clussmanproductions.trafficcontrol.item.ItemCrossingRelayBox;
 import com.clussmanproductions.trafficcontrol.item.ItemCrossingRelayTuner;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightBulb;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightFrame;
 import com.clussmanproductions.trafficcontrol.network.PacketHandler;
+import com.clussmanproductions.trafficcontrol.tileentity.ConcreteBarrierTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.RelayTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.SafetranMechanicalTileEntity;
@@ -54,10 +58,12 @@ import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.StreetLightDoubleTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.StreetLightSingleTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightControlBoxTileEntity;
-import com.clussmanproductions.trafficcontrol.tileentity.WigWagTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.Type3BarrierTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.WigWagTileEntity;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.SoundEvent;
@@ -109,6 +115,9 @@ public class CommonProxy {
 		e.getRegistry().register(new BlockShuntBorder());
 		e.getRegistry().register(new BlockShuntIsland());
 		e.getRegistry().register(new BlockType3Barrier());
+		e.getRegistry().register(new BlockType3BarrierRight());
+		e.getRegistry().register(new BlockTrafficRail());
+		e.getRegistry().register(new BlockConcreteBarrier());
 
 		GameRegistry.registerTileEntity(CrossingGateGateTileEntity.class, ModTrafficControl.MODID + "_crossinggategate");
 		GameRegistry.registerTileEntity(SafetranType3TileEntity.class, ModTrafficControl.MODID + "_safetrantyp3");
@@ -122,6 +131,8 @@ public class CommonProxy {
 		GameRegistry.registerTileEntity(WigWagTileEntity.class, ModTrafficControl.MODID + "_wigwag");
 		GameRegistry.registerTileEntity(ShuntBorderTileEntity.class, ModTrafficControl.MODID + "_shuntborder");
 		GameRegistry.registerTileEntity(ShuntIslandTileEntity.class, ModTrafficControl.MODID + "_shuntisland");
+		GameRegistry.registerTileEntity(Type3BarrierTileEntity.class, ModTrafficControl.MODID + "_type3barrier");
+		GameRegistry.registerTileEntity(ConcreteBarrierTileEntity.class, ModTrafficControl.MODID + "_concretebarrier");
 	}
 
 	@SubscribeEvent
@@ -154,6 +165,25 @@ public class CommonProxy {
 		e.getRegistry().register(new ItemBlock(ModBlocks.shunt_border).setRegistryName(ModBlocks.shunt_border.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.shunt_island).setRegistryName(ModBlocks.shunt_island.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.type_3_barrier).setRegistryName(ModBlocks.type_3_barrier.getRegistryName()));
+		e.getRegistry().register(new ItemBlock(ModBlocks.type_3_barrier_right).setRegistryName(ModBlocks.type_3_barrier_right.getRegistryName()));
+		e.getRegistry().register(new ItemBlock(ModBlocks.traffic_rail).setRegistryName(ModBlocks.traffic_rail.getRegistryName()));
+		e.getRegistry().register(new ItemBlock(ModBlocks.concrete_barrier)
+		{
+			public boolean getHasSubtypes() { return true; }
+			
+			public String getUnlocalizedName(net.minecraft.item.ItemStack stack)
+			{
+				String unlocalizedName = ModTrafficControl.MODID + ".concrete_barrier.";
+				int meta = stack.getMetadata();
+				
+				EnumDyeColor color = EnumDyeColor.byMetadata(meta);
+				unlocalizedName += color.getName();
+				
+				return unlocalizedName;
+			}
+			
+			
+		}.setRegistryName(ModBlocks.concrete_barrier.getRegistryName()));
 	}
 
 	public static void registerSounds(RegistryEvent.Register<SoundEvent> e)
