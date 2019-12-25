@@ -5,6 +5,17 @@
         "textures":
         {
             "color": "minecraft:blocks/concrete_white"
+        },
+        "transform": 
+        {
+        	"gui": 
+        	{
+        		"rotation": 
+        		[
+        			{ "y": 45 },
+        			{ "x": 45 }
+        		]
+        	}
         }
     },
     "variants": {
@@ -17,22 +28,261 @@
     	},
         "dye":
         {
-            "0": {},
-            "1": { "textures": { "color": "minecraft:blocks/concrete_orange" } },
-            "2": { "textures": { "color": "minecraft:blocks/concrete_magenta" } },
-            "3": { "textures": { "color": "minecraft:blocks/concrete_light_blue" } },
-            "4": { "textures": { "color": "minecraft:blocks/concrete_yellow" } },
-            "5": { "textures": { "color": "minecraft:blocks/concrete_lime" } },
-            "6": { "textures": { "color": "minecraft:blocks/concrete_pink" } },
-            "7": { "textures": { "color": "minecraft:blocks/concrete_gray" } },
-            "8": { "textures": { "color": "minecraft:blocks/concrete_silver" } },
-            "9": { "textures": { "color": "minecraft:blocks/concrete_cyan" } },
-            "10": { "textures": { "color": "minecraft:blocks/concrete_purple" } },
-            "11": { "textures": { "color": "minecraft:blocks/concrete_blue" } },
-            "12": { "textures": { "color": "minecraft:blocks/concrete_brown" } },
-            "13": { "textures": { "color": "minecraft:blocks/concrete_green" } },
-            "14": { "textures": { "color": "minecraft:blocks/concrete_red" } },
-            "15": { "textures": { "color": "minecraft:blocks/concrete_black" } }
+            "0": 
+            {
+            	"transform": 
+		        {
+		        	"gui": 
+		        	{
+		        		"rotation": 
+		        		[
+		        			{ "y": 30 },
+		        			{ "x": 30 }
+		        		],
+		        		"scale": [0.75, 0.75, 0.75]
+		        	}
+		        }
+            },
+            "1": 
+            {
+	            "textures": { "color": "minecraft:blocks/concrete_orange" },
+		        "transform": 
+		        {
+		        	"gui": 
+		        	{
+		        		"rotation": 
+		        		[
+		        			{ "y": 30 },
+		        			{ "x": 30 }
+		        		],
+		        		"scale": [0.75, 0.75, 0.75]
+		        	}
+		        } 
+	        },
+            "2": 
+            {
+            	"textures": { "color": "minecraft:blocks/concrete_magenta" },
+		        "transform": 
+		        {
+		        	"gui": 
+		        	{
+		        		"rotation": 
+		        		[
+		        			{ "y": 30 },
+		        			{ "x": 30 }
+		        		],
+		        		"scale": [0.75, 0.75, 0.75]
+		        	}
+		        } 
+            },
+            "3":
+            { 
+            	"textures": { "color": "minecraft:blocks/concrete_light_blue" },
+		        "transform": 
+		        {
+		        	"gui": 
+		        	{
+		        		"rotation": 
+		        		[
+		        			{ "y": 30 },
+		        			{ "x": 30 }
+		        		],
+		        		"scale": [0.75, 0.75, 0.75]
+		        	}
+		        } 
+        	},
+            "4": 
+            {
+            	"textures": { "color": "minecraft:blocks/concrete_yellow" },
+		        "transform": 
+		        {
+		        	"gui": 
+		        	{
+		        		"rotation": 
+		        		[
+		        			{ "y": 30 },
+		        			{ "x": 30 }
+		        		],
+		        		"scale": [0.75, 0.75, 0.75]
+		        	}
+		        } 
+        	},
+            "5":
+            { 
+            	"textures": { "color": "minecraft:blocks/concrete_lime" },
+		        "transform": 
+		        {
+		        	"gui": 
+		        	{
+		        		"rotation": 
+		        		[
+		        			{ "y": 30 },
+		        			{ "x": 30 }
+		        		],
+		        		"scale": [0.75, 0.75, 0.75]
+		        	}
+		        } 
+        	},
+            "6": 
+            { 
+            	"textures": { "color": "minecraft:blocks/concrete_pink" },
+		        "transform": 
+		        {
+		        	"gui": 
+		        	{
+		        		"rotation": 
+		        		[
+		        			{ "y": 30 },
+		        			{ "x": 30 }
+		        		],
+		        		"scale": [0.75, 0.75, 0.75]
+		        	}
+		        } 
+        	},
+            "7": 
+            { 
+            	"textures": { "color": "minecraft:blocks/concrete_gray" },
+		        "transform": 
+		        {
+		        	"gui": 
+		        	{
+		        		"rotation": 
+		        		[
+		        			{ "y": 30 },
+		        			{ "x": 30 }
+		        		],
+		        		"scale": [0.75, 0.75, 0.75]
+		        	}
+		        } 
+        	},
+            "8": 
+            { 
+            	"textures": { "color": "minecraft:blocks/concrete_silver" },
+		        "transform": 
+		        {
+		        	"gui": 
+		        	{
+		        		"rotation": 
+		        		[
+		        			{ "y": 30 },
+		        			{ "x": 30 }
+		        		],
+		        		"scale": [0.75, 0.75, 0.75]
+		        	}
+		        } 
+        	},
+            "9": 
+            { 
+            	"textures": { "color": "minecraft:blocks/concrete_cyan" },
+		        "transform": 
+		        {
+		        	"gui": 
+		        	{
+		        		"rotation": 
+		        		[
+		        			{ "y": 30 },
+		        			{ "x": 30 }
+		        		],
+		        		"scale": [0.75, 0.75, 0.75]
+		        	}
+		        } 
+        	},
+            "10": 
+            { 
+            	"textures": { "color": "minecraft:blocks/concrete_purple" },
+		        "transform": 
+		        {
+		        	"gui": 
+		        	{
+		        		"rotation": 
+		        		[
+		        			{ "y": 30 },
+		        			{ "x": 30 }
+		        		],
+		        		"scale": [0.75, 0.75, 0.75]
+		        	}
+		        } 
+        	},
+            "11": 
+            {
+            	"textures": { "color": "minecraft:blocks/concrete_blue" },
+		        "transform": 
+		        {
+		        	"gui": 
+		        	{
+		        		"rotation": 
+		        		[
+		        			{ "y": 30 },
+		        			{ "x": 30 }
+		        		],
+		        		"scale": [0.75, 0.75, 0.75]
+		        	}
+		        } 
+        	},
+            "12": 
+            { 
+            	"textures": { "color": "minecraft:blocks/concrete_brown" },
+		        "transform": 
+		        {
+		        	"gui": 
+		        	{
+		        		"rotation": 
+		        		[
+		        			{ "y": 30 },
+		        			{ "x": 30 }
+		        		],
+		        		"scale": [0.75, 0.75, 0.75]
+		        	}
+		        } 
+        	},
+            "13": 
+            { 
+            	"textures": { "color": "minecraft:blocks/concrete_green" },
+		        "transform":
+		        {
+		        	"gui": 
+		        	{
+		        		"rotation": 
+		        		[
+		        			{ "y": 30 },
+		        			{ "x": 30 }
+		        		],
+		        		"scale": [0.75, 0.75, 0.75]
+		        	}
+		        } 
+        	},
+            "14": 
+            { 
+            	"textures": { "color": "minecraft:blocks/concrete_red" },
+		        "transform": 
+		        {
+		        	"gui": 
+		        	{
+		        		"rotation": 
+		        		[
+		        			{ "y": 30 },
+		        			{ "x": 30 }
+		        		],
+		        		"scale": [0.75, 0.75, 0.75]
+		        	}
+		        } 
+        	},
+            "15": 
+            { 
+            	"textures": { "color": "minecraft:blocks/concrete_black" },
+		        "transform": 
+		        {
+		        	"gui": 
+		        	{
+		        		"rotation": 
+		        		[
+		        			{ "y": 30 },
+		        			{ "x": 30 }
+		        		],
+		        		"scale": [0.75, 0.75, 0.75]
+		        	}
+		        } 
+        	}
         }
     }
 }
