@@ -1,6 +1,7 @@
 package com.clussmanproductions.trafficcontrol.gui;
 
 import com.clussmanproductions.trafficcontrol.ModItems;
+import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightControlBoxTileEntity;
 
@@ -56,6 +57,15 @@ public class GuiProxy implements IGuiHandler {
 					return new TrafficLightControlBoxGui(controlBoxTE);
 				}
 				break;
+			case GUI_IDs.CROSSING_GATE_GATE:
+				BlockPos preCrossingGatePos = new BlockPos(x, y, z);
+				TileEntity preCrossingGateTE = world.getTileEntity(preCrossingGatePos);
+				if (preCrossingGateTE instanceof CrossingGateGateTileEntity)
+				{
+					CrossingGateGateTileEntity crossingGateTE = (CrossingGateGateTileEntity)preCrossingGateTE;
+					return new CrossingGateGateGui(crossingGateTE);
+				}
+				break;
 		}
 		
 		return null;
@@ -66,5 +76,6 @@ public class GuiProxy implements IGuiHandler {
 		public static final int SIGN = 1;
 		public static final int TRAFFIC_LIGHT_FRAME = 2;
 		public static final int TRAFFIC_LIGHT_CONTROL_BOX = 3;
+		public static final int CROSSING_GATE_GATE = 4;
 	}
 }
