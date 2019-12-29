@@ -35,7 +35,7 @@ public class RendererCrossingGateGate extends TileEntitySpecialRenderer<Crossing
 		renderWeightVerticies(builder);
 		tes.draw();
 		builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-		renderGateVerticies(builder);
+		renderGateVerticies(builder, te.getCrossingGateLength());
 		
 		tes.draw();
 		
@@ -56,7 +56,7 @@ public class RendererCrossingGateGate extends TileEntitySpecialRenderer<Crossing
 		weightBox.render(builder, (tex) -> bindTexture(tex));
 	}
 	
-	private void renderGateVerticies(BufferBuilder builder)
+	private void renderGateVerticies(BufferBuilder builder, float crossingGateLength)
 	{
 		ResourceLocation gate = new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/gate.png");
 		TextureInfoCollection collection = new TextureInfoCollection(
@@ -66,7 +66,7 @@ public class RendererCrossingGateGate extends TileEntitySpecialRenderer<Crossing
 				new TextureInfo(gate, 0, 1, 16, 1.7),
 				new TextureInfo(gate, 0, 2, 3, 4),
 				new TextureInfo(gate, 0, 2, 3, 4));
-		Box gateBox = new Box(-76, -1, 4, 72, 2, -1, collection);
+		Box gateBox = new Box(-(crossingGateLength * 16) - 12, -1, 4, (crossingGateLength * 16) + 8, 2, -1, collection);
 		gateBox.render(builder, (tex) -> bindTexture(tex));
 	}
 }

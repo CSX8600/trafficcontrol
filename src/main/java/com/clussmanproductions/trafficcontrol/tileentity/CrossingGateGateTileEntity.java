@@ -2,39 +2,40 @@ package com.clussmanproductions.trafficcontrol.tileentity;
 
 import com.clussmanproductions.trafficcontrol.ModSounds;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateGate;
-import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateLamps;
 import com.clussmanproductions.trafficcontrol.util.ILoopableSoundTileEntity;
 import com.clussmanproductions.trafficcontrol.util.LoopableTileEntitySound;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.ISound;
-import net.minecraft.client.audio.SoundHandler;
-import net.minecraft.client.audio.SoundManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import scala.Tuple3;
 
-public class CrossingGateGateTileEntity extends TileEntity implements ITickable, ILoopableSoundTileEntity {
+public class CrossingGateGateTileEntity extends SyncableTileEntity implements ITickable, ILoopableSoundTileEntity {
 	private float gateRotation = -60;
 	private float gateDelay = 0;
 	private EnumStatuses status = EnumStatuses.Open;
 	private boolean soundPlaying = false;
+	private float crossingGateLength = 4;
+	private float upperRotationLimit = 60;
+	private float lowerRotationLimit = 0;
+	private float delay = 4;
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setFloat("gateRotation", gateRotation);
 		compound.setFloat("gateDelay", gateDelay);
 		compound.setInteger("status", getCodeFromEnum(status));
+		compound.setFloat("length", crossingGateLength);
+		compound.setFloat("upperRotation", upperRotationLimit);
+		compound.setFloat("lowerRotation", lowerRotationLimit);
+		compound.setFloat("delay", delay);
 		return super.writeToNBT(compound);
 	}
 	
@@ -44,6 +45,10 @@ public class CrossingGateGateTileEntity extends TileEntity implements ITickable,
 		gateRotation = compound.getFloat("gateRotation");
 		gateDelay = compound.getFloat("gateDelay");
 		status = getStatusFromCode(compound.getInteger("status"));
+		crossingGateLength = compound.getFloat("length");
+		upperRotationLimit = compound.getFloat("upperRotation");
+		lowerRotationLimit = compound.getFloat("lowerRotation");
+		delay = compound.getFloat("delay");
 	}
 	
 	public float getFacingRotation()
@@ -148,7 +153,7 @@ public class CrossingGateGateTileEntity extends TileEntity implements ITickable,
 		switch(status)
 		{
 			case Closing:
-				if (gateDelay <= 80)
+				if (gateDelay <= (delay * 20))
 				{
 					gateDelay++;
 					
@@ -160,7 +165,7 @@ public class CrossingGateGateTileEntity extends TileEntity implements ITickable,
 					return;
 				}
 				
-				if (gateRotation >= 0)
+				if (gateRotation >= -lowerRotationLimit)
 				{
 					status = EnumStatuses.Closed;
 					if (!world.isRemote)
@@ -178,7 +183,7 @@ public class CrossingGateGateTileEntity extends TileEntity implements ITickable,
 				gateRotation += 0.5F;
 				break;
 			case Opening:
-				if (gateRotation <= -60)
+				if (gateRotation <= -upperRotationLimit)
 				{
 					gateDelay = 0;
 					status = EnumStatuses.Open;
@@ -197,6 +202,16 @@ public class CrossingGateGateTileEntity extends TileEntity implements ITickable,
 				break;
 			case Open:
 			case Closed:
+				float idealAngle = (status == EnumStatuses.Open) ? -upperRotationLimit : -lowerRotationLimit;
+				if (gateRotation > idealAngle)
+				{
+					gateRotation -= 0.5F;
+				}
+				else if (gateRotation < idealAngle)
+				{
+					gateRotation += 0.5F;
+				}
+				
 				if (world.isRemote)
 				{
 					soundPlaying = false;
@@ -223,6 +238,9 @@ public class CrossingGateGateTileEntity extends TileEntity implements ITickable,
 		nbt.setFloat("gateRotation", gateRotation);
 		nbt.setFloat("gateDelay", gateDelay);
 		nbt.setInteger("status", getCodeFromEnum(status));
+		nbt.setFloat("length", crossingGateLength);
+		nbt.setFloat("upperRotation", upperRotationLimit);
+		nbt.setFloat("lowerRotation", lowerRotationLimit);
 		
 		return nbt;
 	}
@@ -232,6 +250,9 @@ public class CrossingGateGateTileEntity extends TileEntity implements ITickable,
 		gateRotation = tag.getFloat("gateRotation");
 		gateDelay = tag.getFloat("gateDelay");
 		status = getStatusFromCode(tag.getInteger("status"));
+		crossingGateLength = tag.getFloat("length");
+		upperRotationLimit = tag.getFloat("upperRotation");
+		lowerRotationLimit = tag.getFloat("lowerRotation");
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -280,6 +301,68 @@ public class CrossingGateGateTileEntity extends TileEntity implements ITickable,
 		sendUpdates(true);
 	}
 
+	public float getCrossingGateLength()
+	{
+		return crossingGateLength;
+	}
+	
+	public void setCrossingGateLength(float length)
+	{
+		boolean shouldMarkDirty = length != crossingGateLength;
+		
+		crossingGateLength = length;
+		
+		if (shouldMarkDirty)
+		{
+			sendUpdates(true);
+		}
+	}
+	
+	public float getUpperRotationLimit() {
+		return upperRotationLimit;
+	}
+	
+	public void setUpperRotationLimit(float upperRotationLimit) {
+		boolean shouldMarkDirty = upperRotationLimit != this.upperRotationLimit;
+		
+		this.upperRotationLimit = upperRotationLimit;
+		
+		if (shouldMarkDirty)
+		{
+			sendUpdates(true);
+		}
+	}
+	
+	public float getLowerRotationLimit() {
+		return lowerRotationLimit;
+	}
+	
+	public void setLowerRotationLimit(float lowerRotationLimit) {
+		boolean shouldMarkDirty = lowerRotationLimit != this.lowerRotationLimit;
+		
+		this.lowerRotationLimit = lowerRotationLimit;
+		
+		if (shouldMarkDirty)
+		{
+			sendUpdates(true);
+		}
+	}
+	
+	public float getDelay() {
+		return delay;
+	}
+	
+	public void setDelay(float delay) {
+		boolean shouldMarkDirty = delay != this.delay;
+		
+		this.delay = delay;
+		
+		if (shouldMarkDirty)
+		{
+			sendUpdates(true);
+		}
+	}
+	
 	@Override
 	public void onChunkUnload() {
 		soundPlaying = false;
@@ -287,17 +370,17 @@ public class CrossingGateGateTileEntity extends TileEntity implements ITickable,
 
 	@Override
 	public AxisAlignedBB getRenderBoundingBox() {
-		int width = 1;
-		int height = 1;
+		float width = 1;
+		float height = 1;
 		
 		if (status != EnumStatuses.Open)
 		{
-			width = 4;
+			width = crossingGateLength;
 		}
 		
 		if (status != EnumStatuses.Closed)
 		{
-			height = 4;
+			height = crossingGateLength;
 		}
 		
 		AxisAlignedBB base = super.getRenderBoundingBox();
@@ -322,5 +405,21 @@ public class CrossingGateGateTileEntity extends TileEntity implements ITickable,
 		}
 		
 		return super.getRenderBoundingBox();
+	}
+
+	@Override
+	public NBTTagCompound getClientToServerUpdateTag() {
+		NBTTagCompound tag = new NBTTagCompound();
+		tag.setFloat("length", crossingGateLength);
+		tag.setFloat("upperRotation", upperRotationLimit);
+		tag.setFloat("lowerRotation", lowerRotationLimit);
+		return tag;
+	}
+
+	@Override
+	public void handleClientToServerUpdateTag(NBTTagCompound compound) {
+		setCrossingGateLength(compound.getFloat("length"));
+		setUpperRotationLimit(compound.getFloat("upperRotation"));
+		setLowerRotationLimit(compound.getFloat("lowerRotation"));
 	}
 }

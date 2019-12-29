@@ -1,24 +1,23 @@
 package com.clussmanproductions.trafficcontrol.blocks;
 
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
+import com.clussmanproductions.trafficcontrol.gui.GuiProxy;
+import com.clussmanproductions.trafficcontrol.item.ItemCrossingRelayTuner;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.render.RendererCrossingGateGate;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -27,7 +26,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockCrossingGateGate extends Block implements ITileEntityProvider {
+public class BlockCrossingGateGate extends Block {
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 	public BlockCrossingGateGate()
 	{
@@ -55,17 +54,17 @@ public class BlockCrossingGateGate extends Block implements ITileEntityProvider 
 	}
 	
 	@Override
-	public boolean isFullBlock(IBlockState state) {
+	public boolean isFullCube(IBlockState state) {
 		return false;
 	}
 	
 	@Override
-	public boolean isFullCube(IBlockState state) {
-		return false;
+	public boolean hasTileEntity(IBlockState state) {
+		return true;
 	}
-
+	
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) {
+	public TileEntity createTileEntity(World world, IBlockState state) {
 		return new CrossingGateGateTileEntity();
 	}
 	
@@ -88,5 +87,18 @@ public class BlockCrossingGateGate extends Block implements ITileEntityProvider 
 	@Override
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, FACING);
+	}
+
+	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
+			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		
+		if (playerIn.getHeldItem(hand).getItem() instanceof ItemCrossingRelayTuner)
+		{
+			return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+		}
+		
+		playerIn.openGui(ModTrafficControl.instance, GuiProxy.GUI_IDs.CROSSING_GATE_GATE, worldIn, pos.getX(), pos.getY(), pos.getZ());
+		return true;
 	}
 }
