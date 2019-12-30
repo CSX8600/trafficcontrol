@@ -7,6 +7,7 @@ import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightTileEntity;
 import com.clussmanproductions.trafficcontrol.util.EnumTrafficLightBulbTypes;
 
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -19,6 +20,7 @@ public class TrafficLightRenderer extends TileEntitySpecialRenderer<TrafficLight
 	public void render(TrafficLightTileEntity te, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
 		GL11.glPushMatrix();
+		GlStateManager.disableLighting();
 		GL11.glTranslated(x, y, z);
 		float scale = 1F/16F;
 		GL11.glScalef(scale, scale, scale);
@@ -139,6 +141,7 @@ public class TrafficLightRenderer extends TileEntitySpecialRenderer<TrafficLight
 		}
 		
 		tess.draw();
+		GlStateManager.enableLighting();
 		GL11.glPopMatrix();
 	}
 	

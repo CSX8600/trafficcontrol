@@ -4,6 +4,7 @@ import com.clussmanproductions.trafficcontrol.ModSounds;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateGate;
 import com.clussmanproductions.trafficcontrol.util.ILoopableSoundTileEntity;
 import com.clussmanproductions.trafficcontrol.util.LoopableTileEntitySound;
+import com.clussmanproductions.trafficcontrol.util.NBTUtils;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -45,12 +46,12 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 		gateRotation = compound.getFloat("gateRotation");
 		gateDelay = compound.getFloat("gateDelay");
 		status = getStatusFromCode(compound.getInteger("status"));
-		crossingGateLength = compound.getFloat("length");
-		upperRotationLimit = compound.getFloat("upperRotation");
-		lowerRotationLimit = compound.getFloat("lowerRotation");
-		delay = compound.getFloat("delay");
+		crossingGateLength = NBTUtils.getFloatOrDefault(compound, "length", 4);
+		upperRotationLimit = NBTUtils.getFloatOrDefault(compound, "upperRotation", 60);
+		lowerRotationLimit = NBTUtils.getFloatOrDefault(compound, "lowerRotation", 0);
+		delay = NBTUtils.getFloatOrDefault(compound, "delay", 4);
 	}
-	
+		
 	public float getFacingRotation()
 	{
 		IBlockState blockState = world.getBlockState(getPos());
@@ -241,6 +242,7 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 		nbt.setFloat("length", crossingGateLength);
 		nbt.setFloat("upperRotation", upperRotationLimit);
 		nbt.setFloat("lowerRotation", lowerRotationLimit);
+		nbt.setFloat("delay", delay);
 		
 		return nbt;
 	}
@@ -253,6 +255,7 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 		crossingGateLength = tag.getFloat("length");
 		upperRotationLimit = tag.getFloat("upperRotation");
 		lowerRotationLimit = tag.getFloat("lowerRotation");
+		delay = tag.getFloat("delay");
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -413,6 +416,7 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 		tag.setFloat("length", crossingGateLength);
 		tag.setFloat("upperRotation", upperRotationLimit);
 		tag.setFloat("lowerRotation", lowerRotationLimit);
+		tag.setFloat("delay", delay);
 		return tag;
 	}
 
@@ -421,5 +425,6 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 		setCrossingGateLength(compound.getFloat("length"));
 		setUpperRotationLimit(compound.getFloat("upperRotation"));
 		setLowerRotationLimit(compound.getFloat("lowerRotation"));
+		setDelay(compound.getFloat("delay"));
 	}
 }

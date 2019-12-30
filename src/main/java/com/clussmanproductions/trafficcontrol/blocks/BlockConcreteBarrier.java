@@ -42,7 +42,7 @@ public class BlockConcreteBarrier extends Block {
 	{
 		for(EnumDyeColor color : EnumDyeColor.values())
 		{
-			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), color.getMetadata(), new ModelResourceLocation(getRegistryName(), "dye=" + color.getMetadata() + ",facing=north"));
+			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), color.getMetadata(), new ModelResourceLocation(getRegistryName(), "dye=" + color.getMetadata() + ",inventory"));
 		}
 	}
 	
