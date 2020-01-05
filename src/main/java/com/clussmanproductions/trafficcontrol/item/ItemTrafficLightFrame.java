@@ -45,10 +45,7 @@ public class ItemTrafficLightFrame extends Item {
 	
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-		if (playerIn.rayTrace(EntityPlayer.REACH_DISTANCE.getDefaultValue(), 0).typeOfHit != Type.BLOCK)
-		{
-			playerIn.openGui(ModTrafficControl.instance, GuiProxy.GUI_IDs.TRAFFIC_LIGHT_FRAME, worldIn, 0, 0, 0);
-		}
+		playerIn.openGui(ModTrafficControl.instance, GuiProxy.GUI_IDs.TRAFFIC_LIGHT_FRAME, worldIn, 0, 0, 0);
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
 	
@@ -97,9 +94,19 @@ public class ItemTrafficLightFrame extends Item {
 		
 		HashMap<Integer, EnumTrafficLightBulbTypes> bulbsBySlot = new HashMap<Integer, EnumTrafficLightBulbTypes>(3);
 		IItemHandler handler = player.getHeldItem(hand).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-		bulbsBySlot.put(0, EnumTrafficLightBulbTypes.get(handler.getStackInSlot(0).getMetadata()));
-		bulbsBySlot.put(1, EnumTrafficLightBulbTypes.get(handler.getStackInSlot(1).getMetadata()));
-		bulbsBySlot.put(2, EnumTrafficLightBulbTypes.get(handler.getStackInSlot(2).getMetadata()));
+		
+		for(int i = 0; i < 3; i++)
+		{
+			ItemStack bulbTypeInSlot = handler.getStackInSlot(i);
+			if (bulbTypeInSlot == ItemStack.EMPTY)
+			{
+				bulbsBySlot.put(i, null);
+			}
+			else
+			{
+				bulbsBySlot.put(i, EnumTrafficLightBulbTypes.get(bulbTypeInSlot.getMetadata()));
+			}
+		}
 		
 		trafficLight.setBulbsBySlot(bulbsBySlot);
 		

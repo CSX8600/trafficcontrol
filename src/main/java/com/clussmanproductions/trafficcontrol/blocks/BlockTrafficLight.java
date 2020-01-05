@@ -4,6 +4,7 @@ import com.clussmanproductions.trafficcontrol.ModItems;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.render.TrafficLightRenderer;
+import com.clussmanproductions.trafficcontrol.util.EnumTrafficLightBulbTypes;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
@@ -87,13 +88,18 @@ public class BlockTrafficLight extends Block implements ITileEntityProvider {
 		ItemStack frameStack = new ItemStack(ModItems.traffic_light_frame);
 		IItemHandler handler = frameStack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 		
-		ItemStack upperStack = new ItemStack(ModItems.traffic_light_bulb, 1, trafficLight.getBulbTypeBySlot(0).getIndex());
-		ItemStack middleStack = new ItemStack(ModItems.traffic_light_bulb, 1, trafficLight.getBulbTypeBySlot(1).getIndex());
-		ItemStack lowerStack = new ItemStack(ModItems.traffic_light_bulb, 1, trafficLight.getBulbTypeBySlot(2).getIndex());
-		
-		handler.insertItem(0, upperStack, false);
-		handler.insertItem(1, middleStack, false);
-		handler.insertItem(2, lowerStack, false);
+		for(int i = 0; i < 3; i++)
+		{
+			EnumTrafficLightBulbTypes bulbTypeInSlot = trafficLight.getBulbTypeBySlot(i);
+			if (bulbTypeInSlot == null)
+			{
+				handler.insertItem(i, ItemStack.EMPTY, false);
+			}
+			else
+			{
+				handler.insertItem(i, new ItemStack(ModItems.traffic_light_bulb, 1, bulbTypeInSlot.getIndex()), false);
+			}
+		}
 		
 		return frameStack;
 	}
