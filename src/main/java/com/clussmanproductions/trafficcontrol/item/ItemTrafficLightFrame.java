@@ -15,13 +15,13 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -51,7 +51,7 @@ public class ItemTrafficLightFrame extends Item {
 	
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
-		return new ItemTrafficLightFrameCapabilityProvider();
+		return new ItemTrafficLightFrameCapabilityProvider(stack);
 	}
 	
 	@Override
@@ -113,5 +113,32 @@ public class ItemTrafficLightFrame extends Item {
 		player.getHeldItemMainhand().shrink(1);
 		
 		return EnumActionResult.SUCCESS;
+	}
+
+	@Override
+	public NBTTagCompound getNBTShareTag(ItemStack stack) {
+		NBTTagCompound tag = super.getNBTShareTag(stack);
+		
+		if (tag == null)
+		{
+			tag = new NBTTagCompound();
+		}
+		
+		IItemHandler handler = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+		NBTBase capTag = CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.getStorage().writeNBT(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, handler, null);
+		tag.setTag("ClientInventory", capTag);
+		
+		return tag;
+	}
+	
+	@Override
+	public void readNBTShareTag(ItemStack stack, NBTTagCompound nbt) {
+		super.readNBTShareTag(stack, nbt);
+		
+		if (nbt != null && nbt.hasKey("ClientInventory"))
+		{
+			IItemHandler handler = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+			CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.getStorage().readNBT(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, handler, null, nbt.getTag("ClientInventory"));
+		}
 	}
 }

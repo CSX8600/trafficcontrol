@@ -101,6 +101,8 @@ public class BlockTrafficLight extends Block implements ITileEntityProvider {
 			}
 		}
 		
+		frameStack.setTagCompound(frameStack.getItem().getNBTShareTag(frameStack));
+		
 		return frameStack;
 	}
 	

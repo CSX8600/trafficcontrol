@@ -11,10 +11,11 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class ItemTrafficLightFrameCapabilityProvider implements ICapabilityProvider, ICapabilitySerializable<NBTTagCompound> {
 	private final ItemStackHandler handler;
+	private ItemStack stack;
 	
-	public ItemTrafficLightFrameCapabilityProvider() {
+	public ItemTrafficLightFrameCapabilityProvider(ItemStack stack) {
 		handler = new ItemStackHandler(3)
-		{
+		{			
 			@Override
 			public boolean isItemValid(int slot, ItemStack stack) {
 				return stack.getItem() instanceof ItemTrafficLightBulb;
@@ -25,6 +26,7 @@ public class ItemTrafficLightFrameCapabilityProvider implements ICapabilityProvi
 				return 1;
 			}
 		};
+		this.stack = stack;
 	}
 	
 	@Override
@@ -48,13 +50,16 @@ public class ItemTrafficLightFrameCapabilityProvider implements ICapabilityProvi
 
 	@Override
 	public NBTTagCompound serializeNBT() {
-		return handler.serializeNBT();
+		NBTTagCompound tag = new NBTTagCompound();
+		tag.setTag("items", handler.serializeNBT());
+		return tag;
 	}
 
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
-		handler.deserializeNBT(nbt);
-	}
-	
-	
+		if (nbt.hasKey("items"))
+		{
+			handler.deserializeNBT((NBTTagCompound)nbt.getTag("items"));
+		}
+	}	
 }
