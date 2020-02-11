@@ -31,7 +31,7 @@ public class BlockLightSource extends Block {
 	
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		return NULL_AABB;
+		return new AxisAlignedBB(0, 0, 0, 0, 0, 0);
 	}
 	
 	@Override
