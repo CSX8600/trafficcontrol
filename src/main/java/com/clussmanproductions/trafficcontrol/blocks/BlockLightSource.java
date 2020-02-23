@@ -49,4 +49,9 @@ public class BlockLightSource extends Block {
 	public boolean isCollidable() {
 		return false;
 	}
+	
+	@Override
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+		return null;
+	}
 }

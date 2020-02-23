@@ -63,12 +63,12 @@ public class StreetLightSingleTileEntity extends TileEntity {
 	{
 		IBlockState proposedBlockState = world.getBlockState(pos);
 		
-		if (!proposedBlockState.getBlock().isReplaceable(world, pos))
+		if (proposedBlockState.getBlock() != Blocks.AIR)
 		{
 			pos = pos.up();
 			proposedBlockState = world.getBlockState(pos);
 			
-			if (!proposedBlockState.getBlock().isReplaceable(world, pos))
+			if (proposedBlockState.getBlock() != Blocks.AIR)
 			{
 				proposedBlockState = null;
 			}
