@@ -1,5 +1,12 @@
 package com.clussmanproductions.trafficcontrol.util;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import com.google.common.collect.ImmutableList;
+
 import cam72cam.immersiverailroading.entity.EntityMoveableRollingStock;
 import cam72cam.mod.entity.ModdedEntity;
 import net.minecraft.util.EnumFacing;
@@ -10,11 +17,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import trackapi.lib.ITrack;
 import trackapi.lib.Util;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class ImmersiveRailroadingHelper {
 	public static Vec3d findOrigin(BlockPos currentPos, EnumFacing signalFacing, World world)
@@ -106,12 +108,16 @@ public class ImmersiveRailroadingHelper {
 	{
 		BlockPos currentBlockPos = new BlockPos(currentPosition.x, currentPosition.y, currentPosition.z);
 
-		AxisAlignedBB bb = new AxisAlignedBB(currentBlockPos.south().west(), currentBlockPos.up(3).east().north());
-		List<EntityMoveableRollingStock> stocks = world.getEntitiesWithinAABB(ModdedEntity.class, bb)
-				.stream()
-				.map(x -> x.getSelf() instanceof EntityMoveableRollingStock ? (EntityMoveableRollingStock)x.getSelf() : null)
-				.filter(Objects::nonNull)
-				.collect(Collectors.toList());
+		AxisAlignedBB bb = new AxisAlignedBB(currentBlockPos.down().south(2).west(2), currentBlockPos.up(3).east(2).north(2));
+		
+		List<EntityMoveableRollingStock> stocks = ImmutableList.copyOf(world.loadedEntityList)
+						.stream()
+						.map(x -> x instanceof ModdedEntity ? (ModdedEntity)x : null)
+						.filter(Objects::nonNull)
+						.map(x -> x.getSelf() instanceof EntityMoveableRollingStock ? (EntityMoveableRollingStock)x.getSelf() : null)
+						.filter(Objects::nonNull)
+						.filter(emrs -> bb.contains(new Vec3d(emrs.getBlockPosition().internal)))
+						.collect(Collectors.toList());
 
 		if (!stocks.isEmpty())
 		{

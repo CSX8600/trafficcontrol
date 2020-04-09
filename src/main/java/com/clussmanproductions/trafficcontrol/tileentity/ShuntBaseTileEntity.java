@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 
 import com.clussmanproductions.trafficcontrol.util.ImmersiveRailroadingHelper;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -60,9 +61,9 @@ public abstract class ShuntBaseTileEntity extends TileEntity {
 		return new BlockPos(array[0], array[1], array[2]);
 	}
 
-	protected abstract <T extends ShuntBaseTileEntity> Consumer<T> getRelayAddOrRemoveShuntMethod(RelayTileEntity relayTileEntity);
+	protected abstract <T extends IBlockState> Consumer<T> getRelayAddOrRemoveShuntMethod(RelayTileEntity relayTileEntity);
 	
-	public void onBreak()
+	public void onBreak(IBlockState state)
 	{
 		for(BlockPos pos : relayBoxes)
 		{
@@ -73,8 +74,8 @@ public abstract class ShuntBaseTileEntity extends TileEntity {
 			}
 			
 			RelayTileEntity rte = (RelayTileEntity)e;
-			Consumer<ShuntBaseTileEntity> addOrRemoveConsumer = getRelayAddOrRemoveShuntMethod(rte);
-			addOrRemoveConsumer.accept(this);
+			Consumer<IBlockState> addOrRemoveConsumer = getRelayAddOrRemoveShuntMethod(rte);
+			addOrRemoveConsumer.accept(state);
 		}
 	}
 

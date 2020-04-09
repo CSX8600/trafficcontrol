@@ -100,7 +100,7 @@ public abstract class BlockShuntBase extends Block implements ITileEntityProvide
 		if (!worldIn.isRemote)
 		{
 			ShuntBaseTileEntity te = (ShuntBaseTileEntity)worldIn.getTileEntity(pos);
-			te.onBreak();
+			te.onBreak(state);
 		}
 		super.breakBlock(worldIn, pos, state);
 	}

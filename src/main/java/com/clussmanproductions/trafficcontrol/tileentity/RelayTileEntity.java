@@ -1,34 +1,31 @@
 package com.clussmanproductions.trafficcontrol.tileentity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
-import com.clussmanproductions.trafficcontrol.Config;
-import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase.EnumState;
 import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
-import com.clussmanproductions.trafficcontrol.blocks.BlockShuntBorder;
-import com.clussmanproductions.trafficcontrol.blocks.BlockShuntIsland;
+import com.clussmanproductions.trafficcontrol.scanner.IScannerSubscriber;
+import com.clussmanproductions.trafficcontrol.scanner.ScanCompleteData;
+import com.clussmanproductions.trafficcontrol.scanner.ScanRequest;
+import com.clussmanproductions.trafficcontrol.scanner.ScannerThread;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity.EnumStatuses;
 import com.clussmanproductions.trafficcontrol.util.AnyStatement;
-import com.clussmanproductions.trafficcontrol.util.ImmersiveRailroadingHelper;
+import com.clussmanproductions.trafficcontrol.util.Tuple;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class RelayTileEntity extends TileEntity implements ITickable {
-
-	private AutomatedRelaySystem relaySystem = null;
+public class RelayTileEntity extends TileEntity implements ITickable, IScannerSubscriber {
 	
 	private boolean isMaster;
 	private boolean isPowered;
@@ -54,13 +51,11 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 	private ArrayList<BlockPos> crossingGateLocations = new ArrayList<BlockPos>();
 	private ArrayList<BlockPos> bellLocations = new ArrayList<BlockPos>();
 	private ArrayList<BlockPos> wigWagLocations = new ArrayList<BlockPos>();
-	private ArrayList<BlockPos> shuntBorderLocations = new ArrayList<BlockPos>();
-	private ArrayList<BlockPos> shuntIslandLocations = new ArrayList<BlockPos>();
+	private ArrayList<Tuple<BlockPos, EnumFacing>> shuntBorderOriginsAndFacing = new ArrayList<Tuple<BlockPos, EnumFacing>>();
+	private ArrayList<Tuple<BlockPos, EnumFacing>> shuntIslandOriginsAndFacing = new ArrayList<Tuple<BlockPos, EnumFacing>>();
 	
 	private ArrayList<CrossingGateGateTileEntity> crossingGates = new ArrayList<CrossingGateGateTileEntity>();
 	private ArrayList<BellBaseTileEntity> bells = new ArrayList<BellBaseTileEntity>();
-	private ArrayList<ShuntBorderTileEntity> shuntBorders = new ArrayList<ShuntBorderTileEntity>();
-	private ArrayList<ShuntIslandTileEntity> shuntIslands = new ArrayList<ShuntIslandTileEntity>();
 
 	public RelayTileEntity() {
 
@@ -90,8 +85,26 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 		fillArrayListFromNBT("gate", crossingGateLocations, compound);
 		fillArrayListFromNBT("bell", bellLocations, compound);
 		fillArrayListFromNBT("wigwags", wigWagLocations, compound);
-		fillArrayListFromNBT("shuntBorder", shuntBorderLocations, compound);
-		fillArrayListFromNBT("shuntIsland", shuntIslandLocations, compound);
+		
+		int i = 0;
+		while(compound.hasKey("island_pos_" + i))
+		{
+			BlockPos pos = BlockPos.fromLong(compound.getLong("island_pos_" + i));
+			EnumFacing facing = EnumFacing.VALUES[compound.getInteger("island_facing_" + i)];
+			
+			shuntIslandOriginsAndFacing.add(new Tuple<BlockPos, EnumFacing>(pos, facing));
+			i++;
+		}
+		
+		i = 0;
+		while(compound.hasKey("border_pos_" + i))
+		{
+			BlockPos pos = BlockPos.fromLong(compound.getLong("border_pos_" + i));
+			EnumFacing facing = EnumFacing.VALUES[compound.getInteger("border_facing_" + i)];
+			
+			shuntBorderOriginsAndFacing.add(new Tuple<BlockPos, EnumFacing>(pos, facing));
+			i++;
+		}
 	}
 	
 	private void fillArrayListFromNBT(String key, ArrayList<BlockPos> list, NBTTagCompound tag)
@@ -160,21 +173,22 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 			int[] wigWagPos = new int[] { wigWag.getX(), wigWag.getY(), wigWag.getZ() };
 			nbt.setIntArray("wigwags" + i, wigWagPos);
 		}
+
+		for(int i = 0; i < shuntIslandOriginsAndFacing.size(); i++)
+		{
+			Tuple<BlockPos, EnumFacing> island = shuntIslandOriginsAndFacing.get(i);
+			
+			compound.setLong("island_pos_" + i, island.getFirst().toLong());
+			compound.setInteger("island_facing_" + i, island.getSecond().getIndex());
+		}
 		
-		for (int i = 0; i < shuntBorders.size(); i++) {
-			ShuntBorderTileEntity shunt = shuntBorders.get(i);
-
-			int[] shuntPos = new int[] { shunt.getPos().getX(), shunt.getPos().getY(), shunt.getPos().getZ() };
-			nbt.setIntArray("shuntBorder" + i, shuntPos);
+		for(int i = 0; i < shuntBorderOriginsAndFacing.size(); i++)
+		{
+			Tuple<BlockPos, EnumFacing> border = shuntBorderOriginsAndFacing.get(i);
+			
+			compound.setLong("border_pos_" + i, border.getFirst().toLong());
+			compound.setInteger("border_facing_" + i, border.getSecond().getIndex());
 		}
-
-		for (int i = 0; i < shuntIslands.size(); i++) {
-			ShuntIslandTileEntity shunt = shuntIslands.get(i);
-
-			int[] shuntPos = new int[] { shunt.getPos().getX(), shunt.getPos().getY(), shunt.getPos().getZ() };
-			nbt.setIntArray("shuntIsland" + i, shuntPos);
-		}
-
 		return nbt;
 	}
 
@@ -193,12 +207,7 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 		
 		if (ModTrafficControl.IR_INSTALLED)
 		{
-			if (relaySystem == null)
-			{
-				relaySystem = new AutomatedRelaySystem();
-			}
-			
-			relaySystem.tick();
+			ScannerThread.ThreadsByWorld.get(world).subscribe(this);
 		}
 	}
 	
@@ -253,58 +262,6 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 			for (BlockPos bellLocationToRemove : posToRemove)
 			{
 				bellLocations.remove(bellLocationToRemove);
-			}
-		}
-		
-		if (shuntBorderLocations.size() != shuntBorders.size() ||
-				AnyStatement.Any(shuntBorders, (border) -> border.isInvalid()))
-		{
-			shuntBorders.clear();
-			
-			posToRemove.clear();
-			for(BlockPos shuntPos : shuntBorderLocations)
-			{
-				TileEntity shunt = world.getTileEntity(shuntPos);
-				
-				if (shunt == null || !(shunt instanceof ShuntBorderTileEntity))
-				{
-					posToRemove.add(shuntPos);
-				}
-				else
-				{
-					shuntBorders.add((ShuntBorderTileEntity)shunt);
-				}
-			}
-			
-			for (BlockPos shuntLocationToRemove : posToRemove)
-			{
-				shuntBorderLocations.remove(shuntLocationToRemove);
-			}
-		}
-		
-		if (shuntIslandLocations.size() != shuntIslands.size() ||
-				AnyStatement.Any(shuntIslands, (island) -> island.isInvalid()))
-		{
-			shuntIslands.clear();
-			
-			posToRemove.clear();
-			for(BlockPos shuntPos : shuntIslandLocations)
-			{
-				TileEntity shunt = world.getTileEntity(shuntPos);
-				
-				if (shunt == null || !(shunt instanceof ShuntIslandTileEntity))
-				{
-					posToRemove.add(shuntPos);
-				}
-				else
-				{
-					shuntIslands.add((ShuntIslandTileEntity)shunt);
-				}
-			}
-			
-			for (BlockPos shuntLocationToRemove : posToRemove)
-			{
-				shuntIslandLocations.remove(shuntLocationToRemove);
 			}
 		}
 	}
@@ -552,31 +509,31 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 		}
 	}
 	
-	public boolean addOrRemoveShuntBorder(ShuntBorderTileEntity shuntBorder)
+	public boolean addOrRemoveShuntBorder(BlockPos trackOrigin, EnumFacing shuntFacing)
 	{
-		BlockPos borderPos = shuntBorder.getPos();
+		Tuple<BlockPos, EnumFacing> value = new Tuple<BlockPos, EnumFacing>(trackOrigin, shuntFacing);
 		
-		if (shuntBorderLocations.contains(borderPos))
+		if (shuntBorderOriginsAndFacing.contains(value))
 		{
-			shuntBorderLocations.remove(borderPos);
+			shuntBorderOriginsAndFacing.remove(value);
 			return false;
 		}
 		
-		shuntBorderLocations.add(borderPos);
+		shuntBorderOriginsAndFacing.add(value);
 		return true;
 	}
 	
-	public boolean addOrRemoveShuntIsland(ShuntIslandTileEntity shuntIsland)
+	public boolean addOrRemoveShuntIsland(BlockPos trackOrigin, EnumFacing shuntFacing)
 	{
-		BlockPos islandPos = shuntIsland.getPos();
+		Tuple<BlockPos, EnumFacing> value = new Tuple<BlockPos, EnumFacing>(trackOrigin, shuntFacing);
 		
-		if (shuntIslandLocations.contains(islandPos))
+		if (shuntIslandOriginsAndFacing.contains(value))
 		{
-			shuntIslandLocations.remove(islandPos);
+			shuntIslandOriginsAndFacing.remove(value);
 			return false;
 		}
 		
-		shuntIslandLocations.add(islandPos);
+		shuntIslandOriginsAndFacing.add(value);
 		return true;
 	}
 	
@@ -595,179 +552,104 @@ public class RelayTileEntity extends TileEntity implements ITickable {
 		return isPowered || automatedPowerOverride;
 	}
 	
-	private class AutomatedRelaySystem
-	{
-		private final int noMotionTimeout = 200;
-		private HashMap<BlockPos, ShuntIslandTileEntity> islandOrigins = new HashMap<BlockPos, ShuntIslandTileEntity>();
-		private ShuntBorderTileEntity lastEntity = null;
-		private Vec3d lastPosition = null;
-		private Vec3d lastMotion = null;
-		private int ticksSinceLastMotion = 0;
-		
- 		public void tick()
+	private final UUID islandRequest = UUID.fromString("da2e3487-9fe6-4369-80bc-4b5ce40f0530");
+	private final UUID borderRequest = UUID.fromString("c4ba0fb7-3df0-4c18-9edf-491d825899d9");
+
+	@Override
+	public List<ScanRequest> getScanRequests() {
+		ArrayList<ScanRequest> scanRequestList = new ArrayList<ScanRequest>();
+		for(Tuple<BlockPos, EnumFacing> islandOrigin : shuntIslandOriginsAndFacing)
 		{
- 			//ticksSinceIslandCheck++;
-			// If there has been an addition or removal to our shunt lists,
-			// we will need to reload our caches
-			reloadCaches();
-			
-			boolean doOverride = checkIslands();
-			
-			if (!doOverride)
-			{
-				doOverride = checkBorders();
-			}
-			
-			if ((doOverride && !automatedPowerOverride) || (automatedPowerOverride && !doOverride))
-			{
-				alreadyNotifiedGates = false;
-				alreadyNotifiedBells = false;
-				alreadyNotifiedWigWags = false;
-			}
-			
-			automatedPowerOverride = doOverride;
+			scanRequestList.add(new ScanRequest(
+				islandRequest,
+				islandOrigin.getFirst(),
+				shuntIslandOriginsAndFacing.stream().map(tup -> tup.getFirst()).filter(pos -> !pos.equals(islandOrigin.getFirst())).collect(Collectors.toList()),
+				islandOrigin.getSecond()));
 		}
 		
-		private void reloadCaches()
+		for(Tuple<BlockPos, EnumFacing> borderOrigin : shuntBorderOriginsAndFacing)
 		{
-			if (shuntIslands.size() != islandOrigins.size())
+			scanRequestList.add(new ScanRequest(
+					borderRequest,
+					borderOrigin.getFirst(),
+					shuntIslandOriginsAndFacing.stream().map(tup -> tup.getFirst()).collect(Collectors.toList()),
+					borderOrigin.getSecond()));
+		}
+
+		return scanRequestList;
+	}
+
+	long lastMovementWorldTime = 0;
+	@Override
+	public void onScanComplete(ScanCompleteData scanCompleteData) {
+		UUID scanRequestID = scanCompleteData.getScanRequest().getRequestID();
+		if (scanRequestID.equals(islandRequest))
+		{
+			if (scanCompleteData.getTrainFound())
 			{
-				islandOrigins.clear();
-				
-				for(ShuntIslandTileEntity island : shuntIslands)
+				if (!automatedPowerOverride)
 				{
-					islandOrigins.put(island.getTrackOrigin(), island);
+					alreadyNotifiedBells = false;
+					alreadyNotifiedGates = false;
+					alreadyNotifiedWigWags = false;
+					automatedPowerOverride = true;
+					
+					markDirty();
 				}
+				
+				scanCompleteData.cancelScanningForTileEntity();
+				return;
 			}
 		}
-		
-		private boolean checkIslands()
+		else
 		{
-			for(ShuntIslandTileEntity island : shuntIslands)
+			if (scanCompleteData.getTimedOut())
 			{
-				IBlockState blockState = world.getBlockState(island.getPos());
-				if (blockState.getBlock() != ModBlocks.shunt_island)
-				{
-					continue; // This will be cleaned up shortly
-				}
-				EnumFacing facing = blockState.getValue(BlockShuntIsland.FACING);
-				BlockPos originPos = island.getTrackOrigin();
-				Vec3d vecOrigin = new Vec3d(originPos.getX(), originPos.getY(), originPos.getZ());
-				Vec3d workingPos = new Vec3d(originPos.getX(), originPos.getY(), originPos.getZ());
-				Vec3d motion = new Vec3d(facing.getDirectionVec());
-				
-				for(int i = 0; i < Config.islandTimeout; i++)
-				{
-					Vec3d nextPos = ImmersiveRailroadingHelper.getNextPosition(workingPos, motion, world);
-					Vec3d thisMotion = new Vec3d(nextPos.x - workingPos.x, nextPos.y - workingPos.y, nextPos.z - workingPos.z);
-					Tuple<UUID, Vec3d> nearbyStock = ImmersiveRailroadingHelper.getStockNearby(nextPos, world);
-					if (nearbyStock != null)
-					{
-						return true;
-					}
-					
-					ShuntIslandTileEntity entity = islandOrigins.getOrDefault(new BlockPos(nextPos.x, nextPos.y, nextPos.z), null);
-					if (entity != null && entity != island)
-					{
-						ModTrafficControl.logger.debug("Breaking");
-						break;
-					}
-					
-					workingPos = nextPos;
-					motion = thisMotion;
-				}
+				return;
 			}
 			
-			return false;
-		}
-	
-		private boolean checkBorders()
-		{
-			int blocksCheckedThisTick = 0;
-			int entityIndex = shuntBorders.indexOf(lastEntity);
-			
-			while (true)
-			{				
-				if (shuntBorders.size() <= 0)
+			if (scanCompleteData.getTrainFound())
+			{
+				if (scanCompleteData.getTrainMovingTowardsDestination())
 				{
-					return false;
+					lastMovementWorldTime = world.getTotalWorldTime();
 				}
 				
-				if (entityIndex == -1 || entityIndex == shuntBorders.size())
+				if (!automatedPowerOverride && scanCompleteData.getTrainMovingTowardsDestination())
 				{
-					entityIndex = 0;
-				}
-				
-				lastEntity = shuntBorders.get(entityIndex);
-				if (blocksCheckedThisTick >= Config.borderTick)
-				{
-					return false;
-				}
-				
-				if (lastPosition == null)
-				{
-					BlockPos origin = shuntBorders.get(entityIndex).getTrackOrigin();
-					lastPosition = new Vec3d(origin.getX(), origin.getY(), origin.getZ());
-					EnumFacing facing = world.getBlockState(shuntBorders.get(entityIndex).getPos()).getValue(BlockShuntBorder.FACING);
-					lastMotion = new Vec3d(facing.getDirectionVec());
-				}
-				
-				Vec3d nextPosition = ImmersiveRailroadingHelper.getNextPosition(lastPosition, lastMotion, world);
-				blocksCheckedThisTick++;
-				if (nextPosition == lastPosition)
-				{
-					lastPosition = null;
-					lastMotion = null;
-					entityIndex++;
-					continue;
-				}
-				
-				if (islandOrigins.containsKey(new BlockPos(nextPosition.x, nextPosition.y, nextPosition.z)))
-				{
-					lastPosition = null;
-					lastMotion = null;
-					entityIndex++;
-					continue;
-				}
-				
-				Tuple<UUID, Vec3d> stock = ImmersiveRailroadingHelper.getStockNearby(nextPosition, world);
-				if (stock != null)
-				{
-					Vec3d stockMotion = stock.getSecond();
+					alreadyNotifiedBells = false;
+					alreadyNotifiedGates = false;
+					alreadyNotifiedWigWags = false;
+					automatedPowerOverride = true;
 					
-					boolean noMotion = stockMotion.equals(new Vec3d(0, 0, 0));
-					
-					if (noMotion)
-					{
-						if (ticksSinceLastMotion < noMotionTimeout)
-						{
-							ticksSinceLastMotion++;
-						}
-					}
-					else
-					{
-						ticksSinceLastMotion = 0;
-					}
-					
-					EnumFacing stockMovement = EnumFacing.getFacingFromVector((float)stockMotion.x, (float)stockMotion.y, (float)stockMotion.z);
-					EnumFacing motionDirection = EnumFacing.getFacingFromVector((float)lastMotion.x, (float)lastMotion.y, (float)lastMotion.z);
-					
-					if ((!noMotion && stockMovement.equals(motionDirection)) || (noMotion && ticksSinceLastMotion < noMotionTimeout))
-					{
-						return true;
-					}
-					else
-					{
-						lastPosition = null;
-						lastMotion = null;
-						entityIndex++;
-						continue;
-					}
+					markDirty();
 				}
 				
-				lastMotion = new Vec3d(nextPosition.x - lastPosition.x, nextPosition.y - lastPosition.y, nextPosition.z - lastPosition.z);
-				lastPosition = nextPosition;
+				if (automatedPowerOverride && !scanCompleteData.getTrainMovingTowardsDestination() && world.getTotalWorldTime() - lastMovementWorldTime > 200)
+				{
+					
+				}
+				else
+				{
+					scanCompleteData.cancelScanningForTileEntity(); // Islands are always checked before borders, so we can cancel
+				}
+				return;
 			}
 		}
 	}
+	
+	@Override
+	public void onScanRequestsCompleted() {
+		if (automatedPowerOverride)
+		{
+			alreadyNotifiedBells = false;
+			alreadyNotifiedGates = false;
+			alreadyNotifiedWigWags = false;
+			automatedPowerOverride = false;
+			
+			markDirty();
+			return;
+		}
+	}
+
 }

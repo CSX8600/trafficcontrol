@@ -3,15 +3,17 @@ package com.clussmanproductions.trafficcontrol.item;
 import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase;
+import com.clussmanproductions.trafficcontrol.blocks.BlockShuntBorder;
+import com.clussmanproductions.trafficcontrol.blocks.BlockShuntIsland;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight;
 import com.clussmanproductions.trafficcontrol.tileentity.BellBaseTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.RelayTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.ShuntBorderTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.ShuntIslandTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightControlBoxTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.WigWagTileEntity;
-import com.clussmanproductions.trafficcontrol.tileentity.ShuntBorderTileEntity;
-import com.clussmanproductions.trafficcontrol.tileentity.ShuntIslandTileEntity;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -264,7 +266,10 @@ public class ItemCrossingRelayTuner extends Item {
 			
 			if (te instanceof ShuntBorderTileEntity)
 			{
-				if (relay.addOrRemoveShuntBorder((ShuntBorderTileEntity)te))
+				ShuntBorderTileEntity shuntBorderTileEntity = (ShuntBorderTileEntity)te;
+				IBlockState borderBlock = world.getBlockState(te.getPos());
+				EnumFacing borderFacing = borderBlock.getValue(BlockShuntBorder.FACING);
+				if (relay.addOrRemoveShuntBorder(shuntBorderTileEntity.getTrackOrigin(), borderFacing))
 				{
 					player.sendMessage(new TextComponentString("Paired Border Shunt to Relay Box"));
 				}
@@ -276,7 +281,10 @@ public class ItemCrossingRelayTuner extends Item {
 			
 			if (te instanceof ShuntIslandTileEntity)
 			{
-				if (relay.addOrRemoveShuntIsland((ShuntIslandTileEntity)te))
+				ShuntIslandTileEntity shuntIslandTileEntity = (ShuntIslandTileEntity)te;
+				IBlockState islandBlock = world.getBlockState(te.getPos());
+				EnumFacing islandFacing = islandBlock.getValue(BlockShuntIsland.FACING);
+				if (relay.addOrRemoveShuntIsland(shuntIslandTileEntity.getTrackOrigin(), islandFacing))
 				{
 					player.sendMessage(new TextComponentString("Paired Island Shunt to Relay Box"));
 				}
