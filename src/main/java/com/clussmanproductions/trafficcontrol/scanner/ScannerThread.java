@@ -24,7 +24,7 @@ public class ScannerThread extends Thread
 	{
 		super();
 		_world = world;
-		_data = (ScannerData)_world.loadData(ScannerData.class, "RS_scanner_data");
+		_data = (ScannerData)_world.loadData(ScannerData.class, "TC_scanner_data");
 		if (_data == null)
 		{
 			_data = new ScannerData();
