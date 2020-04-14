@@ -24,6 +24,12 @@ public class ScannerThread extends Thread
 	{
 		super();
 		_world = world;
+		_data = (ScannerData)_world.loadData(ScannerData.class, "RS_scanner_data");
+		if (_data == null)
+		{
+			_data = new ScannerData();
+			_world.setData(_data.mapName, _data);
+		}
 		setName("Traffic Control Train Scanner");
 	}
 	
@@ -39,13 +45,6 @@ public class ScannerThread extends Thread
 	
 	@Override
 	public void run() {
-		_data = (ScannerData)_world.loadData(ScannerData.class, "RS_scanner_data");
-		if (_data == null)
-		{
-			_data = new ScannerData();
-			_world.setData(_data.mapName, _data);
-		}
-		
 		while(true)
 		{
 			if (_stop)
