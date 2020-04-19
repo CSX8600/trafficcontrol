@@ -199,11 +199,22 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 			return;
 		}
 		
+		boolean markDirty = false;
+		if (!alreadyNotifiedBells || !alreadyNotifiedGates || !alreadyNotifiedWigWags)
+		{
+			markDirty = true;
+		}
+		
 		verifyLocations();
-		notifyGates();
+		markDirty = markDirty | notifyGates();
 		updateLamps();
-		updateBells();
-		notifyWigWags();
+		markDirty = markDirty | updateBells();
+		markDirty = markDirty | notifyWigWags();
+		
+		if (markDirty)
+		{
+			markDirty();
+		}
 		
 		if (ModTrafficControl.IR_INSTALLED)
 		{
@@ -266,7 +277,7 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 		}
 	}
 	
-	private void notifyGates()
+	private boolean notifyGates()
 	{
 		if (!alreadyNotifiedGates)
 		{
@@ -276,7 +287,10 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 			}
 			
 			alreadyNotifiedGates = true;
+			return true;
 		}
+		
+		return false;
 	}
 
 	private void updateLamps()
@@ -359,7 +373,7 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 		}
 	}
 	
-	private void updateBells()
+	private boolean updateBells()
 	{
 		if (!alreadyNotifiedBells)
 		{
@@ -369,10 +383,13 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 			}
 			
 			alreadyNotifiedBells = true;
+			return true;
 		}
+		
+		return false;
 	}
 	
-	private void notifyWigWags()
+	private boolean notifyWigWags()
 	{
 		if (!alreadyNotifiedWigWags)
 		{
@@ -398,7 +415,10 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 			}
 			
 			alreadyNotifiedWigWags = true;
+			return true;
 		}
+		
+		return false;
 	}
 	
 	public void setMaster() {
@@ -593,8 +613,6 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 					alreadyNotifiedGates = false;
 					alreadyNotifiedWigWags = false;
 					automatedPowerOverride = true;
-					
-					markDirty();
 				}
 				
 				scanCompleteData.cancelScanningForTileEntity();
@@ -621,8 +639,6 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 					alreadyNotifiedGates = false;
 					alreadyNotifiedWigWags = false;
 					automatedPowerOverride = true;
-					
-					markDirty();
 				}
 				
 				if (automatedPowerOverride && !scanCompleteData.getTrainMovingTowardsDestination() && world.getTotalWorldTime() - lastMovementWorldTime > 200)
@@ -647,7 +663,6 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 			alreadyNotifiedWigWags = false;
 			automatedPowerOverride = false;
 			
-			markDirty();
 			return;
 		}
 	}

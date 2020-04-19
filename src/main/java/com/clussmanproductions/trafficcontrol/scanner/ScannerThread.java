@@ -4,11 +4,12 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import com.clussmanproductions.trafficcontrol.Config;
+import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.util.ImmersiveRailroadingHelper;
+import com.clussmanproductions.trafficcontrol.util.Tuple;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -47,36 +48,15 @@ public class ScannerThread extends Thread
 	public void run() {
 		while(true)
 		{
-			if (_stop)
-			{
-				return;
-			}
-			
-			for(BlockPos pos : _data.getSubscribers())
-			{
-				if (!_world.isBlockLoaded(pos))
+			try
+			{				
+				if (_stop)
 				{
-					continue;
+					return;
 				}
 				
-				TileEntity tileEntity = _world.getTileEntity(pos);
-				if (!(tileEntity instanceof IScannerSubscriber))
+				for(BlockPos pos : _data.getSubscribers())
 				{
-					_data.removeSubscriber(pos);
-					continue;
-				}
-				
-				IScannerSubscriber subscriber = (IScannerSubscriber)tileEntity;
-				boolean hasCanceled = false;
-				for(ScanRequest req : subscriber.getScanRequests())
-				{
-					if (_stop)
-					{
-						return;
-					}
-					
-					ScanCompleteData data = performScan(req);
-					
 					if (_stop)
 					{
 						return;
@@ -84,23 +64,62 @@ public class ScannerThread extends Thread
 					
 					if (!_world.isBlockLoaded(pos))
 					{
-						break;
+						continue;
 					}
 					
-					subscriber.onScanComplete(data);
-					
-					if (!data.getContinueScanningForTileEntity())
+					TileEntity tileEntity = _world.getTileEntity(pos);
+					if (!(tileEntity instanceof IScannerSubscriber))
 					{
-						hasCanceled = true;
-						break;
+						_data.removeSubscriber(pos);
+						continue;
+					}
+					
+					IScannerSubscriber subscriber = (IScannerSubscriber)tileEntity;
+					boolean hasCanceled = false;
+					for(ScanRequest req : subscriber.getScanRequests())
+					{
+						if (_stop)
+						{
+							return;
+						}
+						
+						ScanCompleteData data = performScan(req);
+						
+						if (_stop)
+						{
+							return;
+						}
+						
+						if (!_world.isBlockLoaded(pos))
+						{
+							break;
+						}
+						
+						subscriber.onScanComplete(data);
+						
+						if (!data.getContinueScanningForTileEntity())
+						{
+							hasCanceled = true;
+							break;
+						}
+					}
+					
+					if (!hasCanceled)
+					{
+						subscriber.onScanRequestsCompleted();
 					}
 				}
 				
-				if (!hasCanceled)
-				{
-					subscriber.onScanRequestsCompleted();
-				}
+				Thread.sleep(500);
 			}
+			catch(InterruptedException _)
+			{
+				break;
+			}
+			catch(Exception ex) // Something went wrong - report it and try again
+			{
+				ModTrafficControl.logger.error(ex.toString());
+			} 
 		}
 	}
 	
@@ -112,7 +131,7 @@ public class ScannerThread extends Thread
 		boolean foundTrain = false;
 		boolean trainMovingTowardsDest = false;
 		for(int i = 0; i < Config.borderTimeout; i++)
-		{
+		{					
 			Vec3d nextPosition = ImmersiveRailroadingHelper.getNextPosition(currentPosition, motion, _world);
 			
 			if (nextPosition.equals(currentPosition))
@@ -140,8 +159,8 @@ public class ScannerThread extends Thread
 	}
 	
 	private Tuple<Boolean, Boolean> checkPosition(ScanRequest req, Vec3d position, Vec3d motion)
-	{
-		Tuple<UUID, Vec3d> moveableRollingStockNearby = ImmersiveRailroadingHelper.getStockNearby(position, _world);
+	{		
+		net.minecraft.util.Tuple<UUID, Vec3d> moveableRollingStockNearby = ImmersiveRailroadingHelper.getStockNearby(position, _world);
 		if (moveableRollingStockNearby != null)
 		{
 			Vec3d stockVelocity = moveableRollingStockNearby.getSecond();

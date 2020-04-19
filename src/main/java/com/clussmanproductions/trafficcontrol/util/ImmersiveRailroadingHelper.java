@@ -129,4 +129,7 @@ public class ImmersiveRailroadingHelper {
 			return null;
 		}
 	}
+
+	// Methods for finding next position from Track API (to avoid referencing "world")
+	
 }
