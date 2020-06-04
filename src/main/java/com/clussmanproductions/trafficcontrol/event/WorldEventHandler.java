@@ -1,17 +1,12 @@
 package com.clussmanproductions.trafficcontrol.event;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
-import com.clussmanproductions.trafficcontrol.scanner.ScannerThread;
-import com.clussmanproductions.trafficcontrol.util.MultithreadCapableEntityTracker;
+import com.clussmanproductions.trafficcontrol.scanner.Scanner;
 
-import net.minecraft.entity.EntityTracker;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 @EventBusSubscriber
 public class WorldEventHandler {
@@ -25,43 +20,12 @@ public class WorldEventHandler {
 		
 		try
 		{
-			ModTrafficControl.logger.info("Getting entity tracker for world");
-			Field field;
-			try
-			{
-				field = WorldServer.class.getDeclaredField("entityTracker");
-			}
-			catch(Exception ex)
-			{
-				field = WorldServer.class.getDeclaredField("field_73062_L");
-			}
-			
-			field.setAccessible(true);
-
-			Field modifiersField = Field.class.getDeclaredField("modifiers");
-			modifiersField.setAccessible(true);
-			modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-			
-			EntityTracker entityTracker = (EntityTracker)field.get(e.getWorld());
-			
-			if (entityTracker.getClass().getName().equals(EntityTracker.class.getName()))
-			{
-				ModTrafficControl.logger.info("Entity Tracker has not yet been wrapped...wrapping");
-				MultithreadCapableEntityTracker wrappedEntityTracker = new MultithreadCapableEntityTracker(entityTracker, (WorldServer)e.getWorld());
-				field.set(e.getWorld(), wrappedEntityTracker);
-			}
-			else
-			{
-				ModTrafficControl.logger.info("Entity Tracker has already been wrapped, assuming it's ready for multithreaded use");
-			}
-			
-			ScannerThread thread = new ScannerThread(e.getWorld());
-			ScannerThread.ThreadsByWorld.put(e.getWorld(), thread);
-			thread.start();
+			Scanner thread = new Scanner(e.getWorld());
+			Scanner.ScannersByWorld.put(e.getWorld(), thread);
 		}
 		catch(Exception ex)
 		{
-			ModTrafficControl.logger.error("Could not start Scanner Thread!  Could not replace Entity Tracker: " + ex.toString());
+			ModTrafficControl.logger.error("Could not start Scanner Thread!  Either could not replace Entity Tracker or Chunk Loader: " + ex.toString());
 		}
 	}
 	
@@ -73,12 +37,21 @@ public class WorldEventHandler {
 			return;
 		}
 		
-		if (ScannerThread.ThreadsByWorld.containsKey(e.getWorld()))
+		Scanner.ScannersByWorld.remove(e.getWorld());
+	}
+	
+	@SubscribeEvent
+	public static void onTick(TickEvent.WorldTickEvent e)
+	{
+		if (e.world.isRemote || !ModTrafficControl.IR_INSTALLED)
 		{
-			ScannerThread thread = ScannerThread.ThreadsByWorld.get(e.getWorld());
-			thread.requestStop();
-			
-			while(thread.isAlive()) {}
+			return;
+		}
+		
+		Scanner thread = Scanner.ScannersByWorld.get(e.world);
+		if (thread != null)
+		{
+			thread.tick();
 		}
 	}
 }

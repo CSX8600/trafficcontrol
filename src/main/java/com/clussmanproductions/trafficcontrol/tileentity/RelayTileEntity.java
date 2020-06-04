@@ -12,7 +12,7 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
 import com.clussmanproductions.trafficcontrol.scanner.IScannerSubscriber;
 import com.clussmanproductions.trafficcontrol.scanner.ScanCompleteData;
 import com.clussmanproductions.trafficcontrol.scanner.ScanRequest;
-import com.clussmanproductions.trafficcontrol.scanner.ScannerThread;
+import com.clussmanproductions.trafficcontrol.scanner.Scanner;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity.EnumStatuses;
 import com.clussmanproductions.trafficcontrol.util.AnyStatement;
 import com.clussmanproductions.trafficcontrol.util.Tuple;
@@ -218,7 +218,7 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 		
 		if (ModTrafficControl.IR_INSTALLED)
 		{
-			ScannerThread.ThreadsByWorld.get(world).subscribe(this);
+			Scanner.ScannersByWorld.get(world).subscribe(this);
 		}
 	}
 	
