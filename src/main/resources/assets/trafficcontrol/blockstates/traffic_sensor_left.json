@@ -1,0 +1,53 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "trafficcontrol:traffic_sensor_left"
+    },
+    "variants": {
+        "normal": [{}],
+        "inventory": {
+        	"model": "trafficcontrol:traffic_sensor_left",
+        	"transform":
+        	{
+        		"gui": {
+        			"rotation": 
+	        		[
+	        			{ "x": 30 },
+	        			{ "y": 45 }
+	        		],
+	        		"scale": [0.65, 0.65, 0.65]
+        		},
+        		"firstperson": {
+        			"rotation": { "y": -45 },
+	        		"scale": 0.5
+        		},
+        		"firstperson_lefthand": {
+        			"rotation": { "y": -45 },
+	        		"scale": 0.5
+        		},
+        		"thirdperson": {
+        			"rotation": 
+        			[
+        				{ "x": 75},
+        				{ "y": -45 }
+    				],
+	        		"scale": 0.4,
+        			"translation": [0, 0.25, 0]
+        		},
+        		"thirdperson_lefthand": {
+        			"rotation": 
+        			[
+        				{ "x": 75},
+        				{ "y": -45 }
+    				],
+	        		"scale": 0.4,
+        			"translation": [0, 0.25, 0]
+        		}
+        	}
+        },
+        "facing=north": { "model": "trafficcontrol:traffic_sensor_left" },
+        "facing=west": { "model": "trafficcontrol:traffic_sensor_left", "y": 270 },
+        "facing=south": { "model": "trafficcontrol:traffic_sensor_left", "y": 180 },
+        "facing=east": { "model": "trafficcontrol:traffic_sensor_left", "y": 90 }
+    }
+}

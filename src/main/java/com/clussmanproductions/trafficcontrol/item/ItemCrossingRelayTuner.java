@@ -6,6 +6,8 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase;
 import com.clussmanproductions.trafficcontrol.blocks.BlockShuntBorder;
 import com.clussmanproductions.trafficcontrol.blocks.BlockShuntIsland;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorLeft;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorStraight;
 import com.clussmanproductions.trafficcontrol.tileentity.BellBaseTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.RelayTileEntity;
@@ -76,11 +78,10 @@ public class ItemCrossingRelayTuner extends Item {
 	
 	private void checkUseOnBlock(World world, BlockPos pos, TileEntity te, EntityPlayer player)
 	{
+		IBlockState state = world.getBlockState(pos);
 		if (te instanceof RelayTileEntity)
 		{
-			RelayTileEntity relay = (RelayTileEntity)te;
-			IBlockState state = world.getBlockState(pos);
-			
+			RelayTileEntity relay = (RelayTileEntity)te;			
 			if (state.getBlock() instanceof BlockLampBase)
 			{
 				if (relay.addOrRemoveCrossingGateLamp(pos))
@@ -90,6 +91,23 @@ public class ItemCrossingRelayTuner extends Item {
 				else
 				{
 					player.sendMessage(new TextComponentString("Unpaired Crossing Lamps from Relay Box"));
+				}
+			}
+		}
+		
+		if (te instanceof TrafficLightControlBoxTileEntity)
+		{
+			TrafficLightControlBoxTileEntity tlBox = (TrafficLightControlBoxTileEntity)te;
+			
+			if (state.getBlock() instanceof BlockTrafficSensorLeft || state.getBlock() instanceof BlockTrafficSensorStraight)
+			{
+				if (tlBox.addOrRemoveSensor(pos))
+				{
+					player.sendMessage(new TextComponentString("Paired sensor to Traffic Light Control Box"));
+				}
+				else
+				{
+					player.sendMessage(new TextComponentString("Unpaired sensor from Traffic Light Control Box"));
 				}
 			}
 		}

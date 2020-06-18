@@ -32,6 +32,8 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightSingle;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightControlBox;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficRail;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorLeft;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorStraight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockType3Barrier;
 import com.clussmanproductions.trafficcontrol.blocks.BlockType3BarrierRight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
@@ -113,6 +115,10 @@ public class ModBlocks {
 	public static BlockTrafficRail traffic_rail;
 	@ObjectHolder("concrete_barrier")
 	public static BlockConcreteBarrier concrete_barrier;
+	@ObjectHolder("traffic_sensor_left")
+	public static BlockTrafficSensorLeft traffic_sensor_left;
+	@ObjectHolder("traffic_sensor_straight")
+	public static BlockTrafficSensorStraight traffic_sensor_straight;
 
 	@SideOnly(Side.CLIENT)
 	public static void initModels(ModelRegistryEvent e)
@@ -143,5 +149,7 @@ public class ModBlocks {
 		type_3_barrier_right.initModel();
 		traffic_rail.initModel();
 		concrete_barrier.initModel();
+		traffic_sensor_left.initModel();
+		traffic_sensor_straight.initModel();
 	}
 }

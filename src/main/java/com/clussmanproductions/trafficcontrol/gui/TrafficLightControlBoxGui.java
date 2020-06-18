@@ -1,6 +1,10 @@
 package com.clussmanproductions.trafficcontrol.gui;
 
 import java.io.IOException;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+
+import org.lwjgl.input.Keyboard;
 
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightControlBoxTileEntity;
@@ -9,6 +13,7 @@ import com.clussmanproductions.trafficcontrol.util.EnumTrafficLightBulbTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.ResourceLocation;
@@ -44,14 +49,20 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 	private GuiCheckBox yellowArrowLeftOffFlash;
 	private GuiCheckBox redArrowLeftOffFlash;
 	
-	private GuiButton manualMode;
-	private GuiButton manualModeNorth;
-	private GuiButton manualModeSouth;
+	private GuiButtonExtSelectable manualModeNorth;
+	private GuiButtonExtSelectable manualModeSouth;
+	
+	private GuiTextField greenMinimum;
+	private GuiTextField arrowMinimum;
+	private GuiTextField yellowTime;
+	private GuiTextField redTime;
 	
 	private TrafficLightControlBoxTileEntity _te;
 	public TrafficLightControlBoxGui(TrafficLightControlBoxTileEntity te)
 	{
 		_te = te;
+		
+		_currentMode = _te.getHasSensors() ? Modes.Automatic : Modes.ManualNorthSouth; 
 	}
 	
 	@Override
@@ -60,39 +71,38 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		
 		int horizontalCenter = width / 2;
 		int verticalCenter = height / 2;
+		manualModeNorth = new GuiButtonExtSelectable(ELEMENT_IDS.manualModeNS, horizontalCenter - 55, verticalCenter + 105, 25, 20, "N/S");
+		manualModeSouth = new GuiButtonExtSelectable(ELEMENT_IDS.manualModeWE, horizontalCenter - 30, verticalCenter + 105, 25, 20, "W/E");
 		
-		manualMode = new GuiButton(ELEMENT_IDS.manualMode, horizontalCenter - 55, verticalCenter + 83, 45, 20, "Manual");
-		manualModeNorth = new GuiButton(ELEMENT_IDS.manualModeNS, horizontalCenter - 55, verticalCenter + 105, 22, 20, "N/S");
-		manualModeSouth = new GuiButton(ELEMENT_IDS.manualModeWE, horizontalCenter - 33, verticalCenter + 105, 22, 20, "W/E");
+		manualModeNorth.setIsSelected(true);
 		
-		buttonList.add(manualMode);
 		buttonList.add(manualModeNorth);
 		buttonList.add(manualModeSouth);
 		
-		redOn = new GuiCheckBox(ELEMENT_IDS.redOn, horizontalCenter - 27, verticalCenter - 93, "", false);
-		redOnFlash = new GuiCheckBox(ELEMENT_IDS.redOnFlash, horizontalCenter - 12, verticalCenter - 93, "", false);
-		redOff = new GuiCheckBox(ELEMENT_IDS.redOff, horizontalCenter + 10, verticalCenter - 93, "", false);
-		redOffFlash = new GuiCheckBox(ELEMENT_IDS.redOffFlash, horizontalCenter + 25, verticalCenter - 93, "", false);
-		yellowOn = new GuiCheckBox(ELEMENT_IDS.yellowOn, horizontalCenter - 27, verticalCenter - 73, "", false);
-		yellowOnFlash = new GuiCheckBox(ELEMENT_IDS.yellowOnFlash, horizontalCenter - 12, verticalCenter - 73, "", false);
-		yellowOff = new GuiCheckBox(ELEMENT_IDS.yellowOff, horizontalCenter + 10, verticalCenter - 73, "", false);
-		yellowOffFlash = new GuiCheckBox(ELEMENT_IDS.yellowOffFlash, horizontalCenter + 25, verticalCenter - 73, "", false);
-		greenOn = new GuiCheckBox(ELEMENT_IDS.greenOn, horizontalCenter - 27, verticalCenter - 53, "", false);
-		greenOnFlash = new GuiCheckBox(ELEMENT_IDS.greenOnFlash, horizontalCenter - 12, verticalCenter - 53, "", false);
-		greenOff = new GuiCheckBox(ELEMENT_IDS.greenOff, horizontalCenter + 10, verticalCenter - 53, "", false);
-		greenOffFlash = new GuiCheckBox(ELEMENT_IDS.greenOffFlash, horizontalCenter + 25, verticalCenter - 53, "", false);
-		redArrowLeftOn = new GuiCheckBox(ELEMENT_IDS.redArrowLeftOn, horizontalCenter - 27, verticalCenter - 33, "", false);
-		redArrowLeftOnFlash = new GuiCheckBox(ELEMENT_IDS.redArrowLeftOnFlash, horizontalCenter - 12, verticalCenter - 33, "", false);
-		redArrowLeftOff = new GuiCheckBox(ELEMENT_IDS.redArrowLeftOff, horizontalCenter + 10, verticalCenter - 33, "", false);
-		redArrowLeftOffFlash = new GuiCheckBox(ELEMENT_IDS.redArrowLeftOffFlash, horizontalCenter + 25, verticalCenter - 33, "", false);
-		yellowArrowLeftOn = new GuiCheckBox(ELEMENT_IDS.yellowArrowLeftOn, horizontalCenter - 27, verticalCenter - 13, "", false);
-		yellowArrowLeftOnFlash = new GuiCheckBox(ELEMENT_IDS.yellowArrowLeftOnFlash, horizontalCenter - 12, verticalCenter - 13, "", false);
-		yellowArrowLeftOff = new GuiCheckBox(ELEMENT_IDS.yellowArrowLeftOff, horizontalCenter + 10, verticalCenter - 13, "", false);
-		yellowArrowLeftOffFlash = new GuiCheckBox(ELEMENT_IDS.yellowArrowLeftOffFlash, horizontalCenter + 25, verticalCenter - 13, "", false);
-		greenArrowLeftOn = new GuiCheckBox(ELEMENT_IDS.greenArrowLeftOn, horizontalCenter - 27, verticalCenter + 7, "", false);
-		greenArrowLeftOnFlash = new GuiCheckBox(ELEMENT_IDS.greenArrowLeftOnFlash, horizontalCenter - 12, verticalCenter + 7, "", false);
-		greenArrowLeftOff = new GuiCheckBox(ELEMENT_IDS.greenArrowLeftOff, horizontalCenter + 10, verticalCenter + 7, "", false);
-		greenArrowLeftOffFlash = new GuiCheckBox(ELEMENT_IDS.greenArrowLeftOffFlash, horizontalCenter + 25, verticalCenter + 7, "", false);
+		redOn = new GuiCheckBox(ELEMENT_IDS.redOn, horizontalCenter - 27, verticalCenter - 83, "", false);
+		redOnFlash = new GuiCheckBox(ELEMENT_IDS.redOnFlash, horizontalCenter - 12, verticalCenter - 83, "", false);
+		redOff = new GuiCheckBox(ELEMENT_IDS.redOff, horizontalCenter + 10, verticalCenter - 83, "", false);
+		redOffFlash = new GuiCheckBox(ELEMENT_IDS.redOffFlash, horizontalCenter + 25, verticalCenter - 83, "", false);
+		yellowOn = new GuiCheckBox(ELEMENT_IDS.yellowOn, horizontalCenter - 27, verticalCenter - 63, "", false);
+		yellowOnFlash = new GuiCheckBox(ELEMENT_IDS.yellowOnFlash, horizontalCenter - 12, verticalCenter - 63, "", false);
+		yellowOff = new GuiCheckBox(ELEMENT_IDS.yellowOff, horizontalCenter + 10, verticalCenter - 63, "", false);
+		yellowOffFlash = new GuiCheckBox(ELEMENT_IDS.yellowOffFlash, horizontalCenter + 25, verticalCenter - 63, "", false);
+		greenOn = new GuiCheckBox(ELEMENT_IDS.greenOn, horizontalCenter - 27, verticalCenter - 43, "", false);
+		greenOnFlash = new GuiCheckBox(ELEMENT_IDS.greenOnFlash, horizontalCenter - 12, verticalCenter - 43, "", false);
+		greenOff = new GuiCheckBox(ELEMENT_IDS.greenOff, horizontalCenter + 10, verticalCenter - 43, "", false);
+		greenOffFlash = new GuiCheckBox(ELEMENT_IDS.greenOffFlash, horizontalCenter + 25, verticalCenter - 43, "", false);
+		redArrowLeftOn = new GuiCheckBox(ELEMENT_IDS.redArrowLeftOn, horizontalCenter - 27, verticalCenter - 23, "", false);
+		redArrowLeftOnFlash = new GuiCheckBox(ELEMENT_IDS.redArrowLeftOnFlash, horizontalCenter - 12, verticalCenter - 23, "", false);
+		redArrowLeftOff = new GuiCheckBox(ELEMENT_IDS.redArrowLeftOff, horizontalCenter + 10, verticalCenter - 23, "", false);
+		redArrowLeftOffFlash = new GuiCheckBox(ELEMENT_IDS.redArrowLeftOffFlash, horizontalCenter + 25, verticalCenter - 23, "", false);
+		yellowArrowLeftOn = new GuiCheckBox(ELEMENT_IDS.yellowArrowLeftOn, horizontalCenter - 27, verticalCenter - 3, "", false);
+		yellowArrowLeftOnFlash = new GuiCheckBox(ELEMENT_IDS.yellowArrowLeftOnFlash, horizontalCenter - 12, verticalCenter - 3, "", false);
+		yellowArrowLeftOff = new GuiCheckBox(ELEMENT_IDS.yellowArrowLeftOff, horizontalCenter + 10, verticalCenter - 3, "", false);
+		yellowArrowLeftOffFlash = new GuiCheckBox(ELEMENT_IDS.yellowArrowLeftOffFlash, horizontalCenter + 25, verticalCenter - 3, "", false);
+		greenArrowLeftOn = new GuiCheckBox(ELEMENT_IDS.greenArrowLeftOn, horizontalCenter - 27, verticalCenter + 17, "", false);
+		greenArrowLeftOnFlash = new GuiCheckBox(ELEMENT_IDS.greenArrowLeftOnFlash, horizontalCenter - 12, verticalCenter + 17, "", false);
+		greenArrowLeftOff = new GuiCheckBox(ELEMENT_IDS.greenArrowLeftOff, horizontalCenter + 10, verticalCenter + 17, "", false);
+		greenArrowLeftOffFlash = new GuiCheckBox(ELEMENT_IDS.greenArrowLeftOffFlash, horizontalCenter + 25, verticalCenter + 17, "", false);
 		
 		buttonList.add(redOn);
 		buttonList.add(redOnFlash);
@@ -120,6 +130,18 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		buttonList.add(greenArrowLeftOffFlash);
 		
 		setManualChecked();
+		
+		greenMinimum = new GuiTextField(ELEMENT_IDS.greenMinimum, fontRenderer, horizontalCenter - 54, verticalCenter - 90, 105, 20);
+		yellowTime = new GuiTextField(ELEMENT_IDS.yellowTime, fontRenderer, horizontalCenter - 54, verticalCenter - 55, 105, 20);
+		redTime = new GuiTextField(ELEMENT_IDS.redTime, fontRenderer, horizontalCenter - 54, verticalCenter - 20, 105, 20);
+		arrowMinimum = new GuiTextField(ELEMENT_IDS.arrowMinimum, fontRenderer, horizontalCenter - 54, verticalCenter + 15, 105, 20);
+		
+		greenMinimum.setText(Double.toString(_te.getAutomator().getGreenMinimum()));
+		yellowTime.setText(Double.toString(_te.getAutomator().getYellowTime()));
+		redTime.setText(Double.toString(_te.getAutomator().getRedTime()));
+		arrowMinimum.setText(Double.toString(_te.getAutomator().getArrowMinimum()));
+		
+		setButtonVisibilityForMode();
 	}
 	
 	private void setManualChecked()
@@ -151,6 +173,19 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		redArrowLeftOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.RedArrowLeft, true, false));
 	}
 	
+	public void setButtonVisibilityForMode()
+	{
+		boolean manualMode = _currentMode == Modes.ManualNorthSouth || _currentMode == Modes.ManualWestEast;
+		
+		buttonList
+			.stream()
+			.filter(b -> b instanceof GuiCheckBox)
+			.forEach(b -> b.visible = manualMode);
+		
+		manualModeNorth.visible = manualMode;
+		manualModeSouth.visible = manualMode;
+	}
+	
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		// TODO Auto-generated method stub
@@ -160,50 +195,82 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		Minecraft.getMinecraft().getTextureManager().bindTexture(background);
 		drawScaledCustomSizeModalRect(horizontalCenter - 112, verticalCenter - 128, 0, 0, 16, 16, 224, 256, 16, 16);
 		
-		drawString(fontRenderer, "Bulb", horizontalCenter - 54, verticalCenter - 110, 0xFFFFFF);
-		drawString(fontRenderer, "F", horizontalCenter - 11, verticalCenter - 110, 0xFFFFFF);
-		drawString(fontRenderer, "F", horizontalCenter + 26, verticalCenter - 110, 0xFFFFFF);
+		if (_currentMode == Modes.ManualNorthSouth || _currentMode == Modes.ManualWestEast)
+		{
+			drawManualMode(horizontalCenter, verticalCenter);
+		}
+		
+		if (_currentMode == Modes.Automatic)
+		{
+			drawAutomaticMode(horizontalCenter, verticalCenter);
+		}
+				
+		super.drawScreen(mouseX, mouseY, partialTicks);
+	}
+	
+	private void drawManualMode(int horizontalCenter, int verticalCenter)
+	{
+		drawString(fontRenderer, "Manual Mode", horizontalCenter - 54, verticalCenter - 110, 0xFFFF00);
+		
+		drawString(fontRenderer, "Bulb", horizontalCenter - 54, verticalCenter - 100, 0xFFFFFF);
+		drawString(fontRenderer, "F", horizontalCenter - 11, verticalCenter - 100, 0xFFFFFF);
+		drawString(fontRenderer, "F", horizontalCenter + 26, verticalCenter - 100, 0xFFFFFF);
 		
 		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/redstone_torch_on");
-		drawTexturedModalRect(horizontalCenter - 30, verticalCenter - 116, sprite, 16, 16);
+		drawTexturedModalRect(horizontalCenter - 30, verticalCenter - 106, sprite, 16, 16);
 		
 		sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/redstone_torch_off");
-		drawTexturedModalRect(horizontalCenter + 7, verticalCenter - 116, sprite, 16, 16);
+		drawTexturedModalRect(horizontalCenter + 7, verticalCenter - 106, sprite, 16, 16);
 		
 		sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("trafficcontrol:blocks/red");
-		drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 95, sprite, 16, 16);
+		drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 85, sprite, 16, 16);
 		
 		sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("trafficcontrol:blocks/yellow_solid");
-		drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 75, sprite, 16, 16);
+		drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 65, sprite, 16, 16);
 		
 		sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("trafficcontrol:blocks/green");
-		drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 55, sprite, 16, 16);
+		drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 45, sprite, 16, 16);
 		
 		sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("trafficcontrol:blocks/red_arrow_left");
-		drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 35, sprite, 16, 16);
+		drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 25, sprite, 16, 16);
 		
 		sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("trafficcontrol:blocks/yellow_arrow_left");
-		drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 15, sprite, 16, 16);
+		drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 5, sprite, 16, 16);
 		
 		sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("trafficcontrol:blocks/green_arrow_left");
-		drawTexturedModalRect(horizontalCenter - 54, verticalCenter + 5, sprite, 16, 16);
-		
-		super.drawScreen(mouseX, mouseY, partialTicks);
+		drawTexturedModalRect(horizontalCenter - 54, verticalCenter + 15, sprite, 16, 16);
 	}
 
+	private void drawAutomaticMode(int horizontalCenter, int verticalCenter)
+	{
+		int leftMargin = horizontalCenter - 54;
+		drawString(fontRenderer, "Automatic Mode", leftMargin, verticalCenter - 110, 0xFFFF00);
+		drawString(fontRenderer, "Green Minimum", leftMargin, verticalCenter - 100, 0xFFFFFF);
+		greenMinimum.drawTextBox();
+		drawString(fontRenderer, "Yellow Time", leftMargin, verticalCenter - 65, 0xFFFFFF);
+		yellowTime.drawTextBox();
+		drawString(fontRenderer, "Red Time", leftMargin, verticalCenter - 30, 0xFFFFFF);
+		redTime.drawTextBox();
+		drawString(fontRenderer, "Arrow Minimum", leftMargin, verticalCenter + 5, 0xFFFFFF);
+		arrowMinimum.drawTextBox();
+	}
+	
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		switch(button.id)
 		{
-			case ELEMENT_IDS.manualMode:
 			case ELEMENT_IDS.manualModeNS:
 				setCurrentMode(Modes.ManualNorthSouth);
 				setManualChecked();
+				manualModeNorth.setIsSelected(true);
+				manualModeSouth.setIsSelected(false);
 				break;
 			case ELEMENT_IDS.manualModeWE:
 				setCurrentMode(Modes.ManualWestEast);
 				setManualChecked();
+				manualModeNorth.setIsSelected(false);
+				manualModeSouth.setIsSelected(true);
 				break;
 			case ELEMENT_IDS.greenOn:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Green, false, true);
@@ -328,6 +395,54 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 			return _te.hasSpecificWestEastManualOption(bulbType, flash, forActive);
 		}
 	}
+
+	@Override
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+		greenMinimum.mouseClicked(mouseX, mouseY, mouseButton);
+		arrowMinimum.mouseClicked(mouseX, mouseY, mouseButton);
+		yellowTime.mouseClicked(mouseX, mouseY, mouseButton);
+		redTime.mouseClicked(mouseX, mouseY, mouseButton);
+		
+		super.mouseClicked(mouseX, mouseY, mouseButton);
+	}
+	
+	@Override
+	protected void keyTyped(char typedChar, int keyCode) throws IOException {
+		checkedKeyTyped(greenMinimum, typedChar, keyCode, (value) -> _te.getAutomator().setGreenMinimum(value));
+		checkedKeyTyped(arrowMinimum, typedChar, keyCode, (value) -> _te.getAutomator().setArrowMinimum(value));
+		checkedKeyTyped(yellowTime, typedChar, keyCode, (value) -> _te.getAutomator().setYellowTime(value));
+		checkedKeyTyped(redTime, typedChar, keyCode, (value) -> _te.getAutomator().setRedTime(value));
+		
+		super.keyTyped(typedChar, keyCode);
+	}
+	
+	private void checkedKeyTyped(GuiTextField textBox, char typedChar, int keyCode, Consumer<Double> onTypeSuccess)
+	{
+		if (Character.toString(typedChar).equals(".") && textBox.getText().contains("."))
+		{
+			return;
+		}
+		
+		if (Keyboard.KEY_BACK == keyCode ||
+				Keyboard.KEY_DELETE == keyCode ||
+				Character.isDigit(typedChar))
+		{
+			textBox.textboxKeyTyped(typedChar, keyCode);
+			
+			if (textBox.isFocused())
+			{
+				if (textBox.getText().isEmpty())
+				{
+					onTypeSuccess.accept((double)0);
+				}
+				else
+				{
+					double value = Double.parseDouble(textBox.getText());
+					onTypeSuccess.accept(value);
+				}
+			}
+		}
+	}
 	
 	public static class ELEMENT_IDS
 	{
@@ -355,14 +470,18 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		public static final int greenArrowLeftOffFlash = 21;
 		public static final int yellowArrowLeftOffFlash = 22;
 		public static final int redArrowLeftOffFlash = 23;
-		public static final int manualMode = 24;
 		public static final int manualModeNS = 25;
 		public static final int manualModeWE = 26;
+		public static final int greenMinimum = 27;
+		public static final int yellowTime = 28;
+		public static final int redTime = 29;
+		public static final int arrowMinimum = 30;
 	}
 
 	private enum Modes
 	{
 		ManualNorthSouth,
-		ManualWestEast
+		ManualWestEast,
+		Automatic
 	}
 }
