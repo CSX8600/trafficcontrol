@@ -13,5 +13,10 @@
     {
         "category": "block",
         "sounds": [ "trafficcontrol:safetran_mechanical" ]
+    },
+    "wch":
+    {
+    	"category": "block",
+    	"sounds": [ "trafficcontrol:wch" ]
     }
 }

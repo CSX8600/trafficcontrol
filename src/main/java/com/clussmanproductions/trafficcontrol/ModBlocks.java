@@ -34,6 +34,7 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightControlBox
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficRail;
 import com.clussmanproductions.trafficcontrol.blocks.BlockType3Barrier;
 import com.clussmanproductions.trafficcontrol.blocks.BlockType3BarrierRight;
+import com.clussmanproductions.trafficcontrol.blocks.BlockWCHBell;
 import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
 
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -113,6 +114,8 @@ public class ModBlocks {
 	public static BlockTrafficRail traffic_rail;
 	@ObjectHolder("concrete_barrier")
 	public static BlockConcreteBarrier concrete_barrier;
+	@ObjectHolder("wch_bell")
+	public static BlockWCHBell wch_bell;
 
 	@SideOnly(Side.CLIENT)
 	public static void initModels(ModelRegistryEvent e)
@@ -143,5 +146,6 @@ public class ModBlocks {
 		type_3_barrier_right.initModel();
 		traffic_rail.initModel();
 		concrete_barrier.initModel();
+		wch_bell.initModel();
 	}
 }
