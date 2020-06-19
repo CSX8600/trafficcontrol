@@ -17,6 +17,7 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayTopNW;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayTopSE;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayTopSW;
 import com.clussmanproductions.trafficcontrol.blocks.BlockDrum;
+import com.clussmanproductions.trafficcontrol.blocks.BlockHorizontalPole;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLightSource;
 import com.clussmanproductions.trafficcontrol.blocks.BlockOverhead;
 import com.clussmanproductions.trafficcontrol.blocks.BlockOverheadCrossbuck;
@@ -113,6 +114,8 @@ public class ModBlocks {
 	public static BlockTrafficRail traffic_rail;
 	@ObjectHolder("concrete_barrier")
 	public static BlockConcreteBarrier concrete_barrier;
+	@ObjectHolder("horizontal_pole")
+	public static BlockHorizontalPole horizontal_pole;
 
 	@SideOnly(Side.CLIENT)
 	public static void initModels(ModelRegistryEvent e)
@@ -143,5 +146,6 @@ public class ModBlocks {
 		type_3_barrier_right.initModel();
 		traffic_rail.initModel();
 		concrete_barrier.initModel();
+		horizontal_pole.initModel();
 	}
 }

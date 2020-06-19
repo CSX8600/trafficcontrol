@@ -23,6 +23,7 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayTopNW;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayTopSE;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayTopSW;
 import com.clussmanproductions.trafficcontrol.blocks.BlockDrum;
+import com.clussmanproductions.trafficcontrol.blocks.BlockHorizontalPole;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLightSource;
 import com.clussmanproductions.trafficcontrol.blocks.BlockOverhead;
 import com.clussmanproductions.trafficcontrol.blocks.BlockOverheadCrossbuck;
@@ -118,6 +119,7 @@ public class CommonProxy {
 		e.getRegistry().register(new BlockType3BarrierRight());
 		e.getRegistry().register(new BlockTrafficRail());
 		e.getRegistry().register(new BlockConcreteBarrier());
+		e.getRegistry().register(new BlockHorizontalPole());
 
 		GameRegistry.registerTileEntity(CrossingGateGateTileEntity.class, ModTrafficControl.MODID + "_crossinggategate");
 		GameRegistry.registerTileEntity(SafetranType3TileEntity.class, ModTrafficControl.MODID + "_safetrantyp3");
@@ -184,6 +186,7 @@ public class CommonProxy {
 			
 			
 		}.setRegistryName(ModBlocks.concrete_barrier.getRegistryName()));
+		e.getRegistry().register(new ItemBlock(ModBlocks.horizontal_pole).setRegistryName(ModBlocks.horizontal_pole.getRegistryName()));
 	}
 
 	public static void registerSounds(RegistryEvent.Register<SoundEvent> e)
