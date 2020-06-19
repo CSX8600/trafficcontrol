@@ -24,6 +24,7 @@ public class BlockSafetranType3 extends Block implements ITileEntityProvider {
 		setRegistryName("safetran_type_3");
 		setUnlocalizedName(ModTrafficControl.MODID + ".safetran_type_3");
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
+		setHardness(2f);
 	}
 	
 	@Override

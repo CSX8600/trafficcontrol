@@ -23,6 +23,7 @@ tile.trafficcontrol.shunt_border.name=Border Shunt
 tile.trafficcontrol.type_3_barrier.name=Type 3 Barrier
 tile.trafficcontrol.type_3_barrier_right.name=Type 3 Barrier
 tile.trafficcontrol.traffic_rail.name=Guardrail
+tile.trafficcontrol.wch_bell.name=WCH Electronic Bell
 #items
 item.trafficcontrol.crossing_relay_box.name=Crossing Gate Relay
 item.trafficcontrol.crossing_relay_tuner.name=Tuner
