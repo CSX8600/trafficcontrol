@@ -39,6 +39,8 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightSingle;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightControlBox;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficRail;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorLeft;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorStraight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockType3Barrier;
 import com.clussmanproductions.trafficcontrol.blocks.BlockType3BarrierRight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockWCHBell;
@@ -123,6 +125,8 @@ public class CommonProxy {
 		e.getRegistry().register(new BlockConcreteBarrier());
 		e.getRegistry().register(new BlockHorizontalPole());
 		e.getRegistry().register(new BlockWCHBell());
+		e.getRegistry().register(new BlockTrafficSensorLeft());
+		e.getRegistry().register(new BlockTrafficSensorStraight());
 
 		GameRegistry.registerTileEntity(CrossingGateGateTileEntity.class, ModTrafficControl.MODID + "_crossinggategate");
 		GameRegistry.registerTileEntity(SafetranType3TileEntity.class, ModTrafficControl.MODID + "_safetrantyp3");
@@ -192,6 +196,8 @@ public class CommonProxy {
 		}.setRegistryName(ModBlocks.concrete_barrier.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.horizontal_pole).setRegistryName(ModBlocks.horizontal_pole.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.wch_bell).setRegistryName(ModBlocks.wch_bell.getRegistryName()));
+		e.getRegistry().register(new ItemBlock(ModBlocks.traffic_sensor_left).setRegistryName(ModBlocks.traffic_sensor_left.getRegistryName()));
+		e.getRegistry().register(new ItemBlock(ModBlocks.traffic_sensor_straight).setRegistryName(ModBlocks.traffic_sensor_straight.getRegistryName()));
 	}
 
 	public static void registerSounds(RegistryEvent.Register<SoundEvent> e)

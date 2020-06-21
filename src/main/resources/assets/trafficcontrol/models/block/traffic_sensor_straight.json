@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube",
+	"textures": {
+		"down": "trafficcontrol:blocks/traffic_sensor_side",
+		"up": "trafficcontrol:blocks/traffic_sensor_straight_top",
+		"north": "trafficcontrol:blocks/traffic_sensor_side",
+		"east": "trafficcontrol:blocks/traffic_sensor_side",
+		"south": "trafficcontrol:blocks/traffic_sensor_side",
+		"west": "trafficcontrol:blocks/traffic_sensor_side",
+		"particle": "trafficcontrol:blocks/traffic_sensor_straight_top"
+	}
+}
