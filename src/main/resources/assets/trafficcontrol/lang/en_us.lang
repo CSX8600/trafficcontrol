@@ -24,6 +24,7 @@ tile.trafficcontrol.type_3_barrier.name=Type 3 Barrier
 tile.trafficcontrol.type_3_barrier_right.name=Type 3 Barrier
 tile.trafficcontrol.traffic_rail.name=Guardrail
 tile.trafficcontrol.wch_bell.name=WCH Electronic Bell
+tile.trafficcontrol.horizontal_pole.name=Horizontal Pole
 tile.trafficcontrol.traffic_sensor_left.name=Traffic Sensor (Left)
 tile.trafficcontrol.traffic_sensor_straight.name=Traffic Sensor (Straight)
 #items
