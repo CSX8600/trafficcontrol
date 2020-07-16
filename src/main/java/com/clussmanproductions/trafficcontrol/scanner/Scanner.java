@@ -12,6 +12,7 @@ import com.google.common.collect.ImmutableList;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -243,9 +244,13 @@ public class Scanner
 			foundTrainThisRequest = foundTrainThisRequest || foundTrainData.getFirst();
 			trainMovingTowardsDestThisRequest = trainMovingTowardsDestThisRequest || foundTrainData.getSecond();
 			
-			if (req.getEndingPositions().contains(new BlockPos(currentPosition.x, currentPosition.y, currentPosition.z)))
+			for(BlockPos endingPos : req.getEndingPositions())
 			{
-				return new ScanCompleteData(req, false, foundTrainThisRequest, trainMovingTowardsDestThisRequest);
+				AxisAlignedBB bb = new AxisAlignedBB(endingPos.down().south(2).west(2), endingPos.up(3).east(2).north(2));
+				if (bb.contains(currentPosition))
+				{
+					return new ScanCompleteData(req, false, foundTrainThisRequest, trainMovingTowardsDestThisRequest);
+				}
 			}
 			
 			blocksScannedThisTick++;

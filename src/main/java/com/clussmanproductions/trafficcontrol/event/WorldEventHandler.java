@@ -43,7 +43,7 @@ public class WorldEventHandler {
 	@SubscribeEvent
 	public static void onTick(TickEvent.WorldTickEvent e)
 	{
-		if (e.world.isRemote || !ModTrafficControl.IR_INSTALLED)
+		if (e.world.isRemote || !ModTrafficControl.IR_INSTALLED || e.type != TickEvent.Type.WORLD || e.phase != TickEvent.Phase.END)
 		{
 			return;
 		}
