@@ -23,6 +23,7 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayTopNW;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayTopSE;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayTopSW;
 import com.clussmanproductions.trafficcontrol.blocks.BlockDrum;
+import com.clussmanproductions.trafficcontrol.blocks.BlockHorizontalPole;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLightSource;
 import com.clussmanproductions.trafficcontrol.blocks.BlockOverhead;
 import com.clussmanproductions.trafficcontrol.blocks.BlockOverheadCrossbuck;
@@ -38,8 +39,11 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightSingle;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightControlBox;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficRail;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorLeft;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorStraight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockType3Barrier;
 import com.clussmanproductions.trafficcontrol.blocks.BlockType3BarrierRight;
+import com.clussmanproductions.trafficcontrol.blocks.BlockWCHBell;
 import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
 import com.clussmanproductions.trafficcontrol.gui.GuiProxy;
 import com.clussmanproductions.trafficcontrol.item.ItemCrossingRelayBox;
@@ -60,6 +64,7 @@ import com.clussmanproductions.trafficcontrol.tileentity.StreetLightSingleTileEn
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightControlBoxTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.Type3BarrierTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.WCHBellTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.WigWagTileEntity;
 
 import net.minecraft.block.Block;
@@ -118,6 +123,10 @@ public class CommonProxy {
 		e.getRegistry().register(new BlockType3BarrierRight());
 		e.getRegistry().register(new BlockTrafficRail());
 		e.getRegistry().register(new BlockConcreteBarrier());
+		e.getRegistry().register(new BlockHorizontalPole());
+		e.getRegistry().register(new BlockWCHBell());
+		e.getRegistry().register(new BlockTrafficSensorLeft());
+		e.getRegistry().register(new BlockTrafficSensorStraight());
 
 		GameRegistry.registerTileEntity(CrossingGateGateTileEntity.class, ModTrafficControl.MODID + "_crossinggategate");
 		GameRegistry.registerTileEntity(SafetranType3TileEntity.class, ModTrafficControl.MODID + "_safetrantyp3");
@@ -133,6 +142,7 @@ public class CommonProxy {
 		GameRegistry.registerTileEntity(ShuntIslandTileEntity.class, ModTrafficControl.MODID + "_shuntisland");
 		GameRegistry.registerTileEntity(Type3BarrierTileEntity.class, ModTrafficControl.MODID + "_type3barrier");
 		GameRegistry.registerTileEntity(ConcreteBarrierTileEntity.class, ModTrafficControl.MODID + "_concretebarrier");
+		GameRegistry.registerTileEntity(WCHBellTileEntity.class, ModTrafficControl.MODID + "_wchbell");
 	}
 
 	@SubscribeEvent
@@ -170,20 +180,24 @@ public class CommonProxy {
 		e.getRegistry().register(new ItemBlock(ModBlocks.concrete_barrier)
 		{
 			public boolean getHasSubtypes() { return true; }
-			
+
 			public String getUnlocalizedName(net.minecraft.item.ItemStack stack)
 			{
 				String unlocalizedName = ModTrafficControl.MODID + ".concrete_barrier.";
 				int meta = stack.getMetadata();
-				
+
 				EnumDyeColor color = EnumDyeColor.byMetadata(meta);
 				unlocalizedName += color.getName();
-				
+
 				return unlocalizedName;
 			}
-			
-			
+
+
 		}.setRegistryName(ModBlocks.concrete_barrier.getRegistryName()));
+		e.getRegistry().register(new ItemBlock(ModBlocks.horizontal_pole).setRegistryName(ModBlocks.horizontal_pole.getRegistryName()));
+		e.getRegistry().register(new ItemBlock(ModBlocks.wch_bell).setRegistryName(ModBlocks.wch_bell.getRegistryName()));
+		e.getRegistry().register(new ItemBlock(ModBlocks.traffic_sensor_left).setRegistryName(ModBlocks.traffic_sensor_left.getRegistryName()));
+		e.getRegistry().register(new ItemBlock(ModBlocks.traffic_sensor_straight).setRegistryName(ModBlocks.traffic_sensor_straight.getRegistryName()));
 	}
 
 	public static void registerSounds(RegistryEvent.Register<SoundEvent> e)
@@ -191,6 +205,7 @@ public class CommonProxy {
 		e.getRegistry().register(ModSounds.gateEvent);
 		e.getRegistry().register(ModSounds.safetranType3Event);
 		e.getRegistry().register(ModSounds.safetranMechanicalEvent);
+		e.getRegistry().register(ModSounds.wchEvent);
 	}
 
 	public void preInit(FMLPreInitializationEvent e)

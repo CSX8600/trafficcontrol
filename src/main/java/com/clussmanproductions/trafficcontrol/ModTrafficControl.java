@@ -17,43 +17,43 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 @Mod(modid = ModTrafficControl.MODID, version = ModTrafficControl.VERSION, name = "Traffic Control", useMetadata = true)
 public class ModTrafficControl {
 	public static final String MODID = "trafficcontrol";
-	public static final String VERSION = "0.2.1";
+	public static final String VERSION = "0.2.0";
 	public static boolean IR_INSTALLED = false;
 	public static CreativeTabs CREATIVE_TAB = new CreativeTabs("Traffic Control") {
-		
+
 		@Override
 		public ItemStack getTabIconItem() {
 			// TODO Auto-generated method stub
 			return new ItemStack(ModBlocks.cone);
 		}
 	};
-	
+
 	@SidedProxy(clientSide = "com.clussmanproductions.trafficcontrol.proxy.ClientProxy", serverSide = "com.clussmanproductions.trafficcontrol.proxy.ServerProxy")
 	public static CommonProxy proxy;
-	
+
 	@Mod.Instance
 	public static ModTrafficControl instance;
-	
+
 	public static Logger logger;
-	
+
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)
 	{
 		logger = e.getModLog();
 		proxy.preInit(e);
 	}
-	
+
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent e)
 	{
 		proxy.init(e);
 	}
-	
+
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent e)
 	{
 		proxy.postInit(e);
-		
+
 		IR_INSTALLED = Loader.isModLoaded("immersiverailroading");
 	}
 }

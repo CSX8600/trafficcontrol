@@ -5,6 +5,38 @@
     },
     "variants": {
         "normal": [{}],
-        "inventory": [{}]
+        "inventory": [{}],
+        "north": {
+        	"true": {
+        		"submodel": {
+        			"northExt": { "model": "trafficcontrol:crossing_gate_pole_ext" }
+        		}
+        	},
+        	"false": { }
+        },
+        "west": {
+        	"true": {
+        		"submodel": {
+        			"westExt": { "model": "trafficcontrol:crossing_gate_pole_ext", "y": 270 }
+        		}
+        	},
+        	"false": { }
+        },
+        "south": {
+        	"true": {
+        		"submodel": {
+        			"southExt": { "model": "trafficcontrol:crossing_gate_pole_ext", "y": 180 }
+        		}
+        	},
+        	"false": { }
+        },
+        "east": {
+        	"true": {
+        		"submodel": {
+        			"eastExt": { "model": "trafficcontrol:crossing_gate_pole_ext", "y": 90 }
+        		}
+        	},
+        	"false": { }
+        }
     }
 }

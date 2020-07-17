@@ -17,6 +17,7 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayTopNW;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayTopSE;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayTopSW;
 import com.clussmanproductions.trafficcontrol.blocks.BlockDrum;
+import com.clussmanproductions.trafficcontrol.blocks.BlockHorizontalPole;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLightSource;
 import com.clussmanproductions.trafficcontrol.blocks.BlockOverhead;
 import com.clussmanproductions.trafficcontrol.blocks.BlockOverheadCrossbuck;
@@ -32,8 +33,11 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightSingle;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightControlBox;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficRail;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorLeft;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorStraight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockType3Barrier;
 import com.clussmanproductions.trafficcontrol.blocks.BlockType3BarrierRight;
+import com.clussmanproductions.trafficcontrol.blocks.BlockWCHBell;
 import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
 
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -113,6 +117,14 @@ public class ModBlocks {
 	public static BlockTrafficRail traffic_rail;
 	@ObjectHolder("concrete_barrier")
 	public static BlockConcreteBarrier concrete_barrier;
+	@ObjectHolder("horizontal_pole")
+	public static BlockHorizontalPole horizontal_pole;
+	@ObjectHolder("wch_bell")
+	public static BlockWCHBell wch_bell;
+	@ObjectHolder("traffic_sensor_left")
+	public static BlockTrafficSensorLeft traffic_sensor_left;
+	@ObjectHolder("traffic_sensor_straight")
+	public static BlockTrafficSensorStraight traffic_sensor_straight;
 
 	@SideOnly(Side.CLIENT)
 	public static void initModels(ModelRegistryEvent e)
@@ -143,5 +155,9 @@ public class ModBlocks {
 		type_3_barrier_right.initModel();
 		traffic_rail.initModel();
 		concrete_barrier.initModel();
+		horizontal_pole.initModel();
+		wch_bell.initModel();
+		traffic_sensor_left.initModel();
+		traffic_sensor_straight.initModel();
 	}
 }

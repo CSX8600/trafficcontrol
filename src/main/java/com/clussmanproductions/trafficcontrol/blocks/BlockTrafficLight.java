@@ -1,5 +1,8 @@
 package com.clussmanproductions.trafficcontrol.blocks;
 
+import java.util.Arrays;
+
+import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModItems;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightTileEntity;
@@ -9,6 +12,7 @@ import com.clussmanproductions.trafficcontrol.util.EnumTrafficLightBulbTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -31,6 +35,8 @@ import net.minecraftforge.items.IItemHandler;
 public class BlockTrafficLight extends Block implements ITileEntityProvider {
 
 	public static PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+	public static PropertyBool VALIDHORIZONTALBAR = PropertyBool.create("validhorizontalbar");
+	public static PropertyBool VALIDBACKBAR = PropertyBool.create("validbackbar");
 	public BlockTrafficLight()
 	{
 		super(Material.IRON);
@@ -58,7 +64,7 @@ public class BlockTrafficLight extends Block implements ITileEntityProvider {
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, FACING);
+		return new BlockStateContainer(this, FACING, VALIDBACKBAR, VALIDHORIZONTALBAR);
 	}
 	
 	@Override
@@ -73,6 +79,88 @@ public class BlockTrafficLight extends Block implements ITileEntityProvider {
 	
 	@Override
 	public boolean causesSuffocation(IBlockState state) {
+		return false;
+	}
+	
+	@Override
+	public float getAmbientOcclusionLightValue(IBlockState state) {
+		return 1;
+	}
+	
+	@Override
+	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+		boolean hasValidHorizontalBar = false;
+		boolean hasValidBackBar = false;
+		
+		switch(state.getValue(FACING))
+		{
+			case NORTH:				
+				hasValidHorizontalBar = getValidStateForAttachableSubModels(worldIn.getBlockState(pos.west()),
+																				EnumFacing.WEST, EnumFacing.EAST) ||
+										getValidStateForAttachableSubModels(worldIn.getBlockState(pos.east()),
+																				EnumFacing.WEST, EnumFacing.EAST);
+				
+				hasValidBackBar = getValidStateForAttachableSubModels(worldIn.getBlockState(pos.north()), 
+																				EnumFacing.NORTH, EnumFacing.SOUTH);
+				
+				break;
+			case SOUTH:
+				hasValidHorizontalBar = getValidStateForAttachableSubModels(worldIn.getBlockState(pos.west()),
+																EnumFacing.WEST, EnumFacing.EAST) ||
+										getValidStateForAttachableSubModels(worldIn.getBlockState(pos.east()),
+																EnumFacing.WEST, EnumFacing.EAST);
+										
+				hasValidBackBar = getValidStateForAttachableSubModels(worldIn.getBlockState(pos.south()), 
+																EnumFacing.NORTH, EnumFacing.SOUTH);
+				break;
+			case WEST:				
+				hasValidHorizontalBar = getValidStateForAttachableSubModels(worldIn.getBlockState(pos.north()),
+																EnumFacing.NORTH, EnumFacing.SOUTH) ||
+										getValidStateForAttachableSubModels(worldIn.getBlockState(pos.south()),
+																EnumFacing.NORTH, EnumFacing.SOUTH);
+				
+				hasValidBackBar = getValidStateForAttachableSubModels(worldIn.getBlockState(pos.west()), 
+																EnumFacing.WEST, EnumFacing.EAST);
+				break;
+			case EAST:				
+				hasValidHorizontalBar = getValidStateForAttachableSubModels(worldIn.getBlockState(pos.north()),
+																	EnumFacing.NORTH, EnumFacing.SOUTH) ||
+										getValidStateForAttachableSubModels(worldIn.getBlockState(pos.south()),
+																	EnumFacing.NORTH, EnumFacing.SOUTH);
+				
+				hasValidBackBar = getValidStateForAttachableSubModels(worldIn.getBlockState(pos.east()), 
+																	EnumFacing.WEST, EnumFacing.EAST);
+				
+				break;
+		}
+		
+		return state.withProperty(VALIDHORIZONTALBAR, hasValidHorizontalBar).withProperty(VALIDBACKBAR, hasValidBackBar);
+	}
+	
+	private boolean getValidStateForAttachableSubModels(IBlockState state, EnumFacing... validFacings)
+	{
+		if (state.getBlock() == ModBlocks.horizontal_pole)
+		{
+			EnumFacing facing = state.getValue(BlockHorizontalPole.FACING);
+			
+			if (Arrays.stream(validFacings).anyMatch(f -> f.equals(facing)))
+			{
+				return true;
+			}
+		}
+		
+		if (state.getBlock() == ModBlocks.crossing_gate_pole)
+		{
+			return true;
+		}
+		
+		if (state.getBlock() == ModBlocks.traffic_light)
+		{
+			EnumFacing facing = state.getValue(FACING);
+			
+			return Arrays.stream(validFacings).noneMatch(f -> f == facing); // Reverse logic because want traffic lights facing the same way
+		}
+		
 		return false;
 	}
 	
