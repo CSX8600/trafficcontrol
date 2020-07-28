@@ -32,7 +32,8 @@ public abstract class BlockShuntBase extends Block implements ITileEntityProvide
 		super(Material.ROCK);
 		setRegistryName(getName());
 		setUnlocalizedName(ModTrafficControl.MODID + "." + getName());
-		setHardness(2f);
+		setHardness(1f);
+		setHarvestLevel("pickaxe", 1);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
 	
@@ -82,6 +83,11 @@ public abstract class BlockShuntBase extends Block implements ITileEntityProvide
 		}
 		
 		return FULL_BLOCK_AABB;
+	}
+
+	@Override
+	public boolean causesSuffocation(IBlockState state) {
+		return false;
 	}
 
 	@Override

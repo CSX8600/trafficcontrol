@@ -186,4 +186,9 @@ public abstract class BlockRelayBase extends Block implements ITileEntityProvide
 			te.setPowered(worldIn.isBlockPowered(pos));
 		}
 	}
+
+	@Override
+	public boolean causesSuffocation(IBlockState state) {
+		return false;
+	}
 }

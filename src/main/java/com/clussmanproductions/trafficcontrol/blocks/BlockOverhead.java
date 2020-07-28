@@ -24,6 +24,8 @@ public class BlockOverhead extends Block {
 		super(Material.IRON);
 		setRegistryName("overhead");
 		setUnlocalizedName(ModTrafficControl.MODID + ".overhead");
+		setHardness(2f);
+        setHarvestLevel("pickaxe", 2);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
 	
@@ -66,5 +68,10 @@ public class BlockOverhead extends Block {
 	@Override
 	public BlockRenderLayer getBlockLayer() {
 		return BlockRenderLayer.CUTOUT;
+	}
+
+	@Override
+	public boolean causesSuffocation(IBlockState state) {
+		return false;
 	}
 }

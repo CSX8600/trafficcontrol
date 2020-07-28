@@ -36,7 +36,8 @@ public abstract class BlockType3BarrierBase extends Block {
 		super(Material.IRON);
 		setRegistryName(getName());
 		setUnlocalizedName(ModTrafficControl.MODID + "." + getName());
-		setHardness(2f);
+		setHardness(1f);
+		setHarvestLevel("axe", 1);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
 	

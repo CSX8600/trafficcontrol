@@ -24,6 +24,7 @@ public class BlockTrafficSensorLeft extends Block {
 		setRegistryName("traffic_sensor_left");
 		setUnlocalizedName(ModTrafficControl.MODID + ".traffic_sensor_left");
 		setHardness(2f);
+		setHarvestLevel("pickaxe", 2);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
 	
@@ -51,5 +52,10 @@ public class BlockTrafficSensorLeft extends Block {
 	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,
 			float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
 		return getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
+	}
+
+	@Override
+	public boolean causesSuffocation(IBlockState state) {
+		return false;
 	}
 }

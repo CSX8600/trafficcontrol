@@ -40,6 +40,8 @@ public class BlockSign extends Block implements ITileEntityProvider {
 		super(Material.IRON);
 		setRegistryName("sign");
 		setUnlocalizedName(ModTrafficControl.MODID + ".sign");
+		setHardness(2f);
+		setHarvestLevel("pickaxe", 1);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
 	
@@ -153,4 +155,10 @@ public class BlockSign extends Block implements ITileEntityProvider {
 		
 		return FULL_BLOCK_AABB;
 	}
+
+	@Override
+	public boolean causesSuffocation(IBlockState state) {
+		return false;
+	}
+
 }
