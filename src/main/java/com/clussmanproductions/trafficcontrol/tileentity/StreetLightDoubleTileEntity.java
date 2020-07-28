@@ -46,7 +46,8 @@ public class StreetLightDoubleTileEntity extends TileEntity  {
 		
 		IBlockState state = world.getBlockState(pos);
 		
-		if (!state.getValue(BlockStreetLightDouble.POWERED))
+		if (state.getBlock() == ModBlocks.street_light_double &&
+			!state.getValue(BlockStreetLightDouble.POWERED))
 		{
 			addLightSources();
 		}
