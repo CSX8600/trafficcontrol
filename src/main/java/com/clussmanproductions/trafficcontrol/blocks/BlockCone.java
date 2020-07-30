@@ -22,6 +22,8 @@ public class BlockCone extends Block {
 		setRegistryName("cone");
 		setUnlocalizedName(ModTrafficControl.MODID + ".cone");
 		setLightOpacity(1);
+        setHardness(1f);
+        setHarvestLevel("pickaxe", 0);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
 	
@@ -48,5 +50,10 @@ public class BlockCone extends Block {
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return new AxisAlignedBB(0.3,0,0.3,0.7,1,0.7);
+	}
+
+	@Override
+	public boolean causesSuffocation(IBlockState state) {
+		return false;
 	}
 }

@@ -28,6 +28,8 @@ public class BlockSafetranMechanical extends Block implements ITileEntityProvide
 		super(Material.IRON);
 		setRegistryName("safetran_mechanical");
 		setUnlocalizedName(ModTrafficControl.MODID + ".safetran_mechanical");
+		setHardness(2f);
+		setHarvestLevel("pickaxe", 1);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
 	
@@ -93,5 +95,10 @@ public class BlockSafetranMechanical extends Block implements ITileEntityProvide
 				return new AxisAlignedBB(0, 0, 0, 1, 1, 1);
 		}
 		
+	}
+
+	@Override
+	public boolean causesSuffocation(IBlockState state) {
+		return false;
 	}
 }

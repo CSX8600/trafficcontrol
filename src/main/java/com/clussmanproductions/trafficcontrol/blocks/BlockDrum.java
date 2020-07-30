@@ -29,6 +29,8 @@ public class BlockDrum extends Block {
 		setRegistryName("drum");
 		setUnlocalizedName(ModTrafficControl.MODID + ".drum");
 		setLightOpacity(1);
+		setHardness(1f);
+        setHarvestLevel("pickaxe", 0);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
 	
@@ -82,5 +84,10 @@ public class BlockDrum extends Block {
 	@Override
 	public float getAmbientOcclusionLightValue(IBlockState state) {
 		return 1F;
+	}
+
+	@Override
+	public boolean causesSuffocation(IBlockState state) {
+		return false;
 	}
 }

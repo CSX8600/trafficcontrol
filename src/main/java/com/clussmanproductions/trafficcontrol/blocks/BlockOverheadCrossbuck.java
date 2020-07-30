@@ -24,6 +24,8 @@ public class BlockOverheadCrossbuck extends Block {
 		super(Material.IRON);
 		setRegistryName("overhead_crossbuck");
 		setUnlocalizedName(ModTrafficControl.MODID + ".overhead_crossbuck");
+		setHardness(2f);
+		setHarvestLevel("pickaxe", 1);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
 	
@@ -56,5 +58,10 @@ public class BlockOverheadCrossbuck extends Block {
 	@Override
 	public BlockRenderLayer getBlockLayer() {
 		return BlockRenderLayer.CUTOUT;
+	}
+
+	@Override
+	public boolean causesSuffocation(IBlockState state) {
+		return false;
 	}
 }

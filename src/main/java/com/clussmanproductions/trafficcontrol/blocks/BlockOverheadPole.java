@@ -27,6 +27,8 @@ public class BlockOverheadPole extends Block {
 		setRegistryName("overhead_pole");
 		setUnlocalizedName(ModTrafficControl.MODID + ".overhead_pole");
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
+		setHardness(2f);
+		setHarvestLevel("pickaxe", 2);
 	}
 	
 	public void initModel()
@@ -68,5 +70,10 @@ public class BlockOverheadPole extends Block {
 	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,
 			float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
 		return getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
+	}
+
+	@Override
+	public boolean causesSuffocation(IBlockState state) {
+		return false;
 	}
 }

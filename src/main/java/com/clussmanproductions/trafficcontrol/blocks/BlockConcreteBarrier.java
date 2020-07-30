@@ -32,7 +32,7 @@ public class BlockConcreteBarrier extends Block {
 	public BlockConcreteBarrier()
 	{
 		super(Material.ROCK);
-		setHardness(1f);
+		setHardness(2f);
 		setRegistryName("concrete_barrier");
 		setUnlocalizedName(ModTrafficControl.MODID + ".concrete_barrier");
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);

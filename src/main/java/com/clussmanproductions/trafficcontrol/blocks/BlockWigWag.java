@@ -35,7 +35,8 @@ public class BlockWigWag extends Block implements ITileEntityProvider {
 		super(Material.IRON);
 		setRegistryName("wig_wag");
 		setUnlocalizedName(ModTrafficControl.MODID + ".wig_wag");
-		setHardness(2f);
+		setHardness(1f);
+		setHarvestLevel("pickaxe", 2);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
 	
