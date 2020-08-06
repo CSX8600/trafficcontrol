@@ -38,6 +38,8 @@ public class BlockStreetLightSingle extends Block implements ITileEntityProvider
 		super(Material.ROCK);
 		setRegistryName("street_light_single");
 		setUnlocalizedName(ModTrafficControl.MODID + ".street_light_single");
+		setHardness(2f);
+		setHarvestLevel("pickaxe", 1);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
 	
@@ -97,6 +99,11 @@ public class BlockStreetLightSingle extends Block implements ITileEntityProvider
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return new AxisAlignedBB(0.375, 0, 0.375, 0.625, 1, 0.625);
+	}
+
+	@Override
+	public boolean causesSuffocation(IBlockState state) {
+		return false;
 	}
 
 	@Override

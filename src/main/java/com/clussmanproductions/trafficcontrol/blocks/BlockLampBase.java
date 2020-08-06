@@ -28,6 +28,8 @@ public abstract class BlockLampBase extends Block {
 		super(Material.IRON);
 		setRegistryName(getLampRegistryName());
 		setUnlocalizedName(ModTrafficControl.MODID + "." + getLampRegistryName());
+		setHardness(2f);
+		setHarvestLevel("pickaxe", 1);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
 	
@@ -51,6 +53,11 @@ public abstract class BlockLampBase extends Block {
 	@Override
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, FACING, STATE);
+	}
+
+	@Override
+	public boolean causesSuffocation(IBlockState state) {
+		return false;
 	}
 	
 	@Override

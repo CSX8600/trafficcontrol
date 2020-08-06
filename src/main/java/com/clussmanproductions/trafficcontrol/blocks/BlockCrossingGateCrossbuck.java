@@ -24,6 +24,7 @@ public class BlockCrossingGateCrossbuck extends Block {
 		super(Material.IRON);
 		setRegistryName("crossing_gate_crossbuck");
 		setUnlocalizedName(ModTrafficControl.MODID + ".crossing_gate_crossbuck");
+		setHardness(2f);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
 	
@@ -61,5 +62,10 @@ public class BlockCrossingGateCrossbuck extends Block {
 	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,
 			float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
 		return getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
+	}
+
+	@Override
+	public boolean causesSuffocation(IBlockState state) {
+		return false;
 	}
 }

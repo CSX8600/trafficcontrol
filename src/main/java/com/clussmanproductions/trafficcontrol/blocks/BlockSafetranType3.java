@@ -25,6 +25,7 @@ public class BlockSafetranType3 extends Block implements ITileEntityProvider {
 		setUnlocalizedName(ModTrafficControl.MODID + ".safetran_type_3");
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 		setHardness(2f);
+		setHarvestLevel("pickaxe", 2);
 	}
 	
 	@Override
@@ -52,6 +53,11 @@ public class BlockSafetranType3 extends Block implements ITileEntityProvider {
 		return new SafetranType3TileEntity();
 	}
 	
+	@Override
+	public boolean causesSuffocation(IBlockState state) {
+		return false;
+	}
+
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return new AxisAlignedBB(0.375, 0, 0.375, 0.625, 0.8125, 0.625);

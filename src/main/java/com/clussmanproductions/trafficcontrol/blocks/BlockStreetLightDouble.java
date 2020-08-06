@@ -38,6 +38,8 @@ public class BlockStreetLightDouble extends Block implements ITileEntityProvider
 		super(new MaterialCustomTransparency());
 		setRegistryName("street_light_double");
 		setUnlocalizedName(ModTrafficControl.MODID + ".street_light_double");
+		setHardness(2f);
+		setHarvestLevel("pickaxe", 1);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
 	
@@ -131,6 +133,11 @@ public class BlockStreetLightDouble extends Block implements ITileEntityProvider
 		super.breakBlock(worldIn, pos, state);
 	}
 	
+	@Override
+	public boolean causesSuffocation(IBlockState state) {
+		return false;
+	}
+
 	@Override
 	public float getAmbientOcclusionLightValue(IBlockState state) {
 		return 1F;

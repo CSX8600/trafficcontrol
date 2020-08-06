@@ -20,6 +20,8 @@ public class BlockChannelizer extends Block {
 		setRegistryName("channelizer");
 		setUnlocalizedName(ModTrafficControl.MODID + ".channelizer");
 		setLightOpacity(1);
+        setHardness(1f);
+        setHarvestLevel("pickaxe", 0);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
 	
@@ -52,5 +54,10 @@ public class BlockChannelizer extends Block {
 	@Override
 	public float getAmbientOcclusionLightValue(IBlockState state) {
 		return 1F;
+	}
+
+	@Override
+	public boolean causesSuffocation(IBlockState state) {
+		return false;
 	}
 }
