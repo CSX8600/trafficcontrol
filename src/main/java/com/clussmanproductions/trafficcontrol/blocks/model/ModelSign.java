@@ -19,17 +19,17 @@ public class ModelSign implements IModel {
 	ArrayList<ResourceLocation> textures = new ArrayList<>(); 
 	public ModelSign()
 	{
-		for(int i = 0; i <= 112; i++)
+		for(int i = 0; i <= 113; i++)
 		{
 			textures.add(getRL("blocks/sign/circle/circle" + i));
 		}
 		
-		for(int i = 0; i <= 115; i++)
+		for(int i = 0; i <= 124; i++)
 		{
 			textures.add(getRL("blocks/sign/diamond/diamond" + i));
 		}
 		
-		for(int i = 0; i <= 75; i++)
+		for(int i = 0; i <= 91; i++)
 		{
 			textures.add(getRL("blocks/sign/misc/misc" + i));
 		}
@@ -44,12 +44,12 @@ public class ModelSign implements IModel {
 		textures.add(getRL("blocks/sign/misc/misc7B"));
 		textures.add(getRL("blocks/sign/misc/misc8B"));
 		
-		for(int i = 0; i <= 84; i++)
+		for(int i = 0; i <= 87; i++)
 		{
 			textures.add(getRL("blocks/sign/rectangle/rectangle" + i));
 		}
 		
-		for(int i = 0; i <= 103; i++)
+		for(int i = 0; i <= 163; i++)
 		{
 			textures.add(getRL("blocks/sign/square/square" + i));
 		}
