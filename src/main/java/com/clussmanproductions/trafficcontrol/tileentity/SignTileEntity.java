@@ -16,12 +16,12 @@ public class SignTileEntity extends TileEntity {
 	private int variant = 0;
 	
 	private final int MAXTYPE = 5;
-	private final ImmutableMap<Integer, Integer> MAXVARIANTS = ImmutableMap.<Integer, Integer>builder()
+	public static final ImmutableMap<Integer, Integer> MAXVARIANTS = ImmutableMap.<Integer, Integer>builder()
 			.put(0, 113)
-			.put(1, 124)
-			.put(2, 91)
-			.put(3, 87)
-			.put(4, 163)
+			.put(1, 144)
+			.put(2, 98)
+			.put(3, 88)
+			.put(4, 166)
 			.put(5, 95)
 			.build();
 	
@@ -108,7 +108,7 @@ public class SignTileEntity extends TileEntity {
 		{
 			return "misc2b";
 		}
-		else if ((variant >= 9 && variant <= 32) || (variant >= 76 && variant <= 91))
+		else if ((variant >= 9 && variant <= 32) || (variant >= 76 && variant <= 98))
 		{
 			return "misc3b";
 		}

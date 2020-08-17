@@ -137,8 +137,8 @@ public class BlockTrafficLight extends Block implements ITileEntityProvider {
 		return state.withProperty(VALIDHORIZONTALBAR, hasValidHorizontalBar).withProperty(VALIDBACKBAR, hasValidBackBar);
 	}
 	
-	private boolean getValidStateForAttachableSubModels(IBlockState state, EnumFacing... validFacings)
-	{
+	public static boolean getValidStateForAttachableSubModels(IBlockState state, EnumFacing... validFacings)
+	{		
 		if (state.getBlock() == ModBlocks.horizontal_pole)
 		{
 			EnumFacing facing = state.getValue(BlockHorizontalPole.FACING);
@@ -156,12 +156,19 @@ public class BlockTrafficLight extends Block implements ITileEntityProvider {
 		
 		if (state.getBlock() == ModBlocks.traffic_light)
 		{
-			EnumFacing facing = state.getValue(FACING);
+			EnumFacing facing = state.getValue(BlockTrafficLight.FACING);
 			
 			return Arrays.stream(validFacings).noneMatch(f -> f == facing); // Reverse logic because want traffic lights facing the same way
 		}
 		
-		return false;
+		if (state.getBlock() == ModBlocks.sign)
+		{
+			EnumFacing facing = state.getValue(BlockSign.FACING);
+			
+			return Arrays.stream(validFacings).noneMatch(vf -> vf.equals(facing));
+		}
+		
+		return false; 
 	}
 	
 	private ItemStack getItemVersionOfBlock(IBlockAccess world, BlockPos pos)

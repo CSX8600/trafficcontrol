@@ -1,7 +1,5 @@
 package com.clussmanproductions.trafficcontrol.blocks;
 
-import java.util.Arrays;
-
 import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 
@@ -72,6 +70,15 @@ public class BlockCrossingGatePole extends Block {
 		{
 			EnumFacing stateFacing = state.getValue(BlockTrafficLight.FACING);
 			return stateFacing != facing;
+		}
+		
+		if (state.getBlock() == ModBlocks.sign)
+		{
+			EnumFacing stateFacing = state.getValue(BlockSign.FACING);
+			
+			return (facing == EnumFacing.SOUTH || facing == EnumFacing.NORTH) ? 
+					stateFacing == EnumFacing.WEST || stateFacing == EnumFacing.EAST :
+					stateFacing == EnumFacing.NORTH || stateFacing == EnumFacing.SOUTH;
 		}
 		
 		return false;

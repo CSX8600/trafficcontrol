@@ -24,12 +24,12 @@ public class ModelSign implements IModel {
 			textures.add(getRL("blocks/sign/circle/circle" + i));
 		}
 		
-		for(int i = 0; i <= 124; i++)
+		for(int i = 0; i <= 144; i++)
 		{
 			textures.add(getRL("blocks/sign/diamond/diamond" + i));
 		}
 		
-		for(int i = 0; i <= 91; i++)
+		for(int i = 0; i <= 98; i++)
 		{
 			textures.add(getRL("blocks/sign/misc/misc" + i));
 		}
@@ -44,12 +44,12 @@ public class ModelSign implements IModel {
 		textures.add(getRL("blocks/sign/misc/misc7B"));
 		textures.add(getRL("blocks/sign/misc/misc8B"));
 		
-		for(int i = 0; i <= 87; i++)
+		for(int i = 0; i <= 88; i++)
 		{
 			textures.add(getRL("blocks/sign/rectangle/rectangle" + i));
 		}
 		
-		for(int i = 0; i <= 163; i++)
+		for(int i = 0; i <= 166; i++)
 		{
 			textures.add(getRL("blocks/sign/square/square" + i));
 		}

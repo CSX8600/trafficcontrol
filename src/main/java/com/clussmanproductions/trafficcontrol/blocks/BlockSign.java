@@ -1,5 +1,8 @@
 package com.clussmanproductions.trafficcontrol.blocks;
 
+import java.util.Arrays;
+
+import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.gui.GuiProxy;
 import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity;
@@ -9,6 +12,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -34,6 +38,7 @@ public class BlockSign extends Block implements ITileEntityProvider {
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 	public static final UnlistedPropertyInteger TYPE = new UnlistedPropertyInteger("type");
 	public static final UnlistedPropertyInteger SELECTION = new UnlistedPropertyInteger("selection");
+	public static final PropertyBool VALIDHORIZONTALBAR = PropertyBool.create("validhorizontalbar");
 	
 	public BlockSign()
 	{
@@ -52,7 +57,7 @@ public class BlockSign extends Block implements ITileEntityProvider {
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		IProperty<?>[] listedProperties = new IProperty[] { FACING };
+		IProperty<?>[] listedProperties = new IProperty[] { FACING, VALIDHORIZONTALBAR };
 		IUnlistedProperty<?>[] unlistedProperties = new IUnlistedProperty[] { TYPE, SELECTION };
 		return new ExtendedBlockState(this, listedProperties, unlistedProperties);
 	}
@@ -69,6 +74,54 @@ public class BlockSign extends Block implements ITileEntityProvider {
 	
 	@Override
 	public boolean isNormalCube(IBlockState state) {
+		return false;
+	}
+	
+	@Override
+	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+		boolean validHorizontalBar = false;
+		
+		EnumFacing currentFacing = state.getValue(FACING);
+		if (currentFacing == EnumFacing.NORTH || currentFacing == EnumFacing.SOUTH)
+		{
+			validHorizontalBar = getValidStateForAttachableSubModels(state, worldIn.getBlockState(pos.west()), EnumFacing.NORTH, EnumFacing.SOUTH)
+									|| getValidStateForAttachableSubModels(state, worldIn.getBlockState(pos.east()), EnumFacing.NORTH, EnumFacing.SOUTH);
+		}
+		else
+		{
+			validHorizontalBar = getValidStateForAttachableSubModels(state, worldIn.getBlockState(pos.north()), EnumFacing.WEST, EnumFacing.EAST)
+									|| getValidStateForAttachableSubModels(state, worldIn.getBlockState(pos.south()), EnumFacing.WEST, EnumFacing.EAST);
+		}
+		
+		return state.withProperty(VALIDHORIZONTALBAR, validHorizontalBar);
+	}
+	
+	private boolean getValidStateForAttachableSubModels(IBlockState signState, IBlockState state, EnumFacing... validFacings)
+	{
+		if (state.getBlock() == ModBlocks.crossing_gate_pole)
+		{
+			return true;
+		}
+		
+		if (state.getBlock() == ModBlocks.horizontal_pole)
+		{
+			EnumFacing facing = state.getValue(BlockHorizontalPole.FACING);
+			
+			return Arrays.stream(validFacings).noneMatch(vf -> vf.equals(facing));
+		}
+		
+		if (state.getBlock() == ModBlocks.traffic_light)
+		{
+			return true;
+		}
+		
+		if (state.getBlock() == ModBlocks.sign)
+		{
+			EnumFacing facing = state.getValue(FACING);
+			
+			return Arrays.stream(validFacings).anyMatch(vf -> vf.equals(facing));
+		}
+		
 		return false;
 	}
 	

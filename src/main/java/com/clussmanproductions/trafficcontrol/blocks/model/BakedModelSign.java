@@ -47,6 +47,12 @@ public class BakedModelSign extends BaseBakedModel {
 				0, 2,
 				0, 0);
 		
+		UVMapping sevenBy2Generic = new UVMapping(
+				7, 0,
+				7, 2,
+				0, 2,
+				0, 0);
+		
 		UVMapping signBackGeneric = new UVMapping(
 				0,0,
 				0,16,
@@ -93,6 +99,45 @@ public class BakedModelSign extends BaseBakedModel {
 						retval.add(createQuad(v(6.9, 16, 16), v(6.9, 0, 16), v(6.9, 0, 0), v(6.9, 16, 0), getSign(typeName, backName), signBackGeneric));
 						retval.add(createQuad(v(6.9, 16, 0), v(6.9, 0, 0), v(6.9, 0, 16), v(6.9, 16, 16), getSign(typeName, frontName), signBackGeneric));
 						break;
+				}
+				
+				if (extendedState.getValue(BlockSign.VALIDHORIZONTALBAR))
+				{
+					switch(facing)
+					{
+						case NORTH:
+						case SOUTH:
+							retval.add(createQuad(v(16, 9, 7), v(16, 7, 7), v(9, 7, 7), v(9, 9, 7), getGeneric(), sevenBy2Generic));
+							retval.add(createQuad(v(16, 9, 9), v(16, 9, 7), v(9, 9, 7), v(9, 9, 9), getGeneric(), sevenBy2Generic));
+							retval.add(createQuad(v(9, 9, 9), v(9, 7, 9), v(16, 7, 9), v(16, 9, 9), getGeneric(), sevenBy2Generic));
+							retval.add(createQuad(v(16, 7, 7), v(16, 7, 9), v(9, 7, 9), v(9, 7, 7), getGeneric(), sevenBy2Generic));
+							retval.add(createQuad(v(16, 9, 9), v(16, 7, 9), v(16, 7, 7), v(16, 9, 7), getGeneric(), twoBy2Generic));
+							retval.add(createQuad(v(9, 9, 7), v(9, 7, 7), v(9, 7, 9), v(9, 9, 9), getGeneric(), twoBy2Generic));
+							
+							retval.add(createQuad(v(7, 9, 7), v(7, 7, 7), v(0, 7, 7), v(0, 9, 7), getGeneric(), sevenBy2Generic));
+							retval.add(createQuad(v(7, 9, 9), v(7, 9, 7), v(0, 9, 7), v(0, 9, 9), getGeneric(), sevenBy2Generic));
+							retval.add(createQuad(v(0, 9, 9), v(0, 7, 9), v(7, 7, 9), v(7, 9, 9), getGeneric(), sevenBy2Generic));
+							retval.add(createQuad(v(7, 7, 7), v(7, 7, 9), v(0, 7, 9), v(0, 7, 7), getGeneric(), sevenBy2Generic));
+							retval.add(createQuad(v(7, 9, 9), v(7, 7, 9), v(7, 7, 7), v(7, 9, 7), getGeneric(), twoBy2Generic));
+							retval.add(createQuad(v(0, 9, 7), v(0, 7, 7), v(0, 7, 9), v(0, 9, 9), getGeneric(), twoBy2Generic));
+							break;
+						case WEST:
+						case EAST:
+							retval.add(createQuad(v(9, 9, 16), v(9, 7, 16), v(9, 7, 9), v(9, 9, 9), getGeneric(), sevenBy2Generic));
+							retval.add(createQuad(v(7, 9, 16), v(9, 9, 16), v(9, 9, 9), v(7, 9, 9), getGeneric(), sevenBy2Generic));
+							retval.add(createQuad(v(7, 9, 9), v(7, 7, 9), v(7, 7, 16), v(7, 9, 16), getGeneric(), sevenBy2Generic));
+							retval.add(createQuad(v(9, 7, 16), v(7, 7, 16), v(7, 7, 9), v(9, 7, 9), getGeneric(), sevenBy2Generic));
+							retval.add(createQuad(v(7, 9, 16), v(7, 7, 16), v(9, 7, 16), v(9, 9, 16), getGeneric(), twoBy2Generic));
+							retval.add(createQuad(v(9, 9, 9), v(9, 7, 9), v(7, 7, 9), v(7, 9, 9), getGeneric(), twoBy2Generic));
+							
+							retval.add(createQuad(v(9, 9, 7), v(9, 7, 7), v(9, 7, 0), v(9, 9, 0), getGeneric(), sevenBy2Generic));
+							retval.add(createQuad(v(7, 9, 7), v(9, 9, 7), v(9, 9, 0), v(7, 9, 0), getGeneric(), sevenBy2Generic));
+							retval.add(createQuad(v(7, 9, 0), v(7, 7, 0), v(7, 7, 7), v(7, 9, 7), getGeneric(), sevenBy2Generic));
+							retval.add(createQuad(v(9, 7, 7), v(7, 7, 7), v(7, 7, 0), v(9, 7, 0), getGeneric(), sevenBy2Generic));
+							retval.add(createQuad(v(7, 9, 7), v(7, 7, 7), v(9, 7, 7), v(9, 9, 7), getGeneric(), twoBy2Generic));
+							retval.add(createQuad(v(9, 9, 0), v(9, 7, 0), v(7, 7, 0), v(7, 9, 0), getGeneric(), twoBy2Generic));
+							break;
+					}
 				}
 			}
 			catch (Exception e)

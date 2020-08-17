@@ -2,7 +2,9 @@ package com.clussmanproductions.trafficcontrol.tileentity.render;
 
 import org.lwjgl.opengl.GL11;
 
+import com.clussmanproductions.trafficcontrol.blocks.BlockType3Barrier;
 import com.clussmanproductions.trafficcontrol.blocks.BlockType3BarrierBase;
+import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.Type3BarrierTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.Type3BarrierTileEntity.SignType;
 
@@ -22,11 +24,22 @@ public class RendererType3Barrier extends TileEntitySpecialRenderer<Type3Barrier
 	public void render(Type3BarrierTileEntity te, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
 		IBlockState currentState = getWorld().getBlockState(te.getPos()).getActualState(getWorld(), te.getPos());
-		if (!te.getRenderSign() || !currentState.getValue(BlockType3BarrierBase.ISFURTHESTLEFT))
+		if (te.getRenderSign() && currentState.getValue(BlockType3BarrierBase.ISFURTHESTLEFT))
 		{
-			return;
+			renderAllSign(te, x, y, z);
 		}
 		
+		
+
+		// Render secondary sign
+		if (te.getRenderThisSign())
+		{
+			renderSecondarySign(te, x, y, z);
+		}
+	}
+
+	private void renderAllSign(Type3BarrierTileEntity te, double x, double y, double z)
+	{
 		BlockPos farthestLeft = te.getPos().toImmutable();
 		BlockPos farthestRight = te.getPos().toImmutable();
 		
@@ -70,15 +83,21 @@ public class RendererType3Barrier extends TileEntitySpecialRenderer<Type3Barrier
 		BufferBuilder builder = tess.getBuffer();
 		builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
 		
-		float textureBottomY = 0.5F;
+		float textureBottomY = 0.25F;
+		float heightFactor = 0.25F;
 		if (te.getSignType() == SignType.LaneClosed)
 		{
-			textureBottomY = 1;
+			textureBottomY = 0.5F;
+		}
+		else if (te.getSignType() == SignType.RoadClosedThruTraffic)
+		{
+			textureBottomY = 1F;
+			heightFactor = 0.5F;
 		}
 		
-		builder.pos(1, 0, 0).tex(1, textureBottomY).endVertex();
-		builder.pos(1, 0.6875, 0).tex(1, textureBottomY - 0.5).endVertex();
-		builder.pos(0, 0.6875, 0).tex(0, textureBottomY - 0.5).endVertex();
+		builder.pos(1, 0, 0).tex(0.5, textureBottomY).endVertex();
+		builder.pos(1, 0.6875, 0).tex(0.5, textureBottomY - heightFactor).endVertex();
+		builder.pos(0, 0.6875, 0).tex(0, textureBottomY - heightFactor).endVertex();
 		builder.pos(0, 0, 0).tex(0, textureBottomY).endVertex();
 		
 		tess.draw();
@@ -90,6 +109,47 @@ public class RendererType3Barrier extends TileEntitySpecialRenderer<Type3Barrier
 		builder.pos(0, 0.0, 0).tex(1, 0.6875).endVertex();
 		builder.pos(0, 0.6875, 0).tex(0, 0.6875).endVertex();
 		builder.pos(1, 0.6875, 0).tex(0, 0).endVertex();
+		
+		tess.draw();
+		
+		GlStateManager.popMatrix();
+	}
+
+	private void renderSecondarySign(Type3BarrierTileEntity te, double x, double y, double z)
+	{
+		EnumFacing facing = getWorld().getBlockState(te.getPos()).getValue(BlockType3Barrier.FACING);
+		
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(x + 0.5, y + 0.5, z + 0.5);
+		GlStateManager.rotate((4 - (facing.getHorizontalIndex() + 2)) * 90, 0, 1, 0);
+		GlStateManager.translate(-0.375, 0, 0.063);
+		
+		String typeName = SignTileEntity.getSignTypeName(te.getThisSignType());
+		String backName = SignTileEntity.getBackSignName(te.getThisSignType(), te.getThisSignVariant()) + ".png";
+		String frontName = typeName + te.getThisSignVariant() + ".png";
+		
+		bindTexture(new ResourceLocation("trafficcontrol", "textures/blocks/sign/" + typeName + "/" + frontName));
+		
+		// Draw front
+		Tessellator tess = Tessellator.getInstance();
+		BufferBuilder builder = tess.getBuffer();
+		
+		builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+		
+		builder.pos(0.75, 0, 0).tex(1, 1).endVertex();
+		builder.pos(0.75, 0.75, 0).tex(1, 0).endVertex();
+		builder.pos(0, 0.75, 0).tex(0, 0).endVertex();
+		builder.pos(0, 0, 0).tex(0, 1).endVertex();
+		
+		tess.draw();
+		
+		// Draw back		
+		bindTexture(new ResourceLocation("trafficcontrol", "textures/blocks/sign/" + typeName + "/" + backName));
+		builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+		builder.pos(0.75, 0, 0).tex(1, 1).endVertex();
+		builder.pos(0, 0, 0).tex(1, 0).endVertex();
+		builder.pos(0, 0.75, 0).tex(0, 0).endVertex();
+		builder.pos(0.75, 0.75, 0).tex(0, 1).endVertex();
 		
 		tess.draw();
 		

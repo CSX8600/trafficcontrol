@@ -140,7 +140,6 @@ public abstract class BlockType3BarrierBase extends Block {
 		}
 		
 		Type3BarrierTileEntity barrierTE = (Type3BarrierTileEntity)teInPos;
-		barrierTE = barrierTE.findFurthestLeft();
 		
 		playerIn.openGui(ModTrafficControl.instance, GuiProxy.GUI_IDs.TYPE_3_BARRIER, worldIn, barrierTE.getPos().getX(), barrierTE.getPos().getY(), barrierTE.getPos().getZ());
 		return true;

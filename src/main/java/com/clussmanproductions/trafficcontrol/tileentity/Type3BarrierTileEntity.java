@@ -1,6 +1,7 @@
 package com.clussmanproductions.trafficcontrol.tileentity;
 
 import com.clussmanproductions.trafficcontrol.blocks.BlockType3BarrierBase;
+import com.google.common.collect.Comparators;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -15,6 +16,9 @@ import net.minecraft.world.World;
 public class Type3BarrierTileEntity extends SyncableTileEntity {
 	private boolean renderSign;
 	private SignType signType = SignType.RoadClosed;
+	private boolean renderThisSign;
+	private int thisSignType;
+	private int thisSignVariant;
 	
 	public boolean getRenderSign() {
 		return renderSign;
@@ -25,6 +29,21 @@ public class Type3BarrierTileEntity extends SyncableTileEntity {
 		return signType;
 	}
 
+	public boolean getRenderThisSign()
+	{
+		return renderThisSign;
+	}
+	
+	public int getThisSignType()
+	{
+		return thisSignType;
+	}
+	
+	public int getThisSignVariant()
+	{
+		return thisSignVariant;
+	}
+	
 	public void setRenderSign(boolean renderSign) {
 		boolean shouldMarkDirty = renderSign != this.renderSign;
 		
@@ -58,17 +77,74 @@ public class Type3BarrierTileEntity extends SyncableTileEntity {
 		}
 	}
 	
+	public void setRenderThisSign(boolean renderThisSign)
+	{
+		boolean shouldMarkDirty = renderThisSign != this.renderThisSign;
+		
+		this.renderThisSign = renderThisSign;
+		
+		if (shouldMarkDirty)
+		{
+			markDirty();
+			
+			if (world != null)
+			{
+				world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+			}
+		}
+	}
+	
+	public void setThisSignType(int thisSignType)
+	{
+		boolean shouldMarkDirty = thisSignType != this.thisSignType;
+		
+		this.thisSignType = thisSignType;
+		
+		if (shouldMarkDirty)
+		{
+			markDirty();
+			
+			if (world != null)
+			{
+				world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+			}
+		}
+	}
+	
+	public void setThisSignVariant(int thisSignVariant)
+	{
+		boolean shouldMarkDirty = thisSignVariant != this.thisSignVariant;
+		
+		this.thisSignVariant = thisSignVariant;
+		
+		if (shouldMarkDirty)
+		{
+			markDirty();
+			
+			if (world != null)
+			{
+				world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+			}
+		}
+	}
+	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		setRenderSign(compound.getBoolean("renderSign"));
 		setSignType(SignType.getByIndex(compound.getInteger("signType")));
+		setRenderThisSign(compound.getBoolean("renderThisSign"));
+		setThisSignType(compound.getInteger("thisSignType"));
+		setThisSignVariant(compound.getInteger("thisSignVariant"));
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setBoolean("renderSign", getRenderSign());
 		compound.setInteger("signType", signType.index);
+		compound.setBoolean("renderThisSign", getRenderThisSign());
+		compound.setInteger("thisSignType", getThisSignType());
+		compound.setInteger("thisSignVariant", getThisSignVariant());
 		
 		return super.writeToNBT(compound);
 	}
@@ -78,6 +154,9 @@ public class Type3BarrierTileEntity extends SyncableTileEntity {
 		NBTTagCompound nbt = super.getUpdateTag();
 		nbt.setBoolean("renderSign", renderSign);
 		nbt.setInteger("signType", signType.index);
+		nbt.setBoolean("renderThisSign", getRenderThisSign());
+		nbt.setInteger("thisSignType", getThisSignType());
+		nbt.setInteger("thisSignVariant", getThisSignVariant());
 		return nbt;
 	}
 	
@@ -86,6 +165,9 @@ public class Type3BarrierTileEntity extends SyncableTileEntity {
 		super.handleUpdateTag(tag);
 		setRenderSign(tag.getBoolean("renderSign"));
 		setSignType(SignType.getByIndex(tag.getInteger("signType")));
+		setRenderThisSign(tag.getBoolean("renderThisSign"));
+		setThisSignType(tag.getInteger("thisSignType"));
+		setThisSignVariant(tag.getInteger("thisSignVariant"));
 	}
 	
 	@Override
@@ -132,7 +214,7 @@ public class Type3BarrierTileEntity extends SyncableTileEntity {
 
 	public void syncConnectedBarriers(boolean doClientToServerSync)
 	{
-		BlockPos workingPos = pos.toImmutable();
+		BlockPos workingPos = findFurthestLeft().getPos();
 		IBlockState currentState = world.getBlockState(workingPos).getActualState(world, workingPos);
 		Block currentStateBlockInstance = ((BlockType3BarrierBase)currentState.getBlock()).getBlockInstance();
 		EnumFacing facing = currentState.getValue(BlockType3BarrierBase.FACING);
@@ -193,10 +275,57 @@ public class Type3BarrierTileEntity extends SyncableTileEntity {
 		setSignType(SignType.getByIndex(nextIndex));
 	}
 	
+	public void nextThisSignType()
+	{
+		int nextType = thisSignType + 1;
+		if (nextType > SignTileEntity.MAXVARIANTS.keySet().stream().max(Integer::compare).get())
+		{
+			nextType = 0;
+		}
+		
+		setThisSignVariant(0);
+		setThisSignType(nextType);
+	}
+	
+	public void prevThisSignType()
+	{
+		int nextType = thisSignType - 1;
+		if (nextType < 0)
+		{
+			nextType = SignTileEntity.MAXVARIANTS.keySet().stream().max(Integer::compare).get();
+		}
+
+		setThisSignVariant(0);
+		setThisSignType(nextType);
+	}
+	
+	public void nextThisSignVariant()
+	{
+		int nextVariant = thisSignVariant + 1;
+		if (nextVariant > SignTileEntity.MAXVARIANTS.get(getThisSignType()))
+		{
+			nextVariant = 0;
+		}
+		
+		setThisSignVariant(nextVariant);
+	}
+	
+	public void prevThisSignVariant()
+	{
+		int nextVariant = thisSignVariant - 1;
+		if (nextVariant < 1)
+		{
+			nextVariant = SignTileEntity.MAXVARIANTS.get(getThisSignType());
+		}
+		
+		setThisSignVariant(nextVariant);
+	}
+	
 	public enum SignType
 	{
 		RoadClosed(0),
-		LaneClosed(1);
+		LaneClosed(1),
+		RoadClosedThruTraffic(2);
 		
 		private int index;
 		private SignType(int index)
