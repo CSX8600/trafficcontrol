@@ -29,7 +29,7 @@ public class ModelSign implements IModel {
 			textures.add(getRL("blocks/sign/diamond/diamond" + i));
 		}
 		
-		for(int i = 0; i <= 98; i++)
+		for(int i = 0; i <= 97; i++)
 		{
 			textures.add(getRL("blocks/sign/misc/misc" + i));
 		}

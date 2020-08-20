@@ -19,7 +19,7 @@ public class SignTileEntity extends TileEntity {
 	public static final ImmutableMap<Integer, Integer> MAXVARIANTS = ImmutableMap.<Integer, Integer>builder()
 			.put(0, 113)
 			.put(1, 144)
-			.put(2, 98)
+			.put(2, 97)
 			.put(3, 88)
 			.put(4, 166)
 			.put(5, 95)
