@@ -100,12 +100,12 @@ public class TESRHelper {
 		
 		private double[][] getVertexPoints()
 		{
-			double convertedX = x / 16;
-			double convertedY = y / 16;
-			double convertedZ = z / 16;
-			double convertedWidth = width / 16;
-			double convertedHeight = height / 16;
-			double convertedDepth = depth / 16;
+			double convertedX = x;
+			double convertedY = y;
+			double convertedZ = z;
+			double convertedWidth = width;
+			double convertedHeight = height;
+			double convertedDepth = depth;
 			return new double[][] {
 				{convertedX + convertedWidth, convertedY, convertedZ},
 				{convertedX + convertedWidth, convertedY + convertedHeight, convertedZ},

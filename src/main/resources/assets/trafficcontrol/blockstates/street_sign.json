@@ -1,0 +1,10 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "trafficcontrol:street_sign"
+	},
+	"variants": {
+		"normal": { "model": "trafficcontrol:light_source" },
+		"inventory": [{}]
+	}
+}

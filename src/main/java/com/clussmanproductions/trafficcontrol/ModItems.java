@@ -2,6 +2,7 @@ package com.clussmanproductions.trafficcontrol;
 
 import com.clussmanproductions.trafficcontrol.item.ItemCrossingRelayBox;
 import com.clussmanproductions.trafficcontrol.item.ItemCrossingRelayTuner;
+import com.clussmanproductions.trafficcontrol.item.ItemStreetSign;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightBulb;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightFrame;
 
@@ -18,6 +19,8 @@ public class ModItems {
 	public static ItemTrafficLightBulb traffic_light_bulb;
 	@ObjectHolder("traffic_light_frame")
 	public static ItemTrafficLightFrame traffic_light_frame;
+	@ObjectHolder("street_sign")
+	public static ItemStreetSign street_sign;
 	
 	public static void initModels(ModelRegistryEvent e)
 	{
@@ -25,5 +28,6 @@ public class ModItems {
 		crossing_relay_tuner.initModel();
 		traffic_light_bulb.initModel();
 		traffic_light_frame.initModel();
+		street_sign.initModel();
 	}
 }

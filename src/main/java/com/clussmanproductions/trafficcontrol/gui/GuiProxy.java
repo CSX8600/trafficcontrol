@@ -3,6 +3,7 @@ package com.clussmanproductions.trafficcontrol.gui;
 import com.clussmanproductions.trafficcontrol.ModItems;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.StreetSignTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightControlBoxTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.Type3BarrierTileEntity;
 
@@ -76,6 +77,15 @@ public class GuiProxy implements IGuiHandler {
 					return new CrossingGateGateGui(crossingGateTE);
 				}
 				break;
+			case GUI_IDs.STREET_SIGN:
+				BlockPos preStreetSignPos = new BlockPos(x, y, z);
+				TileEntity preStreetSignTE = world.getTileEntity(preStreetSignPos);
+				if (preStreetSignTE instanceof StreetSignTileEntity)
+				{
+					StreetSignTileEntity streetSignTileEntity = (StreetSignTileEntity)preStreetSignTE;
+					return new StreetSignGui(streetSignTileEntity);
+				}
+				break;
 		}
 
 		return null;
@@ -88,5 +98,6 @@ public class GuiProxy implements IGuiHandler {
 		public static final int TRAFFIC_LIGHT_CONTROL_BOX = 3;
 		public static final int TYPE_3_BARRIER = 4;
 		public static final int CROSSING_GATE_GATE = 5;
+		public static final int STREET_SIGN = 6;
 	}
 }

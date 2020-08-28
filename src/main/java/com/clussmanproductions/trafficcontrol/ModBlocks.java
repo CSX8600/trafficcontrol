@@ -30,6 +30,7 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockShuntIsland;
 import com.clussmanproductions.trafficcontrol.blocks.BlockSign;
 import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightDouble;
 import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightSingle;
+import com.clussmanproductions.trafficcontrol.blocks.BlockStreetSign;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightControlBox;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficRail;
@@ -125,6 +126,8 @@ public class ModBlocks {
 	public static BlockTrafficSensorLeft traffic_sensor_left;
 	@ObjectHolder("traffic_sensor_straight")
 	public static BlockTrafficSensorStraight traffic_sensor_straight;
+	@ObjectHolder("street_sign")
+	public static BlockStreetSign street_sign;
 
 	@SideOnly(Side.CLIENT)
 	public static void initModels(ModelRegistryEvent e)
@@ -159,5 +162,6 @@ public class ModBlocks {
 		wch_bell.initModel();
 		traffic_sensor_left.initModel();
 		traffic_sensor_straight.initModel();
+		street_sign.initModel();
 	}
 }
