@@ -24,6 +24,18 @@ public class GuiProxy implements IGuiHandler {
 					return new TrafficLightFrameContainer(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
+			case GUI_IDs.TRAFFIC_LIGHT_5_FRAME:
+				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_5_frame)
+				{
+					return new TrafficLight5FrameContainer(player.inventory, player.getHeldItemMainhand());
+				}
+				break;
+			case GUI_IDs.TRAFFIC_LIGHT_DOGHOUSE_FRAME:
+				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_doghouse_frame)
+				{
+					return new TrafficLightDoghouseFrameContainer(player.inventory, player.getHeldItemMainhand());
+				}
+				break;
 		}
 
 		return null;
@@ -40,7 +52,7 @@ public class GuiProxy implements IGuiHandler {
 				if (te instanceof SignTileEntity)
 				{
 					SignTileEntity signTE = (SignTileEntity)te;
-					return new SignGui(signTE, pos);
+					return new SignGui(signTE);
 				}
 				break;
 			case GUI_IDs.TRAFFIC_LIGHT_FRAME:
@@ -76,6 +88,18 @@ public class GuiProxy implements IGuiHandler {
 					return new CrossingGateGateGui(crossingGateTE);
 				}
 				break;
+			case GUI_IDs.TRAFFIC_LIGHT_5_FRAME:
+				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_5_frame)
+				{
+					return new TrafficLight5FrameGui(player.inventory, player.getHeldItemMainhand());
+				}
+				break;
+			case GUI_IDs.TRAFFIC_LIGHT_DOGHOUSE_FRAME:
+				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_doghouse_frame)
+				{
+					return new TrafficLightDoghouseFrameGui(player.inventory, player.getHeldItemMainhand());
+				}
+				break;
 		}
 
 		return null;
@@ -88,5 +112,7 @@ public class GuiProxy implements IGuiHandler {
 		public static final int TRAFFIC_LIGHT_CONTROL_BOX = 3;
 		public static final int TYPE_3_BARRIER = 4;
 		public static final int CROSSING_GATE_GATE = 5;
+		public static final int TRAFFIC_LIGHT_5_FRAME = 6;
+		public static final int TRAFFIC_LIGHT_DOGHOUSE_FRAME = 7;
 	}
 }

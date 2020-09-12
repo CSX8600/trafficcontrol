@@ -2,19 +2,19 @@ package com.clussmanproductions.trafficcontrol.item;
 
 import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
+import com.clussmanproductions.trafficcontrol.blocks.BlockBaseTrafficLight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase;
 import com.clussmanproductions.trafficcontrol.blocks.BlockShuntBorder;
 import com.clussmanproductions.trafficcontrol.blocks.BlockShuntIsland;
-import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorLeft;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorStraight;
+import com.clussmanproductions.trafficcontrol.tileentity.BaseTrafficLightTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.BellBaseTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.RelayTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.ShuntBorderTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.ShuntIslandTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightControlBoxTileEntity;
-import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.WigWagTileEntity;
 
 import net.minecraft.block.state.IBlockState;
@@ -316,13 +316,13 @@ public class ItemCrossingRelayTuner extends Item {
 		if (pairedTE instanceof TrafficLightControlBoxTileEntity)
 		{
 			TrafficLightControlBoxTileEntity controlBox = (TrafficLightControlBoxTileEntity)pairedTE;
-			if (te instanceof TrafficLightTileEntity)
+			if (te instanceof BaseTrafficLightTileEntity)
 			{
 				IBlockState state = world.getBlockState(te.getPos());
 				
-				if (state.getBlock() == ModBlocks.traffic_light)
+				if (state.getBlock() instanceof BlockBaseTrafficLight)
 				{
-					EnumFacing facing = state.getValue(BlockTrafficLight.FACING);
+					EnumFacing facing = state.getValue(BlockBaseTrafficLight.FACING);
 					
 					boolean operationResult = false;
 					if (facing == EnumFacing.EAST || facing == EnumFacing.WEST)

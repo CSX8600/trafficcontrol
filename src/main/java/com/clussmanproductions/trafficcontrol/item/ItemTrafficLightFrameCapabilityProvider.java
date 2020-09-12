@@ -12,9 +12,12 @@ import net.minecraftforge.items.ItemStackHandler;
 public class ItemTrafficLightFrameCapabilityProvider implements ICapabilityProvider, ICapabilitySerializable<NBTTagCompound> {
 	private final ItemStackHandler handler;
 	private ItemStack stack;
+	private final int BULB_COUNT;
 	
-	public ItemTrafficLightFrameCapabilityProvider(ItemStack stack) {
-		handler = new ItemStackHandler(3)
+	public ItemTrafficLightFrameCapabilityProvider(ItemStack stack, int bulbCount) {
+		BULB_COUNT = bulbCount;
+		
+		handler = new ItemStackHandler(BULB_COUNT)
 		{			
 			@Override
 			public boolean isItemValid(int slot, ItemStack stack) {

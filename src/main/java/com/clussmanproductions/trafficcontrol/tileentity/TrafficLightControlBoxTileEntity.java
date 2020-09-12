@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.clussmanproductions.trafficcontrol.Config;
+import com.clussmanproductions.trafficcontrol.blocks.BlockBaseTrafficLight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorLeft;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorStraight;
@@ -15,8 +16,6 @@ import com.clussmanproductions.trafficcontrol.util.EnumTrafficLightBulbTypes;
 import com.google.common.collect.ImmutableList;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -204,9 +203,9 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 		for(BlockPos westEastLight : westEastLights)
 		{
 			TileEntity te = world.getTileEntity(westEastLight);
-			if (te instanceof TrafficLightTileEntity)
+			if (te instanceof BaseTrafficLightTileEntity)
 			{
-				TrafficLightTileEntity light = (TrafficLightTileEntity)te;
+				BaseTrafficLightTileEntity light = (BaseTrafficLightTileEntity)te;
 				light.powerOff();
 			}
 		}
@@ -214,9 +213,9 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 		for(BlockPos northSouthLight : northSouthLights)
 		{
 			TileEntity te = world.getTileEntity(northSouthLight);
-			if (te instanceof TrafficLightTileEntity)
+			if (te instanceof BaseTrafficLightTileEntity)
 			{
-				TrafficLightTileEntity light = (TrafficLightTileEntity)te;
+				BaseTrafficLightTileEntity light = (BaseTrafficLightTileEntity)te;
 				light.powerOff();
 			}
 		}
@@ -228,9 +227,9 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 				for(BlockPos northSouthLight : northSouthLights)
 				{
 					TileEntity te = world.getTileEntity(northSouthLight);
-					if (te instanceof TrafficLightTileEntity)
+					if (te instanceof BaseTrafficLightTileEntity)
 					{
-						TrafficLightTileEntity light = (TrafficLightTileEntity)te;
+						BaseTrafficLightTileEntity light = (BaseTrafficLightTileEntity)te;
 						light.setActive(bulbType, true, manualNorthSouthActive.get(bulbType));
 					}
 				}
@@ -241,9 +240,9 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 				for(BlockPos westEastLight : westEastLights)
 				{
 					TileEntity te = world.getTileEntity(westEastLight);
-					if (te instanceof TrafficLightTileEntity)
+					if (te instanceof BaseTrafficLightTileEntity)
 					{
-						TrafficLightTileEntity light = (TrafficLightTileEntity)te;
+						BaseTrafficLightTileEntity light = (BaseTrafficLightTileEntity)te;
 						light.setActive(bulbType, true, manualWestEastActive.get(bulbType));
 					}
 				}
@@ -256,9 +255,9 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 				for(BlockPos northSouthLight : northSouthLights)
 				{
 					TileEntity te = world.getTileEntity(northSouthLight);
-					if (te instanceof TrafficLightTileEntity)
+					if (te instanceof BaseTrafficLightTileEntity)
 					{
-						TrafficLightTileEntity light = (TrafficLightTileEntity)te;
+						BaseTrafficLightTileEntity light = (BaseTrafficLightTileEntity)te;
 						light.setActive(bulbType, true, manualNorthSouthInactive.get(bulbType));
 					}
 				}
@@ -269,9 +268,9 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 				for(BlockPos westEastLight : westEastLights)
 				{
 					TileEntity te = world.getTileEntity(westEastLight);
-					if (te instanceof TrafficLightTileEntity)
+					if (te instanceof BaseTrafficLightTileEntity)
 					{
-						TrafficLightTileEntity light = (TrafficLightTileEntity)te;
+						BaseTrafficLightTileEntity light = (BaseTrafficLightTileEntity)te;
 						light.setActive(bulbType, true, manualWestEastInactive.get(bulbType));
 					}
 				}
@@ -566,14 +565,14 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 		
 		private void initialize()
 		{
-			for(TrafficLightTileEntity te : northSouthLights
+			for(BaseTrafficLightTileEntity te : northSouthLights
 					.stream()
 					.map(bp ->
 					{
 						TileEntity teAtPos = world.getTileEntity(bp);
-						if (teAtPos instanceof TrafficLightTileEntity)
+						if (teAtPos instanceof BaseTrafficLightTileEntity)
 						{
-							return (TrafficLightTileEntity)teAtPos;
+							return (BaseTrafficLightTileEntity)teAtPos;
 						}
 						
 						return null;
@@ -586,14 +585,14 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 				te.setActive(EnumTrafficLightBulbTypes.RedArrowLeft, true, false);
 			};
 			
-			for(TrafficLightTileEntity te : westEastLights
+			for(BaseTrafficLightTileEntity te : westEastLights
 					.stream()
 					.map(bp ->
 					{
 						TileEntity teAtPos = world.getTileEntity(bp);
-						if (teAtPos instanceof TrafficLightTileEntity)
+						if (teAtPos instanceof BaseTrafficLightTileEntity)
 						{
-							return (TrafficLightTileEntity)teAtPos;
+							return (BaseTrafficLightTileEntity)teAtPos;
 						}
 						
 						return null;
@@ -611,7 +610,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 		
 		private Stages updateLightsByStage(Stages stage)
 		{
-			List<TrafficLightTileEntity> trafficLightsForRightOfWay;
+			List<BaseTrafficLightTileEntity> trafficLightsForRightOfWay;
 			EnumFacing direction1;
 			EnumFacing direction2;
 			
@@ -622,9 +621,9 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 						.map(p ->
 						{
 							TileEntity te = world.getTileEntity(p);
-							if (te instanceof TrafficLightTileEntity)
+							if (te instanceof BaseTrafficLightTileEntity)
 							{
-								return (TrafficLightTileEntity)te;
+								return (BaseTrafficLightTileEntity)te;
 							}
 							
 							return null;
@@ -642,9 +641,9 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 						.map(p ->
 						{
 							TileEntity te = world.getTileEntity(p);
-							if (te instanceof TrafficLightTileEntity)
+							if (te instanceof BaseTrafficLightTileEntity)
 							{
-								return (TrafficLightTileEntity)te;
+								return (BaseTrafficLightTileEntity)te;
 							}
 							
 							return null;
@@ -674,7 +673,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 						.stream()
 						.forEach(tl -> {
 							IBlockState tlBs = world.getBlockState(tl.getPos());
-							if (!tlBs.getValue(BlockTrafficLight.FACING).equals(direction1))
+							if (!tlBs.getValue(BlockBaseTrafficLight.FACING).equals(direction1))
 							{
 								return;
 							}
@@ -690,7 +689,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 					.stream()
 					.forEach(tl -> {
 						IBlockState tlBs = world.getBlockState(tl.getPos());
-						if (!tlBs.getValue(BlockTrafficLight.FACING).equals(direction2))
+						if (!tlBs.getValue(BlockBaseTrafficLight.FACING).equals(direction2))
 						{
 							return;
 						}
@@ -716,7 +715,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 						.stream()
 						.forEach(tl -> {
 							IBlockState tlBs = world.getBlockState(tl.getPos());
-							if (!tlBs.getValue(BlockTrafficLight.FACING).equals(direction1))
+							if (!tlBs.getValue(BlockBaseTrafficLight.FACING).equals(direction1))
 							{
 								return;
 							}
@@ -732,7 +731,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 					.stream()
 					.forEach(tl -> {
 						IBlockState tlBs = world.getBlockState(tl.getPos());
-						if (!tlBs.getValue(BlockTrafficLight.FACING).equals(direction2))
+						if (!tlBs.getValue(BlockBaseTrafficLight.FACING).equals(direction2))
 						{
 							return;
 						}

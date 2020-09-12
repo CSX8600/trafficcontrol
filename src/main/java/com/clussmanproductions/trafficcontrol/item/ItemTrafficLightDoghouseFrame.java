@@ -12,21 +12,20 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class ItemTrafficLightFrame extends BaseItemTrafficLightFrame {
+public class ItemTrafficLightDoghouseFrame extends BaseItemTrafficLightFrame {
 
-	public ItemTrafficLightFrame()
-	{
-		super("traffic_light_frame");
+	public ItemTrafficLightDoghouseFrame() {
+		super("traffic_light_doghouse_frame");
 	}
 	
 	@Override
 	protected int getGuiID() {
-		return GuiProxy.GUI_IDs.TRAFFIC_LIGHT_FRAME;
+		return GuiProxy.GUI_IDs.TRAFFIC_LIGHT_DOGHOUSE_FRAME;
 	}
 
 	@Override
 	public int getBulbCount() {
-		return 3;
+		return 5;
 	}
 
 	@Override
@@ -41,19 +40,30 @@ public class ItemTrafficLightFrame extends BaseItemTrafficLightFrame {
 		subStack = handler.getStackInSlot(1);
 		if (subStack != ItemStack.EMPTY)
 		{
-			tooltip.add("Middle: " + subStack.getItem().getItemStackDisplayName(subStack));
+			tooltip.add("Upper Left: " + subStack.getItem().getItemStackDisplayName(subStack));
 		}
 		
 		subStack = handler.getStackInSlot(2);
 		if (subStack != ItemStack.EMPTY)
 		{
-			tooltip.add("Bottom: " + subStack.getItem().getItemStackDisplayName(subStack));
+			tooltip.add("Lower Left: " + subStack.getItem().getItemStackDisplayName(subStack));
+		}
+		
+		subStack = handler.getStackInSlot(3);
+		if (subStack != ItemStack.EMPTY)
+		{
+			tooltip.add("Upper Right: " + subStack.getItem().getItemStackDisplayName(subStack));
+		}
+		
+		subStack = handler.getStackInSlot(4);
+		if (subStack != ItemStack.EMPTY)
+		{
+			tooltip.add("Lower Right: " + subStack.getItem().getItemStackDisplayName(subStack));
 		}
 	}
 
 	@Override
 	protected BlockBaseTrafficLight getBaseBlockTrafficLight() {
-		return ModBlocks.traffic_light;
+		return ModBlocks.traffic_light_doghouse;
 	}
-	
 }

@@ -2,7 +2,9 @@ package com.clussmanproductions.trafficcontrol;
 
 import com.clussmanproductions.trafficcontrol.item.ItemCrossingRelayBox;
 import com.clussmanproductions.trafficcontrol.item.ItemCrossingRelayTuner;
+import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight5Frame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightBulb;
+import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightDoghouseFrame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightFrame;
 
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -18,6 +20,10 @@ public class ModItems {
 	public static ItemTrafficLightBulb traffic_light_bulb;
 	@ObjectHolder("traffic_light_frame")
 	public static ItemTrafficLightFrame traffic_light_frame;
+	@ObjectHolder("traffic_light_5_frame")
+	public static ItemTrafficLight5Frame traffic_light_5_frame;
+	@ObjectHolder("traffic_light_doghouse_frame")
+	public static ItemTrafficLightDoghouseFrame traffic_light_doghouse_frame;
 	
 	public static void initModels(ModelRegistryEvent e)
 	{
@@ -25,5 +31,7 @@ public class ModItems {
 		crossing_relay_tuner.initModel();
 		traffic_light_bulb.initModel();
 		traffic_light_frame.initModel();
+		traffic_light_5_frame.initModel();
+		traffic_light_doghouse_frame.initModel();
 	}
 }

@@ -134,6 +134,27 @@ public class SignTileEntity extends TileEntity {
 		}
 	}
 
+	public static int getSignTypeByName(String type)
+	{
+		switch(type)
+		{
+			case "circle":
+				return 0;
+			case "diamond":
+				return 1;
+			case "misc":
+				return 2;
+			case "rectangle":
+				return 3;
+			case "square":
+				return 4;
+			case "triangle":
+				return 5;
+		}
+		
+		return 0;
+	}
+	
 	public String getFriendlySignName()
 	{
 		switch(type)
