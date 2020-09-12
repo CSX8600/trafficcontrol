@@ -1,5 +1,7 @@
 package com.clussmanproductions.trafficcontrol.gui;
 
+import java.io.IOException;
+
 import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity;
 
 import net.minecraft.client.gui.GuiScreen;
@@ -25,5 +27,19 @@ public class SignGui extends GuiScreen {
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		
 		list.draw(mouseX, mouseY, fontRenderer, text -> x -> y -> drawHoveringText(text, x, y));
+	}
+
+	@Override
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+		super.mouseClicked(mouseX, mouseY, mouseButton);
+		
+		list.onMouseClick(mouseX, mouseY);
+	}
+	
+	@Override
+	protected void mouseReleased(int mouseX, int mouseY, int state) {
+		super.mouseReleased(mouseX, mouseY, state);
+		
+		list.onMouseRelease();
 	}
 }

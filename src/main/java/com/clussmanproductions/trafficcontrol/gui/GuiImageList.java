@@ -12,7 +12,6 @@ import java.util.function.Function;
 import org.lwjgl.opengl.GL11;
 
 import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity;
-import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -40,6 +39,16 @@ public class GuiImageList {
 	private HashMap<Integer, HashMap<Integer, Image>> imagesByVariantByType;
 	Image currentImage;
 	Image[][] slots;
+	
+	// Scroll bar stuff
+	private int scrollBarLeft;
+	private double scrollBarHeight;
+	private double scrollBarTop;
+	private int currentScrollBarStep = 0;
+	private int maxScrollBarSteps = 0;
+	private boolean isMouseClicked = false;
+	private int clickY = 0;
+	private int preClickScrollBarStep = 0;
 	
  	public GuiImageList(int x, int y, int width, int height, String sort, ResourceLocation imageListSource, int currentTypeID, int currentVariant)
 	{
@@ -129,7 +138,7 @@ public class GuiImageList {
 			return;
 		}
 		
-		int slotWidth = (width / 16) - 2;
+		int slotWidth = (width / 16) - 1;
 		
 		if (slotWidth == 0)
 		{
@@ -143,17 +152,8 @@ public class GuiImageList {
 		
 		slots = new Image[slotWidth][rows];
 		
-		// The first slot is always the selected sign
-		slots[0][0] = currentImage;
-		
 		int currentRow = 0;
-		int currentCol = 1;
-		
-		if (slotWidth == 1)
-		{
-			currentRow = 1;
-			currentCol = 0;
-		}
+		int currentCol = 0;
 		
 		for (int typeId : imagesByVariantByType.keySet())
 		{
@@ -169,6 +169,30 @@ public class GuiImageList {
 					currentCol = 0;
 					currentRow++;
 				}
+			}
+		}
+		
+		// Setup scroll bar values
+		scrollBarLeft = this.x + this.width - 16;
+		scrollBarTop = this.y;
+
+		maxScrollBarSteps = rows - (this.height / 16);
+		if (maxScrollBarSteps < 0)
+		{
+			maxScrollBarSteps = 0;
+		}
+
+		if (maxScrollBarSteps == 0)
+		{
+			scrollBarHeight = this.height;
+		}
+		else
+		{
+			scrollBarHeight = (double)this.height / ((double)maxScrollBarSteps + 1);
+			
+			if (scrollBarHeight > this.height)
+			{
+				scrollBarHeight = this.height;
 			}
 		}
 	}
@@ -194,24 +218,37 @@ public class GuiImageList {
 			return;
 		}
 		
+		if (isMouseClicked)
+		{			
+			int differenceY = mouseY - clickY;
+			
+			currentScrollBarStep = preClickScrollBarStep + (int)(differenceY / scrollBarHeight);
+			if (currentScrollBarStep > maxScrollBarSteps)
+			{
+				currentScrollBarStep = maxScrollBarSteps;
+			}
+			
+			if (currentScrollBarStep < 0)
+			{
+				currentScrollBarStep = 0;
+			}
+			
+			scrollBarTop = y + (scrollBarHeight * currentScrollBarStep);
+		}
+		
 		GlStateManager.disableTexture2D();
 		
 		Tessellator tess = Tessellator.getInstance();
 		BufferBuilder builder = tess.getBuffer();
 		builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
 		
-		builder.pos(x + width - 32, y + height, 0).color(255, 255, 255, 255).endVertex();
-		builder.pos(x + width - 32, y, 0).color(255, 255, 255, 255).endVertex();
+		builder.pos(x + width - 16, y + height, 0).color(255, 255, 255, 255).endVertex();
+		builder.pos(x + width - 16, y, 0).color(255, 255, 255, 255).endVertex();
 		builder.pos(x, y, 0).color(255, 255, 255, 255).endVertex();
 		builder.pos(x, y + height, 0).color(255, 255, 255, 255).endVertex();
 		
-		builder.pos(x + 16, y + 16, 0).color(0, 128, 0, 255).endVertex();
-		builder.pos(x + 16, y, 0).color(0, 128, 0, 255).endVertex();
-		builder.pos(x, y, 0).color(0, 128, 0, 255).endVertex();
-		builder.pos(x, y + 16, 0).color(0, 128, 0, 255).endVertex();
-		
 		int renderableRows = height / 16;
-		int maxRows = (imagesByName.keySet().size() / 16) + 1;
+		int maxRows = (imagesByName.keySet().size() / slots.length) + 1;
 		
 		Image hoveringImage = null;
 		if (mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height)
@@ -221,15 +258,18 @@ public class GuiImageList {
 			
 			if (hoverRow < renderableRows && slots.length > hoverCol && slots[hoverCol].length > hoverRow && slots[hoverCol][hoverRow] != null)
 			{
-				hoveringImage = slots[hoverCol][hoverRow];
+				hoveringImage = slots[hoverCol][hoverRow + currentScrollBarStep];
 				
-				int hoverColX = x + (hoverCol * 16);
-				int hoverRowY = y + (hoverRow * 16);
-				 
-				builder.pos(hoverColX + 16, hoverRowY + 16, 0).color(0, 0, 255, 255).endVertex();
-				builder.pos(hoverColX + 16, hoverRowY, 0).color(0, 0, 255, 255).endVertex();
-				builder.pos(hoverColX, hoverRowY, 0).color(0, 0, 255, 255).endVertex();
-				builder.pos(hoverColX, hoverRowY + 16, 0).color(0, 0, 255, 255).endVertex();
+				if (hoveringImage != null)
+				{
+					int hoverColX = x + (hoverCol * 16);
+					int hoverRowY = y + (hoverRow * 16);
+					 
+					builder.pos(hoverColX + 16, hoverRowY + 16, 0).color(0, 0, 255, 255).endVertex();
+					builder.pos(hoverColX + 16, hoverRowY, 0).color(0, 0, 255, 255).endVertex();
+					builder.pos(hoverColX, hoverRowY, 0).color(0, 0, 255, 255).endVertex();
+					builder.pos(hoverColX, hoverRowY + 16, 0).color(0, 0, 255, 255).endVertex();
+				}
 			}
 		}
 		
@@ -244,7 +284,7 @@ public class GuiImageList {
 			int rowLimit = (slots[col].length < renderableRows) ? slots[col].length : renderableRows;
 			for(int row = 0; row < rowLimit; row++)
 			{
-				Image image = slots[col][row];
+				Image image = slots[col][row + currentScrollBarStep];
 				
 				if (image == null)
 				{
@@ -286,18 +326,34 @@ public class GuiImageList {
 		Tessellator tess = Tessellator.getInstance();
 		BufferBuilder builder = tess.getBuffer();
 		
-		builder.pos(x + width - 32, y, 1).color(32, 32, 32, 255).endVertex();
-		builder.pos(x + width - 32, y + height, 1).color(32, 32, 32, 255).endVertex();
+		builder.pos(scrollBarLeft, y, 1).color(32, 32, 32, 255).endVertex();
+		builder.pos(scrollBarLeft, y + height, 1).color(32, 32, 32, 255).endVertex();
 		builder.pos(x + width, y + height, 1).color(32, 32, 32, 255).endVertex();
 		builder.pos(x + width, y, 1).color(32, 32, 32, 255).endVertex();
 		
-		double percentageOfShownRows = (double)renderableRows / (double)maxRows;
-		int scrollBarHeight = (int)((double)height * percentageOfShownRows);
-		
-		builder.pos(x + width - 32, y, 1).color(128, 128, 128, 255).endVertex();
-		builder.pos(x + width - 32, y + scrollBarHeight, 1).color(128, 128, 128, 255).endVertex();
-		builder.pos(x + width, y + scrollBarHeight, 1).color(128, 128, 128, 255).endVertex();
-		builder.pos(x + width, y, 1).color(128, 128, 128, 255).endVertex();
+		builder.pos(scrollBarLeft, scrollBarTop, 1).color(128, 128, 128, 255).endVertex();
+		builder.pos(scrollBarLeft, scrollBarTop + scrollBarHeight, 1).color(128, 128, 128, 255).endVertex();
+		builder.pos(x + width, scrollBarTop + scrollBarHeight, 1).color(128, 128, 128, 255).endVertex();
+		builder.pos(x + width, scrollBarTop, 1).color(128, 128, 128, 255).endVertex();
+	}
+	
+	public void onMouseClick(int mouseX, int mouseY)
+	{
+		if (mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height)
+		{
+			// Check to see if it's on the scroll bar
+			if (mouseX > scrollBarLeft && mouseY > scrollBarTop && mouseY < scrollBarTop + scrollBarHeight)
+			{
+				isMouseClicked = true;
+				clickY = mouseY;
+				preClickScrollBarStep = currentScrollBarStep;
+			}
+		}
+	}
+	
+	public void onMouseRelease()
+	{
+		isMouseClicked = false;
 	}
 	
 	private class Image
