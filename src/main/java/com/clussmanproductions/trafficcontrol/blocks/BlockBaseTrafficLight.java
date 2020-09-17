@@ -47,7 +47,6 @@ public abstract class BlockBaseTrafficLight extends Block {
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
 	
-	@SideOnly(Side.CLIENT)
 	public abstract void initModel();
 	
 	@Override

@@ -9,6 +9,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockTrafficLight extends BlockBaseTrafficLight {
 
@@ -18,6 +20,7 @@ public class BlockTrafficLight extends BlockBaseTrafficLight {
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void initModel() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TrafficLightTileEntity.class, new TrafficLightRenderer());
 	}

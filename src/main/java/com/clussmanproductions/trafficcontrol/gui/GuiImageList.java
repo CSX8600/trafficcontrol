@@ -1,21 +1,19 @@
 package com.clussmanproductions.trafficcontrol.gui;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.lwjgl.opengl.GL11;
 
 import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity.Sign;
+import com.clussmanproductions.trafficcontrol.util.Tuple;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -23,22 +21,19 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.ResourceLocation;
 
 public class GuiImageList {
-	public int x;
-	public int y;
-	public int width;
-	public int height;
-	public String sort;
-	public ResourceLocation imageListSource;
+	private int x;
+	private int y;
+	private int width;
+	private int height;
+	private String filter;
+	private Consumer<Sign> imageClickCallback;
 	
 	private boolean didLoadFail = false;
 	private String loadFailedMessage = null;
-	private HashMap<String, Image> imagesByName;
-	private HashMap<Integer, HashMap<Integer, Image>> imagesByVariantByType;
-	Image currentImage;
-	Image[][] slots;
+	private HashMap<String, Sign> imagesByName;
+	Sign[][] slots;
 	
 	// Scroll bar stuff
 	private int scrollBarLeft;
@@ -47,100 +42,22 @@ public class GuiImageList {
 	private int currentScrollBarStep = 0;
 	private int maxScrollBarSteps = 0;
 	private boolean isMouseClicked = false;
+	private boolean isMouseHover = false;
 	private int clickY = 0;
 	private int preClickScrollBarStep = 0;
 	
- 	public GuiImageList(int x, int y, int width, int height, String sort, ResourceLocation imageListSource, int currentTypeID, int currentVariant)
+ 	public GuiImageList(int x, int y, int width, int height, String filter, Consumer<Sign> imageClickCallback)
 	{
 		this.x = x + (width % 16);
 		this.y = y + (height % 16);
 		this.width = width - (width % 16);
 		this.height = height - (height % 16);
-		this.sort = sort;
-		this.imageListSource = imageListSource;
-		
-		try
-		{
-			InputStream jsonStream = Minecraft.getMinecraft().getResourceManager().getResource(this.imageListSource).getInputStream();
-			InputStreamReader streamReader= new InputStreamReader(jsonStream);
-			
-			JsonArray jsonArray = new JsonParser().parse(streamReader).getAsJsonArray();
-			Iterator<JsonElement> arrayIterator = jsonArray.iterator();
-			while(arrayIterator.hasNext())
-			{
-				JsonElement element = arrayIterator.next();
-				if (!element.isJsonObject())
-				{
-					continue;
-				}
-				
-				JsonObject obj = element.getAsJsonObject();
-				String name = obj.get("name").getAsString();
-				String type = obj.get("type").getAsString();
-				int typeID = SignTileEntity.getSignTypeByName(type);
-				int variant = obj.get("variant").getAsInt();
-				String note = null;
-				
-				if (obj.has("note"))
-				{
-					note = obj.get("note").getAsString();
-				}
-				
-				if (imagesByName == null)
-				{
-					imagesByName = new HashMap<>();
-				}
-				
-				if (imagesByVariantByType == null)
-				{
-					imagesByVariantByType = new HashMap<>();
-				}
-				
-				Image newImage = new Image(
-						new ResourceLocation("trafficcontrol:textures/blocks/sign/" + type + "/" + type + variant + ".png"),
-						name,
-						typeID,
-						variant,
-						note);
-				
-				if (currentTypeID == typeID && variant == currentVariant)
-				{
-					currentImage = newImage;
-				}
-				
-				if (imagesByName.containsKey(name))
-				{
-					int counter = 0;
-					do
-					{
-						counter++;
-					}
-					while(imagesByName.containsKey(name + " (" + counter + ")"));
-					
-					name = name + " (" + counter + ")";
-				}
-				
-				imagesByName.put(name, newImage);
-				if (!imagesByVariantByType.containsKey(typeID))
-				{
-					imagesByVariantByType.put(typeID, new HashMap<>());
-				}
-				
-				imagesByVariantByType.get(typeID).put(variant, newImage);
-				
-			}
-		}
-		catch(Exception ex)
-		{
-			didLoadFail = true;
-			loadFailedMessage = "Could not load image list: " + ex.getMessage();
-			
-			return;
-		}
+		this.filter = filter;
+		this.imageClickCallback = imageClickCallback;
 		
 		int slotWidth = (width / 16) - 1;
 		
-		if (slotWidth == 0)
+		if (slotWidth < 1)
 		{
 			didLoadFail = true;
 			loadFailedMessage = "Too narrow";
@@ -148,67 +65,23 @@ public class GuiImageList {
 			return;
 		}
 		
-		int rows = ((imagesByName.values().size() + 1) / slotWidth) + 1;
-		
-		slots = new Image[slotWidth][rows];
-		
-		int currentRow = 0;
-		int currentCol = 0;
-		
-		for (int typeId : imagesByVariantByType.keySet())
+		imagesByName = new HashMap<>();
+		for(Sign sign : SignTileEntity.SIGNS_BY_TYPE_VARIANT.values())
 		{
-			for (int variant : imagesByVariantByType.get(typeId).keySet())
-			{
-				Image image = imagesByVariantByType.get(typeId).get(variant);
-				
-				slots[currentCol][currentRow] = image;
-				
-				currentCol++;
-				if (currentCol >= slotWidth)
-				{
-					currentCol = 0;
-					currentRow++;
-				}
-			}
+			imagesByName.put(sign.getName() + " (" + sign.getVariant() + ")", sign);
 		}
 		
-		// Setup scroll bar values
-		scrollBarLeft = this.x + this.width - 16;
-		scrollBarTop = this.y;
-
-		maxScrollBarSteps = rows - (this.height / 16);
-		if (maxScrollBarSteps < 0)
-		{
-			maxScrollBarSteps = 0;
-		}
-
-		if (maxScrollBarSteps == 0)
-		{
-			scrollBarHeight = this.height;
-		}
-		else
-		{
-			scrollBarHeight = (double)this.height / ((double)maxScrollBarSteps + 1);
-			
-			if (scrollBarHeight > this.height)
-			{
-				scrollBarHeight = this.height;
-			}
-		}
+		fillSlots();
 	}
 	
-	public GuiImageList(int x, int y, int width, int height, ResourceLocation imageListSource, int currentTypeID, int currentVariant)
+	public GuiImageList(int x, int y, int width, int height, Consumer<Sign> imageClickCallback)
 	{
-		this(x, y, width, height, null, imageListSource, currentTypeID, currentVariant);
-	}
-	
-	public GuiImageList(int x, int y, int width, int height)
-	{
-		this(x, y, width, height, null, null, 0, 0);
+		this(x, y, width, height, null, imageClickCallback);
 	}
 	
 	public void draw(int mouseX, int mouseY, FontRenderer renderer, Function<List<String>, Function<Integer, Consumer<Integer>>> drawHoveringTextCallback)
 	{
+		GlStateManager.color(255, 255, 255);
 		if (didLoadFail)
 		{
 			int length = renderer.getStringWidth(loadFailedMessage);
@@ -250,13 +123,15 @@ public class GuiImageList {
 		int renderableRows = height / 16;
 		int maxRows = (imagesByName.keySet().size() / slots.length) + 1;
 		
-		Image hoveringImage = null;
+		Sign hoveringImage = null;
 		if (mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height)
 		{
+			isMouseHover = true;
+			
 			int hoverCol = (mouseX - x) / 16;
 			int hoverRow = (mouseY - y) / 16;
 			
-			if (hoverRow < renderableRows && slots.length > hoverCol && slots[hoverCol].length > hoverRow && slots[hoverCol][hoverRow] != null)
+			if (hoverRow < renderableRows && slots.length > hoverCol && slots[hoverCol].length - currentScrollBarStep > hoverRow && slots[hoverCol][hoverRow +  currentScrollBarStep] != null)
 			{
 				hoveringImage = slots[hoverCol][hoverRow + currentScrollBarStep];
 				
@@ -272,6 +147,10 @@ public class GuiImageList {
 				}
 			}
 		}
+		else
+		{
+			isMouseHover = false;
+		}
 		
 		drawScrollbar(mouseX, mouseY, renderableRows, maxRows);
 		
@@ -281,10 +160,10 @@ public class GuiImageList {
 		
 		for(int col = 0; col < slots.length; col++)
 		{
-			int rowLimit = (slots[col].length < renderableRows) ? slots[col].length : renderableRows;
+			int rowLimit = (slots[col].length - currentScrollBarStep < renderableRows) ? slots[col].length - currentScrollBarStep : renderableRows;
 			for(int row = 0; row < rowLimit; row++)
 			{
-				Image image = slots[col][row + currentScrollBarStep];
+				Sign image = slots[col][row + currentScrollBarStep];
 				
 				if (image == null)
 				{
@@ -310,17 +189,60 @@ public class GuiImageList {
 		if (hoveringImage != null)
 		{
 			ArrayList<String> hoverText = new ArrayList<>();
-			hoverText.add("§e" + hoveringImage.name);
+			hoverText.add("§e" + hoveringImage.getName() + " (" + hoveringImage.getVariant() + ")");
 			
-			if (hoveringImage.note != null && hoveringImage.note != "")
+			if (hoveringImage.getToolTip() != null && hoveringImage.getToolTip() != "")
 			{
-				hoverText.add(hoveringImage.note);
+				hoverText.add(hoveringImage.getToolTip());
 			}
 			
 			drawHoveringTextCallback.apply(hoverText).apply(mouseX).accept(mouseY);
 		}
 	}
 
+	public void scroll(int direction)
+	{
+		if (!isMouseHover)
+		{
+			return;
+		}
+		
+		if (direction == 1)
+		{
+			scrollUp();
+		}
+		else if (direction == -1)
+		{
+			scrollDown();
+		}
+	}
+	
+	private void scrollUp()
+	{
+		currentScrollBarStep -= 1;
+		if (currentScrollBarStep < 0)
+		{
+			currentScrollBarStep = 0;
+		}
+		else
+		{
+			scrollBarTop -= scrollBarHeight;
+		}
+	}
+	
+	public void scrollDown()
+	{
+		currentScrollBarStep += 1;
+		if (currentScrollBarStep > maxScrollBarSteps)
+		{
+			currentScrollBarStep = maxScrollBarSteps;
+		}
+		else
+		{
+			scrollBarTop += scrollBarHeight;
+		}
+	}
+	
 	public void drawScrollbar(int mouseX, int mouseY, int renderableRows, int maxRows)
 	{
 		Tessellator tess = Tessellator.getInstance();
@@ -347,6 +269,25 @@ public class GuiImageList {
 				isMouseClicked = true;
 				clickY = mouseY;
 				preClickScrollBarStep = currentScrollBarStep;
+				
+				return;
+			}
+			
+			int hoverCol = (mouseX - x) / 16;
+			int hoverRow = (mouseY - y) / 16;
+			
+			if (hoverCol < slots.length && hoverRow + currentScrollBarStep < slots[hoverCol].length)
+			{
+				Sign image = slots[hoverCol][hoverRow + currentScrollBarStep];
+				if (image == null)
+				{
+					return;
+				}
+				
+				if (imageClickCallback != null)
+				{
+					imageClickCallback.accept(image);
+				}
 			}
 		}
 	}
@@ -356,23 +297,73 @@ public class GuiImageList {
 		isMouseClicked = false;
 	}
 	
-	private class Image
+	public void filter(String filterText)
 	{
-		private ResourceLocation imageResourceLocation;
-		private String name;
-		private int type;
-		private int variant;
-		private String note;
+		this.filter = filterText;
 		
-		public Image(ResourceLocation imageRL, String name, int type, int variant, String note)
+		fillSlots();
+	}
+	
+	private void fillSlots()
+	{
+		int slotWidth = (width / 16) - 1;
+		
+		if (slotWidth < 1)
 		{
-			imageResourceLocation = imageRL;
-			this.name = name;
-			this.type = type;
-			this.variant = variant;
-			this.note = note;
+			return;
 		}
 		
-		public ResourceLocation getImageResourceLocation() { return imageResourceLocation; }
+		Map<String, Sign> imagesToRender = imagesByName.entrySet().stream().filter(entry -> (filter != null && filter.length() != 0) ? entry.getKey().toLowerCase().contains(filter.toLowerCase()) : true).collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue()));
+		
+		int rows = ((imagesToRender.values().size() + 1) / slotWidth) + 1;
+		
+		slots = new Sign[slotWidth][rows];
+		
+		int currentRow = 0;
+		int currentCol = 0;
+		
+		for (Tuple<Integer, Integer> signEntry : SignTileEntity.SIGNS_BY_TYPE_VARIANT.keySet().stream().sorted(new SignTileEntity.Sign.TestComparator()).collect(Collectors.toList()))
+		{
+			Sign image = SignTileEntity.SIGNS_BY_TYPE_VARIANT.get(signEntry);
+			
+			if (!imagesToRender.containsValue(image))
+			{
+				continue;
+			}
+			
+			slots[currentCol][currentRow] = image;
+			
+			currentCol++;
+			if (currentCol >= slotWidth)
+			{
+				currentCol = 0;
+				currentRow++;
+			}
+		}
+		
+		// Setup scroll bar values
+		scrollBarLeft = this.x + this.width - 16;
+		scrollBarTop = this.y;
+
+		currentScrollBarStep = 0;
+		maxScrollBarSteps = rows - (this.height / 16);
+		if (maxScrollBarSteps < 0)
+		{
+			maxScrollBarSteps = 0;
+		}
+
+		if (maxScrollBarSteps == 0)
+		{
+			scrollBarHeight = this.height;
+		}
+		else
+		{
+			scrollBarHeight = (double)this.height / ((double)maxScrollBarSteps + 1);
+			
+			if (scrollBarHeight > this.height)
+			{
+				scrollBarHeight = this.height;
+			}
+		}
 	}
 }

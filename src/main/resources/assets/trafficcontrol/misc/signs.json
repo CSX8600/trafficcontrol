@@ -3,13 +3,15 @@
     "name": "Blank Circle Sign",
     "type": "circle",
     "variant": "0",
-    "note": "Use the arrows to select a sign"
+    "tooltip": "There's a search bar at the bottom",
+    "note": "Click a sign in the array to select it. Use the search bar if you want a specific sign."
   },
   {
     "name": "Railroad Crossing Ahead",
     "type": "circle",
     "variant": "1",
-    "note": "The MUTCD says that this sign should be 100 feet from the crossing (50 for pedestrian paths)"
+    "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
+    "note": "The MUTCD says that this sign should be 100 feet from the crossing (50 for pedestrian paths), displayed whenever possible at every direct approach. 100 feet is equal to 30 blocks, while 50 feet is 15 blocks."
   },
   {
     "name": "No Left Turn",
@@ -45,109 +47,125 @@
     "name": "Speed Limit 30",
     "type": "circle",
     "variant": "8",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "Speed Limit 50",
     "type": "circle",
     "variant": "9",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "Speed Limit 70",
     "type": "circle",
     "variant": "10",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "Speed Limit 90",
     "type": "circle",
     "variant": "11",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "Speed Limit 100",
     "type": "circle",
     "variant": "12",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "Speed Limit 110",
     "type": "circle",
     "variant": "13",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "Speed Limit 120",
     "type": "circle",
     "variant": "14",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "Speed Limit 130",
     "type": "circle",
     "variant": "15",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "End Speed Limit 30",
     "type": "circle",
     "variant": "16",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "End Speed Limit 50",
     "type": "circle",
     "variant": "17",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "End Speed Limit 70",
     "type": "circle",
     "variant": "18",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "End Speed Limit 90",
     "type": "circle",
     "variant": "19",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "End Speed Limit 100",
     "type": "circle",
     "variant": "20",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "End Speed Limit 110",
     "type": "circle",
     "variant": "21",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "End Speed Limit 120",
     "type": "circle",
     "variant": "22",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "End Speed Limit 130",
     "type": "circle",
     "variant": "23",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "No Overtaking",
     "type": "circle",
     "variant": "24",
-    "note": "In other words"
+    "tooltip": "In other words, no passing."
   },
   {
     "name": "Lorries May Not Overtake",
     "type": "circle",
     "variant": "25",
-    "note": "In other words"
+    "tooltip": "In other words, large trucks may not pass."
   },
   {
     "name": "No Motorized Vehicles",
@@ -178,7 +196,7 @@
     "name": "No Lorries",
     "type": "circle",
     "variant": "31",
-    "note": "In other words"
+    "tooltip": "In other words, no large trucks."
   },
   {
     "name": "Do Not Use Horn",
@@ -199,6 +217,7 @@
     "name": "No Vehicles Carrying Water Pollutants",
     "type": "circle",
     "variant": "35",
+    "tooltip": "Good for mods that require water filtration & drinking",
     "note": "Can find utility if you have a mod that adds the need for water drinking and makes water pollutable."
   },
   {
@@ -225,6 +244,7 @@
     "name": "Toll Ahead",
     "type": "circle",
     "variant": "40",
+    "tooltip": "To be removed",
     "note": "This is a duplicate of Circular Sign 37 and will be removed."
   },
   {
@@ -338,34 +358,32 @@
     "variant": "62"
   },
   {
-    "name": "Bikes Keep Left",
+    "name": "Bikes Keep Left, Pedestrians Keep Right",
     "type": "circle",
-    "variant": "63",
-    "note": " Pedestrians Keep Right"
+    "variant": "63"
   },
   {
-    "name": "Cars Keep Left",
+    "name": "Cars Keep Left, Buses Keep Right",
     "type": "circle",
-    "variant": "64",
-    "note": " Buses Keep Right"
+    "variant": "64"
   },
   {
-    "name": "Don’t Park Here",
+    "name": "Don't Park Here",
     "type": "circle",
     "variant": "65"
   },
   {
-    "name": "Don’t Stop",
+    "name": "Don't Stop",
     "type": "circle",
     "variant": "66"
   },
   {
-    "name": "Don’t Park Here on Odd Days",
+    "name": "Don't Park Here on Odd Days",
     "type": "circle",
     "variant": "67"
   },
   {
-    "name": "Don’t Park Here on Even Days",
+    "name": "Don't Park Here on Even Days",
     "type": "circle",
     "variant": "68"
   },
@@ -378,13 +396,13 @@
     "name": "End of Overtaking Prohibition",
     "type": "circle",
     "variant": "70",
-    "note": "In other words"
+    "tooltip": "In other words, passing is no longer prohibited."
   },
   {
     "name": "End of Lorry Overtaking Prohibition",
     "type": "circle",
     "variant": "71",
-    "note": "In other words"
+    "tooltip": "In other words, large trucks are no longer prohibited from passing."
   },
   {
     "name": "End of Parking Prohibition",
@@ -430,109 +448,125 @@
     "name": "Speed Limit 30 (Temporary)",
     "type": "circle",
     "variant": "80",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "Speed Limit 50 (Temporary)",
     "type": "circle",
     "variant": "81",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "Speed Limit 70 (Temporary)",
     "type": "circle",
     "variant": "82",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "Speed Limit 90 (Temporary)",
     "type": "circle",
     "variant": "83",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "Speed Limit 100 (Temporary)",
     "type": "circle",
     "variant": "84",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "Speed Limit 110 (Temporary)",
     "type": "circle",
     "variant": "85",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "Speed Limit 120 (Temporary)",
     "type": "circle",
     "variant": "86",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "Speed Limit 130 (Temporary)",
     "type": "circle",
     "variant": "87",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "End Speed Limit 30 (Temporary)",
     "type": "circle",
     "variant": "88",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "End Speed Limit 50 (Temporary)",
     "type": "circle",
     "variant": "89",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "End Speed Limit 70 (Temporary)",
     "type": "circle",
     "variant": "90",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "End Speed Limit 90 (Temporary)",
     "type": "circle",
     "variant": "91",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "End Speed Limit 100 (Temporary)",
     "type": "circle",
     "variant": "92",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "End Speed Limit 110 (Temporary)",
     "type": "circle",
     "variant": "93",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "End Speed Limit 120 (Temporary)",
     "type": "circle",
     "variant": "94",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "End Speed Limit 130 (Temporary)",
     "type": "circle",
     "variant": "95",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "No Overtaking (Temporary)",
     "type": "circle",
     "variant": "96",
-    "note": "In other words"
+    "tooltip": "In other words, no passing."
   },
   {
     "name": "Lorries May Not Overtake (Temporary)",
     "type": "circle",
     "variant": "97",
-    "note": "In other words"
+    "tooltip": "In other words, large trucks may not overtake."
   },
   {
     "name": "No Motor Vehicles (Temporary)",
@@ -563,7 +597,7 @@
     "name": "No Lorries (Temporary)",
     "type": "circle",
     "variant": "103",
-    "note": "In other words"
+    "tooltip": "In other words, no large trucks."
   },
   {
     "name": "Do Not Use Horn (Temporary)",
@@ -604,13 +638,13 @@
     "name": "End of Overtaking Restriction (Temporary)",
     "type": "circle",
     "variant": "111",
-    "note": "In other words"
+    "tooltip": "In other words, passing is no longer prohibited."
   },
   {
     "name": "End of Lorry Overtaking Restriction",
     "type": "circle",
     "variant": "112",
-    "note": "In other words"
+    "tooltip": "In other words, large trucks are no longer prohibited from passing."
   },
   {
     "name": "Turn Left Or Right",
@@ -621,7 +655,8 @@
     "name": "Blank Diamond Sign",
     "type": "diamond",
     "variant": "0",
-    "note": "Use the arrows to select a sign"
+    "tooltip": "There's a search bar at the bottom",
+    "note": "Click a sign in the array to select it. Use the search bar if you want a specific sign."
   },
   {
     "name": "Left Curve",
@@ -742,13 +777,15 @@
     "name": "Left Added Lane",
     "type": "diamond",
     "variant": "24",
-    "note": "Don't use this sign if the added lane ends soon after the merge. You may"
+    "tooltip": "Don't use if the added lane ends soon after",
+    "note": "Don't use this sign if the added lane ends soon after the merge. You may, however, use it if the lane becomes a dropped (turn/exit only) lane or has been closed temporarily."
   },
   {
     "name": "Right Added Lane",
     "type": "diamond",
     "variant": "25",
-    "note": "Don't use this sign if the added lane ends soon after the merge. You may"
+    "tooltip": "Don't use if the added lane ends soon after",
+    "note": "Don't use this sign if the added lane ends soon after the merge. You may, however, use it if the lane becomes a dropped (turn/exit only) lane or has been closed temporarily."
   },
   {
     "name": "Left Side Road",
@@ -804,13 +841,15 @@
     "name": "Left 270-Degree Loop",
     "type": "diamond",
     "variant": "36",
-    "note": "The loop doesn’t have to be exactly 270 degrees. A turn of at least 235 degrees justifies this sign."
+    "tooltip": "The loop should be roughly 235 degrees or more",
+    "note": "The loop doesn't have to be exactly 270 degrees. A turn of at least 235 degrees justifies this sign."
   },
   {
     "name": "Right 270-Degree Loop",
     "type": "diamond",
     "variant": "37",
-    "note": "The loop doesn’t have to be exactly 270 degrees. A turn of at least 235 degrees justifies this sign."
+    "tooltip": "The loop should be roughly 235 degrees or more",
+    "note": "The loop doesn't have to be exactly 270 degrees. A turn of at least 235 degrees justifies this sign."
   },
   {
     "name": "Two Way Traffic",
@@ -833,28 +872,24 @@
     "variant": "41"
   },
   {
-    "name": "Entering Roadway",
+    "name": "Entering Roadway, Merge on Right",
     "type": "diamond",
-    "variant": "42",
-    "note": " Merge on Right"
+    "variant": "42"
   },
   {
-    "name": "Entering Roadway",
+    "name": "Entering Roadway, Merge on Left",
     "type": "diamond",
-    "variant": "43",
-    "note": " Merge on Left"
+    "variant": "43"
   },
   {
-    "name": "Entering Roadway",
+    "name": "Entering Roadway, Added Lane on Right",
     "type": "diamond",
-    "variant": "44",
-    "note": " Added Lane on Right"
+    "variant": "44"
   },
   {
-    "name": "Entering Roadway",
+    "name": "Entering Roadway, Added Lane on Left",
     "type": "diamond",
-    "variant": "45",
-    "note": " Added Lane on Left"
+    "variant": "45"
   },
   {
     "name": "Slippery When Wet",
@@ -867,46 +902,53 @@
     "variant": "47"
   },
   {
-    "name": "Cross-Roads",
+    "name": "Cross-Roads, Railroad to Right",
     "type": "diamond",
     "variant": "48",
-    "note": " Railroad to Right"
+    "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
+    "note": "The MUTCD says that this sign should be 100 feet from the crossing (50 for pedestrian paths), displayed whenever possible at every indirect approach. 100 feet is equal to 30 blocks, while 50 feet is 15 blocks."
   },
   {
-    "name": "Cross-Roads",
+    "name": "Cross-Roads, Railroad to Left",
     "type": "diamond",
     "variant": "49",
-    "note": " Railroad to Left"
+    "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
+    "note": "The MUTCD says that this sign should be 100 feet from the crossing (50 for pedestrian paths), displayed whenever possible at every indirect approach. 100 feet is equal to 30 blocks, while 50 feet is 15 blocks."
   },
   {
     "name": "Right Side Road Crosses Railroad",
     "type": "diamond",
     "variant": "50",
-    "note": "The MUTCD says that this sign should be 100 feet from the crossing (50 for pedestrian paths)"
+    "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
+    "note": "The MUTCD says that this sign should be 100 feet from the crossing (50 for pedestrian paths), displayed whenever possible at every indirect approach. 100 feet is equal to 30 blocks, while 50 feet is 15 blocks."
   },
   {
     "name": "Left Side Road Crosses Railroad",
     "type": "diamond",
     "variant": "51",
-    "note": "The MUTCD says that this sign should be 100 feet from the crossing (50 for pedestrian paths)"
+    "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
+    "note": "The MUTCD says that this sign should be 100 feet from the crossing (50 for pedestrian paths), displayed whenever possible at every indirect approach. 100 feet is equal to 30 blocks, while 50 feet is 15 blocks."
   },
   {
-    "name": "T-Intersection",
+    "name": "T-Intersection, Railroad to Right",
     "type": "diamond",
     "variant": "52",
-    "note": " Railroad to Right"
+    "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
+    "note": "The MUTCD says that this sign should be 100 feet from the crossing (50 for pedestrian paths), displayed whenever possible at every indirect approach. 100 feet is equal to 30 blocks, while 50 feet is 15 blocks."
   },
   {
-    "name": "T-Intersection",
+    "name": "T-Intersection, Railroad to Left",
     "type": "diamond",
     "variant": "53",
-    "note": " Railroad to Left"
+    "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
+    "note": "The MUTCD says that this sign should be 100 feet from the crossing (50 for pedestrian paths), displayed whenever possible at every indirect approach. 100 feet is equal to 30 blocks, while 50 feet is 15 blocks."
   },
   {
     "name": "T-Intersection After Railroad",
     "type": "diamond",
     "variant": "54",
-    "note": "The MUTCD says that this sign should be 100 feet from the crossing (50 for pedestrian paths)"
+    "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
+    "note": "The MUTCD says that this sign should be 100 feet from the crossing (50 for pedestrian paths), displayed whenever possible at every indirect approach. 100 feet is equal to 30 blocks, while 50 feet is 15 blocks."
   },
   {
     "name": "Skewed Railroad Crossing",
@@ -927,6 +969,7 @@
     "name": "General Wild Animals/Deer",
     "type": "diamond",
     "variant": "58",
+    "tooltip": "Handy for mods with deer",
     "note": "Can find more utility if you have a mod with deer."
   },
   {
@@ -938,6 +981,7 @@
     "name": "Farm Equipment",
     "type": "diamond",
     "variant": "60",
+    "tooltip": "Handy for mods with farm vehicles",
     "note": "Can find more utility if you have a mod with farm vehicles."
   },
   {
@@ -959,6 +1003,7 @@
     "name": "Roll-Over Hazard",
     "type": "diamond",
     "variant": "64",
+    "tooltip": "Handy if vehicles can overturn. Use on sharp turns",
     "note": "Can find more utility if vehicles from your mod can roll over. Advised to be used with sharp turns."
   },
   {
@@ -990,7 +1035,7 @@
     "name": "Light Rail Crossing",
     "type": "diamond",
     "variant": "70",
-    "note": "A light rail is basically a railroad for trams."
+    "tooltip": "A light rail is basically a railroad for trams."
   },
   {
     "name": "Road Narrows on Both Sides",
@@ -998,12 +1043,12 @@
     "variant": "71"
   },
   {
-    "name": "Road Narrows on Left Side",
+    "name": "Road Narrows on Left",
     "type": "diamond",
     "variant": "72"
   },
   {
-    "name": "Road Narrows on Right Side",
+    "name": "Road Narrows on Right",
     "type": "diamond",
     "variant": "73"
   },
@@ -1041,7 +1086,8 @@
     "name": "DRAWBRIDGE",
     "type": "diamond",
     "variant": "80",
-    "note": "Drawbridges need not look like drawbridges! If you have a mod that adds a retractable drawbridge block"
+    "tooltip": "Drawbridges need not look like drawbridges! View the expanded tip for more info.",
+    "note": "Drawbridges need not look like drawbridges! If you have a mod that adds a retractable drawbridge block, that can suffice since 'drawbridge' in some forms of English is a catch-all term for opening bridges. Therefore you don't need the drawbridge to be pulled up and down around a pivot by tethers. You can even forget pavement markings if you find it simpler to do so; just remember to have contrasting pavement blocks."
   },
   {
     "name": "Opening Bridge",
@@ -1077,24 +1123,28 @@
     "name": "Kangaroos",
     "type": "diamond",
     "variant": "87",
+    "tooltip": "Handy for mods with kangaroos",
     "note": "Can find more utility if you have a mod with kangaroos."
   },
   {
     "name": "Bears",
     "type": "diamond",
     "variant": "88",
+    "tooltip": "Handy for mods with bears or in biomes that spawn polar bears",
     "note": "Can find more utility if you have a mod with bears or use this in an area with polar bears."
   },
   {
     "name": "Bears (with cub)",
     "type": "diamond",
     "variant": "89",
+    "tooltip": "Handy for mods with bears or in biomes that spawn polar bears",
     "note": "Can find more utility if you have a mod with bears or use this in an area with polar bears."
   },
   {
     "name": "Snowmobiles",
     "type": "diamond",
     "variant": "90",
+    "tooltip": "Handy for mods with snowmobiles",
     "note": "Can find more utility if you have a mod with snowmobiles."
   },
   {
@@ -1126,49 +1176,57 @@
     "name": "General Enemies/Creepers",
     "type": "diamond",
     "variant": "96",
+    "tooltip": "Use near enemy-prone areas",
     "note": "Recommended near mob spawners and other areas that are prone to enemies or ambushes."
   },
   {
     "name": "Skeletons",
     "type": "diamond",
     "variant": "97",
-    "note": "Recommended near skeleton spawners"
+    "tooltip": "Use near skeleton-prone areas",
+    "note": "Recommended near skeleton spawners, cliffs that skeletons can shoot players off of, and other areas that are prone to skeletons or skeleton ambushes."
   },
   {
     "name": "Zombies",
     "type": "diamond",
     "variant": "98",
-    "note": "Recommended near zombie spawners"
+    "tooltip": "Use near zombie-prone areas",
+    "note": "Recommended near zombie spawners, villages (since zombie raids can start during the night regardless of light level), and other areas that are prone to zombies or zombie ambushes."
   },
   {
     "name": "ZOMBIES",
     "type": "diamond",
     "variant": "99",
-    "note": "Recommended near zombie spawners"
+    "tooltip": "Use near zombie-prone areas",
+    "note": "Recommended near zombie spawners, villages (since zombie raids can start during the night regardless of light level), and other areas that are prone to zombies or zombie ambushes."
   },
   {
     "name": "Spiders",
     "type": "diamond",
     "variant": "100",
-    "note": "Recommended near spider spawners"
+    "tooltip": "Use near spider-prone areas",
+    "note": "Recommended near spider spawners, cobweb-covered areas (since spiders aren't slowed down by them), walls that have no lip (since spiders can climb over), and other areas that are prone to spiders or spider ambushes."
   },
   {
     "name": "Endermen",
     "type": "diamond",
     "variant": "101",
-    "note": "Recommended in very open areas (since players might provoke endermen by looking at them)"
+    "tooltip": "Use near enderman-prone areas or on roads made of blocks endermen can take",
+    "note": "Recommended in very open areas (since players might provoke endermen by looking at them), places with frequent sight obstructions (since endermen might hide behind one of these), the End, and other areas prone to endermen or enderman ambushes, as well as on roads (or parts of roads) made of blocks that endermen can take."
   },
   {
     "name": "Ghasts",
     "type": "diamond",
     "variant": "102",
-    "note": "This sign is fit for the Nether. Recommended in very open areas"
+    "tooltip": "Use near ghast-prone areas or on roads that ghasts can destroy",
+    "note": "This sign is fit for the Nether. Recommended in very open areas, near lava pools (since ghasts can hide in them), and in other areas that are prone to ghasts or ghast ambushes, as well as on roads made of blocks that ghasts can destroy."
   },
   {
     "name": "Slimes/Magma Cubes",
     "type": "diamond",
     "variant": "103",
-    "note": "Recommended in swamps"
+    "tooltip": "Use near slime- or magma cube-prone areas",
+    "note": "Recommended in swamps, in areas with slopes (since slimes and magma cubes can climb slopes rather quickly), near where players have reported slime sightings, near cliffs in the Nether (since magma cubes don't take fall damage), and in other areas prone to slimes or magma cubes or slime or magma cube ambushes."
   },
   {
     "name": "Men Working",
@@ -1189,7 +1247,8 @@
     "name": "FRESH OIL",
     "type": "diamond",
     "variant": "107",
-    "note": "Can find utility if you have a mod that adds slippery oil."
+    "tooltip": "Handy for mods that add spillable oil",
+    "note": "Can find utility if you have a mod that adds spillable, slippery oil."
   },
   {
     "name": "1x Left Double S-Curve",
@@ -1282,22 +1341,22 @@
     "variant": "125"
   },
   {
-    "name": "Road Narrows on Right Side (Construction)",
+    "name": "Road Narrows on Left (Construction)",
     "type": "diamond",
     "variant": "126"
   },
   {
-    "name": "Right Lane Closed (Construction)",
+    "name": "Left Lane Closed (Construction)",
     "type": "diamond",
     "variant": "127"
   },
   {
-    "name": "Road Narrows on Left Side (Construction)",
+    "name": "Road Narrows on Right (Construction)",
     "type": "diamond",
     "variant": "128"
   },
   {
-    "name": "Left Lane Closed (Construction)",
+    "name": "Right Lane Closed (Construction)",
     "type": "diamond",
     "variant": "129"
   },
@@ -1352,28 +1411,24 @@
     "variant": "139"
   },
   {
-    "name": "Entering Roadway",
+    "name": "Entering Roadway, Merge on Right (Construction)",
     "type": "diamond",
-    "variant": "140",
-    "note": " Merge on Right (Construction)"
+    "variant": "140"
   },
   {
-    "name": "Entering Roadway",
+    "name": "Entering Roadway, Merge on Left (Construction)",
     "type": "diamond",
-    "variant": "141",
-    "note": " Merge on Left (Construction)"
+    "variant": "141"
   },
   {
-    "name": "Entering Roadway",
+    "name": "Entering Roadway, Added Lane on Right (Construction)",
     "type": "diamond",
-    "variant": "142",
-    "note": " Added Lane on Right (Construction)"
+    "variant": "142"
   },
   {
-    "name": "Entering Roadway",
+    "name": "Entering Roadway, Added Lane on Left (Construction)",
     "type": "diamond",
-    "variant": "143",
-    "note": " Added Lane on Left (Construction)"
+    "variant": "143"
   },
   {
     "name": "Pass to Either Side (Construction)",
@@ -1384,7 +1439,8 @@
     "name": "Blank Miscellaneous Sign",
     "type": "misc",
     "variant": "0",
-    "note": "Use the arrows to select a sign"
+    "tooltip": "There's a search bar at the bottom",
+    "note": "Click a sign in the array to select it. Use the search bar if you want a specific sign."
   },
   {
     "name": "Stop Sign (English)",
@@ -1425,73 +1481,75 @@
     "name": "Japanese Stop Sign",
     "type": "misc",
     "variant": "8",
-    "note": "This isn’t a yield sign."
+    "tooltip": "This isn't a yield sign."
   },
   {
     "name": "Right Arrow Plaque",
     "type": "misc",
     "variant": "9",
-    "note": "Should be used with route markers to show direction."
+    "tooltip": "Should be used with route markers to show direction."
   },
   {
     "name": "Left Arrow Plaque",
     "type": "misc",
     "variant": "10",
-    "note": "Should be used with route markers to show direction."
+    "tooltip": "Should be used with route markers to show direction."
   },
   {
     "name": "Left-Right Arrow Plaque",
     "type": "misc",
     "variant": "11",
-    "note": "Should be used with route markers to show direction."
+    "tooltip": "Should be used with route markers to show direction."
   },
   {
     "name": "Up Arrow Plaque",
     "type": "misc",
     "variant": "12",
-    "note": "Should be used with route markers to show direction."
+    "tooltip": "Should be used with route markers to show direction."
   },
   {
     "name": "Down Arrow Plaque",
     "type": "misc",
     "variant": "13",
-    "note": "Should be used with route markers to show direction."
+    "tooltip": "Should be used with route markers to show direction."
   },
   {
     "name": "Up-Left Arrow Plaque",
     "type": "misc",
     "variant": "14",
-    "note": "Should be used with route markers to show direction."
+    "tooltip": "Should be used with route markers to show direction."
   },
   {
     "name": "Up-Right Arrow Plaque",
     "type": "misc",
     "variant": "15",
-    "note": "Should be used with route markers to show direction."
+    "tooltip": "Should be used with route markers to show direction."
   },
   {
     "name": "KM/H Plaque",
     "type": "misc",
     "variant": "16",
+    "tooltip": "Use under a rectangular Speed Limit sign for KM/H speeds",
     "note": "Use with a rectangular Speed Limit sign to indicate that it is for kilometers per hour instead of miles per hour."
   },
   {
-    "name": "“GIVE WAY” Plaque",
+    "name": "'GIVE WAY' Plaque",
     "type": "misc",
     "variant": "17",
-    "note": "In other words"
+    "tooltip": "In other words, yield."
   },
   {
     "name": "Snowflake Plaque",
     "type": "misc",
     "variant": "18",
+    "tooltip": "For icy conditions or biomes",
     "note": "Use under a Slippery When Wet sign to indicate that it is because of ice or applies during icy conditions."
   },
   {
-    "name": "“CEDEZ LE PASSAGE” Plaque",
+    "name": "'CEDEZ LE PASSAGE' Plaque",
     "type": "misc",
     "variant": "19",
-    "note": "Translate to “Yield”"
+    "tooltip": "French for 'Yield'"
   },
   {
     "name": "150 Meters Plaque",
@@ -1524,7 +1582,7 @@
     "variant": "25"
   },
   {
-    "name": "“STOP” Plaque",
+    "name": "'STOP' Plaque",
     "type": "misc",
     "variant": "26"
   },
@@ -1559,52 +1617,56 @@
     "variant": "32"
   },
   {
-    "name": "“NORTH” Plaque",
+    "name": "'NORTH' Plaque",
     "type": "misc",
     "variant": "33",
-    "note": "Should be used with route markers to show cardinal direction. The exact direction of the road needs not be (direction)"
+    "tooltip": "Use to show the general direction of the route.",
+    "note": "Should be used with route markers to show cardinal direction. The exact direction of the road needs not be north, but the route should go in that general direction."
   },
   {
-    "name": "“SOUTH” Plaque",
+    "name": "'SOUTH' Plaque",
     "type": "misc",
     "variant": "34",
-    "note": "Should be used with route markers to show cardinal direction. The exact direction of the road needs not be (direction)"
+    "tooltip": "Use to show the general direction of the route.",
+    "note": "Should be used with route markers to show cardinal direction. The exact direction of the road needs not be south, but the route should go in that general direction."
   },
   {
-    "name": "“EAST” Plaque",
+    "name": "'EAST' Plaque",
     "type": "misc",
     "variant": "35",
-    "note": "Should be used with route markers to show cardinal direction. The exact direction of the road needs not be (direction)"
+    "tooltip": "Use to show the general direction of the route.",
+    "note": "Should be used with route markers to show cardinal direction. The exact direction of the road needs not be east, but the route should go in that general direction."
   },
   {
-    "name": "“WEST” Plaque",
+    "name": "'WEST' Plaque",
     "type": "misc",
     "variant": "36",
-    "note": "Should be used with route markers to show cardinal direction. The exact direction of the road needs not be (direction)"
+    "tooltip": "Use to show the general direction of the route.",
+    "note": "Should be used with route markers to show cardinal direction. The exact direction of the road needs not be west, but the route should go in that general direction."
   },
   {
-    "name": "“TO” Plaque",
+    "name": "'TO' Plaque",
     "type": "misc",
     "variant": "37",
-    "note": "Show the way to the route."
+    "tooltip": "Show the way to the route."
   },
   {
-    "name": "“JCT” Plaque",
+    "name": "'JCT' Plaque",
     "type": "misc",
     "variant": "38",
-    "note": "Junction with this route."
+    "tooltip": "Junction with this route."
   },
   {
-    "name": "“DETOUR” Plaque",
+    "name": "'DETOUR' Plaque",
     "type": "misc",
     "variant": "39",
-    "note": "Show the temporary alternative route."
+    "tooltip": "Show the temporary alternative route."
   },
   {
-    "name": "“BUS” Plaque",
+    "name": "'BUS' Plaque",
     "type": "misc",
     "variant": "40",
-    "note": "Show a business route."
+    "tooltip": "Show a business route."
   },
   {
     "name": "Crossbuck (Vienna Convention White w/ Red Border)",
@@ -1635,7 +1697,8 @@
     "name": "Crossbuck (America)",
     "type": "misc",
     "variant": "46",
-    "note": "You should use the Crossbuck item instead"
+    "tooltip": "Use the Crossbuck items instead; they're higher quality",
+    "note": "You should use the Crossbuck items instead, since it is higher quality."
   },
   {
     "name": "Crossbuck (Canada)",
@@ -1646,18 +1709,21 @@
     "name": "NO PASSING ZONE",
     "type": "misc",
     "variant": "48",
+    "tooltip": "Place on the opposite shoulder of traffic if a passing zone ends on a two-way road",
     "note": "Should be used at the start of a no passing zone on a two-way road. Place on the opposite shoulder of traffic. (In the US this would be on the left side.)"
   },
   {
     "name": "NO ADELANTAR",
     "type": "misc",
     "variant": "49",
+    "tooltip": "Place on the opposite shoulder of traffic if a passing zone ends on a two-way road",
     "note": "Should be used at the start of a no passing zone on a two-way road. Place on the opposite shoulder of traffic. (In the US this would be on the left side.)"
   },
   {
     "name": "ZONA DE NO PASAR",
     "type": "misc",
     "variant": "50",
+    "tooltip": "Place on the opposite shoulder of traffic if a passing zone ends on a two-way road",
     "note": "Should be used at the start of a no passing zone on a two-way road. Place on the opposite shoulder of traffic. (In the US this would be on the left side.)"
   },
   {
@@ -1676,136 +1742,158 @@
     "variant": "53"
   },
   {
-    "name": "Countdown (Left",
+    "name": "Countdown (Left, 1, Red on White)",
     "type": "misc",
     "variant": "54",
-    "note": " 1"
+    "tooltip": "Place on left in decreasing order with equal spacing",
+    "note": "Place to the left of the roadway, in decreasing order and with equal spacing and identical coloration."
   },
   {
-    "name": "Countdown (Left",
+    "name": "Countdown (Left, 2, Red on White)",
     "type": "misc",
     "variant": "55",
-    "note": " 2"
+    "tooltip": "Place on left in decreasing order with equal spacing",
+    "note": "Place to the left of the roadway, in decreasing order and with equal spacing and identical coloration."
   },
   {
-    "name": "Countdown (Left",
+    "name": "Countdown (Left, 3, Red on White)",
     "type": "misc",
     "variant": "56",
-    "note": " 3"
+    "tooltip": "Place on left in decreasing order with equal spacing",
+    "note": "Place to the left of the roadway, in decreasing order and with equal spacing and identical coloration."
   },
   {
-    "name": "Countdown (Right",
+    "name": "Countdown (Right, 1, Red on White)",
     "type": "misc",
     "variant": "57",
-    "note": " 1"
+    "tooltip": "Place on right in decreasing order with equal spacing",
+    "note": "Place to the right of the roadway, in decreasing order and with equal spacing and identical coloration."
   },
   {
-    "name": "Countdown (Right",
+    "name": "Countdown (Right, 2, Red on White)",
     "type": "misc",
     "variant": "58",
-    "note": " 2"
+    "tooltip": "Place on right in decreasing order with equal spacing",
+    "note": "Place to the right of the roadway, in decreasing order and with equal spacing and identical coloration."
   },
   {
-    "name": "Countdown (Right",
+    "name": "Countdown (Right, 3, Red on White)",
     "type": "misc",
     "variant": "59",
-    "note": " 3"
+    "tooltip": "Place on right in decreasing order with equal spacing",
+    "note": "Place to the right of the roadway, in decreasing order and with equal spacing and identical coloration."
   },
   {
-    "name": "Countdown (Left",
+    "name": "Countdown (Left, 1, Red on Yellow)",
     "type": "misc",
     "variant": "60",
-    "note": " 1"
+    "tooltip": "Place on left in decreasing order with equal spacing",
+    "note": "Place to the left of the roadway, in decreasing order and with equal spacing and identical coloration."
   },
   {
-    "name": "Countdown (Left",
+    "name": "Countdown (Left, 2, Red on Yellow)",
     "type": "misc",
     "variant": "61",
-    "note": " 2"
+    "tooltip": "Place on left in decreasing order with equal spacing",
+    "note": "Place to the left of the roadway, in decreasing order and with equal spacing and identical coloration."
   },
   {
-    "name": "Countdown (Left",
+    "name": "Countdown (Left, 3, Red on Yellow)",
     "type": "misc",
     "variant": "62",
-    "note": " 3"
+    "tooltip": "Place on left in decreasing order with equal spacing",
+    "note": "Place to the left of the roadway, in decreasing order and with equal spacing and identical coloration."
   },
   {
-    "name": "Countdown (Right",
+    "name": "Countdown (Right, 1, Red on Yellow)",
     "type": "misc",
     "variant": "63",
-    "note": " 1"
+    "tooltip": "Place on right in decreasing order with equal spacing",
+    "note": "Place to the right of the roadway, in decreasing order and with equal spacing and identical coloration."
   },
   {
-    "name": "Countdown (Right",
+    "name": "Countdown (Right, 2, Red on Yellow)",
     "type": "misc",
     "variant": "64",
-    "note": " 2"
+    "tooltip": "Place on right in decreasing order with equal spacing",
+    "note": "Place to the right of the roadway, in decreasing order and with equal spacing and identical coloration."
   },
   {
-    "name": "Countdown (Right",
+    "name": "Countdown (Right, 3, Red on Yellow)",
     "type": "misc",
     "variant": "65",
-    "note": " 3"
+    "tooltip": "Place on right in decreasing order with equal spacing",
+    "note": "Place to the right of the roadway, in decreasing order and with equal spacing and identical coloration."
   },
   {
-    "name": "Chevrons (Left",
+    "name": "Chevrons (Left, Black and Yellow)",
     "type": "misc",
     "variant": "66",
-    "note": " Black and Yellow)"
+    "tooltip": "Place to left of road to mark obstacles",
+    "note": "Place to the left of the roadway to mark obstacles."
   },
   {
-    "name": "Chevrons (Right",
+    "name": "Chevrons (Right, Black and Yellow)",
     "type": "misc",
     "variant": "67",
-    "note": " Black and Yellow)"
+    "tooltip": "Place to right of road to mark obstacles",
+    "note": "Place to the right of the roadway to mark obstacles."
   },
   {
-    "name": "Chevrons (Left",
+    "name": "Chevrons (Left, Blue and Yellow)",
     "type": "misc",
     "variant": "68",
-    "note": " Blue and Yellow)"
+    "tooltip": "Place to left of road to mark obstacles",
+    "note": "Place to the left of the roadway to mark obstacles."
   },
   {
-    "name": "Chevrons (Right",
+    "name": "Chevrons (Right, Blue and Yellow)",
     "type": "misc",
     "variant": "69",
-    "note": " Blue and Yellow)"
+    "tooltip": "Place to right of road to mark obstacles",
+    "note": "Place to the right of the roadway to mark obstacles."
   },
   {
-    "name": "Chevrons (Left",
+    "name": "Chevrons (Left, Red and White)",
     "type": "misc",
     "variant": "70",
-    "note": " Red and White)"
+    "tooltip": "Place to left of road to mark obstacles",
+    "note": "Place to the left of the roadway to mark obstacles."
   },
   {
-    "name": "Chevrons (Right",
+    "name": "Chevrons (Right, Red and White)",
     "type": "misc",
     "variant": "71",
-    "note": " Red and White)"
+    "tooltip": "Place to right of road to mark obstacles",
+    "note": "Place to the right of the roadway to mark obstacles."
   },
   {
-    "name": "Chevrons (Left",
+    "name": "Chevrons (Left, Blue and White)",
     "type": "misc",
     "variant": "72",
-    "note": " Blue and White)"
+    "tooltip": "Place to left of road to mark obstacles",
+    "note": "Place to the left of the roadway to mark obstacles."
   },
   {
-    "name": "Chevrons (Right",
+    "name": "Chevrons (Right, Blue and White)",
     "type": "misc",
     "variant": "73",
-    "note": " Blue and White)"
+    "tooltip": "Place to right of road to mark obstacles",
+    "note": "Place to the right of the roadway to mark obstacles."
   },
   {
-    "name": "Chevrons (Left",
+    "name": "Chevrons (Left, Green and White)",
     "type": "misc",
     "variant": "74",
-    "note": " Green and White)"
+    "tooltip": "Place to left of road to mark obstacles",
+    "note": "Place to the left of the roadway to mark obstacles."
   },
   {
-    "name": "Chevrons (Right",
+    "name": "Chevrons (Right, Green and White)",
     "type": "misc",
     "variant": "75",
-    "note": " Green and White)"
+    "tooltip": "Place to right of road to mark obstacles",
+    "note": "Place to the right of the roadway to mark obstacles."
   },
   {
     "name": "END ROAD WORK",
@@ -1856,181 +1944,185 @@
     "name": "Left-Right Arrow (Warning)",
     "type": "misc",
     "variant": "85",
-    "note": "At a T-intersection"
+    "tooltip": "At a T-intersection, place on opposite side to ending road",
+    "note": "At a T-intersection, place on the side opposite to the terminating road, facing the terminating road. (For example, if the terminating road heads south from the intersection, place this sign on the north.)"
   },
   {
     "name": "Left Arrow (Warning)",
     "type": "misc",
     "variant": "86",
-    "note": "Place at a largely sharp (side) curve"
+    "tooltip": "Place at a largely sharp left curve",
+    "note": "Place at a largely sharp left curve, facing traffic and largely in the center of where the road would be if it were not to curve. Should replace the Left-Right Warning Arrow (Misc. 85) if the road is one-way. MAKE SURE IT POINTS THE CORRECT WAY."
   },
   {
     "name": "Right Arrow (Warning)",
     "type": "misc",
     "variant": "87",
-    "note": "Should  replace the Left-Right Warning Arrow (Misc. 85) if the road is one-way. MAKE SURE IT POINTS THE CORRECT WAY."
+    "tooltip": "Place at a largely sharp right curve",
+    "note": "Place at a largely sharp right curve, facing traffic and largely in the center of where the road would be if it were not to curve. Should replace the Left-Right Warning Arrow (Misc. 85) if the road is one-way. MAKE SURE IT POINTS THE CORRECT WAY."
   },
   {
-    "name": "ONE WAY (Right",
+    "name": "ONE WAY (Right, Black)",
     "type": "misc",
     "variant": "88",
-    "note": " Black)"
+    "tooltip": "MAKE SURE THE ARROW POINTS THE CORRECT WAY."
   },
   {
-    "name": "ONE WAY (Left",
+    "name": "ONE WAY (Left, Black)",
     "type": "misc",
     "variant": "89",
-    "note": " Black)"
+    "tooltip": "MAKE SURE THE ARROW POINTS THE CORRECT WAY."
   },
   {
-    "name": "ONE WAY (Left",
+    "name": "ONE WAY (Left, Blue)",
     "type": "misc",
     "variant": "90",
-    "note": " Blue)"
+    "tooltip": "MAKE SURE THE ARROW POINTS THE CORRECT WAY."
   },
   {
-    "name": "ONE WAY (Right",
+    "name": "ONE WAY (Right, Blue)",
     "type": "misc",
     "variant": "91",
-    "note": " Blue)"
+    "tooltip": "MAKE SURE THE ARROW POINTS THE CORRECT WAY."
   },
   {
     "name": "2-WAY",
     "type": "misc",
     "variant": "92",
-    "note": "Place under a Stop Sign"
+    "tooltip": "Place under a Stop Sign"
   },
   {
     "name": "3-WAY",
     "type": "misc",
     "variant": "93",
-    "note": "Place under a Stop Sign"
+    "tooltip": "Place under a Stop Sign"
   },
   {
     "name": "4-WAY",
     "type": "misc",
     "variant": "94",
-    "note": "Place under a Stop Sign"
+    "tooltip": "Place under a Stop Sign"
   },
   {
     "name": "ALL-WAY",
     "type": "misc",
     "variant": "95",
-    "note": "Place under a Stop Sign"
+    "tooltip": "Place under a Stop Sign"
   },
   {
     "name": "ONCOMING TRAFFIC DOES NOT STOP",
     "type": "misc",
     "variant": "96",
-    "note": "Place under a Stop Sign"
+    "tooltip": "Place under a Stop Sign"
   },
   {
     "name": "CROSS TRAFFIC DOES NOT STOP",
     "type": "misc",
     "variant": "97",
-    "note": "Place under a Stop Sign"
+    "tooltip": "Place under a Stop Sign"
   },
   {
     "name": "Blank Rectangle Sign",
     "type": "rectangle",
     "variant": "0",
-    "note": "Use the arrows to select a sign"
+    "tooltip": "There's a search bar at the bottom",
+    "note": "Click a sign in the array to select it. Use the search bar if you want a specific sign."
   },
   {
     "name": "SPEED LIMIT 10",
     "type": "rectangle",
     "variant": "1",
-    "note": "MPH unless you use the KM/H plaque below (Misc. 16)"
+    "tooltip": "MPH unless you use the KM/H plaque below (Misc. 16)"
   },
   {
     "name": "SPEED LIMIT 15",
     "type": "rectangle",
     "variant": "2",
-    "note": "MPH unless you use the KM/H plaque below (Misc. 16)"
+    "tooltip": "MPH unless you use the KM/H plaque below (Misc. 16)"
   },
   {
     "name": "SPEED LIMIT 20",
     "type": "rectangle",
     "variant": "3",
-    "note": "MPH unless you use the KM/H plaque below (Misc. 16)"
+    "tooltip": "MPH unless you use the KM/H plaque below (Misc. 16)"
   },
   {
     "name": "SPEED LIMIT 25",
     "type": "rectangle",
     "variant": "4",
-    "note": "MPH unless you use the KM/H plaque below (Misc. 16)"
+    "tooltip": "MPH unless you use the KM/H plaque below (Misc. 16)"
   },
   {
     "name": "SPEED LIMIT 30",
     "type": "rectangle",
     "variant": "5",
-    "note": "MPH unless you use the KM/H plaque below (Misc. 16)"
+    "tooltip": "MPH unless you use the KM/H plaque below (Misc. 16)"
   },
   {
     "name": "SPEED LIMIT 35",
     "type": "rectangle",
     "variant": "6",
-    "note": "MPH unless you use the KM/H plaque below (Misc. 16)"
+    "tooltip": "MPH unless you use the KM/H plaque below (Misc. 16)"
   },
   {
     "name": "SPEED LIMIT 40",
     "type": "rectangle",
     "variant": "7",
-    "note": "MPH unless you use the KM/H plaque below (Misc. 16)"
+    "tooltip": "MPH unless you use the KM/H plaque below (Misc. 16)"
   },
   {
     "name": "SPEED LIMIT 45",
     "type": "rectangle",
     "variant": "8",
-    "note": "MPH unless you use the KM/H plaque below (Misc. 16)"
+    "tooltip": "MPH unless you use the KM/H plaque below (Misc. 16)"
   },
   {
     "name": "SPEED LIMIT 50",
     "type": "rectangle",
     "variant": "9",
-    "note": "MPH unless you use the KM/H plaque below (Misc. 16)"
+    "tooltip": "MPH unless you use the KM/H plaque below (Misc. 16)"
   },
   {
     "name": "SPEED LIMIT 55",
     "type": "rectangle",
     "variant": "10",
-    "note": "MPH unless you use the KM/H plaque below (Misc. 16)"
+    "tooltip": "MPH unless you use the KM/H plaque below (Misc. 16)"
   },
   {
     "name": "SPEED LIMIT 60",
     "type": "rectangle",
     "variant": "11",
-    "note": "MPH unless you use the KM/H plaque below (Misc. 16)"
+    "tooltip": "MPH unless you use the KM/H plaque below (Misc. 16)"
   },
   {
     "name": "SPEED LIMIT 65",
     "type": "rectangle",
     "variant": "12",
-    "note": "MPH unless you use the KM/H plaque below (Misc. 16)"
+    "tooltip": "MPH unless you use the KM/H plaque below (Misc. 16)"
   },
   {
     "name": "SPEED LIMIT 70",
     "type": "rectangle",
     "variant": "13",
-    "note": "MPH unless you use the KM/H plaque below (Misc. 16)"
+    "tooltip": "MPH unless you use the KM/H plaque below (Misc. 16)"
   },
   {
     "name": "SPEED LIMIT 75",
     "type": "rectangle",
     "variant": "14",
-    "note": "MPH unless you use the KM/H plaque below (Misc. 16)"
+    "tooltip": "MPH unless you use the KM/H plaque below (Misc. 16)"
   },
   {
     "name": "SPEED LIMIT 80",
     "type": "rectangle",
     "variant": "15",
-    "note": "MPH unless you use the KM/H plaque below (Misc. 16)"
+    "tooltip": "MPH unless you use the KM/H plaque below (Misc. 16)"
   },
   {
     "name": "SPEED LIMIT 85",
     "type": "rectangle",
     "variant": "16",
-    "note": "MPH unless you use the KM/H plaque below (Misc. 16)"
+    "tooltip": "MPH unless you use the KM/H plaque below (Misc. 16)"
   },
   {
     "name": "Left Turn Only",
@@ -2061,6 +2153,7 @@
     "name": "Central Turn Lane",
     "type": "rectangle",
     "variant": "22",
+    "tooltip": "Use on a two-way road that has a central turn lane",
     "note": "This should be used in roads with central turn lanes. The middle lane functions as a left turn lane for traffic coming in both directions. Use of the central turn lane to pass a vehicle is prohibited."
   },
   {
@@ -2072,13 +2165,13 @@
     "name": "DO NOT PASS",
     "type": "rectangle",
     "variant": "24",
-    "note": "Should be used if passing is absolutely prohibited."
+    "tooltip": "Should be used if passing is absolutely prohibited."
   },
   {
     "name": "PASS WITH CARE",
     "type": "rectangle",
     "variant": "25",
-    "note": "Should be used if passing is no longer absolutely prohibited."
+    "tooltip": "Should be used if passing is no longer absolutely prohibited."
   },
   {
     "name": "Keep Right",
@@ -2091,22 +2184,22 @@
     "variant": "27"
   },
   {
-    "name": "“KEEP RIGHT” With Right Arrow",
+    "name": "'KEEP RIGHT' With Right Arrow",
     "type": "rectangle",
     "variant": "28"
   },
   {
-    "name": "“KEEP LEFT” With Left Arrow",
+    "name": "'KEEP LEFT' With Left Arrow",
     "type": "rectangle",
     "variant": "29"
   },
   {
-    "name": "“KEEP RIGHT” With Upwards Facing Right Arrow",
+    "name": "'KEEP RIGHT' With Upwards Facing Right Arrow",
     "type": "rectangle",
     "variant": "30"
   },
   {
-    "name": "“KEEP LEFT” With Upwards Facing Left Arrow",
+    "name": "'KEEP LEFT' With Upwards Facing Left Arrow",
     "type": "rectangle",
     "variant": "31"
   },
@@ -2114,10 +2207,10 @@
     "name": "STAY IN LANE",
     "type": "rectangle",
     "variant": "32",
-    "note": "Should be used if passing is prohibited."
+    "tooltip": "Should be used if passing is prohibited."
   },
   {
-    "name": "“ONE WAY” With Right Arrow",
+    "name": "'ONE WAY' With Right Arrow",
     "type": "rectangle",
     "variant": "33"
   },
@@ -2127,22 +2220,22 @@
     "variant": "34"
   },
   {
-    "name": "“NO PARK” With Crossed Out P Symbol",
+    "name": "'NO PARK' With Crossed Out P Symbol",
     "type": "rectangle",
     "variant": "35"
   },
   {
-    "name": "“NO PARK ANYTIME” With Left Arrow",
+    "name": "'NO PARK ANYTIME' With Left Arrow",
     "type": "rectangle",
     "variant": "36"
   },
   {
-    "name": "“NO PARK ANYTIME” With Right Arrow",
+    "name": "'NO PARK ANYTIME' With Right Arrow",
     "type": "rectangle",
     "variant": "37"
   },
   {
-    "name": "“NO PARK ANYTIME” With Left And Right Arrow",
+    "name": "'NO PARK ANYTIME' With Left And Right Arrow",
     "type": "rectangle",
     "variant": "38"
   },
@@ -2152,13 +2245,14 @@
     "variant": "39"
   },
   {
-    "name": "“NO TURN ON RED” Ball",
+    "name": "'NO TURN ON RED' Ball",
     "type": "rectangle",
     "variant": "40",
+    "tooltip": "Prohibit 'on-side' turns if they'd be otherwise allowed",
     "note": "This should be used to prohibit a right turn on a red traffic light when state/country laws would otherwise allow for this."
   },
   {
-    "name": "“DO NOT DRIVE ON TRACKS”",
+    "name": "'DO NOT DRIVE ON TRACKS'",
     "type": "rectangle",
     "variant": "41"
   },
@@ -2171,84 +2265,98 @@
     "name": "30 Speed Zone",
     "type": "rectangle",
     "variant": "43",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "End 30 Speed Zone",
     "type": "rectangle",
     "variant": "44",
-    "note": "Most areas consider this speed limit in kilometers per hour"
+    "tooltip": "Often in KM/H, but is MPH in the UK",
+    "note": "Most areas consider this speed limit in kilometers per hour, but the United Kingdom uses it for miles per hour."
   },
   {
     "name": "Chevron Right Arrow (Black on Yellow)",
     "type": "rectangle",
     "variant": "45",
+    "tooltip": "Place at regular intervals along a right curve",
     "note": "This should be used in multiples  alongside the outside edge of sharp curves."
   },
   {
     "name": "Chevron Left Arrow (Black on Yellow)",
     "type": "rectangle",
     "variant": "46",
+    "tooltip": "Place at regular intervals along a left curve",
     "note": "This should be used in multiples  alongside the outside edge of sharp curves."
   },
   {
     "name": "Chevron Right Arrow (Red on White)",
     "type": "rectangle",
     "variant": "47",
+    "tooltip": "Place at regular intervals along a right curve",
     "note": "This should be used in multiples  alongside the outside edge of sharp curves."
   },
   {
     "name": "Chevron Left Arrow (Red on White)",
     "type": "rectangle",
     "variant": "48",
+    "tooltip": "Place at regular intervals along a left curve",
     "note": "This should be used in multiples  alongside the outside edge of sharp curves."
   },
   {
     "name": "Chevron Pattern Left (Yellow And Black) ",
     "type": "rectangle",
     "variant": "49",
+    "tooltip": "Place to left of road to mark obstacles",
     "note": "This should be used to direct drivers away from dangerous obstacles on the sides of a road."
   },
   {
     "name": "Chevron Pattern Right (Yellow And Black)",
     "type": "rectangle",
     "variant": "50",
+    "tooltip": "Place to right of road to mark obstacles",
     "note": "This should be used to direct drivers away from dangerous obstacles on the sides of a road."
   },
   {
     "name": "Chevron Pattern Left (Yellow And Blue) ",
     "type": "rectangle",
     "variant": "51",
+    "tooltip": "Place to left of road to mark obstacles",
     "note": "This should be used to direct drivers away from dangerous obstacles on the sides of a road."
   },
   {
     "name": "Chevron Pattern Right (Yellow And Blue)",
     "type": "rectangle",
     "variant": "52",
+    "tooltip": "Place to right of road to mark obstacles",
     "note": "This should be used to direct drivers away from dangerous obstacles on the sides of a road."
   },
   {
     "name": "Chevron Pattern Left (White And Red) ",
     "type": "rectangle",
     "variant": "53",
+    "tooltip": "Place to left of road to mark obstacles",
     "note": "This should be used to direct drivers away from dangerous obstacles on the sides of a road."
   },
   {
     "name": "Chevron Pattern Right (White And Red)",
     "type": "rectangle",
     "variant": "54",
+    "tooltip": "Place to right of road to mark obstacles",
     "note": "This should be used to direct drivers away from dangerous obstacles on the sides of a road."
   },
   {
     "name": "Chevron Pattern Left (White And Blue) ",
     "type": "rectangle",
     "variant": "55",
+    "tooltip": "Place to left of road to mark obstacles",
     "note": "This should be used to direct drivers away from dangerous obstacles on the sides of a road."
   },
   {
     "name": "Chevron Pattern Right (White And Blue)",
     "type": "rectangle",
     "variant": "56",
+    "tooltip": "Place to right of road to mark obstacles",
     "note": "This should be used to direct drivers away from dangerous obstacles on the sides of a road."
   },
   {
@@ -2280,12 +2388,14 @@
     "name": "Fuel",
     "type": "rectangle",
     "variant": "62",
+    "tooltip": "Handy with vehicle mods that require fuel",
     "note": "Can find utility if the vehicles provided by your mod need fuel."
   },
   {
     "name": "Repairs",
     "type": "rectangle",
     "variant": "63",
+    "tooltip": "Handy with mod vehicles that can be repaired",
     "note": "Can find utility if the vehicles provided by your mod can be repaired."
   },
   {
@@ -2322,7 +2432,8 @@
     "name": "Water",
     "type": "rectangle",
     "variant": "70",
-    "note": "Can find utility if you have a mod that requires players to drink water"
+    "tooltip": "Handy with mods that require players to drink water",
+    "note": "Can find utility if you have a mod that requires players to drink water, such as Tough As Nails."
   },
   {
     "name": "Restaurant",
@@ -2333,7 +2444,8 @@
     "name": "Fire Extinguisher",
     "type": "rectangle",
     "variant": "72",
-    "note": "Can find utility if you have a mod that adds a fire extinguisher. If not"
+    "tooltip": "Handy if a mod adds a fire extinguisher",
+    "note": "Can find utility if you have a mod that adds a fire extinguisher. If not, a water bucket can suffice."
   },
   {
     "name": "Tram Station",
@@ -2419,7 +2531,8 @@
     "name": "Blank Square Sign",
     "type": "square",
     "variant": "0",
-    "note": "Use the arrows to select a sign"
+    "tooltip": "There's a search bar at the bottom",
+    "note": "Click a sign in the array to select it. Use the search bar if you want a specific sign."
   },
   {
     "name": "No Right Turn",
@@ -2445,7 +2558,8 @@
     "name": "Do Not Enter",
     "type": "square",
     "variant": "5",
-    "note": "Don’t limit this sign to just one-way roads. A restricted road can give this sign utility."
+    "tooltip": "Not just for one-way roads",
+    "note": "Don't limit this sign to just one-way roads. A restricted road can give this sign utility."
   },
   {
     "name": "No Parking",
@@ -2471,13 +2585,14 @@
     "name": "No Semi Trucks",
     "type": "square",
     "variant": "10",
-    "note": "Can find utility if the road is not suited for semis due to steep slopes"
+    "tooltip": "Good for roads not built for semis",
+    "note": "Can find utility if the road is not suited for semis due to steep slopes, very tight turns, low clearances..."
   },
   {
     "name": "National Network Route",
     "type": "square",
     "variant": "11",
-    "note": "The National Network is a system of recommended roads for large trucks."
+    "tooltip": "The National Network is a system of recommended roads for large trucks."
   },
   {
     "name": "Hazardous Materials Prohibited",
@@ -2543,7 +2658,7 @@
     "name": "Speed Bump",
     "type": "square",
     "variant": "24",
-    "note": "Place at the location of the speed bump"
+    "tooltip": "Place at the location of the speed bump"
   },
   {
     "name": "Up Arrow",
@@ -2569,7 +2684,7 @@
     "name": "Pedestrian Crossing",
     "type": "square",
     "variant": "29",
-    "note": "Place at the location of the pedestrian crossing"
+    "tooltip": "Place at the location of the pedestrian crossing"
   },
   {
     "name": "You Have Priority Over Oncoming Traffic",
@@ -2662,28 +2777,24 @@
     "variant": "47"
   },
   {
-    "name": "Main Traffic Heading Left",
+    "name": "Main Traffic Heading Left, Bus Lane Heading Right",
     "type": "square",
-    "variant": "48",
-    "note": " Bus Lane Heading Right"
+    "variant": "48"
   },
   {
-    "name": "Main Traffic Heading Right",
+    "name": "Main Traffic Heading Right, Bus Lane Heading Left",
     "type": "square",
-    "variant": "49",
-    "note": " Bus Lane Heading Left"
+    "variant": "49"
   },
   {
-    "name": "Main Traffic Heading Left",
+    "name": "Main Traffic Heading Left, Bike Lane Heading Right",
     "type": "square",
-    "variant": "50",
-    "note": " Bike Lane Heading Right"
+    "variant": "50"
   },
   {
-    "name": "Main Traffic Heading Right",
+    "name": "Main Traffic Heading Right, Bike Lane Heading Left",
     "type": "square",
-    "variant": "51",
-    "note": " Bike Lane Heading Left"
+    "variant": "51"
   },
   {
     "name": "Bus Lane",
@@ -2776,16 +2887,14 @@
     "variant": "69"
   },
   {
-    "name": "Left Curve",
+    "name": "Left Curve, Escape Lane to Right",
     "type": "square",
-    "variant": "70",
-    "note": " Escape Lane to Right"
+    "variant": "70"
   },
   {
-    "name": "Right Curve",
+    "name": "Right Curve, Escape Lane to Left",
     "type": "square",
-    "variant": "71",
-    "note": " Escape Lane to Left"
+    "variant": "71"
   },
   {
     "name": "MC Route 1",
@@ -2884,52 +2993,60 @@
     "note": "This is an example route shield. More route shields will come in future updates."
   },
   {
-    "name": "Chevron Arrow (Yellow on Black",
+    "name": "Chevron Arrow (Yellow on Black, Right)",
     "type": "square",
     "variant": "88",
-    "note": " Right)"
+    "tooltip": "Place at regular intervals outside of sharp curves",
+    "note": "This should be used in multiples alongside the outside edge of sharp curves."
   },
   {
-    "name": "Chevron Arrow (Yellow on Black",
+    "name": "Chevron Arrow (Yellow on Black, Left)",
     "type": "square",
     "variant": "89",
-    "note": " Left)"
+    "tooltip": "Place at regular intervals outside of sharp curves",
+    "note": "This should be used in multiples alongside the outside edge of sharp curves."
   },
   {
-    "name": "Chevron Arrow (Yellow on Blue",
+    "name": "Chevron Arrow (Yellow on Blue, Right)",
     "type": "square",
     "variant": "90",
-    "note": " Right)"
+    "tooltip": "Place at regular intervals outside of sharp curves",
+    "note": "This should be used in multiples alongside the outside edge of sharp curves."
   },
   {
-    "name": "Chevron Arrow (Yellow on Blue",
+    "name": "Chevron Arrow (Yellow on Blue, Left)",
     "type": "square",
     "variant": "91",
-    "note": " Left)"
+    "tooltip": "Place at regular intervals outside of sharp curves",
+    "note": "This should be used in multiples alongside the outside edge of sharp curves."
   },
   {
-    "name": "Chevron Arrow (White on Blue",
+    "name": "Chevron Arrow (White on Blue, Right)",
     "type": "square",
     "variant": "92",
-    "note": " Right)"
+    "tooltip": "Place at regular intervals outside of sharp curves",
+    "note": "This should be used in multiples alongside the outside edge of sharp curves."
   },
   {
-    "name": "Chevron Arrow (White on Blue",
+    "name": "Chevron Arrow (White on Blue, Left)",
     "type": "square",
     "variant": "93",
-    "note": " Left)"
+    "tooltip": "Place at regular intervals outside of sharp curves",
+    "note": "This should be used in multiples alongside the outside edge of sharp curves."
   },
   {
-    "name": "Chevron Arrow (White on Red",
+    "name": "Chevron Arrow (White on Red, Right)",
     "type": "square",
     "variant": "94",
-    "note": " Right)"
+    "tooltip": "Place at regular intervals outside of sharp curves",
+    "note": "This should be used in multiples alongside the outside edge of sharp curves."
   },
   {
-    "name": "Chevron Arrow (White on Red",
+    "name": "Chevron Arrow (White on Red, Left)",
     "type": "square",
     "variant": "95",
-    "note": " Left)"
+    "tooltip": "Place at regular intervals outside of sharp curves",
+    "note": "This should be used in multiples alongside the outside edge of sharp curves."
   },
   {
     "name": "Main Road Turns Left at Intersection",
@@ -2962,28 +3079,28 @@
     "variant": "101"
   },
   {
-    "name": "Main Road S-Curves Right",
+    "name": "Main Road S-Curves Right, Side Road on Right",
     "type": "square",
-    "variant": "102",
-    "note": " Side Road on Right"
+    "variant": "102"
   },
   {
-    "name": "Main Road S-Curves Left",
+    "name": "Main Road S-Curves Left, Side Road on Left",
     "type": "square",
-    "variant": "103",
-    "note": " Side Road on Left"
+    "variant": "103"
   },
   {
-    "name": "Chevron Arrow (Black on Yellow",
+    "name": "Chevron Arrow (Black on Yellow, Left)",
     "type": "square",
     "variant": "104",
-    "note": " Left)"
+    "tooltip": "Place at regular intervals outside of sharp curves",
+    "note": "This should be used in multiples  alongside the outside edge of sharp curves."
   },
   {
-    "name": "Chevron Arrow (Black on Yellow",
+    "name": "Chevron Arrow (Black on Yellow, Right)",
     "type": "square",
     "variant": "105",
-    "note": " Right)"
+    "tooltip": "Place at regular intervals outside of sharp curves",
+    "note": "This should be used in multiples  alongside the outside edge of sharp curves."
   },
   {
     "name": "WORK ZONE",
@@ -2991,32 +3108,32 @@
     "variant": "106"
   },
   {
-    "name": "“DETOUR” Left or Right",
+    "name": "'DETOUR' Left or Right",
     "type": "square",
     "variant": "107"
   },
   {
-    "name": "“DETOUR” Left",
+    "name": "'DETOUR' Left",
     "type": "square",
     "variant": "108"
   },
   {
-    "name": "“DETOUR” Right",
+    "name": "'DETOUR' Right",
     "type": "square",
     "variant": "109"
   },
   {
-    "name": "“DETOUR” Turn Left",
+    "name": "'DETOUR' Turn Left",
     "type": "square",
     "variant": "110"
   },
   {
-    "name": "“DETOUR” Turn Right",
+    "name": "'DETOUR' Turn Right",
     "type": "square",
     "variant": "111"
   },
   {
-    "name": "“DETOUR” Straight",
+    "name": "'DETOUR' Straight",
     "type": "square",
     "variant": "112"
   },
@@ -3049,7 +3166,7 @@
     "name": "LEFT TURN SIGNAL",
     "type": "square",
     "variant": "118",
-    "note": "Place next to a traffic light that denotes left turns"
+    "tooltip": "Place next to a traffic light that denotes left turns"
   },
   {
     "name": "LEFT TURN YIELD ON FLASHING YELLOW ARROW",
@@ -3057,17 +3174,17 @@
     "variant": "119"
   },
   {
-    "name": "“LEFT TURN YIELD ON FLASHING YELLOW” Arrow",
+    "name": "'LEFT TURN YIELD ON FLASHING YELLOW' Arrow",
     "type": "square",
     "variant": "120"
   },
   {
-    "name": "“LEFT TURN YIELD ON FLASHING” Yellow Arrow",
+    "name": "'LEFT TURN YIELD ON FLASHING' Yellow Arrow",
     "type": "square",
     "variant": "121"
   },
   {
-    "name": "“LEFT TURN YIELD ON GREEN” Ball",
+    "name": "'LEFT TURN YIELD ON GREEN' Ball",
     "type": "square",
     "variant": "122"
   },
@@ -3077,17 +3194,17 @@
     "variant": "123"
   },
   {
-    "name": "“NO TURN ON RED” Ball",
+    "name": "'NO TURN ON RED' Ball",
     "type": "square",
     "variant": "124"
   },
   {
-    "name": "“ONE WAY” with Left Arrow",
+    "name": "'ONE WAY' with Left Arrow",
     "type": "square",
     "variant": "125"
   },
   {
-    "name": "“ONE WAY” with Right Arrow",
+    "name": "'ONE WAY' with Right Arrow",
     "type": "square",
     "variant": "126"
   },
@@ -3110,19 +3227,17 @@
     "name": "RIGHT TURN SIGNAL",
     "type": "square",
     "variant": "130",
-    "note": "Place next to a traffic light that denotes right turns"
+    "tooltip": "Place next to a traffic light that denotes right turns"
   },
   {
-    "name": "“SIDEWALK CLOSED AHEAD",
+    "name": "'SIDEWALK CLOSED AHEAD, CROSS HERE' to Left",
     "type": "square",
-    "variant": "131",
-    "note": " CROSS HERE” to Left"
+    "variant": "131"
   },
   {
-    "name": "“SIDEWALK CLOSED AHEAD",
+    "name": "'SIDEWALK CLOSED AHEAD, CROSS HERE' to Right",
     "type": "square",
-    "variant": "132",
-    "note": " CROSS HERE” to Right"
+    "variant": "132"
   },
   {
     "name": "SIDEWALK CLOSED AHEAD",
@@ -3130,34 +3245,29 @@
     "variant": "133"
   },
   {
-    "name": "“SIDEWALK CLOSED",
+    "name": "'SIDEWALK CLOSED, CROSS HERE' to Left",
     "type": "square",
-    "variant": "134",
-    "note": " CROSS HERE” to Left"
+    "variant": "134"
   },
   {
-    "name": "“SIDEWALK CLOSED",
+    "name": "'SIDEWALK CLOSED, CROSS HERE' to Right",
     "type": "square",
-    "variant": "135",
-    "note": " CROSS HERE” to Right"
+    "variant": "135"
   },
   {
-    "name": "“SIDEWALK CLOSED",
+    "name": "'SIDEWALK CLOSED, USE OTHER SIDE' to Either Side",
     "type": "square",
-    "variant": "136",
-    "note": " USE OTHER SIDE” to Either Side"
+    "variant": "136"
   },
   {
-    "name": "“SIDEWALK CLOSED",
+    "name": "'SIDEWALK CLOSED, USE OTHER SIDE' to Left",
     "type": "square",
-    "variant": "137",
-    "note": " USE OTHER SIDE” to Left"
+    "variant": "137"
   },
   {
-    "name": "“SIDEWALK CLOSED",
+    "name": "'SIDEWALK CLOSED, USE OTHER SIDE' to Right",
     "type": "square",
-    "variant": "138",
-    "note": " USE OTHER SIDE” to Right"
+    "variant": "138"
   },
   {
     "name": "SIDEWALK CLOSED",
@@ -3168,13 +3278,13 @@
     "name": "WRONG WAY",
     "type": "square",
     "variant": "140",
-    "note": "Place facing away from normal traffic on a one-way street"
+    "tooltip": "Place facing away from normal traffic on a one-way street"
   },
   {
     "name": "Exit (Left) with Number Space",
     "type": "square",
     "variant": "141",
-    "note": "You’ll be able to edit this sign to add a number in a future update."
+    "tooltip": "You'll be able to edit this sign to add a number in a future update."
   },
   {
     "name": "Exit (Left)",
@@ -3185,7 +3295,7 @@
     "name": "Exit (Right) with Number Space",
     "type": "square",
     "variant": "143",
-    "note": "You’ll be able to edit this sign to add a number in a future update."
+    "tooltip": "You'll be able to edit this sign to add a number in a future update."
   },
   {
     "name": "Exit (Right)",
@@ -3293,10 +3403,9 @@
     "variant": "164"
   },
   {
-    "name": "“PRIVATE RAILROAD CROSSING",
+    "name": "'PRIVATE RAILROAD CROSSING, LOOK' Both Ways",
     "type": "square",
-    "variant": "165",
-    "note": " LOOK” Both Ways"
+    "variant": "165"
   },
   {
     "name": "No Straight Through",
@@ -3307,7 +3416,8 @@
     "name": "Blank Triangle Sign",
     "type": "triangle",
     "variant": "0",
-    "note": "Use the arrows to select a sign"
+    "tooltip": "There's a search bar at the bottom",
+    "note": "Click a sign in the array to select it. Use the search bar if you want a specific sign."
   },
   {
     "name": "Right Turn",
@@ -3463,12 +3573,13 @@
     "name": "Light Rail Crossing",
     "type": "triangle",
     "variant": "31",
-    "note": "A light rail is basically a railroad for trams."
+    "tooltip": "A light rail is basically a railroad for trams."
   },
   {
     "name": "High Winds",
     "type": "triangle",
     "variant": "32",
+    "tooltip": "Handy for mods with wind",
     "note": "Can find utility if you have a mod that adds interactive wind."
   },
   {
@@ -3490,7 +3601,7 @@
     "name": "Snow and/or Ice",
     "type": "triangle",
     "variant": "36",
-    "note": "This sign is fit for snowy biomes."
+    "tooltip": "This sign is fit for snowy biomes."
   },
   {
     "name": "Low Visibility",
@@ -3706,12 +3817,13 @@
     "name": "Light Rail Crossing",
     "type": "triangle",
     "variant": "79",
-    "note": "A light rail is basically a railroad for trams."
+    "tooltip": "A light rail is basically a railroad for trams."
   },
   {
     "name": "High Winds",
     "type": "triangle",
     "variant": "80",
+    "tooltip": "Handy for mods with wind",
     "note": "Can find utility if you have a mod that adds interactive wind."
   },
   {
@@ -3733,7 +3845,7 @@
     "name": "Snow and/or Ice",
     "type": "triangle",
     "variant": "84",
-    "note": "This sign is fit for snowy biomes."
+    "tooltip": "This sign is fit for snowy biomes."
   },
   {
     "name": "Low Visibility",
