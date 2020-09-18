@@ -2,13 +2,13 @@
 {
   "modid": "trafficcontrol",
   "name": "Traffic Control",
-  "description": "Control traffic in Minecraft using signs, railroad crossings, and more!",
+  "description": "Control traffic in Minecraft using signs, railroad crossings, traffic lights, and more!",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
   "authorList": ["CSX8600", "KillerMapper"],
-  "credits": "KillerMapper for making this the first time and creating all of the wonderful road sign textures",
+  "credits": "KillerMapper for making this the first time and creating many of the wonderful road sign textures.  The_Epicness9000, Alex9327, RavenholmZombie, South Texas Railfan for community sign submissions.",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

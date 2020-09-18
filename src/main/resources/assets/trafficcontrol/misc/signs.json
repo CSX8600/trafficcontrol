@@ -1229,6 +1229,22 @@
     "note": "Recommended in swamps, in areas with slopes (since slimes and magma cubes can climb slopes rather quickly), near where players have reported slime sightings, near cliffs in the Nether (since magma cubes don't take fall damage), and in other areas prone to slimes or magma cubes or slime or magma cube ambushes."
   },
   {
+    "name": "Tram Crossing",
+    "type": "diamond",
+    "variant": "145"
+  },
+  {
+    "name": "Pedestrian Crossing",
+    "type": "diamond",
+    "variant": "146",
+    "tooltip": "Place at the location of the pedestrian crossing"
+  },
+  {
+    "name": "'SLOW' Sign",
+    "type": "diamond",
+    "variant": "147"
+  },
+  {
     "name": "Men Working",
     "type": "diamond",
     "variant": "104"
@@ -1615,6 +1631,12 @@
     "name": "Large Down Arrow",
     "type": "misc",
     "variant": "32"
+  },
+  {
+    "name": "'EXEMPT' Sign",
+    "type": "misc",
+    "variant": "98",
+    "tooltip": "Use to indicate that a railroad crossing is considered exempt"
   },
   {
     "name": "'NORTH' Plaque",
@@ -2022,11 +2044,23 @@
     "tooltip": "Place under a Stop Sign"
   },
   {
+    "name": "Ped Xing",
+    "type": "misc",
+    "variant": "99",
+    "tooltip": "Place under a diamond Pedestrian Crossing sign to bring more clarity and notice to the sign"
+  },
+  {
     "name": "Blank Rectangle Sign",
     "type": "rectangle",
     "variant": "0",
     "tooltip": "There's a search bar at the bottom",
     "note": "Click a sign in the array to select it. Use the search bar if you want a specific sign."
+  },
+  {
+  	"name": "SPEED LIMIT 5",
+  	"type": "rectangle",
+  	"variant": "89",
+  	"tooltip": "MPH unless you use the KM/H plaque below (Misc. 16)"
   },
   {
     "name": "SPEED LIMIT 10",

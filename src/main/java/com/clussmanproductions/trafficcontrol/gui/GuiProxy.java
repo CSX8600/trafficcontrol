@@ -123,7 +123,7 @@ public class GuiProxy implements IGuiHandler {
 		public static final int TYPE_3_BARRIER = 4;
 		public static final int CROSSING_GATE_GATE = 5;
 		public static final int STREET_SIGN = 6;
-		public static final int TRAFFIC_LIGHT_5_FRAME = 6;
-		public static final int TRAFFIC_LIGHT_DOGHOUSE_FRAME = 7;
+		public static final int TRAFFIC_LIGHT_5_FRAME = 7;
+		public static final int TRAFFIC_LIGHT_DOGHOUSE_FRAME = 8;
 	}
 }
