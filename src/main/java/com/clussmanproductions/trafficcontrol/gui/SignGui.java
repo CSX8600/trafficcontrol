@@ -2,120 +2,215 @@ package com.clussmanproductions.trafficcontrol.gui;
 
 import java.io.IOException;
 
-import com.clussmanproductions.trafficcontrol.ModTrafficControl;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
+
 import com.clussmanproductions.trafficcontrol.network.PacketHandler;
 import com.clussmanproductions.trafficcontrol.network.PacketUpdateSign;
 import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
+import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity.Sign;
+import com.clussmanproductions.trafficcontrol.util.Tuple;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.client.config.GuiButtonExt;
 
 public class SignGui extends GuiScreen {
-	private SignTileEntity te;
-	private BlockPos pos;
-	GuiButton cmdPrevType;
-	GuiButton cmdNextType;
-	GuiButton cmdPrevVariant;
-	GuiButton cmdNextVariant;
-	GuiButton cmdSkipPrevVariant;
-	GuiButton cmdSkipNextVariant;
-	private final ImmutableMap<Integer, Integer> U_POSITIONS_BY_TYPE =ImmutableMap.<Integer, Integer>builder()
-			.put(0, 96)
-			.put(1, 160)
-			.put(2, 224)
-			.put(3, 192)
-			.put(4, 64)
-			.put(5, 128)
-			.build();
-	private ResourceLocation signConfigResourceLocation = new ResourceLocation(ModTrafficControl.MODID, "textures/gui/signconfig.png");
+
+	SignTileEntity sign;
+	GuiImageList list;
+	GuiTextField search;
+	GuiButtonExt typeButton;
+	GuiTextField variant;
 	
-	public SignGui(SignTileEntity te, BlockPos pos)
+	public SignGui(SignTileEntity sign)
 	{
-		this.te = te;
-		this.pos = pos;
+		this.sign = sign;
 	}
 	
 	@Override
 	public void initGui() {
-		int horizontalCenter = width / 2;
-		int verticalCenter = height / 2;
-		cmdPrevType = new GuiButton(0, 80, 20, 20, 20, "<");
-		cmdNextType = new GuiButton(1, width - 80, 20, 20, 20,">");
-		cmdPrevVariant = new GuiButton(2, 80, verticalCenter, 20, 20,"<");
-		cmdNextVariant = new GuiButton(3, width - 80, verticalCenter, 20, 20,">");
-		cmdSkipPrevVariant = new GuiButton(4, 55, verticalCenter, 20, 20, "<<");
-		cmdSkipNextVariant = new GuiButton(5, width - 55, verticalCenter, 20, 20, ">>");
+		list = new GuiImageList(width - 128,
+				18,
+				112,
+				height - 68,
+				img -> onImageClicked(img));
 		
-		buttonList.addAll(ImmutableSet.of(cmdPrevType, cmdNextType, cmdPrevVariant, cmdNextVariant, cmdSkipPrevVariant, cmdSkipNextVariant));
-	}
-	
-	@Override
-	public boolean doesGuiPauseGame() {
-		return false;
+		search = new GuiTextField(0, fontRenderer, width - 128, height - 40, 112, 20);
+		search.setText("\u00a73\u00a7oSearch...");
+		
+		int leftPanelWidth = width - 134;
+		int leftPanelHorizontalCenter = leftPanelWidth / 2;
+		
+		int textWidth = fontRenderer.getStringWidth("Type:");
+		
+		typeButton = new GuiButtonExt(1, leftPanelHorizontalCenter - ((203 + textWidth) / 2) + textWidth + 3, 20, sign.getFriendlySignName());
+		
+		if (typeButton.x + typeButton.width > leftPanelWidth)
+		{
+			typeButton.width = leftPanelWidth - typeButton.x;
+		}
+		
+		textWidth = fontRenderer.getStringWidth("Variant:");
+		variant = new GuiTextField(2, fontRenderer, leftPanelHorizontalCenter - ((33 + textWidth) / 2) + textWidth + 3, 50, 30, 20);
+		variant.setText(String.valueOf(sign.getVariant()));
+		variant.setMaxStringLength(3);
+		
+		buttonList.add(typeButton);
 	}
 	
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		int horizontalCenter = width / 2;
-		int verticalCenter = height / 2;
-		drawDefaultBackground();
-		
-		drawCenteredString(fontRenderer, "Type: " + te.getVariant(), horizontalCenter, verticalCenter - 84, 16777215);
-		
-		mc.getTextureManager().bindTexture(signConfigResourceLocation);
-		drawModalRectWithCustomSizedTexture(horizontalCenter - 16, 20, U_POSITIONS_BY_TYPE.get(te.getType()), 0, 32, 32, 256, 256);
-		
-		mc.getTextureManager().bindTexture(te.getTexture());
-		drawModalRectWithCustomSizedTexture(horizontalCenter - 64, verticalCenter - 64, 0, 0, 128, 128, 128, 128);
-		
+		super.drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
-	}
-	
-	@Override
-	protected void actionPerformed(GuiButton button) throws IOException {
-		switch(button.id)
+		
+		search.drawTextBox();
+		variant.drawTextBox();
+		
+		int leftPanelWidth = width - 134;
+		int leftPanelHorizontalCenter = leftPanelWidth / 2;
+		
+		int textWidth = fontRenderer.getStringWidth("Type:");
+		fontRenderer.drawString("Type:", leftPanelHorizontalCenter - ((typeButton.width + textWidth + 3) / 2), 27, 0xFFFFFF);
+		
+		textWidth = fontRenderer.getStringWidth("Variant:");
+		fontRenderer.drawString("Variant:", leftPanelHorizontalCenter - ((variant.width + textWidth + 3) / 2), 57, 0xFFFFFF);
+		
+		Sign currentSign = SignTileEntity.SIGNS_BY_TYPE_VARIANT.get(new Tuple<Integer, Integer>(sign.getType(), sign.getVariant()));
+		
+		textWidth = fontRenderer.getStringWidth("Name: " + currentSign.getName());
+		fontRenderer.drawString("Name: " + currentSign.getName(), leftPanelHorizontalCenter - (textWidth / 2), 73, 0xFFFF00);
+		
+		if (currentSign.getNote() != null && !currentSign.getNote().equals(""))
 		{
-			case 0:
-				te.prevType();
-				break;
-			case 1:
-				te.nextType();
-				break;
-			case 2:
-				te.prevVariant();
-				break;
-			case 3:
-				te.nextVariant();
-				break;
-			case 4:
-				for(int i = 0; i < 5; i++)
-				{
-					te.prevVariant();
-				}
-				break;
-			case 5:
-				for(int i = 0; i < 5; i++)
-				{
-					te.nextVariant();
-				}
-				break;
+			String note = "Note: " + currentSign.getNote();
+			textWidth = fontRenderer.getStringWidth(note);
+			if (textWidth > leftPanelWidth)
+			{
+				textWidth = leftPanelWidth;
+			}
+
+			fontRenderer.drawSplitString(note, leftPanelHorizontalCenter - (textWidth / 2), height - 20, textWidth, 0xFFFFFF);
 		}
+		
+		mc.renderEngine.bindTexture(currentSign.getImageResourceLocation());
+		
+		int previewWidthHeight = leftPanelWidth;
+		int maxPreviewHeight = height - 105;
+		if (previewWidthHeight > maxPreviewHeight)
+		{
+			previewWidthHeight = maxPreviewHeight;
+		}
+		
+		int previewX = leftPanelHorizontalCenter - (previewWidthHeight / 2);
+		
+		GlStateManager.color(255, 255, 255);
+		
+		Tessellator tess = Tessellator.getInstance();
+		BufferBuilder builder = tess.getBuffer();
+		
+		builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+		
+		builder.pos(previewX, 83, 1).tex(0, 0).endVertex();
+		builder.pos(previewX, 83 + previewWidthHeight, 1).tex(0, 1).endVertex();
+		builder.pos(previewX + previewWidthHeight, 83 + previewWidthHeight, 1).tex(1, 1).endVertex();
+		builder.pos(previewX + previewWidthHeight, 83, 1).tex(1, 0).endVertex();
+		
+		tess.draw();
+		
+		list.draw(mouseX, mouseY, fontRenderer, text -> x -> y -> drawHoveringText(text, x, y));
 	}
 
 	@Override
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+		super.mouseClicked(mouseX, mouseY, mouseButton);
+		
+		list.onMouseClick(mouseX, mouseY);
+		if (search.mouseClicked(mouseX, mouseY, mouseButton) && search.getText().equals("\u00a73\u00a7oSearch..."))
+		{
+			search.setText("");
+		}
+		else if (search.getText().equals(""))
+		{
+			search.setText("\u00a73\u00a7oSearch...");
+		}
+		variant.mouseClicked(mouseX, mouseY, mouseButton);
+	}
+	
+	@Override
+	protected void keyTyped(char typedChar, int keyCode) throws IOException {
+		super.keyTyped(typedChar, keyCode);
+		
+		if (search.textboxKeyTyped(typedChar, keyCode))
+		{
+			list.filter(search.getText());
+		}
+		
+		if (variant.textboxKeyTyped(typedChar, keyCode))
+		{
+			int newVariant = 0;
+			try
+			{
+				newVariant = Integer.parseInt(variant.getText());
+			}
+			catch(Exception ex){}
+			
+			sign.setVariant(newVariant);
+		}
+	}
+	
+	@Override
+	protected void mouseReleased(int mouseX, int mouseY, int state) {
+		super.mouseReleased(mouseX, mouseY, state);
+		
+		list.onMouseRelease();
+	}
+	
+	@Override
+	public void handleMouseInput() throws IOException {
+		super.handleMouseInput();
+		
+		list.scroll(Integer.signum(Mouse.getDWheel()));
+	}
+	
+	private void onImageClicked(Sign image)
+	{
+		sign.setType(image.getType());
+		sign.setVariant(image.getVariant());
+		
+		typeButton.displayString = sign.getFriendlySignName();
+		variant.setText(String.valueOf(image.getVariant()));
+	}
+	
+	@Override
 	public void onGuiClosed() {
 		super.onGuiClosed();
+		BlockPos pos = sign.getPos();
 		PacketUpdateSign updateSign = new PacketUpdateSign();
 		updateSign.x = pos.getX();
 		updateSign.y = pos.getY();
 		updateSign.z = pos.getZ();
-		updateSign.type = te.getType();
-		updateSign.variant = te.getVariant();
+		updateSign.type = sign.getType();
+		updateSign.variant = sign.getVariant();
 		
 		PacketHandler.INSTANCE.sendToServer(updateSign);
+	}
+
+	@Override
+	protected void actionPerformed(GuiButton button) throws IOException {
+		if (button == typeButton)
+		{
+			sign.nextType();
+			
+			typeButton.displayString = sign.getFriendlySignName();
+			variant.setText(String.valueOf(sign.getVariant()));
+		}
 	}
 }

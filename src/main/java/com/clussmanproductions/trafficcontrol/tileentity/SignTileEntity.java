@@ -1,14 +1,31 @@
 package com.clussmanproductions.trafficcontrol.tileentity;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
+
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
+import com.clussmanproductions.trafficcontrol.util.Tuple;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class SignTileEntity extends TileEntity {
 
@@ -24,6 +41,7 @@ public class SignTileEntity extends TileEntity {
 			.put(4, 166)
 			.put(5, 95)
 			.build();
+	public static ImmutableMap<Tuple<Integer, Integer>, Sign> SIGNS_BY_TYPE_VARIANT;
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
@@ -53,6 +71,12 @@ public class SignTileEntity extends TileEntity {
 	
 	public void setVariant(int variant)
 	{
+		if (variant > MAXVARIANTS.get(getType()))
+		{
+			this.variant = 0;
+			return;
+		}
+		
 		this.variant = variant;
 	}
 	
@@ -134,6 +158,27 @@ public class SignTileEntity extends TileEntity {
 		}
 	}
 
+	public static int getSignTypeByName(String type)
+	{
+		switch(type)
+		{
+			case "circle":
+				return 0;
+			case "diamond":
+				return 1;
+			case "misc":
+				return 2;
+			case "rectangle":
+				return 3;
+			case "square":
+				return 4;
+			case "triangle":
+				return 5;
+		}
+		
+		return 0;
+	}
+	
 	public String getFriendlySignName()
 	{
 		switch(type)
@@ -241,5 +286,152 @@ public class SignTileEntity extends TileEntity {
 		
 		NBTTagCompound nbt = pkt.getNbtCompound();
 		handleUpdateTag(nbt);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static void initializeSigns()
+	{
+		try
+		{
+			ResourceLocation signJsonRL = new ResourceLocation("trafficcontrol:misc/signs.json");
+			InputStream jsonStream = Minecraft.getMinecraft().getResourceManager().getResource(signJsonRL).getInputStream();
+			InputStreamReader streamReader= new InputStreamReader(jsonStream);
+			
+			JsonArray jsonArray = new JsonParser().parse(streamReader).getAsJsonArray();
+			Iterator<JsonElement> arrayIterator = jsonArray.iterator();
+			
+			HashMap<Tuple<Integer, Integer>, Sign> signsbyTypeVariant = new HashMap<>();
+			while(arrayIterator.hasNext())
+			{
+				JsonElement element = arrayIterator.next();
+				if (!element.isJsonObject())
+				{
+					continue;
+				}
+				
+				JsonObject obj = element.getAsJsonObject();
+				String name = obj.get("name").getAsString();
+				String type = obj.get("type").getAsString();
+				int typeID = SignTileEntity.getSignTypeByName(type);
+				int variant = obj.get("variant").getAsInt();
+				String tooltip = null;
+				String note = null;
+				
+				if (obj.has("tooltip"))
+				{
+					tooltip = obj.get("tooltip").getAsString();
+				}
+				
+				if (obj.has("note"))
+				{
+					note = obj.get("note").getAsString();
+				}
+				
+				if ((note == null || note.equals("")) && tooltip != null && !tooltip.equals(""))
+				{
+					note = tooltip;
+				}
+				
+				Sign newImage = new Sign(
+						new ResourceLocation("trafficcontrol:textures/blocks/sign/" + type + "/" + type + variant + ".png"),
+						name,
+						typeID,
+						variant,
+						tooltip,
+						note);
+				
+				signsbyTypeVariant.put(new Tuple<Integer, Integer>(typeID, variant), newImage);				
+			}
+			
+			SIGNS_BY_TYPE_VARIANT = ImmutableMap.copyOf(signsbyTypeVariant);
+		}
+		catch(Exception ex)
+		{
+			FMLCommonHandler.instance().raiseException(ex, "Failed to load signs", true);
+		}
+	}
+	
+	public static class Sign
+	{
+		private ResourceLocation imageResourceLocation;
+		private String name;
+		private int type;
+		private int variant;
+		private String tooltip;
+		private String note;
+		
+		public Sign(ResourceLocation imageRL, String name, int type, int variant, String toolTip, String note)
+		{
+			imageResourceLocation = imageRL;
+			this.name = name;
+			this.type = type;
+			this.variant = variant;
+			this.tooltip = toolTip;
+			this.note = note;
+		}
+		
+		public String getName() { return name; }
+		
+		public int getType() { return type; }
+		
+		public int getVariant() { return variant; }
+		
+		public ResourceLocation getImageResourceLocation() { return imageResourceLocation; }
+		
+		public String getToolTip() { return tooltip; }
+		
+		public String getNote() { return note; }
+		
+		public static class TestComparator implements Comparator<Tuple<Integer, Integer>>
+		{
+			@Override
+			public int compare(Tuple<Integer, Integer> arg0, Tuple<Integer, Integer> arg1) {
+				if (arg0 == null && arg1 == null)
+				{
+					return 0;
+				}
+				
+				if (arg0 == null && arg1 != null)
+				{
+					return -1;
+				}
+				
+				if (arg1 == null && arg0 != null)
+				{
+					return 1;
+				}
+				
+				if (arg0.getFirst() != arg1.getFirst())
+				{
+					if (arg0.getFirst() > arg1.getFirst())
+					{
+						return 1;
+					}
+					else
+					{
+						return -1;
+					}
+				}
+				else
+				{
+					if (arg0.getSecond() == arg1.getSecond())
+					{
+						return 0;
+					}
+					else
+					{
+						if (arg0.getSecond() > arg1.getSecond())
+						{
+							return 1;
+						}
+						else
+						{
+							return -1;
+						}
+					}
+				}
+			}
+			
+		}
 	}
 }
