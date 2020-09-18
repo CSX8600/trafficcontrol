@@ -44,7 +44,7 @@ public class SignGui extends GuiScreen {
 				img -> onImageClicked(img));
 		
 		search = new GuiTextField(0, fontRenderer, width - 128, height - 40, 112, 20);
-		search.setText("§3§oSearch...");
+		search.setText("\u00a73\u00a7oSearch...");
 		
 		int leftPanelWidth = width - 134;
 		int leftPanelHorizontalCenter = leftPanelWidth / 2;
@@ -133,13 +133,13 @@ public class SignGui extends GuiScreen {
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 		
 		list.onMouseClick(mouseX, mouseY);
-		if (search.mouseClicked(mouseX, mouseY, mouseButton) && search.getText().equals("§3§oSearch..."))
+		if (search.mouseClicked(mouseX, mouseY, mouseButton) && search.getText().equals("\u00a73\u00a7oSearch..."))
 		{
 			search.setText("");
 		}
 		else if (search.getText().equals(""))
 		{
-			search.setText("§3§oSearch...");
+			search.setText("\u00a73\u00a7oSearch...");
 		}
 		variant.mouseClicked(mouseX, mouseY, mouseButton);
 	}

@@ -189,7 +189,7 @@ public class GuiImageList {
 		if (hoveringImage != null)
 		{
 			ArrayList<String> hoverText = new ArrayList<>();
-			hoverText.add("§e" + hoveringImage.getName() + " (" + hoveringImage.getVariant() + ")");
+			hoverText.add("\u00a7e" + hoveringImage.getName() + " (" + hoveringImage.getVariant() + ")");
 			
 			if (hoveringImage.getToolTip() != null && hoveringImage.getToolTip() != "")
 			{
