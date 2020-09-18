@@ -125,5 +125,7 @@ public class StreetSignTileEntity extends SyncableTileEntity {
 	public void handleClientToServerUpdateTag(NBTTagCompound compound) {
 		handleUpdateTag(compound);		
 		markDirty();
+		
+		world.notifyBlockUpdate(getPos(), world.getBlockState(getPos()), world.getBlockState(getPos()), 3);
 	}
 }

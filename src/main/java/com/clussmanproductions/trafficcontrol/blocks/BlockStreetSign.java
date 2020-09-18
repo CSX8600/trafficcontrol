@@ -24,6 +24,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockStreetSign extends Block {
 	public BlockStreetSign()
@@ -37,6 +39,7 @@ public class BlockStreetSign extends Block {
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
 	
+	@SideOnly(Side.CLIENT)
 	public void initModel()
 	{
 		ClientRegistry.bindTileEntitySpecialRenderer(StreetSignTileEntity.class, new StreetSignRenderer());
