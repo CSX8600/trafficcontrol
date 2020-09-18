@@ -21,7 +21,7 @@ public class WorldEventHandler {
 		try
 		{
 			Scanner thread = new Scanner(e.getWorld());
-			Scanner.ScannersByWorld.put(e.getWorld(), thread);
+			Scanner.ScannersByWorld.put(e.getWorld().provider.getDimension(), thread);
 		}
 		catch(Exception ex)
 		{
@@ -37,7 +37,7 @@ public class WorldEventHandler {
 			return;
 		}
 		
-		Scanner.ScannersByWorld.remove(e.getWorld());
+		Scanner.ScannersByWorld.remove(e.getWorld().provider.getDimension());
 	}
 	
 	@SubscribeEvent
@@ -48,10 +48,10 @@ public class WorldEventHandler {
 			return;
 		}
 		
-		Scanner thread = Scanner.ScannersByWorld.get(e.world);
+		Scanner thread = Scanner.ScannersByWorld.get(e.world.provider.getDimension());
 		if (thread != null)
 		{
-			thread.tick();
+			thread.tick(e.world);
 		}
 	}
 }

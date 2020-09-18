@@ -218,7 +218,7 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 		
 		if (ModTrafficControl.IR_INSTALLED)
 		{
-			Scanner.ScannersByWorld.get(world).subscribe(this);
+			Scanner.ScannersByWorld.get(world.provider.getDimension()).subscribe(this);
 		}
 	}
 	
