@@ -66,7 +66,7 @@ public class BlockCrossingGatePole extends Block {
 					stateFacing == EnumFacing.WEST || stateFacing == EnumFacing.EAST;
 		}
 		
-		if (state.getBlock() == ModBlocks.traffic_light)
+		if (state.getBlock() instanceof BlockBaseTrafficLight)
 		{
 			EnumFacing stateFacing = state.getValue(BlockTrafficLight.FACING);
 			return stateFacing != facing;
