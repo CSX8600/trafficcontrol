@@ -868,7 +868,22 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 				boolean isTripped = world
 						.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB(sensePos).expand(-1, Config.sensorScanHeight, 1))
 						.stream()
-						.anyMatch(e -> !(e instanceof EntityPlayerMP) && Arrays.stream(Config.sensorEntities).anyMatch(eName -> eName.equals(EntityList.getKey(e).toString())));
+						.anyMatch(e -> !(e instanceof EntityPlayerMP) && Arrays.stream(Config.sensorClasses).anyMatch(eName ->
+						{
+							Class<?> nextClass = e.getClass();
+							
+							while(nextClass != null)
+							{
+								if (eName.equals(nextClass.getName()))
+								{
+									return true;
+								}
+								
+								nextClass = nextClass.getSuperclass();
+							}
+							
+							return false;
+						}));
 				
 				if (isTripped)
 				{
