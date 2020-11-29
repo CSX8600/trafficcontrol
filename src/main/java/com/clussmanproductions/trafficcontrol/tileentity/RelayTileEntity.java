@@ -1,6 +1,7 @@
 package com.clussmanproductions.trafficcontrol.tileentity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -14,7 +15,6 @@ import com.clussmanproductions.trafficcontrol.scanner.ScanCompleteData;
 import com.clussmanproductions.trafficcontrol.scanner.ScanRequest;
 import com.clussmanproductions.trafficcontrol.scanner.Scanner;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity.EnumStatuses;
-import com.clussmanproductions.trafficcontrol.util.AnyStatement;
 import com.clussmanproductions.trafficcontrol.util.Tuple;
 
 import net.minecraft.block.state.IBlockState;
@@ -53,10 +53,10 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 	private ArrayList<BlockPos> wigWagLocations = new ArrayList<BlockPos>();
 	private ArrayList<Tuple<BlockPos, EnumFacing>> shuntBorderOriginsAndFacing = new ArrayList<Tuple<BlockPos, EnumFacing>>();
 	private ArrayList<Tuple<BlockPos, EnumFacing>> shuntIslandOriginsAndFacing = new ArrayList<Tuple<BlockPos, EnumFacing>>();
+	private HashMap<BlockPos, Integer> invalidCrossingGates = new HashMap<>();
+	private HashMap<BlockPos, Integer> invalidBells = new HashMap<>();
+	private int lastHeartbeat;
 	
-	private ArrayList<CrossingGateGateTileEntity> crossingGates = new ArrayList<CrossingGateGateTileEntity>();
-	private ArrayList<BellBaseTileEntity> bells = new ArrayList<BellBaseTileEntity>();
-
 	public RelayTileEntity() {
 
 	}
@@ -153,17 +153,17 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 			nbt.setIntArray("lamps" + i, lampPos);
 		}
 
-		for (int i = 0; i < crossingGates.size(); i++) {
-			CrossingGateGateTileEntity gate = crossingGates.get(i);
+		for (int i = 0; i < crossingGateLocations.size(); i++) {
+			BlockPos gate = crossingGateLocations.get(i);
 
-			int[] gatePos = new int[] { gate.getPos().getX(), gate.getPos().getY(), gate.getPos().getZ() };
+			int[] gatePos = new int[] { gate.getX(), gate.getY(), gate.getZ() };
 			nbt.setIntArray("gate" + i, gatePos);
 		}
 
-		for (int i = 0; i < bells.size(); i++) {
-			BellBaseTileEntity bell = bells.get(i);
+		for (int i = 0; i < bellLocations.size(); i++) {
+			BlockPos bell = bellLocations.get(i);
 
-			int[] bellPos = new int[] { bell.getPos().getX(), bell.getPos().getY(), bell.getPos().getZ() };
+			int[] bellPos = new int[] { bell.getX(), bell.getY(), bell.getZ() };
 			nbt.setIntArray("bell" + i, bellPos);
 		}
 		
@@ -199,17 +199,30 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 			return;
 		}
 		
+		if (lastHeartbeat >= 20)
+		{
+			alreadyNotifiedBells = false;
+			alreadyNotifiedGates = false;
+			alreadyNotifiedWigWags = false;
+			
+			lastHeartbeat = 0;
+		}
+		else
+		{
+			lastHeartbeat++;
+		}
+		
 		boolean markDirty = false;
 		if (!alreadyNotifiedBells || !alreadyNotifiedGates || !alreadyNotifiedWigWags)
 		{
 			markDirty = true;
 		}
 		
-		verifyLocations();
 		markDirty = markDirty | notifyGates();
 		updateLamps();
 		markDirty = markDirty | updateBells();
 		markDirty = markDirty | notifyWigWags();
+		markDirty = markDirty | checkRemoveInvalidItems();
 		
 		if (markDirty)
 		{
@@ -222,72 +235,38 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 		}
 	}
 	
-	private void verifyLocations()
-	{
-		ArrayList<BlockPos> posToRemove = new ArrayList<BlockPos>();
-		if (crossingGateLocations.size() != crossingGates.size() || 
-				AnyStatement.Any(crossingGates, gate -> gate.isInvalid()))
-		{
-			crossingGates.clear();
-			
-			for(BlockPos crossingGatePos : crossingGateLocations)
-			{
-				TileEntity gate = world.getTileEntity(crossingGatePos);
-				
-				if (gate == null || !(gate instanceof CrossingGateGateTileEntity))
-				{
-					posToRemove.add(crossingGatePos);
-				}
-				else
-				{
-					crossingGates.add((CrossingGateGateTileEntity)gate);
-				}
-			}
-			
-			for (BlockPos gateLocationToRemove : posToRemove)
-			{
-				crossingGateLocations.remove(gateLocationToRemove);
-			}
-		}
-				
-		if (bellLocations.size() != bells.size() ||
-				AnyStatement.Any(bells, bell -> bell.isInvalid()))
-		{
-			bells.clear();
-			
-			posToRemove.clear();
-			for(BlockPos bellPos : bellLocations)
-			{
-				TileEntity bell = world.getTileEntity(bellPos);
-				
-				if (bell == null || !(bell instanceof BellBaseTileEntity))
-				{
-					posToRemove.add(bellPos);
-				}
-				else
-				{
-					bells.add((BellBaseTileEntity)bell);
-				}
-			}
-			
-			for (BlockPos bellLocationToRemove : posToRemove)
-			{
-				bellLocations.remove(bellLocationToRemove);
-			}
-		}
-	}
-	
 	private boolean notifyGates()
 	{
-		if (!alreadyNotifiedGates)
+		for(BlockPos gatePos : crossingGateLocations)
 		{
-			for(CrossingGateGateTileEntity gate : crossingGates)
+			TileEntity te = world.getTileEntity(gatePos);
+			if (!(te instanceof CrossingGateGateTileEntity) || te.isInvalid())
 			{
-				gate.setStatus(getPowered() ? EnumStatuses.Closing : EnumStatuses.Opening);
+				if (invalidCrossingGates.containsKey(gatePos))
+				{
+					invalidCrossingGates.put(gatePos, invalidCrossingGates.get(gatePos) + 1);
+				}
+				else
+				{
+					invalidCrossingGates.put(gatePos, 1);
+				}
+				
+				continue;
 			}
 			
-			alreadyNotifiedGates = true;
-			return true;
+			if(invalidCrossingGates.containsKey(gatePos))
+			{
+				invalidCrossingGates.remove(gatePos);
+			}
+			
+			if (!alreadyNotifiedGates)
+			{
+				CrossingGateGateTileEntity gate = (CrossingGateGateTileEntity)te;
+				gate.setStatus(getPowered() ? EnumStatuses.Closing : EnumStatuses.Opening);
+				alreadyNotifiedGates = true;
+				
+				return true;
+			}
 		}
 		
 		return false;
@@ -297,7 +276,7 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 	{
 		if (!getPowered() && state != EnumState.Off)
 		{
-			if (crossingGates.size() == 0)
+			if (crossingGateLocations.stream().noneMatch(cgl -> !invalidCrossingGates.containsKey(cgl)))
 			{
 				lastFlash = 19;
 				state = EnumState.Off;
@@ -308,7 +287,9 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 			}
 			else
 			{
-				if (crossingGates.get(0).getStatus() == EnumStatuses.Open)
+				BlockPos firstValidGate = crossingGateLocations.stream().filter(cgl -> !invalidCrossingGates.containsKey(cgl)).findFirst().get();
+				CrossingGateGateTileEntity gateTE = (CrossingGateGateTileEntity)world.getTileEntity(firstValidGate);
+				if (gateTE.getStatus() == EnumStatuses.Open)
 				{
 					lastFlash = 19;
 					state = EnumState.Off;
@@ -375,15 +356,35 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 	
 	private boolean updateBells()
 	{
-		if (!alreadyNotifiedBells)
+		for(BlockPos bellPos : bellLocations)
 		{
-			for(BellBaseTileEntity bell : bells)
+			TileEntity te = world.getTileEntity(bellPos);
+			if (!(te instanceof BellBaseTileEntity) || te.isInvalid())
 			{
-				bell.setIsRinging(getPowered());
+				if (invalidBells.containsKey(bellPos))
+				{
+					invalidBells.put(bellPos, invalidBells.get(bellPos) + 1);
+				}
+				else
+				{
+					invalidBells.put(bellPos, 1);
+				}
+				
+				continue;
 			}
 			
-			alreadyNotifiedBells = true;
-			return true;
+			if (invalidBells.containsKey(bellPos))
+			{
+				invalidBells.remove(bellPos);
+			}
+			
+			if (!alreadyNotifiedBells)
+			{
+				BellBaseTileEntity bell = (BellBaseTileEntity)te;
+				bell.setIsRinging(getPowered());
+				alreadyNotifiedBells = true;
+				return true;
+			}
 		}
 		
 		return false;
@@ -419,6 +420,42 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 		}
 		
 		return false;
+	}
+	
+	private boolean checkRemoveInvalidItems()
+	{
+		boolean didRemove = false;
+		ArrayList<BlockPos> itemsRemoved = new ArrayList<>();
+		
+		for(BlockPos invalidGate : invalidCrossingGates.entrySet().stream().filter(set -> set.getValue() > 200).map(set -> set.getKey()).collect(Collectors.toList()))
+		{
+			didRemove = true;
+			ModTrafficControl.logger.warn("Crossing Relay at " + getPos().toString() + " found that a crossing gate at " + invalidGate.toString() + " did not load after 10 seconds.  It is getting removed from the list of paired items for this relay.");
+			crossingGateLocations.remove(invalidGate);
+			itemsRemoved.add(invalidGate);
+		}
+		
+		for(BlockPos removed : itemsRemoved)
+		{
+			invalidCrossingGates.remove(removed);
+		}
+		
+		itemsRemoved.clear();
+		
+		for(BlockPos invalidBell : invalidBells.entrySet().stream().filter(set -> set.getValue() > 200).map(set -> set.getKey()).collect(Collectors.toList()))
+		{
+			didRemove = true;
+			ModTrafficControl.logger.warn("Crossing Relay at " + getPos().toString() + " found that a bell at " + invalidBell.toString() + " did not load after 10 seconds.  It is getting removed from the list of paired items for this relay.");
+			bellLocations.remove(invalidBell);
+			itemsRemoved.add(invalidBell);
+		}
+		
+		for(BlockPos removed : itemsRemoved)
+		{
+			invalidBells.remove(removed);
+		}
+		
+		return didRemove;
 	}
 	
 	public void setMaster() {

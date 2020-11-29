@@ -181,7 +181,14 @@ public class BlockSign extends Block implements ITileEntityProvider {
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		double poleHeight = 1;
-		SignTileEntity te = (SignTileEntity)source.getTileEntity(pos);
+		TileEntity worldTE = source.getTileEntity(pos);
+		
+		if (!(worldTE instanceof SignTileEntity))
+		{
+			return FULL_BLOCK_AABB;
+		}
+		
+		SignTileEntity te = (SignTileEntity)worldTE;
 		if (te != null)
 		{
 			int type = te.getType();

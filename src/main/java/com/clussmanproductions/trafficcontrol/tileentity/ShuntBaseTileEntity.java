@@ -91,4 +91,16 @@ public abstract class ShuntBaseTileEntity extends TileEntity {
 	{
 		return trackOrigin;
 	}
+
+	public void addPairedRelayBox(BlockPos relayPos)
+	{
+		relayBoxes.add(relayPos);
+		markDirty();
+	}
+	
+	public void removePairedRelayBox(BlockPos relayPos)
+	{
+		relayBoxes.remove(relayPos);
+		markDirty();
+	}
 }
