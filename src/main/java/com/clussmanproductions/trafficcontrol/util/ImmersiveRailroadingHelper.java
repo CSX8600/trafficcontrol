@@ -8,21 +8,22 @@ import java.util.stream.Collectors;
 import com.google.common.collect.ImmutableList;
 
 import cam72cam.immersiverailroading.entity.EntityMoveableRollingStock;
+import cam72cam.immersiverailroading.thirdparty.trackapi.ITrack;
 import cam72cam.mod.entity.ModdedEntity;
+import cam72cam.mod.math.Vec3i;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Tuple;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import trackapi.lib.ITrack;
-import trackapi.lib.Util;
 
 public class ImmersiveRailroadingHelper {
 	public static Vec3d findOrigin(BlockPos currentPos, EnumFacing signalFacing, World world)
 	{
 		Vec3d retVal = new Vec3d(0, -1, 0);
-
+		cam72cam.mod.world.World camWorld = cam72cam.mod.world.World.get(world);
+		
 		EnumFacing searchDirection = signalFacing.rotateY().rotateY().rotateY();
 		
 		BlockPos workingPos = new BlockPos(currentPos.getX(), currentPos.getY() - 3, currentPos.getZ());
@@ -31,21 +32,26 @@ public class ImmersiveRailroadingHelper {
 			for(int i = 0; i <= 10; i++)
 			{
 				workingPos = workingPos.offset(searchDirection);
-				ITrack tile = Util.getTileEntity(world, new Vec3d(workingPos), false);
+				cam72cam.mod.math.Vec3d workingPosVec3d = new cam72cam.mod.math.Vec3d(workingPos.getX(), workingPos.getY(), workingPos.getZ());
+				ITrack tile = ITrack.get(camWorld, workingPosVec3d, false);
                 if (tile == null)
                 {
                     continue;
                 }
 
-                Vec3d current = new Vec3d(workingPos.getX(), workingPos.getY(), workingPos.getZ());
+                cam72cam.mod.math.Vec3d current = workingPosVec3d;
 
-                Vec3d center = tile.getNextPosition(current, new Vec3d(0, 0, 0));
+                cam72cam.mod.math.Vec3d center = tile.getNextPosition(current, new cam72cam.mod.math.Vec3d(0, 0, 0));
 
                 retVal = new Vec3d(center.x, center.y, center.z);
                 break;
 			}
 			
-			workingPos = new BlockPos(currentPos.getX(), workingPos.getY() + 1, currentPos.getZ());
+			if (retVal.y != -1)
+			{
+				break;
+			}
+			workingPos = new BlockPos(currentPos.getX(), currentPos.getY() + 1, currentPos.getZ());
 		}
 		
 		return retVal;
@@ -54,7 +60,8 @@ public class ImmersiveRailroadingHelper {
 	public static Vec3d getNextPosition(Vec3d currentPosition, Vec3d motion, World world)
 	{
 		BlockPos currentBlockPos = new BlockPos(currentPosition.x, currentPosition.y, currentPosition.z);
-		ITrack te = Util.getTileEntity(world, new Vec3d(currentBlockPos), false);
+		cam72cam.mod.world.World camWorld = cam72cam.mod.world.World.get(world);
+		ITrack te = ITrack.get(camWorld, new cam72cam.mod.math.Vec3d(currentBlockPos.getX(), currentBlockPos.getY(), currentBlockPos.getZ()), false);
 		
 		int attempt = 0;
 		while(te == null && attempt < 8)
@@ -91,7 +98,7 @@ public class ImmersiveRailroadingHelper {
 					break;
 			}
 			
-			te = Util.getTileEntity(world, new Vec3d(currentBlockPos), false);
+			te = ITrack.get(camWorld, new cam72cam.mod.math.Vec3d(currentBlockPos.getX(), currentBlockPos.getY(), currentBlockPos.getZ()), false);
 			attempt++;
 		}
 		
@@ -99,9 +106,9 @@ public class ImmersiveRailroadingHelper {
 		{
 			return currentPosition;
 		}
-		
 
-		return te.getNextPosition(currentPosition, motion);
+		cam72cam.mod.math.Vec3d retVal = te.getNextPosition(new cam72cam.mod.math.Vec3d(currentPosition), new cam72cam.mod.math.Vec3d(motion));
+		return retVal.internal();
 	}
 	
 	public static Tuple<UUID, Vec3d> getStockNearby(Vec3d currentPosition, World world)
@@ -116,13 +123,13 @@ public class ImmersiveRailroadingHelper {
 						.filter(Objects::nonNull)
 						.map(x -> x.getSelf() instanceof EntityMoveableRollingStock ? (EntityMoveableRollingStock)x.getSelf() : null)
 						.filter(Objects::nonNull)
-						.filter(emrs -> bb.contains(new Vec3d(emrs.getBlockPosition().internal)))
+						.filter(emrs -> bb.contains(new Vec3d(emrs.getBlockPosition().internal())))
 						.collect(Collectors.toList());
 
 		if (!stocks.isEmpty())
 		{
 			EntityMoveableRollingStock stock = stocks.get(0);
-			return new Tuple<UUID, Vec3d>(stock.getUUID(), stock.getVelocity().internal);
+			return new Tuple<UUID, Vec3d>(stock.getUUID(), stock.getVelocity().internal());
 		}
 		else
 		{
