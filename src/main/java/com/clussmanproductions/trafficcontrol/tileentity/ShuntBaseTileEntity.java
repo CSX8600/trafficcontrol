@@ -31,6 +31,8 @@ public abstract class ShuntBaseTileEntity extends TileEntity {
 			}
 			
 			relayBoxes.add(arrayToBP(compound.getIntArray("relayBox" + counter)));
+			
+			counter++;
 		}
 	}
 	
