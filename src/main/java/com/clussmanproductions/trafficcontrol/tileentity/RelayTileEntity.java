@@ -237,6 +237,7 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 	
 	private boolean notifyGates()
 	{
+		boolean markDirty = false;
 		for(BlockPos gatePos : crossingGateLocations)
 		{
 			TileEntity te = world.getTileEntity(gatePos);
@@ -263,13 +264,13 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 			{
 				CrossingGateGateTileEntity gate = (CrossingGateGateTileEntity)te;
 				gate.setStatus(getPowered() ? EnumStatuses.Closing : EnumStatuses.Opening);
-				alreadyNotifiedGates = true;
 				
-				return true;
+				markDirty = true;
 			}
 		}
-		
-		return false;
+
+		alreadyNotifiedGates = true;
+		return markDirty;
 	}
 
 	private void updateLamps()
@@ -356,6 +357,7 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 	
 	private boolean updateBells()
 	{
+		boolean markDirty = false;
 		for(BlockPos bellPos : bellLocations)
 		{
 			TileEntity te = world.getTileEntity(bellPos);
@@ -382,12 +384,12 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 			{
 				BellBaseTileEntity bell = (BellBaseTileEntity)te;
 				bell.setIsRinging(getPowered());
-				alreadyNotifiedBells = true;
-				return true;
+				markDirty = true;
 			}
 		}
 		
-		return false;
+		alreadyNotifiedBells = true;
+		return markDirty;
 	}
 	
 	private boolean notifyWigWags()
