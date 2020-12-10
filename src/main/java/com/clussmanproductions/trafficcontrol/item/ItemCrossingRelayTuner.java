@@ -289,10 +289,12 @@ public class ItemCrossingRelayTuner extends Item {
 				EnumFacing borderFacing = borderBlock.getValue(BlockShuntBorder.FACING);
 				if (relay.addOrRemoveShuntBorder(shuntBorderTileEntity.getTrackOrigin(), borderFacing))
 				{
+					shuntBorderTileEntity.addPairedRelayBox(relay.getPos());
 					player.sendMessage(new TextComponentString("Paired Border Shunt to Relay Box"));
 				}
 				else
 				{
+					shuntBorderTileEntity.removePairedRelayBox(relay.getPos());
 					player.sendMessage(new TextComponentString("Unpaired Border Shunt from Relay Box"));
 				}
 			}
@@ -304,10 +306,12 @@ public class ItemCrossingRelayTuner extends Item {
 				EnumFacing islandFacing = islandBlock.getValue(BlockShuntIsland.FACING);
 				if (relay.addOrRemoveShuntIsland(shuntIslandTileEntity.getTrackOrigin(), islandFacing))
 				{
+					shuntIslandTileEntity.addPairedRelayBox(relay.getPos());
 					player.sendMessage(new TextComponentString("Paired Island Shunt to Relay Box"));
 				}
 				else
 				{
+					shuntIslandTileEntity.removePairedRelayBox(relay.getPos());
 					player.sendMessage(new TextComponentString("Unpaired Island Shunt from Relay Box"));
 				}
 			}

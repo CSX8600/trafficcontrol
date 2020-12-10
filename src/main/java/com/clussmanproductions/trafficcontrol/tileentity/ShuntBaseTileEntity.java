@@ -31,6 +31,8 @@ public abstract class ShuntBaseTileEntity extends TileEntity {
 			}
 			
 			relayBoxes.add(arrayToBP(compound.getIntArray("relayBox" + counter)));
+			
+			counter++;
 		}
 	}
 	
@@ -90,5 +92,17 @@ public abstract class ShuntBaseTileEntity extends TileEntity {
 	public BlockPos getTrackOrigin()
 	{
 		return trackOrigin;
+	}
+
+	public void addPairedRelayBox(BlockPos relayPos)
+	{
+		relayBoxes.add(relayPos);
+		markDirty();
+	}
+	
+	public void removePairedRelayBox(BlockPos relayPos)
+	{
+		relayBoxes.remove(relayPos);
+		markDirty();
 	}
 }
