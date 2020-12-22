@@ -107,7 +107,9 @@ public class GuiType3Barrier extends GuiScreen {
 		if (imageList.isVisible())
 		{
 			GlStateManager.color(1, 1, 1);
+			GlStateManager.disableLighting();
 			imageListFilter.drawTextBox();
+			GlStateManager.enableLighting();
 		}
 	}
 	

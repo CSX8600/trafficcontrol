@@ -113,12 +113,12 @@ public class Type3BarrierTileEntity extends SyncableTileEntity {
 	
 	public void setThisSignVariant(int thisSignVariant)
 	{
-		if (SignTileEntity.MAX_VARIANTS_BY_TYPE.get(getThisSignType()) > thisSignVariant)
+		if (thisSignVariant > SignTileEntity.MAX_VARIANTS_BY_TYPE.get(getThisSignType()))
 		{
 			switch(getThisSignType()) // Use new error textures because it's fun
 			{
 				case 0:
-					thisSignVariant = 115;
+					thisSignVariant = 114;
 					break;
 				case 1:
 					thisSignVariant = 162;
