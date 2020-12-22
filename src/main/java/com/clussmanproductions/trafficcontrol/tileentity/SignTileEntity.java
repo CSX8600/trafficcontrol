@@ -69,7 +69,7 @@ public class SignTileEntity extends TileEntity {
 			switch(getType()) // Use new error textures because it's fun
 			{
 				case 0:
-					variant = 115;
+					variant = 114;
 					break;
 				case 1:
 					variant = 162;
