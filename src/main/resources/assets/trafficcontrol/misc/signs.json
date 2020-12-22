@@ -2057,10 +2057,10 @@
     "note": "Click a sign in the array to select it. Use the search bar if you want a specific sign."
   },
   {
-  	"name": "SPEED LIMIT 5",
-  	"type": "rectangle",
-  	"variant": "89",
-  	"tooltip": "MPH unless you use the KM/H plaque below (Misc. 16)"
+    "name": "SPEED LIMIT 5",
+    "type": "rectangle",
+    "variant": "89",
+    "tooltip": "MPH unless you use the KM/H plaque below (Misc. 16)"
   },
   {
     "name": "SPEED LIMIT 10",
@@ -3935,5 +3935,490 @@
     "name": "Cross-Roads",
     "type": "triangle",
     "variant": "95"
+  },
+  {
+    "name": "Error",
+    "type": "circle",
+    "variant": "114"
+  },
+  {
+    "name": "Bicycle Route",
+    "type": "diamond",
+    "variant": "148"
+  },
+  {
+    "name": "Bicycle Route",
+    "type": "diamond",
+    "variant": "149"
+  },
+  {
+    "name": "Bomb Scene Ahead",
+    "type": "diamond",
+    "variant": "150"
+  },
+  {
+    "name": "Bomb Threat Ahead",
+    "type": "diamond",
+    "variant": "151"
+  },
+  {
+    "name": "Bump",
+    "type": "diamond",
+    "variant": "152"
+  },
+  {
+    "name": "Children Playing",
+    "type": "diamond",
+    "variant": "153"
+  },
+  {
+    "name": "Chunks May Be Invisible Or Glitched",
+    "type": "diamond",
+    "variant": "154"
+  },
+  {
+    "name": "Crime Scene Ahead",
+    "type": "diamond",
+    "variant": "155"
+  },
+  {
+    "name": "Cross Roads",
+    "type": "diamond",
+    "variant": "156"
+  },
+  {
+    "name": "Cross Roads (Railroad To Right)",
+    "type": "diamond",
+    "variant": "157"
+  },
+  {
+    "name": "Dead End",
+    "type": "diamond",
+    "variant": "158"
+  },
+  {
+    "name": "Dip",
+    "type": "diamond",
+    "variant": "159"
+  },
+  {
+    "name": "Divided Highway Begins",
+    "type": "diamond",
+    "variant": "160"
+  },
+  {
+    "name": "Emergency Scene Ahead",
+    "type": "diamond",
+    "variant": "161"
+  },
+  {
+    "name": "Error",
+    "type": "diamond",
+    "variant": "162"
+  },
+  {
+    "name": "Fire Scene Ahead",
+    "type": "diamond",
+    "variant": "163"
+  },
+  {
+    "name": "Have Food?",
+    "type": "diamond",
+    "variant": "164"
+  },
+  {
+    "name": "Ice",
+    "type": "diamond",
+    "variant": "165"
+  },
+  {
+    "name": "Inventory Check Ahead",
+    "type": "diamond",
+    "variant": "166"
+  },
+  {
+    "name": "Lag Warning",
+    "type": "diamond",
+    "variant": "167"
+  },
+  {
+    "name": "Large Trucks",
+    "type": "diamond",
+    "variant": "168"
+  },
+  {
+    "name": "Lattice Grid",
+    "type": "diamond",
+    "variant": "169"
+  },
+  {
+    "name": "Lattice Grid Left",
+    "type": "diamond",
+    "variant": "170"
+  },
+  {
+    "name": "Left Curve",
+    "type": "diamond",
+    "variant": "171"
+  },
+  {
+    "name": "Left Curve With Right Side Road",
+    "type": "diamond",
+    "variant": "172"
+  },
+  {
+    "name": "Hairpin Turn",
+    "type": "diamond",
+    "variant": "173"
+  },
+  {
+    "name": "Left S Curve",
+    "type": "diamond",
+    "variant": "174"
+  },
+  {
+    "name": "Left Side Road",
+    "type": "diamond",
+    "variant": "175"
+  },
+  {
+    "name": "Left Skewed Road",
+    "type": "diamond",
+    "variant": "176"
+  },
+  {
+    "name": "Left Turn",
+    "type": "diamond",
+    "variant": "177"
+  },
+  {
+    "name": "Left Winding Road",
+    "type": "diamond",
+    "variant": "178"
+  },
+  {
+    "name": "Left Z Turn",
+    "type": "diamond",
+    "variant": "179"
+  },
+  {
+    "name": "Loose Pavement",
+    "type": "diamond",
+    "variant": "180"
+  },
+  {
+    "name": "Nether Portal Ahead",
+    "type": "diamond",
+    "variant": "181"
+  },
+  {
+    "name": "Pavement Ends",
+    "type": "diamond",
+    "variant": "182"
+  },
+  {
+    "name": "Pedestrian Crossing",
+    "type": "diamond",
+    "variant": "183"
+  },
+  {
+    "name": "Pedestrian Crossing",
+    "type": "diamond",
+    "variant": "184"
+  },
+  {
+    "name": "Pedestrian Crossing",
+    "type": "diamond",
+    "variant": "185"
+  },
+  {
+    "name": "PVP Warning",
+    "type": "diamond",
+    "variant": "186"
+  },
+  {
+    "name": "Right 270 To Left",
+    "type": "diamond",
+    "variant": "187"
+  },
+  {
+    "name": "Roundabout",
+    "type": "diamond",
+    "variant": "188"
+  },
+  {
+    "name": "Right Side Road (Railroad To Right)",
+    "type": "diamond",
+    "variant": "189"
+  },
+  {
+    "name": "Signal Ahead",
+    "type": "diamond",
+    "variant": "190"
+  },
+  {
+    "name": "Skewed Crossing",
+    "type": "diamond",
+    "variant": "191"
+  },
+  {
+    "name": "Slippery When Wet",
+    "type": "diamond",
+    "variant": "192"
+  },
+  {
+    "name": "Stop Ahead",
+    "type": "diamond",
+    "variant": "193"
+  },
+  {
+    "name": "T Intersection After Railroad",
+    "type": "diamond",
+    "variant": "194"
+  },
+  {
+    "name": "T Intersection",
+    "type": "diamond",
+    "variant": "195"
+  },
+  {
+    "name": "T Intersection (Railroad To Right)",
+    "type": "diamond",
+    "variant": "196"
+  },
+  {
+    "name": "TNT Scene Ahead",
+    "type": "diamond",
+    "variant": "197"
+  },
+  {
+    "name": "Truck Rollover",
+    "type": "diamond",
+    "variant": "198"
+  },
+  {
+    "name": "Two Way Traffic",
+    "type": "diamond",
+    "variant": "199"
+  },
+  {
+    "name": "Undercutter Assited Repaving",
+    "type": "diamond",
+    "variant": "200"
+  },
+  {
+    "name": "Village Ahead",
+    "type": "diamond",
+    "variant": "201"
+  },
+  {
+    "name": "Yield Ahead",
+    "type": "diamond",
+    "variant": "202"
+  },
+  {
+    "name": "Y Intersection",
+    "type": "diamond",
+    "variant": "203"
+  },
+  {
+    "name": "Alto",
+    "type": "misc",
+    "variant": "100"
+  },
+  {
+    "name": "Arret",
+    "type": "misc",
+    "variant": "101"
+  },
+  {
+    "name": "Down Left Arrow",
+    "type": "misc",
+    "variant": "102"
+  },
+  {
+    "name": "Down Right Arrow",
+    "type": "misc",
+    "variant": "103"
+  },
+  {
+    "name": "Up Left Arrow",
+    "type": "misc",
+    "variant": "104"
+  },
+  {
+    "name": "Up Right Arrow",
+    "type": "misc",
+    "variant": "105"
+  },
+  {
+    "name": "Day",
+    "type": "misc",
+    "variant": "106"
+  },
+  {
+    "name": "Day",
+    "type": "misc",
+    "variant": "107"
+  },
+  {
+    "name": "Left Arrow",
+    "type": "misc",
+    "variant": "108"
+  },
+  {
+    "name": "Left Arrow",
+    "type": "misc",
+    "variant": "109"
+  },
+  {
+    "name": "Night",
+    "type": "misc",
+    "variant": "110"
+  },
+  {
+    "name": "Night",
+    "type": "misc",
+    "variant": "111"
+  },
+  {
+    "name": "On Red",
+    "type": "misc",
+    "variant": "112"
+  },
+  {
+    "name": "Stop",
+    "type": "misc",
+    "variant": "113"
+  },
+  {
+    "name": "Two Way Arrow",
+    "type": "misc",
+    "variant": "114"
+  },
+  {
+    "name": "Two Way Arrow",
+    "type": "misc",
+    "variant": "115"
+  },
+  {
+    "name": "Wrong Way",
+    "type": "misc",
+    "variant": "116"
+  },
+  {
+    "name": "Yield",
+    "type": "misc",
+    "variant": "117"
+  },
+  {
+    "name": "Yield",
+    "type": "misc",
+    "variant": "118"
+  },
+  {
+    "name": "Do Not Enter",
+    "type": "square",
+    "variant": "167"
+  },
+  {
+    "name": "Error",
+    "type": "square",
+    "variant": "168"
+  },
+  {
+    "name": "Florida's Turnpike",
+    "type": "square",
+    "variant": "169"
+  },
+  {
+    "name": "Hurricane Evacuation Route Left",
+    "type": "square",
+    "variant": "170"
+  },
+  {
+    "name": "Hurricane Evacuation Route Right",
+    "type": "square",
+    "variant": "171"
+  },
+  {
+    "name": "Hurricane Evacuation Route Straight",
+    "type": "square",
+    "variant": "172"
+  },
+  {
+    "name": "Hurricane Evacuation Route",
+    "type": "square",
+    "variant": "173"
+  },
+  {
+    "name": "Eisenhower Interstate System",
+    "type": "square",
+    "variant": "174"
+  },
+  {
+    "name": "Kansas Turnpike",
+    "type": "square",
+    "variant": "175"
+  },
+  {
+    "name": "Left Chevron",
+    "type": "square",
+    "variant": "176"
+  },
+  {
+    "name": "Left Chevron",
+    "type": "square",
+    "variant": "177"
+  },
+  {
+    "name": "No Potions",
+    "type": "square",
+    "variant": "178"
+  },
+  {
+    "name": "No PVP",
+    "type": "square",
+    "variant": "179"
+  },
+  {
+    "name": "No Weapons",
+    "type": "square",
+    "variant": "180"
+  },
+  {
+    "name": "Ohio Turnpike",
+    "type": "square",
+    "variant": "181"
+  },
+  {
+    "name": "Turnpike",
+    "type": "square",
+    "variant": "182"
+  },
+  {
+    "name": "U Turns Permitted",
+    "type": "square",
+    "variant": "183"
+  },
+  {
+    "name": "Left Or U Turn",
+    "type": "square",
+    "variant": "184"
+  },
+  {
+    "name": "Spawn Area No PVP",
+    "type": "square",
+    "variant": "185"
+  },
+  {
+    "name": "Right Turning Vehicles Yield To Pedestrians",
+    "type": "square",
+    "variant": "186"
+  },
+  {
+    "name": "Error",
+    "type": "triangle",
+    "variant": "96"
   }
 ]

@@ -76,7 +76,9 @@ public class BakedModelSign extends BaseBakedModel {
 				String backName = SignTileEntity.getBackSignName(type, variant);
 				
 				if (type == 2 &&
-						(variant >= 33 && variant <= 40))
+						((variant >= 33 && variant <= 40) || 
+								(variant >= 106 && variant <= 107) ||
+								(variant >= 110 && variant <= 111)))
 				{
 					poleHeight = 8;
 				}

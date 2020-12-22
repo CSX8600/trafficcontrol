@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.function.Function;
 
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
+import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity.Sign;
 
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -19,19 +21,13 @@ public class ModelSign implements IModel {
 	ArrayList<ResourceLocation> textures = new ArrayList<>(); 
 	public ModelSign()
 	{
-		for(int i = 0; i <= 113; i++)
+		SignTileEntity.initializeSigns();
+		for(Sign sign : SignTileEntity.SIGNS_BY_TYPE_VARIANT.values())
 		{
-			textures.add(getRL("blocks/sign/circle/circle" + i));
-		}
-		
-		for(int i = 0; i <= 147; i++)
-		{
-			textures.add(getRL("blocks/sign/diamond/diamond" + i));
-		}
-		
-		for(int i = 0; i <= 99; i++)
-		{
-			textures.add(getRL("blocks/sign/misc/misc" + i));
+			String path = sign.getImageResourceLocation().getResourcePath();
+			path = path.substring(path.indexOf('/') + 1);
+			path = path.substring(0, path.lastIndexOf('.'));
+			textures.add(getRL(path));
 		}
 		
 		textures.add(getRL("blocks/sign/misc/misc0B"));
@@ -43,21 +39,21 @@ public class ModelSign implements IModel {
 		textures.add(getRL("blocks/sign/misc/misc6B"));
 		textures.add(getRL("blocks/sign/misc/misc7B"));
 		textures.add(getRL("blocks/sign/misc/misc8B"));
-		
-		for(int i = 0; i <= 89; i++)
-		{
-			textures.add(getRL("blocks/sign/rectangle/rectangle" + i));
-		}
-		
-		for(int i = 0; i <= 166; i++)
-		{
-			textures.add(getRL("blocks/sign/square/square" + i));
-		}
-		
-		for(int i = 0; i <= 95; i++)
-		{
-			textures.add(getRL("blocks/sign/triangle/triangle" + i));
-		}
+//		
+//		for(int i = 0; i <= 89; i++)
+//		{
+//			textures.add(getRL("blocks/sign/rectangle/rectangle" + i));
+//		}
+//		
+//		for(int i = 0; i <= 166; i++)
+//		{
+//			textures.add(getRL("blocks/sign/square/square" + i));
+//		}
+//		
+//		for(int i = 0; i <= 95; i++)
+//		{
+//			textures.add(getRL("blocks/sign/triangle/triangle" + i));
+//		}
 	}
 	
 	private ResourceLocation getRL(String name)
