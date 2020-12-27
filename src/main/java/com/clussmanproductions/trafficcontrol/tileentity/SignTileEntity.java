@@ -75,10 +75,10 @@ public class SignTileEntity extends TileEntity {
 					variant = 162;
 					break;
 				case 2:
-					variant = 0; // No misc right now
+					variant = 119;
 					break;
 				case 3:
-					variant = 0; // No rectangle right now
+					variant = 91;
 					break;
 				case 4:
 					variant = 168;
@@ -137,7 +137,8 @@ public class SignTileEntity extends TileEntity {
 		}
 		else if ((variant >= 1 && variant <= 4) || 
 				(variant >= 100 && variant <= 101) ||
-				variant == 113)
+				variant == 113 ||
+				variant == 119)
 		{
 			return "misc1b";
 		}

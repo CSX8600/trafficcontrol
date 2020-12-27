@@ -124,10 +124,10 @@ public class Type3BarrierTileEntity extends SyncableTileEntity {
 					thisSignVariant = 162;
 					break;
 				case 2:
-					thisSignVariant = 0; // No misc right now
+					thisSignVariant = 119;
 					break;
 				case 3:
-					thisSignVariant = 0; // No rectangle right now
+					thisSignVariant = 91;
 					break;
 				case 4:
 					thisSignVariant = 168;

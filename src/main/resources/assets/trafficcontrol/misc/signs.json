@@ -4252,12 +4252,12 @@
     "variant": "105"
   },
   {
-    "name": "Day",
+    "name": "Day (Fancy)",
     "type": "misc",
     "variant": "106"
   },
   {
-    "name": "Day",
+    "name": "Day (Simple)",
     "type": "misc",
     "variant": "107"
   },
@@ -4272,12 +4272,12 @@
     "variant": "109"
   },
   {
-    "name": "Night",
+    "name": "Night (Fancy)",
     "type": "misc",
     "variant": "110"
   },
   {
-    "name": "Night",
+    "name": "Night (Simple)",
     "type": "misc",
     "variant": "111"
   },
@@ -4420,5 +4420,60 @@
     "name": "Error",
     "type": "triangle",
     "variant": "96"
+  },
+  {
+    "name": "Error",
+    "type": "misc",
+    "variant": "119"
+  },
+  {
+    "name": "Accessible Parking Only",
+    "type": "rectangle",
+    "variant": "90"
+  },
+  {
+    "name": "Error",
+    "type": "rectangle",
+    "variant": "91"
+  },
+  {
+    "name": "Speed Limit 100 KMH",
+    "type": "rectangle",
+    "variant": "92"
+  },
+  {
+    "name": "Speed Limit 110 KMH",
+    "type": "rectangle",
+    "variant": "93"
+  },
+  {
+    "name": "Speed Limit 120 KMH",
+    "type": "rectangle",
+    "variant": "94"
+  },
+  {
+    "name": "Speed Limit 130 KMH",
+    "type": "rectangle",
+    "variant": "95"
+  },
+  {
+    "name": "Speed Limit 30 KMH",
+    "type": "rectangle",
+    "variant": "96"
+  },
+  {
+    "name": "Speed Limit 50 KMH",
+    "type": "rectangle",
+    "variant": "97"
+  },
+  {
+    "name": "Speed Limit 70 KMH",
+    "type": "rectangle",
+    "variant": "98"
+  },
+  {
+    "name": "Speed Limit 90 KMH",
+    "type": "rectangle",
+    "variant": "99"
   }
 ]
