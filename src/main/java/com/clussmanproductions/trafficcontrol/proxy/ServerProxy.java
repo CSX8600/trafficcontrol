@@ -23,7 +23,7 @@ public class ServerProxy extends CommonProxy {
 		super.init(e);
 		String signsJson;
 		try {
-			signsJson = Resources.toString(ModTrafficControl.class.getResource("../../../assets/trafficcontrol/misc/signs.json"), Charsets.UTF_8);
+			signsJson = Resources.toString(ModTrafficControl.class.getClassLoader().getResource("assets/trafficcontrol/misc/signs.json"), Charsets.UTF_8);
 		} catch (IOException ex) {
 			FMLCommonHandler.instance().raiseException(ex, "Failed to load signs", true);
 			return;

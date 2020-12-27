@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 @Mod(modid = ModTrafficControl.MODID, version = ModTrafficControl.VERSION, name = "Traffic Control", useMetadata = true)
 public class ModTrafficControl {
 	public static final String MODID = "trafficcontrol";
-	public static final String VERSION = "0.3.5a";
+	public static final String VERSION = "0.3.5b";
 	public static boolean IR_INSTALLED = false;
 	public static CreativeTabs CREATIVE_TAB = new CreativeTabs("Traffic Control") {
 
