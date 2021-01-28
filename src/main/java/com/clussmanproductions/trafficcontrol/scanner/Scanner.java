@@ -8,6 +8,7 @@ import java.util.Queue;
 import java.util.UUID;
 
 import com.clussmanproductions.trafficcontrol.Config;
+import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.util.ImmersiveRailroadingHelper;
 import com.clussmanproductions.trafficcontrol.util.Tuple;
 
@@ -181,7 +182,7 @@ public class Scanner
 		}
 		catch(Exception ex) // Something went wrong - report it and try again
 		{
-			ex.printStackTrace();
+			ModTrafficControl.logger.error(ex);
 		} 
 	}
 	
