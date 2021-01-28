@@ -182,7 +182,7 @@ public class Scanner
 		}
 		catch(Exception ex) // Something went wrong - report it and try again
 		{
-			ModTrafficControl.logger.error(ex);
+			ModTrafficControl.logger.error("Error in scanner", ex);
 		} 
 	}
 	
