@@ -35,6 +35,7 @@ item.trafficcontrol.traffic_light_frame.name=Traffic Light Frame
 tile.trafficcontrol.street_sign.name=Street Sign
 item.trafficcontrol.traffic_light_5_frame.name=Traffic Light Frame (5 Bulb)
 item.trafficcontrol.traffic_light_doghouse_frame.name=Traffic Light Frame (Doghouse)
+item.trafficcontrol.traffic_light_one_frame.name=Traffic Light Frame (One Bulb)
 trafficcontrol.traffic_light_bulb.green.name=Bulb (Green)
 trafficcontrol.traffic_light_bulb.yellow.name=Bulb (Yellow)
 trafficcontrol.traffic_light_bulb.red.name=Bulb (Red)
