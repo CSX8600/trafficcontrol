@@ -37,6 +37,7 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight5Upper;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightControlBox;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightDoghouse;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightOne;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightTwo;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficRail;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorLeft;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorStraight;
@@ -140,6 +141,8 @@ public class ModBlocks {
 	public static BlockTrafficLightDoghouse traffic_light_doghouse;
 	@ObjectHolder("traffic_light_one")
 	public static BlockTrafficLightOne traffic_light_one;
+	@ObjectHolder("traffic_light_two")
+	public static BlockTrafficLightTwo traffic_light_two;
 
 	@SideOnly(Side.CLIENT)
 	public static void initModels(ModelRegistryEvent e)
@@ -178,5 +181,6 @@ public class ModBlocks {
 		traffic_light_5.initModel();
 		traffic_light_doghouse.initModel();
 		traffic_light_one.initModel();
+		traffic_light_two.initModel();
 	}
 }

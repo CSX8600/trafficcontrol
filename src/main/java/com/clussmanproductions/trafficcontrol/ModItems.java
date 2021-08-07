@@ -8,6 +8,7 @@ import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightBulb;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightDoghouseFrame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightFrame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightOneFrame;
+import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightTwoFrame;
 
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
@@ -30,6 +31,8 @@ public class ModItems {
 	public static ItemTrafficLightDoghouseFrame traffic_light_doghouse_frame;
 	@ObjectHolder("traffic_light_one_frame")
 	public static ItemTrafficLightOneFrame traffic_light_one_frame;
+	@ObjectHolder("traffic_light_two_frame")
+	public static ItemTrafficLightTwoFrame traffic_light_two_frame;
 
 	public static void initModels(ModelRegistryEvent e)
 	{
@@ -41,5 +44,6 @@ public class ModItems {
 		traffic_light_5_frame.initModel();
 		traffic_light_doghouse_frame.initModel();
 		traffic_light_one_frame.initModel();
+		traffic_light_two_frame.initModel();
 	}
 }

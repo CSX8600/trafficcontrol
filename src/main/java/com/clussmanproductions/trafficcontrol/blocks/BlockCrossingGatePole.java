@@ -108,4 +108,9 @@ public class BlockCrossingGatePole extends Block {
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return new AxisAlignedBB(0.4325, 0, 0.4325, 0.5575, 1, 0.5575);
 	}
+	
+	@Override
+	public boolean causesSuffocation(IBlockState state) {
+		return false;
+	}
 }

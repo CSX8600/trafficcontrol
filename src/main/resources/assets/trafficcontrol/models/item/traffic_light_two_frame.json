@@ -1,0 +1,6 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "trafficcontrol:items/traffic_light_two_frame"
+	}
+}

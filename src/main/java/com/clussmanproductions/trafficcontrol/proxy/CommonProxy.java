@@ -43,6 +43,7 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight5Upper;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightControlBox;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightDoghouse;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightOne;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightTwo;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficRail;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorLeft;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorStraight;
@@ -59,6 +60,7 @@ import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightBulb;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightDoghouseFrame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightFrame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightOneFrame;
+import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightTwoFrame;
 import com.clussmanproductions.trafficcontrol.network.PacketHandler;
 import com.clussmanproductions.trafficcontrol.tileentity.ConcreteBarrierTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
@@ -76,6 +78,7 @@ import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightControlBoxT
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightDoghouseTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightOneTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightTwoTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.Type3BarrierTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.WCHBellTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.WigWagTileEntity;
@@ -145,6 +148,7 @@ public class CommonProxy {
 		e.getRegistry().register(new BlockTrafficLight5Upper());
 		e.getRegistry().register(new BlockTrafficLightDoghouse());
 		e.getRegistry().register(new BlockTrafficLightOne());
+		e.getRegistry().register(new BlockTrafficLightTwo());
 
 		GameRegistry.registerTileEntity(CrossingGateGateTileEntity.class, ModTrafficControl.MODID + "_crossinggategate");
 		GameRegistry.registerTileEntity(SafetranType3TileEntity.class, ModTrafficControl.MODID + "_safetrantyp3");
@@ -165,6 +169,7 @@ public class CommonProxy {
 		GameRegistry.registerTileEntity(TrafficLight5TileEntity.class, ModTrafficControl.MODID + "_trafficlight5");
 		GameRegistry.registerTileEntity(TrafficLightDoghouseTileEntity.class, ModTrafficControl.MODID + "_trafficlightdoghouse");
 		GameRegistry.registerTileEntity(TrafficLightOneTileEntity.class, ModTrafficControl.MODID + "_trafficlightone");
+		GameRegistry.registerTileEntity(TrafficLightTwoTileEntity.class, ModTrafficControl.MODID + "_trafficlighttwo"); 
 	}
 
 	@SubscribeEvent
@@ -177,6 +182,7 @@ public class CommonProxy {
 		e.getRegistry().register(new ItemTrafficLight5Frame());
 		e.getRegistry().register(new ItemTrafficLightDoghouseFrame());
 		e.getRegistry().register(new ItemTrafficLightOneFrame());
+		e.getRegistry().register(new ItemTrafficLightTwoFrame());
 
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_base).setRegistryName(ModBlocks.crossing_gate_base.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_gate).setRegistryName(ModBlocks.crossing_gate_gate.getRegistryName()));
