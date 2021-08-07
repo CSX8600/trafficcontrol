@@ -29,7 +29,7 @@ public class TrafficLightOneRenderer extends BaseTrafficLightRenderer
 	{
 		return ImmutableList
 				.<BulbRenderer>builder()
-				.add(new BulbRenderer(5.2, 2.5, 1))
+				.add(new BulbRenderer(5.2, 5.5, 0))
 				.build();
 	}
 }
