@@ -1,0 +1,76 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "trafficcontrol:blocks/black",
+		"1": "trafficcontrol:blocks/black_textured",
+		"2": "trafficcontrol:blocks/generic",
+		"particle": "trafficcontrol:blocks/generic"
+	},
+	"elements": [
+		{
+			"name": "Middle Bulb Upper Blinder",
+			"from": [4.2, 11.3, 10],
+			"to": [11.8, 11.8, 12],
+			"faces": {
+				"north": {"uv": [0, 0, 7.6, 0.5], "texture": "#0"},
+				"east": {"uv": [0, 0, 2, 0.5], "texture": "#0"},
+				"south": {"uv": [0, 0, 7.6, 0.5], "texture": "#0"},
+				"west": {"uv": [0, 0, 2, 0.5], "texture": "#0"},
+				"up": {"uv": [0, 0, 7.6, 2], "texture": "#0"},
+				"down": {"uv": [0, 0, 7.6, 2], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Middle Bulb Left Blinder",
+			"from": [4.2, 7.3, 10],
+			"to": [4.7, 11.3, 12],
+			"faces": {
+				"north": {"uv": [0, 0, 0.5, 4], "texture": "#0"},
+				"east": {"uv": [0, 0, 2, 4], "texture": "#0"},
+				"south": {"uv": [0, 0, 0.5, 4], "texture": "#0"},
+				"west": {"uv": [0, 0, 2, 4], "texture": "#0"},
+				"up": {"uv": [0, 0, 0.5, 2], "texture": "#0"},
+				"down": {"uv": [0, 0, 0.5, 2], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Middle Bulb Right Blinder",
+			"from": [11.3, 7.3, 10],
+			"to": [11.8, 11.3, 12],
+			"faces": {
+				"north": {"uv": [0, 0, 0.5, 4], "texture": "#0"},
+				"east": {"uv": [0, 0, 2, 4], "texture": "#0"},
+				"south": {"uv": [0, 0, 0.5, 4], "texture": "#0"},
+				"west": {"uv": [0, 0, 2, 4], "texture": "#0"},
+				"up": {"uv": [0, 0, 0.5, 2], "texture": "#0"},
+				"down": {"uv": [0, 0, 0.5, 2], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Backing Plate",
+			"from": [3.2, 3, 9],
+			"to": [12.7, 13.5, 10],
+			"faces": {
+				"north": {"uv": [0, 0, 9.5, 16], "texture": "#1"},
+				"east": {"uv": [0, 0, 1, 16], "texture": "#1"},
+				"south": {"uv": [0, 0, 9.5, 16], "texture": "#1"},
+				"west": {"uv": [0, 0, 1, 16], "texture": "#1"},
+				"up": {"uv": [0, 0, 9.5, 1], "texture": "#1"},
+				"down": {"uv": [0, 0, 9.5, 1], "texture": "#1"}
+			}
+		},
+		{
+			"name": "Pole",
+			"from": [7, 0, 7],
+			"to": [9, 16, 9],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 16], "texture": "#2"},
+				"east": {"uv": [2, 0, 4, 16], "texture": "#2"},
+				"south": {"uv": [4, 0, 6, 16], "texture": "#2"},
+				"west": {"uv": [6, 0, 8, 16], "texture": "#2"},
+				"up": {"uv": [0, 0, 2, 2], "texture": "#2"},
+				"down": {"uv": [0, 0, 2, 2], "texture": "#2"}
+			}
+		}
+	]
+}
