@@ -23,7 +23,7 @@ public class TrafficLightOneFrameContainer extends BaseTrafficLightFrameContaine
 	{
 		return ImmutableList
 				.<FrameSlotInfo>builder()
-				.add(new FrameSlotInfo(EnumCheckboxOrientation.RIGHT, new SlotItemHandlerListenable(frameStackHandler, 1, 79, 44)))
+				.add(new FrameSlotInfo(EnumCheckboxOrientation.RIGHT, new SlotItemHandlerListenable(frameStackHandler, 0, 79, 44)))
 				.build();
 	}
 	
