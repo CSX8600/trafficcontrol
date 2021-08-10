@@ -1,7 +1,5 @@
 {
-    "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
     "textures": {
-        "0": "trafficcontrol:blocks/generic",
         "1": "trafficcontrol:blocks/crossbuck",
         "2": "trafficcontrol:blocks/catwalk_side",
         "3": "trafficcontrol:blocks/catwalk",
