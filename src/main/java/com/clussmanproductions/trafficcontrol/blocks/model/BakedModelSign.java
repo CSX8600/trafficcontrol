@@ -78,7 +78,8 @@ public class BakedModelSign extends BaseBakedModel {
 				if (type == 2 &&
 						((variant >= 33 && variant <= 40) || 
 								(variant >= 106 && variant <= 107) ||
-								(variant >= 110 && variant <= 111)))
+								(variant >= 110 && variant <= 111) ||
+								(variant >= 120 && variant <= 124)))
 				{
 					poleHeight = 8;
 				}

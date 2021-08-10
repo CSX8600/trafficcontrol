@@ -20,6 +20,7 @@ public class Config {
 				"com.mrcrayfish.vehicle.entity.EntityVehicle",
 				"com.flansmod.common.driveables.EntityDriveable",
 				"net.fexcraft.mod.fvtm.sys.legacy.LandVehicle",
+				"net.fexcraft.mod.fvtm.sys.uni12.ULandVehicle",
 				"net.minecraft.entity.passive.EntityPig",
 				"net.minecraft.entity.passive.EntityHorse",
 				"net.minecraft.entity.passive.EntityDonkey",

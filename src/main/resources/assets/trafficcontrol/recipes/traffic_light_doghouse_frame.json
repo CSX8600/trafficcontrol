@@ -1,0 +1,15 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "##"
+    ],
+    "key": {
+        "#": {
+            "item": "trafficcontrol:traffic_light_frame"
+        }
+    },
+    "result": {
+        "item": "trafficcontrol:traffic_light_doghouse_frame",
+        "count": 1
+    }
+}
