@@ -6,6 +6,7 @@ import com.clussmanproductions.trafficcontrol.item.ItemStreetSign;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight5Frame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightBulb;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightDoghouseFrame;
+import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightFourFrame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightFrame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightOneFrame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightTwoFrame;
@@ -33,6 +34,8 @@ public class ModItems {
 	public static ItemTrafficLightOneFrame traffic_light_one_frame;
 	@ObjectHolder("traffic_light_two_frame")
 	public static ItemTrafficLightTwoFrame traffic_light_two_frame;
+	@ObjectHolder("traffic_light_4_frame")
+	public static ItemTrafficLightFourFrame traffic_light_four_frame;
 
 	public static void initModels(ModelRegistryEvent e)
 	{
@@ -45,5 +48,6 @@ public class ModItems {
 		traffic_light_doghouse_frame.initModel();
 		traffic_light_one_frame.initModel();
 		traffic_light_two_frame.initModel();
+		traffic_light_four_frame.initModel();
 	}
 }

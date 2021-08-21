@@ -49,6 +49,12 @@ public class GuiProxy implements IGuiHandler {
 					return new TrafficLightTwoFrameContainer(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
+			case GUI_IDs.TRAFFIC_LIGHT_FOUR_FRAME:
+				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_four_frame)
+				{
+					return new TrafficLightFourFrameContainer(player.inventory, player.getHeldItemMainhand());
+				}
+				break;
 		}
 
 		return null;
@@ -134,6 +140,12 @@ public class GuiProxy implements IGuiHandler {
 					return new TrafficLightTwoFrameGui(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
+			case GUI_IDs.TRAFFIC_LIGHT_FOUR_FRAME:
+				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_four_frame)
+				{
+					return new TrafficLightFourFrameGui(player.inventory, player.getHeldItemMainhand());
+				}
+				break;
 		}
 
 		return null;
@@ -151,5 +163,6 @@ public class GuiProxy implements IGuiHandler {
 		public static final int TRAFFIC_LIGHT_DOGHOUSE_FRAME = 8;
 		public static final int TRAFFIC_LIGHT_ONE_FRAME = 9;
 		public static final int TRAFFIC_LIGHT_TWO_FRAME = 10;
+		public static final int TRAFFIC_LIGHT_FOUR_FRAME = 11;
 	}
 }
