@@ -30,10 +30,10 @@ public class TrafficLightFourRenderer extends BaseTrafficLightRenderer
 	{
 		return ImmutableList
 				.<BulbRenderer>builder()
-				.add(new BulbRenderer(5.2, 22, 0))
-				.add(new BulbRenderer(5.2, 15.5, 1))
-				.add(new BulbRenderer(5.2, 9, 2))
-				.add(new BulbRenderer(5.2, 2.5, 3))
+				.add(new BulbRenderer(5.2, 15.5, 0))
+				.add(new BulbRenderer(5.2, 9, 1))
+				.add(new BulbRenderer(5.2, 2.5, 2))
+				.add(new BulbRenderer(5.2, 1, 3))
 				.build();
 	}
 }
