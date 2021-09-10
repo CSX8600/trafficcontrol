@@ -9,14 +9,7 @@
 		"normal": [{}],
 		"inventory":
 		{
-			"model": "trafficcontrol:type_3_barrier_bars_right",
-			"transform": 
-			{
-				"gui":
-				{
-					"translation": [0, -0.3125, 0]
-				}
-			}
+			"model": "trafficcontrol:type_3_barrier_bars_right"
 		},
 		
 		"facing=north,isfurthestleft=false,isfurthestright=false": [{}],
