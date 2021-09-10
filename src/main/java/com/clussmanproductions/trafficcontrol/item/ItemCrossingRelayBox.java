@@ -13,6 +13,7 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayTopSW;
 import com.clussmanproductions.trafficcontrol.tileentity.RelayTileEntity;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -22,21 +23,37 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemCrossingRelayBox extends Item {
+	private final TextComponentTranslation tooltipInfo = new TextComponentTranslation("tc.tt.crossingrelay");
 	public ItemCrossingRelayBox()
 	{
 		setRegistryName("crossing_relay_box");
 		setUnlocalizedName(ModTrafficControl.MODID + ".crossing_relay_box");
 		setMaxStackSize(1);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
+		tooltipInfo.getStyle().setColor(TextFormatting.GOLD);
 	}
 	
 	public void initModel()
 	{
 		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flag)
+	{
+		tooltip.add(tooltipInfo.getFormattedText());
 	}
 	
 	@Override
