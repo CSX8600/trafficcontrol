@@ -71,4 +71,4 @@ key.trafficcontrol.category=Traffic Control
 #Tooltips
 tc.tt.tuner=Use to link components to Crossing Gate Relays or Traffic Light Control Boxes.
 tc.tt.crossingrelay=Uses Shunts or Redstone to control crossing components.
-tc.tt.trafficbox=Uses Redstone or Traffic Sensors to control traffic signals.
+tc.tt.trafficbox=Uses Redstone or Traffic Sensors to control traffic signal components.
