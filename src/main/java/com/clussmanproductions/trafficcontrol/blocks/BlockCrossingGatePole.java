@@ -28,6 +28,7 @@ public class BlockCrossingGatePole extends Block {
 		setRegistryName("crossing_gate_pole");
 		setUnlocalizedName(ModTrafficControl.MODID + ".crossing_gate_pole");
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
+		setLightOpacity(15);
 		setHardness(2f);
 	}
 	
@@ -112,5 +113,11 @@ public class BlockCrossingGatePole extends Block {
 	@Override
 	public boolean causesSuffocation(IBlockState state) {
 		return false;
+	}
+	
+	@Override
+	public float getAmbientOcclusionLightValue(IBlockState state)
+	{
+		return 1;
 	}
 }

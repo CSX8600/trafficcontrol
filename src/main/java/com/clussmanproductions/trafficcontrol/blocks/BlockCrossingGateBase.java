@@ -19,6 +19,7 @@ public class BlockCrossingGateBase extends Block {
 		setRegistryName("crossing_gate_base");
 		setUnlocalizedName(ModTrafficControl.MODID + ".crossing_gate_base");
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
+		setLightOpacity(15);
 	}
 	
 	public void initModel()
@@ -42,7 +43,14 @@ public class BlockCrossingGateBase extends Block {
 	}
 	
 	@Override
-	public boolean causesSuffocation(IBlockState state) {
+	public boolean causesSuffocation(IBlockState state) 
+	{
 		return false;
+	}
+	
+	@Override
+	public float getAmbientOcclusionLightValue(IBlockState state)
+	{
+		return 1;
 	}
 }
