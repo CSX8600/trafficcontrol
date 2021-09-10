@@ -1,5 +1,6 @@
 package com.clussmanproductions.trafficcontrol.item;
 
+import com.clussmanproductions.trafficcontrol.Config;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -32,12 +33,12 @@ public class ItemCone extends ItemBlock
     {
         if(GuiScreen.isShiftKeyDown())
         {
-            String info = I18n.format("tc.tt.cone");
-            tooltip.addAll(Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(info, 150));
+            String info = I18n.format("trafficcontrol.tooltip.cone");
+            tooltip.addAll(Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(info, Config.tooltipCharWrapLength));
         }
         else
         {
-            tooltip.add(TextFormatting.YELLOW + I18n.format("tc.tt.help"));
+            tooltip.add(TextFormatting.YELLOW + I18n.format("trafficcontrol.tooltip.help"));
         }
     }
 }

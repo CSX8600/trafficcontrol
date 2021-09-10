@@ -1,5 +1,6 @@
 package com.clussmanproductions.trafficcontrol.blocks;
 
+import com.clussmanproductions.trafficcontrol.Config;
 import com.clussmanproductions.trafficcontrol.ModItems;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.gui.GuiProxy;
@@ -11,7 +12,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,7 +39,6 @@ import java.util.List;
 
 public class BlockTrafficLightControlBox extends Block implements ITileEntityProvider {
 	public static PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
-	private final TextComponentTranslation tooltipInfo = new TextComponentTranslation("tc.tt.trafficbox");
 	public BlockTrafficLightControlBox()
 	{
 		super(Material.IRON);
@@ -43,7 +46,6 @@ public class BlockTrafficLightControlBox extends Block implements ITileEntityPro
 		setUnlocalizedName(ModTrafficControl.MODID + ".traffic_light_control_box");
 		setHardness(2f);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
-		tooltipInfo.getStyle().setColor(TextFormatting.GOLD);
 	}
 	
 	public void initModel()
@@ -55,7 +57,15 @@ public class BlockTrafficLightControlBox extends Block implements ITileEntityPro
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(tooltipInfo.getFormattedText());
+		if(GuiScreen.isShiftKeyDown())
+		{
+			String info = I18n.format("trafficcontrol.tooltip.trafficbox");
+			tooltip.addAll(Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(info, Config.tooltipCharWrapLength));
+		}
+		else
+		{
+			tooltip.add(TextFormatting.YELLOW + I18n.format("trafficcontrol.tooltip.help"));
+		}
 	}
 	
 	@Override

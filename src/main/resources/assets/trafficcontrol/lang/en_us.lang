@@ -69,8 +69,8 @@ key.entityclassrenderer.toggle=Toggle Entity Class Display
 key.trafficcontrol.category=Traffic Control
 
 #Tooltips
-tc.tt.tuner=Use to link components to Crossing Gate Relays or Traffic Light Control Boxes.
-tc.tt.crossingrelay=Uses Shunts or Redstone to control crossing components.
-tc.tt.trafficbox=Uses Redstone or Traffic Sensors to control traffic signal components.
-tc.tt.cone=Can be worn as a hat.
-tc.tt.help=Press Shift For More Info
+trafficcontrol.tooltip.tuner=Use to link components to Crossing Gate Relays or Traffic Light Control Boxes.
+trafficcontrol.tooltip.crossingrelay=Uses Shunts or Redstone to control crossing components.
+trafficcontrol.tooltip.trafficbox=Uses Redstone or Traffic Sensors to control traffic signal components.
+trafficcontrol.tooltip.cone=Can be worn as a hat.
+trafficcontrol.tooltip.help=[Press SHIFT for more info]

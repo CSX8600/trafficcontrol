@@ -1,5 +1,6 @@
 package com.clussmanproductions.trafficcontrol.item;
 
+import com.clussmanproductions.trafficcontrol.Config;
 import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayNE;
@@ -12,7 +13,10 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayTopSE;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayTopSW;
 import com.clussmanproductions.trafficcontrol.tileentity.RelayTileEntity;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -34,14 +38,12 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemCrossingRelayBox extends Item {
-	private final TextComponentTranslation tooltipInfo = new TextComponentTranslation("tc.tt.crossingrelay");
 	public ItemCrossingRelayBox()
 	{
 		setRegistryName("crossing_relay_box");
 		setUnlocalizedName(ModTrafficControl.MODID + ".crossing_relay_box");
 		setMaxStackSize(1);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
-		tooltipInfo.getStyle().setColor(TextFormatting.GOLD);
 	}
 	
 	public void initModel()
@@ -53,7 +55,15 @@ public class ItemCrossingRelayBox extends Item {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(tooltipInfo.getFormattedText());
+		if(GuiScreen.isShiftKeyDown())
+		{
+			String info = I18n.format("trafficcontrol.tooltip.crossingrelay");
+			tooltip.addAll(Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(info, Config.tooltipCharWrapLength));
+		}
+		else
+		{
+			tooltip.add(TextFormatting.YELLOW + I18n.format("trafficcontrol.tooltip.help"));
+		}
 	}
 	
 	@Override
