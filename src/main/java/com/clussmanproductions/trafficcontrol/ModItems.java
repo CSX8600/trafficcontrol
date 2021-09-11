@@ -1,15 +1,6 @@
 package com.clussmanproductions.trafficcontrol;
 
-import com.clussmanproductions.trafficcontrol.item.ItemCrossingRelayBox;
-import com.clussmanproductions.trafficcontrol.item.ItemCrossingRelayTuner;
-import com.clussmanproductions.trafficcontrol.item.ItemStreetSign;
-import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight5Frame;
-import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightBulb;
-import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightDoghouseFrame;
-import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightFourFrame;
-import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightFrame;
-import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightOneFrame;
-import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightTwoFrame;
+import com.clussmanproductions.trafficcontrol.item.*;
 
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
@@ -36,6 +27,8 @@ public class ModItems {
 	public static ItemTrafficLightTwoFrame traffic_light_two_frame;
 	@ObjectHolder("traffic_light_4_frame")
 	public static ItemTrafficLightFourFrame traffic_light_four_frame;
+	@ObjectHolder("traffic_light_horizontal_frame")
+	public static ItemTrafficLightHorizontalFrame traffic_light_horizontal_frame;
 
 	public static void initModels(ModelRegistryEvent e)
 	{
@@ -49,5 +42,6 @@ public class ModItems {
 		traffic_light_one_frame.initModel();
 		traffic_light_two_frame.initModel();
 		traffic_light_four_frame.initModel();
+		traffic_light_horizontal_frame.initModel();
 	}
 }

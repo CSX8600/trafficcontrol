@@ -1,51 +1,6 @@
 package com.clussmanproductions.trafficcontrol;
 
-import com.clussmanproductions.trafficcontrol.blocks.BlockChannelizer;
-import com.clussmanproductions.trafficcontrol.blocks.BlockConcreteBarrier;
-import com.clussmanproductions.trafficcontrol.blocks.BlockCone;
-import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateBase;
-import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateCrossbuck;
-import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateGate;
-import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateLamps;
-import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGatePole;
-import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayNE;
-import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayNW;
-import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelaySE;
-import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelaySW;
-import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayTopNE;
-import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayTopNW;
-import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayTopSE;
-import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayTopSW;
-import com.clussmanproductions.trafficcontrol.blocks.BlockDrum;
-import com.clussmanproductions.trafficcontrol.blocks.BlockHorizontalPole;
-import com.clussmanproductions.trafficcontrol.blocks.BlockLightSource;
-import com.clussmanproductions.trafficcontrol.blocks.BlockOverhead;
-import com.clussmanproductions.trafficcontrol.blocks.BlockOverheadCrossbuck;
-import com.clussmanproductions.trafficcontrol.blocks.BlockOverheadLamps;
-import com.clussmanproductions.trafficcontrol.blocks.BlockOverheadPole;
-import com.clussmanproductions.trafficcontrol.blocks.BlockSafetranMechanical;
-import com.clussmanproductions.trafficcontrol.blocks.BlockSafetranType3;
-import com.clussmanproductions.trafficcontrol.blocks.BlockShuntBorder;
-import com.clussmanproductions.trafficcontrol.blocks.BlockShuntIsland;
-import com.clussmanproductions.trafficcontrol.blocks.BlockSign;
-import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightDouble;
-import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightSingle;
-import com.clussmanproductions.trafficcontrol.blocks.BlockStreetSign;
-import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight;
-import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight5;
-import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight5Upper;
-import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightControlBox;
-import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightDoghouse;
-import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightFour;
-import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightOne;
-import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightTwo;
-import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficRail;
-import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorLeft;
-import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorStraight;
-import com.clussmanproductions.trafficcontrol.blocks.BlockType3Barrier;
-import com.clussmanproductions.trafficcontrol.blocks.BlockType3BarrierRight;
-import com.clussmanproductions.trafficcontrol.blocks.BlockWCHBell;
-import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
+import com.clussmanproductions.trafficcontrol.blocks.*;
 
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
@@ -146,6 +101,8 @@ public class ModBlocks {
 	public static BlockTrafficLightTwo traffic_light_two;
 	@ObjectHolder("traffic_light_4")
 	public static BlockTrafficLightFour traffic_light_4;
+	@ObjectHolder("traffic_light_horizontal")
+	public static BlockTrafficLightHorizontal traffic_light_horizontal;
 
 	@SideOnly(Side.CLIENT)
 	public static void initModels(ModelRegistryEvent e)
@@ -186,5 +143,6 @@ public class ModBlocks {
 		traffic_light_one.initModel();
 		traffic_light_two.initModel();
 		traffic_light_4.initModel();
+		traffic_light_horizontal.initModel();
 	}
 }
