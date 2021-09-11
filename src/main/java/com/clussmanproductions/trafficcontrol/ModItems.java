@@ -27,8 +27,6 @@ public class ModItems {
 	public static ItemTrafficLightTwoFrame traffic_light_two_frame;
 	@ObjectHolder("traffic_light_4_frame")
 	public static ItemTrafficLightFourFrame traffic_light_four_frame;
-	@ObjectHolder("traffic_light_horizontal_frame")
-	public static ItemTrafficLightHorizontalFrame traffic_light_horizontal_frame;
 
 	public static void initModels(ModelRegistryEvent e)
 	{
@@ -42,6 +40,5 @@ public class ModItems {
 		traffic_light_one_frame.initModel();
 		traffic_light_two_frame.initModel();
 		traffic_light_four_frame.initModel();
-		traffic_light_horizontal_frame.initModel();
 	}
 }

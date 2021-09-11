@@ -101,8 +101,6 @@ public class ModBlocks {
 	public static BlockTrafficLightTwo traffic_light_two;
 	@ObjectHolder("traffic_light_4")
 	public static BlockTrafficLightFour traffic_light_4;
-	@ObjectHolder("traffic_light_horizontal")
-	public static BlockTrafficLightHorizontal traffic_light_horizontal;
 
 	@SideOnly(Side.CLIENT)
 	public static void initModels(ModelRegistryEvent e)
@@ -143,6 +141,5 @@ public class ModBlocks {
 		traffic_light_one.initModel();
 		traffic_light_two.initModel();
 		traffic_light_4.initModel();
-		traffic_light_horizontal.initModel();
 	}
 }
