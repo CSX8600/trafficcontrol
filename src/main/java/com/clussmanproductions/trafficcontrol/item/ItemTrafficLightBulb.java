@@ -20,7 +20,7 @@ public class ItemTrafficLightBulb extends Item {
 	public ItemTrafficLightBulb()
 	{
 		setRegistryName("traffic_light_bulb");
-		setMaxStackSize(5);
+		setMaxStackSize(1);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
 	
