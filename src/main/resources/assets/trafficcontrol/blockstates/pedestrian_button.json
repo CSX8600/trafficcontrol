@@ -1,0 +1,14 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "trafficcontrol:pedestrian_button"
+    },
+    "variants": {
+        "normal": [{}],
+        "inventory": [{}],
+        "facing=north": { "model": "trafficcontrol:pedestrian_button" },
+        "facing=west": { "model": "trafficcontrol:pedestrian_button", "y": 270 },
+        "facing=south": { "model": "trafficcontrol:pedestrian_button", "y": 180 },
+        "facing=east": { "model": "trafficcontrol:pedestrian_button", "y": 90 }
+    }
+}
