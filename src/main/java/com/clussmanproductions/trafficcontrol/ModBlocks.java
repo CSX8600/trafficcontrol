@@ -95,12 +95,12 @@ public class ModBlocks {
 	public static BlockTrafficLight5Upper traffic_light_5_upper;
 	@ObjectHolder("traffic_light_doghouse")
 	public static BlockTrafficLightDoghouse traffic_light_doghouse;
-	@ObjectHolder("traffic_light_one")
-	public static BlockTrafficLightOne traffic_light_one;
-	@ObjectHolder("traffic_light_two")
-	public static BlockTrafficLightTwo traffic_light_two;
+	@ObjectHolder("traffic_light_1")
+	public static BlockTrafficLight1 traffic_light_1;
+	@ObjectHolder("traffic_light_2")
+	public static BlockTrafficLight2 traffic_light_2;
 	@ObjectHolder("traffic_light_4")
-	public static BlockTrafficLightFour traffic_light_4;
+	public static BlockTrafficLight4 traffic_light_4;
 
 	@SideOnly(Side.CLIENT)
 	public static void initModels(ModelRegistryEvent e)
@@ -138,8 +138,8 @@ public class ModBlocks {
 		street_sign.initModel();
 		traffic_light_5.initModel();
 		traffic_light_doghouse.initModel();
-		traffic_light_one.initModel();
-		traffic_light_two.initModel();
+		traffic_light_1.initModel();
+		traffic_light_2.initModel();
 		traffic_light_4.initModel();
 	}
 }

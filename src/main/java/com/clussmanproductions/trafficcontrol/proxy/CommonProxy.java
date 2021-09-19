@@ -76,9 +76,9 @@ public class CommonProxy {
 		e.getRegistry().register(new BlockTrafficLight5());
 		e.getRegistry().register(new BlockTrafficLight5Upper());
 		e.getRegistry().register(new BlockTrafficLightDoghouse());
-		e.getRegistry().register(new BlockTrafficLightOne());
-		e.getRegistry().register(new BlockTrafficLightTwo());
-		e.getRegistry().register(new BlockTrafficLightFour());
+		e.getRegistry().register(new BlockTrafficLight1());
+		e.getRegistry().register(new BlockTrafficLight2());
+		e.getRegistry().register(new BlockTrafficLight4());
 
 		GameRegistry.registerTileEntity(CrossingGateGateTileEntity.class, ModTrafficControl.MODID + "_crossinggategate");
 		GameRegistry.registerTileEntity(SafetranType3TileEntity.class, ModTrafficControl.MODID + "_safetrantyp3");
@@ -98,9 +98,9 @@ public class CommonProxy {
 		GameRegistry.registerTileEntity(StreetSignTileEntity.class, ModTrafficControl.MODID + "_streetsign");
 		GameRegistry.registerTileEntity(TrafficLight5TileEntity.class, ModTrafficControl.MODID + "_trafficlight5");
 		GameRegistry.registerTileEntity(TrafficLightDoghouseTileEntity.class, ModTrafficControl.MODID + "_trafficlightdoghouse");
-		GameRegistry.registerTileEntity(TrafficLightOneTileEntity.class, ModTrafficControl.MODID + "_trafficlightone");
-		GameRegistry.registerTileEntity(TrafficLightTwoTileEntity.class, ModTrafficControl.MODID + "_trafficlighttwo"); 
-		GameRegistry.registerTileEntity(TrafficLightFourTileEntity.class, ModTrafficControl.MODID + "_trafficlightfour");
+		GameRegistry.registerTileEntity(TrafficLight1TileEntity.class, ModTrafficControl.MODID + "_trafficlight1");
+		GameRegistry.registerTileEntity(TrafficLight2TileEntity.class, ModTrafficControl.MODID + "_trafficlight2"); 
+		GameRegistry.registerTileEntity(TrafficLight4TileEntity.class, ModTrafficControl.MODID + "_trafficlight4");
 	}
 
 	@SubscribeEvent
@@ -112,9 +112,9 @@ public class CommonProxy {
 		e.getRegistry().register(new ItemTrafficLightFrame());
 		e.getRegistry().register(new ItemTrafficLight5Frame());
 		e.getRegistry().register(new ItemTrafficLightDoghouseFrame());
-		e.getRegistry().register(new ItemTrafficLightOneFrame());
-		e.getRegistry().register(new ItemTrafficLightTwoFrame());
-		e.getRegistry().register(new ItemTrafficLightFourFrame());
+		e.getRegistry().register(new ItemTrafficLight1Frame());
+		e.getRegistry().register(new ItemTrafficLight2Frame());
+		e.getRegistry().register(new ItemTrafficLight4Frame());
 
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_base).setRegistryName(ModBlocks.crossing_gate_base.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_gate).setRegistryName(ModBlocks.crossing_gate_gate.getRegistryName()));

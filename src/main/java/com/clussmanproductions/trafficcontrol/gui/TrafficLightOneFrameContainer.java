@@ -30,7 +30,7 @@ public class TrafficLightOneFrameContainer extends BaseTrafficLightFrameContaine
 	@Override
 	protected BaseItemTrafficLightFrame getValidFrameItem()
 	{
-		return ModItems.traffic_light_one_frame;
+		return ModItems.traffic_light_1_frame;
 	}
 	
 	@Override

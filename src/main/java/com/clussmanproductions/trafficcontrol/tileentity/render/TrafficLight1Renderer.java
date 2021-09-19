@@ -16,7 +16,7 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 
-public class TrafficLightTwoRenderer extends BaseTrafficLightRenderer
+public class TrafficLight1Renderer extends BaseTrafficLightRenderer
 {
 	@Override
 	protected double getBulbZLocation()
@@ -29,8 +29,7 @@ public class TrafficLightTwoRenderer extends BaseTrafficLightRenderer
 	{
 		return ImmutableList
 				.<BulbRenderer>builder()
-				.add(new BulbRenderer(5.2, 9, 0))
-				.add(new BulbRenderer(5.2, 2.5, 1))
+				.add(new BulbRenderer(5.2, 5.5, 0))
 				.build();
 	}
 }

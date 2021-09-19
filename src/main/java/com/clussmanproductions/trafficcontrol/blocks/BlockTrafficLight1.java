@@ -2,12 +2,10 @@ package com.clussmanproductions.trafficcontrol.blocks;
 
 import com.clussmanproductions.trafficcontrol.ModItems;
 import com.clussmanproductions.trafficcontrol.item.BaseItemTrafficLightFrame;
-import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightOneTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.TrafficLight1TileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightTileEntity;
-import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightTwoTileEntity;
-import com.clussmanproductions.trafficcontrol.tileentity.render.TrafficLightOneRenderer;
+import com.clussmanproductions.trafficcontrol.tileentity.render.TrafficLight1Renderer;
 import com.clussmanproductions.trafficcontrol.tileentity.render.TrafficLightRenderer;
-import com.clussmanproductions.trafficcontrol.tileentity.render.TrafficLightTwoRenderer;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -16,29 +14,29 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockTrafficLightTwo extends BlockBaseTrafficLight
+public class BlockTrafficLight1 extends BlockBaseTrafficLight
 {
-	public BlockTrafficLightTwo()
+	public BlockTrafficLight1()
 	{
-		super("traffic_light_two");
+		super("traffic_light_1");
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void initModel()
 	{
-		ClientRegistry.bindTileEntitySpecialRenderer(TrafficLightTwoTileEntity.class, new TrafficLightTwoRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(TrafficLight1TileEntity.class, new TrafficLight1Renderer());
 	}
 	
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState state)
 	{
-		return new TrafficLightTwoTileEntity();
+		return new TrafficLight1TileEntity();
 	}
 	
 	@Override
 	protected BaseItemTrafficLightFrame getItemVersionOfBlock()
 	{
-		return ModItems.traffic_light_two_frame;
+		return ModItems.traffic_light_1_frame;
 	}
 }

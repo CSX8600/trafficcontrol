@@ -19,9 +19,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class ItemTrafficLightFourFrame extends BaseItemTrafficLightFrame
+public class ItemTrafficLight4Frame extends BaseItemTrafficLightFrame
 {
-	public ItemTrafficLightFourFrame()
+	public ItemTrafficLight4Frame()
 	{
 		super("traffic_light_4_frame");
 	}
@@ -70,6 +70,6 @@ public class ItemTrafficLightFourFrame extends BaseItemTrafficLightFrame
 	@Override
 	protected int getGuiID() 
 	{
-		return GuiProxy.GUI_IDs.TRAFFIC_LIGHT_FOUR_FRAME;
+		return GuiProxy.GUI_IDs.TRAFFIC_LIGHT_4_FRAME;
 	}
 }

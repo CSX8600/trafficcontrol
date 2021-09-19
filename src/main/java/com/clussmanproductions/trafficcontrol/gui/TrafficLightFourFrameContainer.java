@@ -34,7 +34,7 @@ public class TrafficLightFourFrameContainer extends BaseTrafficLightFrameContain
 	@Override
 	protected BaseItemTrafficLightFrame getValidFrameItem() 
 	{
-		return ModItems.traffic_light_four_frame;
+		return ModItems.traffic_light_4_frame;
 	}
 
 	@Override

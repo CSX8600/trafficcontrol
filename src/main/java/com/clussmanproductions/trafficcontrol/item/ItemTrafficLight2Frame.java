@@ -12,17 +12,17 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class ItemTrafficLightTwoFrame extends BaseItemTrafficLightFrame
+public class ItemTrafficLight2Frame extends BaseItemTrafficLightFrame
 {
-	public ItemTrafficLightTwoFrame()
+	public ItemTrafficLight2Frame()
 	{
-		super("traffic_light_two_frame");
+		super("traffic_light_2_frame");
 	}
 	
 	@Override
 	protected int getGuiID()
 	{
-		return GuiProxy.GUI_IDs.TRAFFIC_LIGHT_TWO_FRAME;
+		return GuiProxy.GUI_IDs.TRAFFIC_LIGHT_2_FRAME;
 	}
 	
 	@Override
@@ -51,6 +51,6 @@ public class ItemTrafficLightTwoFrame extends BaseItemTrafficLightFrame
 	@Override
 	protected BlockBaseTrafficLight getBaseBlockTrafficLight()
 	{
-		return ModBlocks.traffic_light_two;
+		return ModBlocks.traffic_light_2;
 	}
 }

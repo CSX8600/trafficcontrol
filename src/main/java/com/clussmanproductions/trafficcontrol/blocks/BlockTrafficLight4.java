@@ -2,10 +2,14 @@ package com.clussmanproductions.trafficcontrol.blocks;
 
 import com.clussmanproductions.trafficcontrol.ModItems;
 import com.clussmanproductions.trafficcontrol.item.BaseItemTrafficLightFrame;
-import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightOneTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.TrafficLight4TileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.TrafficLight1TileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightTileEntity;
-import com.clussmanproductions.trafficcontrol.tileentity.render.TrafficLightOneRenderer;
+import com.clussmanproductions.trafficcontrol.tileentity.TrafficLight2TileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.render.TrafficLight4Renderer;
+import com.clussmanproductions.trafficcontrol.tileentity.render.TrafficLight1Renderer;
 import com.clussmanproductions.trafficcontrol.tileentity.render.TrafficLightRenderer;
+import com.clussmanproductions.trafficcontrol.tileentity.render.TrafficLight2Renderer;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -14,29 +18,29 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockTrafficLightOne extends BlockBaseTrafficLight
+public class BlockTrafficLight4 extends BlockBaseTrafficLight
 {
-	public BlockTrafficLightOne()
+	public BlockTrafficLight4()
 	{
-		super("traffic_light_one");
+		super("traffic_light_4");
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void initModel()
 	{
-		ClientRegistry.bindTileEntitySpecialRenderer(TrafficLightOneTileEntity.class, new TrafficLightOneRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(TrafficLight4TileEntity.class, new TrafficLight4Renderer());
 	}
 	
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState state)
 	{
-		return new TrafficLightOneTileEntity();
+		return new TrafficLight4TileEntity();
 	}
 	
 	@Override
 	protected BaseItemTrafficLightFrame getItemVersionOfBlock()
 	{
-		return ModItems.traffic_light_one_frame;
+		return ModItems.traffic_light_4_frame;
 	}
 }
