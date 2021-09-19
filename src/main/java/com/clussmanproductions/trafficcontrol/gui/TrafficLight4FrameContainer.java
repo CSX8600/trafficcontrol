@@ -12,9 +12,9 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
-public class TrafficLightFourFrameContainer extends BaseTrafficLightFrameContainer
+public class TrafficLight4FrameContainer extends BaseTrafficLightFrameContainer
 {
-	public TrafficLightFourFrameContainer(InventoryPlayer inventory, ItemStack frameStack)
+	public TrafficLight4FrameContainer(InventoryPlayer inventory, ItemStack frameStack)
 	{
 		super(inventory, frameStack);
 	}

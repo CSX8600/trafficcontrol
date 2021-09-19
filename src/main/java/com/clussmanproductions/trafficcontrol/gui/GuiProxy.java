@@ -40,19 +40,19 @@ public class GuiProxy implements IGuiHandler {
 			case GUI_IDs.TRAFFIC_LIGHT_1_FRAME:
 				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_1_frame)
 				{
-					return new TrafficLightOneFrameContainer(player.inventory, player.getHeldItemMainhand());
+					return new TrafficLight1FrameContainer(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
 			case GUI_IDs.TRAFFIC_LIGHT_2_FRAME:
 				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_2_frame)
 				{
-					return new TrafficLightTwoFrameContainer(player.inventory, player.getHeldItemMainhand());
+					return new TrafficLight2FrameContainer(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
 			case GUI_IDs.TRAFFIC_LIGHT_4_FRAME:
 				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_4_frame)
 				{
-					return new TrafficLightFourFrameContainer(player.inventory, player.getHeldItemMainhand());
+					return new TrafficLight4FrameContainer(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
 		}
@@ -131,19 +131,19 @@ public class GuiProxy implements IGuiHandler {
 			case GUI_IDs.TRAFFIC_LIGHT_1_FRAME:
 				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_1_frame)
 				{
-					return new TrafficLightOneFrameGui(player.inventory, player.getHeldItemMainhand());
+					return new TrafficLight1FrameGui(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
 			case GUI_IDs.TRAFFIC_LIGHT_2_FRAME:
 				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_2_frame)
 				{
-					return new TrafficLightTwoFrameGui(player.inventory, player.getHeldItemMainhand());
+					return new TrafficLight2FrameGui(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
 			case GUI_IDs.TRAFFIC_LIGHT_4_FRAME:
 				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_4_frame)
 				{
-					return new TrafficLightFourFrameGui(player.inventory, player.getHeldItemMainhand());
+					return new TrafficLight4FrameGui(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
 		}
