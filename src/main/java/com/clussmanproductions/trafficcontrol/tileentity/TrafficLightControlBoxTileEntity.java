@@ -1020,8 +1020,10 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 		Direction1TurnArrowYellow(4, 2),
 		Direction2TurnArrowYellow(5, 2),
 		BothTurnArrowYellow(6, 2),
-		Green(7, 3),
-		Yellow(8, 4);
+		GreenCross(7, 3),
+		GreenDontCrossWarning(8,4),
+		Green(9, 5),
+		Yellow(10, 6);
 		
 		private int priority;
 		private int id;
