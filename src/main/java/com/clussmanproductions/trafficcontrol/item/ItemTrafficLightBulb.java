@@ -85,7 +85,7 @@ public class ItemTrafficLightBulb extends Item {
 		}
 		else if (meta == EnumTrafficLightBulbTypes.DontCross.getIndex())
 		{
-			unlocalizedName = "dontcross";
+			unlocalizedName = "dont_cross";
 		}
 		else
 		{
