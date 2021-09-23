@@ -70,7 +70,7 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 	{
 		_te = te;
 		
-		_currentMode = _te.getHasSensors() ? Modes.Automatic : Modes.ManualNorthSouth; 
+		_currentMode = _te.isAutoMode() ? Modes.Automatic : Modes.ManualNorthSouth; 
 	}
 	
 	@Override

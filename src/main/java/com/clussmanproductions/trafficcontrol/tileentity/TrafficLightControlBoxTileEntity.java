@@ -9,16 +9,17 @@ import java.util.stream.Collectors;
 
 import com.clussmanproductions.trafficcontrol.Config;
 import com.clussmanproductions.trafficcontrol.blocks.BlockBaseTrafficLight;
-import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorLeft;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorStraight;
 import com.clussmanproductions.trafficcontrol.util.EnumTrafficLightBulbTypes;
 import com.google.common.collect.ImmutableList;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagLong;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.server.MinecraftServer;
@@ -27,6 +28,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.util.Constants.NBT;
 
 public class TrafficLightControlBoxTileEntity extends SyncableTileEntity implements ITickable {
 	private ArrayList<BlockPos> westEastLights = new ArrayList<BlockPos>();
@@ -36,7 +38,9 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 	private HashMap<EnumTrafficLightBulbTypes, Boolean> manualNorthSouthInactive = new HashMap<EnumTrafficLightBulbTypes, Boolean>();
 	private HashMap<EnumTrafficLightBulbTypes, Boolean> manualWestEastInactive = new HashMap<EnumTrafficLightBulbTypes, Boolean>();
 	private ArrayList<BlockPos> sensors = new ArrayList<>();
-	private boolean hasSensors = false; // Client only property
+	private ArrayList<BlockPos> northSouthPedButtons = new ArrayList<>();
+	private ArrayList<BlockPos> westEastPedButtons = new ArrayList<>();
+	private boolean isAutoMode = false; // Client only property
 	private boolean powered;
 	private Automator automator = null;
 	
@@ -68,6 +72,21 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 			BlockPos sensorPos = sensors.get(i);
 			compound.setLong("sensor" + i, sensorPos.toLong());
 		}
+		
+		NBTTagList northSouthPedButtonsList = new NBTTagList();
+		for(BlockPos pos : northSouthPedButtons)
+		{
+			northSouthPedButtonsList.appendTag(new NBTTagLong(pos.toLong()));
+		}
+		
+		NBTTagList westEastPedButtonsList = new NBTTagList();
+		for(BlockPos pos : westEastPedButtons)
+		{
+			westEastPedButtonsList.appendTag(new NBTTagLong(pos.toLong()));
+		}
+		
+		compound.setTag("northSouthPedButtons", northSouthPedButtonsList);
+		compound.setTag("westEastPedButtons", westEastPedButtonsList);
 		
 		getAutomator().writeNBT(compound);
 		
@@ -146,6 +165,24 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 		}
 		
 		getAutomator().readNBT(compound);
+		
+		NBTTagList northSouthPedButtonList = compound.getTagList("northSouthPedButtons", NBT.TAG_LONG);
+		NBTTagList westEastPedButtonList = compound.getTagList("westEastPedButtons", NBT.TAG_LONG);
+		
+		northSouthPedButtons = new ArrayList<>();
+		westEastPedButtons = new ArrayList<>();
+		
+		for(NBTBase baseLong : northSouthPedButtonList)
+		{
+			NBTTagLong posLong = (NBTTagLong)baseLong;
+			northSouthPedButtons.add(BlockPos.fromLong(posLong.getLong()));
+		}
+		
+		for(NBTBase baseLong : westEastPedButtonList)
+		{
+			NBTTagLong posLong = (NBTTagLong)baseLong;
+			westEastPedButtons.add(BlockPos.fromLong(posLong.getLong()));
+		}
 	}
 	
 	@Override
@@ -157,7 +194,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 		writeManualSettingDictionary(compound, manualNorthSouthInactive, "manualNorthSouthInactive");
 		writeManualSettingDictionary(compound, manualWestEastInactive, "manualWestEastInactive");
 		
-		compound.setBoolean("hasSensors", !sensors.isEmpty());
+		compound.setBoolean("isAutoMode", !sensors.isEmpty() || !northSouthPedButtons.isEmpty() || !westEastPedButtons.isEmpty());
 		
 		getAutomator().setSyncData(compound);
 		
@@ -173,7 +210,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 		readManualSettingDictionary(tag, manualNorthSouthInactive, "manualNorthSouthInactive");
 		readManualSettingDictionary(tag, manualWestEastInactive, "manualWestEastInactive");
 		
-		hasSensors = tag.getBoolean("hasSensors");
+		isAutoMode = tag.getBoolean("isAutoMode");
 		
 		getAutomator().readSyncData(tag);
 	}
@@ -324,6 +361,42 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 		}
 	}
 	
+	public boolean addOrRemoveNorthSouthPedButton(BlockPos pos)
+	{
+		if (northSouthPedButtons.contains(pos))
+		{
+			northSouthPedButtons.remove(pos);
+			markDirty();
+			world.notifyBlockUpdate(getPos(), world.getBlockState(getPos()), world.getBlockState(getPos()), 3);
+			return false;
+		}
+		else
+		{
+			northSouthPedButtons.add(pos);
+			markDirty();
+			world.notifyBlockUpdate(getPos(), world.getBlockState(getPos()), world.getBlockState(getPos()), 3);
+			return true;
+		}
+	}
+	
+	public boolean addOrRemoveWestEastPedButton(BlockPos pos)
+	{
+		if (westEastPedButtons.contains(pos))
+		{
+			westEastPedButtons.remove(pos);
+			markDirty();
+			world.notifyBlockUpdate(getPos(), world.getBlockState(getPos()), world.getBlockState(getPos()), 3);
+			return false;
+		}
+		else
+		{
+			westEastPedButtons.add(pos);
+			markDirty();
+			world.notifyBlockUpdate(getPos(), world.getBlockState(getPos()), world.getBlockState(getPos()), 3);
+			return true;
+		}
+	}
+	
 	public void addRemoveNorthSouthActive(EnumTrafficLightBulbTypes type, boolean flash, boolean add)
 	{
 		if (add)
@@ -459,9 +532,9 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 		}
 	}
 
-	public boolean getHasSensors()
+	public boolean isAutoMode()
 	{
-		return hasSensors;
+		return isAutoMode;
 	}
 	
 	@Override
@@ -502,10 +575,13 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 		
 		private Stages lastStage = Stages.Red;
 		private RightOfWays lastRightOfWay = RightOfWays.EastWest;
+		
 		private double greenMinimum = 10;
 		private double yellowTime = 3;
 		private double redTime = 2;
 		private double arrowMinimum = 5;
+		private boolean northSouthPedQueued;
+		private boolean westEastPedQueued;
 		
 		public double getGreenMinimum() {
 			return greenMinimum;
@@ -539,6 +615,22 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 			this.arrowMinimum = arrowMinimum;
 		}
 				
+		public boolean isNorthSouthPedQueued() {
+			return northSouthPedQueued;
+		}
+
+		public void setNorthSouthPedQueued(boolean northSouthPedQueued) {
+			this.northSouthPedQueued = northSouthPedQueued;
+		}
+
+		public boolean isWestEastPedQueued() {
+			return westEastPedQueued;
+		}
+
+		public void setWestEastPedQueued(boolean westEastPedQueued) {
+			this.westEastPedQueued = westEastPedQueued;
+		}
+
 		public void update()
 		{
 			if (!hasInitialized)

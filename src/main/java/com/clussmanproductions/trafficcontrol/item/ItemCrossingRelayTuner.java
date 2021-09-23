@@ -1,9 +1,9 @@
 package com.clussmanproductions.trafficcontrol.item;
 
-import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockBaseTrafficLight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase;
+import com.clussmanproductions.trafficcontrol.blocks.BlockPedestrianButton;
 import com.clussmanproductions.trafficcontrol.blocks.BlockShuntBorder;
 import com.clussmanproductions.trafficcontrol.blocks.BlockShuntIsland;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorLeft;
@@ -11,6 +11,7 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorStraight;
 import com.clussmanproductions.trafficcontrol.tileentity.BaseTrafficLightTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.BellBaseTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.PedestrianButtonTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.RelayTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.ShuntBorderTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.ShuntIslandTileEntity;
@@ -345,6 +346,38 @@ public class ItemCrossingRelayTuner extends Item {
 					else
 					{
 						player.sendMessage(new TextComponentString("Unpaired Traffic Light to Traffic Light Control Box"));
+					}
+				}
+			}
+			
+			if (te instanceof PedestrianButtonTileEntity)
+			{
+				IBlockState state = world.getBlockState(te.getPos());
+				
+				if (state.getBlock() instanceof BlockPedestrianButton)
+				{
+					EnumFacing facing = state.getValue(BlockPedestrianButton.FACING);
+					
+					boolean operationResult = false;
+					if (facing == EnumFacing.EAST || facing == EnumFacing.WEST)
+					{
+						operationResult = controlBox.addOrRemoveWestEastPedButton(te.getPos());
+					}
+					else
+					{
+						operationResult = controlBox.addOrRemoveNorthSouthPedButton(te.getPos());
+					}
+					
+					PedestrianButtonTileEntity pedTE = (PedestrianButtonTileEntity)te;
+					if (operationResult)
+					{
+						pedTE.addPairedBox(controlBox.getPos());
+						player.sendMessage(new TextComponentString("Paired Pedestrian Button to Traffic Light Control Box"));
+					}
+					else
+					{
+						pedTE.removePairedBox(controlBox.getPos());
+						player.sendMessage(new TextComponentString("Unpaired Pedestrian Button to Traffic Light Control Box"));
 					}
 				}
 			}
