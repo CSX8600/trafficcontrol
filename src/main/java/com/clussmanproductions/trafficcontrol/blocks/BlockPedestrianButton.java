@@ -2,6 +2,7 @@ package com.clussmanproductions.trafficcontrol.blocks;
 
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.tileentity.PedestrianButtonTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightControlBoxTileEntity;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -10,6 +11,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -88,5 +90,59 @@ public class BlockPedestrianButton extends Block {
 	@Override
 	public boolean hasTileEntity(IBlockState state) {
 		return true;
+	}
+
+	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
+			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (worldIn.isRemote)
+		{
+			return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+		}
+		
+		TileEntity te = worldIn.getTileEntity(pos);
+		if (te != null && te instanceof PedestrianButtonTileEntity)
+		{
+			PedestrianButtonTileEntity pedTE = (PedestrianButtonTileEntity)te;
+			for(BlockPos controller : pedTE.getPairedBoxes())
+			{
+				TileEntity prelimCtrlrTE = worldIn.getTileEntity(controller);
+				if (prelimCtrlrTE == null || !(prelimCtrlrTE instanceof TrafficLightControlBoxTileEntity))
+				{
+					pedTE.removePairedBox(controller);
+					continue;
+				}
+				
+				EnumFacing myFacing = state.getValue(FACING);
+				TrafficLightControlBoxTileEntity ctrlr = (TrafficLightControlBoxTileEntity)prelimCtrlrTE;
+				if (myFacing == EnumFacing.NORTH || myFacing == EnumFacing.SOUTH)
+				{
+					ctrlr.getAutomator().setWestEastPedQueued(true);
+				}
+				else
+				{
+					ctrlr.getAutomator().setNorthSouthPedQueued(true);
+				}
+			}
+		}
+		
+		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+	}
+	
+	@Override
+	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+		if (worldIn.isRemote)
+		{
+			super.breakBlock(worldIn, pos, state);
+			return;
+		}
+		
+		PedestrianButtonTileEntity te = (PedestrianButtonTileEntity)worldIn.getTileEntity(pos);
+		if (te != null)
+		{
+			te.onBreak(worldIn, state.getValue(FACING));
+		}
+		
+		super.breakBlock(worldIn, pos, state);
 	}
 }

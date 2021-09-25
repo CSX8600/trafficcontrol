@@ -28,6 +28,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants.NBT;
 
 public class TrafficLightControlBoxTileEntity extends SyncableTileEntity implements ITickable {
@@ -547,6 +548,31 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 		if (!sensors.isEmpty())
 		{
 			getAutomator().update();
+		}
+	}
+	
+	public void onBreak(World world)
+	{
+		for(BlockPos pos : northSouthPedButtons)
+		{
+			TileEntity prelimPed = world.getTileEntity(pos);
+			if (prelimPed == null || !(prelimPed instanceof PedestrianButtonTileEntity))
+			{
+				continue;
+			}
+			
+			((PedestrianButtonTileEntity)prelimPed).removePairedBox(getPos());
+		}
+		
+		for(BlockPos pos : westEastPedButtons)
+		{
+			TileEntity prelimPed = world.getTileEntity(pos);
+			if (prelimPed == null || !(prelimPed instanceof PedestrianButtonTileEntity))
+			{
+				continue;
+			}
+			
+			((PedestrianButtonTileEntity)prelimPed).removePairedBox(getPos());
 		}
 	}
 	

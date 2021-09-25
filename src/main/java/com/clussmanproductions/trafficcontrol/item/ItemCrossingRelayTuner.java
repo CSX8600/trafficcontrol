@@ -361,11 +361,11 @@ public class ItemCrossingRelayTuner extends Item {
 					boolean operationResult = false;
 					if (facing == EnumFacing.EAST || facing == EnumFacing.WEST)
 					{
-						operationResult = controlBox.addOrRemoveWestEastPedButton(te.getPos());
+						operationResult = controlBox.addOrRemoveNorthSouthPedButton(te.getPos());
 					}
 					else
 					{
-						operationResult = controlBox.addOrRemoveNorthSouthPedButton(te.getPos());
+						operationResult = controlBox.addOrRemoveWestEastPedButton(te.getPos());
 					}
 					
 					PedestrianButtonTileEntity pedTE = (PedestrianButtonTileEntity)te;

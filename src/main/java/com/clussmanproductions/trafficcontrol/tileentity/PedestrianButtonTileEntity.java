@@ -2,12 +2,16 @@ package com.clussmanproductions.trafficcontrol.tileentity;
 
 import java.util.HashSet;
 
+import com.google.common.collect.ImmutableList;
+
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagLong;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants.NBT;
 
 public class PedestrianButtonTileEntity extends TileEntity {
@@ -22,6 +26,8 @@ public class PedestrianButtonTileEntity extends TileEntity {
 			NBTTagLong tag = (NBTTagLong)tagBase;
 			pairedBoxes.add(BlockPos.fromLong(tag.getLong()));
 		}
+		
+		super.readFromNBT(compound);
 	}
 	
 	@Override
@@ -46,5 +52,32 @@ public class PedestrianButtonTileEntity extends TileEntity {
 	{
 		pairedBoxes.remove(pos);
 		markDirty();
+	}
+	
+	public ImmutableList<BlockPos> getPairedBoxes()
+	{
+		return ImmutableList.copyOf(pairedBoxes);
+	}
+
+	public void onBreak(World world, EnumFacing currentFacing)
+	{
+		for(BlockPos pos : pairedBoxes)
+		{
+			TileEntity prelimCtrlr = world.getTileEntity(pos);
+			if (prelimCtrlr == null || !(prelimCtrlr instanceof TrafficLightControlBoxTileEntity))
+			{
+				continue;
+			}
+			
+			TrafficLightControlBoxTileEntity ctrlr = (TrafficLightControlBoxTileEntity)prelimCtrlr;
+			if (currentFacing == EnumFacing.NORTH || currentFacing == EnumFacing.SOUTH)
+			{
+				ctrlr.addOrRemoveWestEastPedButton(getPos());
+			}
+			else
+			{
+				ctrlr.addOrRemoveNorthSouthPedButton(getPos());
+			}
+		}
 	}
 }
