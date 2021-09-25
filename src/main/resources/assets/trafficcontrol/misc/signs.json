@@ -11,7 +11,7 @@
     "type": "circle",
     "variant": "1",
     "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
-    "note": "The MUTCD says that this sign should be 100 feet from the crossing (50 for pedestrian paths), displayed whenever possible at every direct approach. 100 feet is equal to 30 blocks, while 50 feet is 15 blocks."
+    "note": "The MUTCD says this sign should be 100 feet (30 blocks) from the RXR (50 [15 blocks] for pedestrian paths), displayed everywhere it can be."
   },
   {
     "name": "No Left Turn",
@@ -207,6 +207,7 @@
     "name": "Oncoming Traffic Has Priority Over You",
     "type": "circle",
     "variant": "33"
+    "tooltip": "...and therefore you must yield to oncoming traffic."
   },
   {
     "name": "No Vehicles Carrying Dangerous Goods ",
@@ -241,11 +242,10 @@
     "variant": "39"
   },
   {
-    "name": "Toll Ahead",
+    "name": "Deleted Sign",
     "type": "circle",
     "variant": "40",
-    "tooltip": "To be removed",
-    "note": "This is a duplicate of Circular Sign 37 and will be removed."
+    "tooltip": "This sign was a duplicate of Circle 37. Please use that.",
   },
   {
     "name": "Go Straight",
@@ -778,14 +778,14 @@
     "type": "diamond",
     "variant": "24",
     "tooltip": "Don't use if the added lane ends soon after",
-    "note": "Don't use this sign if the added lane ends soon after the merge. You may, however, use it if the lane becomes a dropped (turn/exit only) lane or has been closed temporarily."
+    "note": "Don't use this sign if the added lane ends soon after the merge (unless the lane gets dropped)."
   },
   {
     "name": "Right Added Lane",
     "type": "diamond",
     "variant": "25",
     "tooltip": "Don't use if the added lane ends soon after",
-    "note": "Don't use this sign if the added lane ends soon after the merge. You may, however, use it if the lane becomes a dropped (turn/exit only) lane or has been closed temporarily."
+    "note": "Don't use this sign if the added lane ends soon after the merge (unless the lane gets dropped)."
   },
   {
     "name": "Left Side Road",
@@ -838,18 +838,18 @@
     "variant": "35"
   },
   {
-    "name": "Left 270-Degree Loop",
+    "name": "Right-Turning 270-Degree Loop (Net Turn Left)",
     "type": "diamond",
     "variant": "36",
     "tooltip": "The loop should be roughly 235 degrees or more",
-    "note": "The loop doesn't have to be exactly 270 degrees. A turn of at least 235 degrees justifies this sign."
+    "note": "A turn of at least 235 degrees justifies this sign."
   },
   {
-    "name": "Right 270-Degree Loop",
+    "name": "Left-Turning 270-Degree Loop (Net Turn Right)",
     "type": "diamond",
     "variant": "37",
     "tooltip": "The loop should be roughly 235 degrees or more",
-    "note": "The loop doesn't have to be exactly 270 degrees. A turn of at least 235 degrees justifies this sign."
+    "note": "A turn of at least 235 degrees justifies this sign."
   },
   {
     "name": "Two Way Traffic",
@@ -906,49 +906,49 @@
     "type": "diamond",
     "variant": "48",
     "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
-    "note": "The MUTCD says that this sign should be 100 feet from the crossing (50 for pedestrian paths), displayed whenever possible at every indirect approach. 100 feet is equal to 30 blocks, while 50 feet is 15 blocks."
+    "note": "The MUTCD says this sign should be 100 feet (30 blocks) from the RXR (50 [15 blocks] for pedestrian paths), displayed everywhere it can be."
   },
   {
     "name": "Cross-Roads, Railroad to Left",
     "type": "diamond",
     "variant": "49",
     "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
-    "note": "The MUTCD says that this sign should be 100 feet from the crossing (50 for pedestrian paths), displayed whenever possible at every indirect approach. 100 feet is equal to 30 blocks, while 50 feet is 15 blocks."
+    "note": "The MUTCD says this sign should be 100 feet (30 blocks) from the RXR (50 [15 blocks] for pedestrian paths), displayed everywhere it can be."
   },
   {
     "name": "Right Side Road Crosses Railroad",
     "type": "diamond",
     "variant": "50",
     "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
-    "note": "The MUTCD says that this sign should be 100 feet from the crossing (50 for pedestrian paths), displayed whenever possible at every indirect approach. 100 feet is equal to 30 blocks, while 50 feet is 15 blocks."
+    "note": "The MUTCD says this sign should be 100 feet (30 blocks) from the RXR (50 [15 blocks] for pedestrian paths), displayed everywhere it can be."
   },
   {
     "name": "Left Side Road Crosses Railroad",
     "type": "diamond",
     "variant": "51",
     "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
-    "note": "The MUTCD says that this sign should be 100 feet from the crossing (50 for pedestrian paths), displayed whenever possible at every indirect approach. 100 feet is equal to 30 blocks, while 50 feet is 15 blocks."
+    "note": "The MUTCD says this sign should be 100 feet (30 blocks) from the RXR (50 [15 blocks] for pedestrian paths), displayed everywhere it can be."
   },
   {
     "name": "T-Intersection, Railroad to Right",
     "type": "diamond",
     "variant": "52",
     "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
-    "note": "The MUTCD says that this sign should be 100 feet from the crossing (50 for pedestrian paths), displayed whenever possible at every indirect approach. 100 feet is equal to 30 blocks, while 50 feet is 15 blocks."
+    "note": "The MUTCD says this sign should be 100 feet (30 blocks) from the RXR (50 [15 blocks] for pedestrian paths), displayed everywhere it can be."
   },
   {
     "name": "T-Intersection, Railroad to Left",
     "type": "diamond",
     "variant": "53",
     "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
-    "note": "The MUTCD says that this sign should be 100 feet from the crossing (50 for pedestrian paths), displayed whenever possible at every indirect approach. 100 feet is equal to 30 blocks, while 50 feet is 15 blocks."
+    "note": "The MUTCD says this sign should be 100 feet (30 blocks) from the RXR (50 [15 blocks] for pedestrian paths), displayed everywhere it can be."
   },
   {
     "name": "T-Intersection After Railroad",
     "type": "diamond",
     "variant": "54",
     "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
-    "note": "The MUTCD says that this sign should be 100 feet from the crossing (50 for pedestrian paths), displayed whenever possible at every indirect approach. 100 feet is equal to 30 blocks, while 50 feet is 15 blocks."
+    "note": "The MUTCD says this sign should be 100 feet (30 blocks) from the RXR (50 [15 blocks] for pedestrian paths), displayed everywhere it can be."
   },
   {
     "name": "Skewed Railroad Crossing",
@@ -1086,8 +1086,8 @@
     "name": "DRAWBRIDGE",
     "type": "diamond",
     "variant": "80",
-    "tooltip": "Drawbridges need not look like drawbridges! View the expanded tip for more info.",
-    "note": "Drawbridges need not look like drawbridges! If you have a mod that adds a retractable drawbridge block, that can suffice since 'drawbridge' in some forms of English is a catch-all term for opening bridges. Therefore you don't need the drawbridge to be pulled up and down around a pivot by tethers. You can even forget pavement markings if you find it simpler to do so; just remember to have contrasting pavement blocks."
+    "tooltip": "Drawbridges need not look like drawbridges!",
+    "note": "Some forms of English consider ANY opening bridge as a drawbridge."
   },
   {
     "name": "Opening Bridge",
@@ -1177,56 +1177,56 @@
     "type": "diamond",
     "variant": "96",
     "tooltip": "Use near enemy-prone areas",
-    "note": "Recommended near mob spawners and other areas that are prone to enemies or ambushes."
+    "note": "Recommended near areas that are prone to enemies or ambushes."
   },
   {
     "name": "Skeletons",
     "type": "diamond",
     "variant": "97",
     "tooltip": "Use near skeleton-prone areas",
-    "note": "Recommended near skeleton spawners, cliffs that skeletons can shoot players off of, and other areas that are prone to skeletons or skeleton ambushes."
+    "note": "Recommended near areas that are prone to skeletons or skeleton ambushes."
   },
   {
     "name": "Zombies",
     "type": "diamond",
     "variant": "98",
     "tooltip": "Use near zombie-prone areas",
-    "note": "Recommended near zombie spawners, villages (since zombie raids can start during the night regardless of light level), and other areas that are prone to zombies or zombie ambushes."
+    "note": "Recommended near areas that are prone to zombies or zombie ambushes."
   },
   {
     "name": "ZOMBIES",
     "type": "diamond",
     "variant": "99",
     "tooltip": "Use near zombie-prone areas",
-    "note": "Recommended near zombie spawners, villages (since zombie raids can start during the night regardless of light level), and other areas that are prone to zombies or zombie ambushes."
+    "note": "Recommended near areas that are prone to zombies or zombie ambushes."
   },
   {
     "name": "Spiders",
     "type": "diamond",
     "variant": "100",
     "tooltip": "Use near spider-prone areas",
-    "note": "Recommended near spider spawners, cobweb-covered areas (since spiders aren't slowed down by them), walls that have no lip (since spiders can climb over), and other areas that are prone to spiders or spider ambushes."
+    "note": "Recommended near areas that are prone to spiders or spider ambushes."
   },
   {
     "name": "Endermen",
     "type": "diamond",
     "variant": "101",
     "tooltip": "Use near enderman-prone areas or on roads made of blocks endermen can take",
-    "note": "Recommended in very open areas (since players might provoke endermen by looking at them), places with frequent sight obstructions (since endermen might hide behind one of these), the End, and other areas prone to endermen or enderman ambushes, as well as on roads (or parts of roads) made of blocks that endermen can take."
+    "note": "Recommended in areas prone to endermen or enderman ambushes, as well as on roads (or parts of roads) made of blocks that endermen can take."
   },
   {
     "name": "Ghasts",
     "type": "diamond",
     "variant": "102",
     "tooltip": "Use near ghast-prone areas or on roads that ghasts can destroy",
-    "note": "This sign is fit for the Nether. Recommended in very open areas, near lava pools (since ghasts can hide in them), and in other areas that are prone to ghasts or ghast ambushes, as well as on roads made of blocks that ghasts can destroy."
+    "note": "This sign is fit for the Nether. Recommended in areas that are prone to ghasts or ghast ambushes, as well as on roads made of blocks that ghasts can destroy."
   },
   {
     "name": "Slimes/Magma Cubes",
     "type": "diamond",
     "variant": "103",
     "tooltip": "Use near slime- or magma cube-prone areas",
-    "note": "Recommended in swamps, in areas with slopes (since slimes and magma cubes can climb slopes rather quickly), near where players have reported slime sightings, near cliffs in the Nether (since magma cubes don't take fall damage), and in other areas prone to slimes or magma cubes or slime or magma cube ambushes."
+    "note": "Recommended in  areas prone to slimes or magma cubes or slime or magma cube ambushes. Advise players to report slime chunks."
   },
   {
     "name": "Tram Crossing",
@@ -1240,7 +1240,7 @@
     "tooltip": "Place at the location of the pedestrian crossing"
   },
   {
-    "name": "'SLOW' Sign",
+    "name": "SLOW",
     "type": "diamond",
     "variant": "147"
   },
@@ -1643,28 +1643,24 @@
     "type": "misc",
     "variant": "33",
     "tooltip": "Use to show the general direction of the route.",
-    "note": "Should be used with route markers to show cardinal direction. The exact direction of the road needs not be north, but the route should go in that general direction."
   },
   {
     "name": "'SOUTH' Plaque",
     "type": "misc",
     "variant": "34",
     "tooltip": "Use to show the general direction of the route.",
-    "note": "Should be used with route markers to show cardinal direction. The exact direction of the road needs not be south, but the route should go in that general direction."
   },
   {
     "name": "'EAST' Plaque",
     "type": "misc",
     "variant": "35",
     "tooltip": "Use to show the general direction of the route.",
-    "note": "Should be used with route markers to show cardinal direction. The exact direction of the road needs not be east, but the route should go in that general direction."
   },
   {
     "name": "'WEST' Plaque",
     "type": "misc",
     "variant": "36",
     "tooltip": "Use to show the general direction of the route.",
-    "note": "Should be used with route markers to show cardinal direction. The exact direction of the road needs not be west, but the route should go in that general direction."
   },
   {
     "name": "'TO' Plaque",
@@ -1682,7 +1678,7 @@
     "name": "'DETOUR' Plaque",
     "type": "misc",
     "variant": "39",
-    "tooltip": "Show the temporary alternative route."
+    "tooltip": "Show a temporary alternative route."
   },
   {
     "name": "'BUS' Plaque",
@@ -1958,7 +1954,7 @@
     "variant": "83"
   },
   {
-    "name": "Left-Right Arrow (Construction",
+    "name": "Left-Right Arrow (Construction)",
     "type": "misc",
     "variant": "84"
   },
@@ -1967,45 +1963,45 @@
     "type": "misc",
     "variant": "85",
     "tooltip": "At a T-intersection, place on opposite side to ending road",
-    "note": "At a T-intersection, place on the side opposite to the terminating road, facing the terminating road. (For example, if the terminating road heads south from the intersection, place this sign on the north.)"
+    "note": "At a T-intersection, place on the side opposite to the terminating road, facing the terminating road."
   },
   {
     "name": "Left Arrow (Warning)",
     "type": "misc",
     "variant": "86",
     "tooltip": "Place at a largely sharp left curve",
-    "note": "Place at a largely sharp left curve, facing traffic and largely in the center of where the road would be if it were not to curve. Should replace the Left-Right Warning Arrow (Misc. 85) if the road is one-way. MAKE SURE IT POINTS THE CORRECT WAY."
+    "note": "Place at a largely sharp left curve, facing traffic and largely straight ahead. Replace the Left-Right arrow with this if the main road is one-way."
   },
   {
     "name": "Right Arrow (Warning)",
     "type": "misc",
     "variant": "87",
     "tooltip": "Place at a largely sharp right curve",
-    "note": "Place at a largely sharp right curve, facing traffic and largely in the center of where the road would be if it were not to curve. Should replace the Left-Right Warning Arrow (Misc. 85) if the road is one-way. MAKE SURE IT POINTS THE CORRECT WAY."
+    "note": "Place at a largely sharp right curve, facing traffic and largely straight ahead. Replace the Left-Right arrow with this if the main road is one-way."
   },
   {
     "name": "ONE WAY (Right, Black)",
     "type": "misc",
     "variant": "88",
-    "tooltip": "MAKE SURE THE ARROW POINTS THE CORRECT WAY."
+    "tooltip": "§c§lMAKE SURE THE ARROW POINTS THE CORRECT WAY."
   },
   {
     "name": "ONE WAY (Left, Black)",
     "type": "misc",
     "variant": "89",
-    "tooltip": "MAKE SURE THE ARROW POINTS THE CORRECT WAY."
+    "tooltip": "§c§lMAKE SURE THE ARROW POINTS THE CORRECT WAY."
   },
   {
     "name": "ONE WAY (Left, Blue)",
     "type": "misc",
     "variant": "90",
-    "tooltip": "MAKE SURE THE ARROW POINTS THE CORRECT WAY."
+    "tooltip": "§c§lMAKE SURE THE ARROW POINTS THE CORRECT WAY."
   },
   {
     "name": "ONE WAY (Right, Blue)",
     "type": "misc",
     "variant": "91",
-    "tooltip": "MAKE SURE THE ARROW POINTS THE CORRECT WAY."
+    "tooltip": "§c§lMAKE SURE THE ARROW POINTS THE CORRECT WAY."
   },
   {
     "name": "2-WAY",
@@ -2057,10 +2053,10 @@
     "note": "Click a sign in the array to select it. Use the search bar if you want a specific sign."
   },
   {
-    "name": "SPEED LIMIT 5",
-    "type": "rectangle",
-    "variant": "89",
-    "tooltip": "MPH unless you use the KM/H plaque below (Misc. 16)"
+  	"name": "SPEED LIMIT 5",
+  	"type": "rectangle",
+  	"variant": "89",
+  	"tooltip": "MPH unless you use the KM/H plaque below (Misc. 16)"
   },
   {
     "name": "SPEED LIMIT 10",
@@ -2188,7 +2184,7 @@
     "type": "rectangle",
     "variant": "22",
     "tooltip": "Use on a two-way road that has a central turn lane",
-    "note": "This should be used in roads with central turn lanes. The middle lane functions as a left turn lane for traffic coming in both directions. Use of the central turn lane to pass a vehicle is prohibited."
+    "note": "This should be used in roads with central turn lanes. The middle lane functions as a left turn lane for traffic coming in both directions."
   },
   {
     "name": "BUS LANE AHEAD",
@@ -2314,28 +2310,28 @@
     "type": "rectangle",
     "variant": "45",
     "tooltip": "Place at regular intervals along a right curve",
-    "note": "This should be used in multiples  alongside the outside edge of sharp curves."
+    "note": "This should be used in multiples alongside the outside edge of sharp curves."
   },
   {
     "name": "Chevron Left Arrow (Black on Yellow)",
     "type": "rectangle",
     "variant": "46",
     "tooltip": "Place at regular intervals along a left curve",
-    "note": "This should be used in multiples  alongside the outside edge of sharp curves."
+    "note": "This should be used in multiples alongside the outside edge of sharp curves."
   },
   {
     "name": "Chevron Right Arrow (Red on White)",
     "type": "rectangle",
     "variant": "47",
     "tooltip": "Place at regular intervals along a right curve",
-    "note": "This should be used in multiples  alongside the outside edge of sharp curves."
+    "note": "This should be used in multiples alongside the outside edge of sharp curves."
   },
   {
     "name": "Chevron Left Arrow (Red on White)",
     "type": "rectangle",
     "variant": "48",
     "tooltip": "Place at regular intervals along a left curve",
-    "note": "This should be used in multiples  alongside the outside edge of sharp curves."
+    "note": "This should be used in multiples alongside the outside edge of sharp curves."
   },
   {
     "name": "Chevron Pattern Left (Yellow And Black) ",
@@ -2467,7 +2463,7 @@
     "type": "rectangle",
     "variant": "70",
     "tooltip": "Handy with mods that require players to drink water",
-    "note": "Can find utility if you have a mod that requires players to drink water, such as Tough As Nails."
+    "note": "Can find utility if you have a mod that requires players to drink water, such as §oTough As Nails."
   },
   {
     "name": "Restaurant",
@@ -2626,7 +2622,7 @@
     "name": "National Network Route",
     "type": "square",
     "variant": "11",
-    "tooltip": "The National Network is a system of recommended roads for large trucks."
+    "tooltip": "The National Network is a system of recommended roads for large trucks. If your world has large trucks, you might want to set up your own National Network."
   },
   {
     "name": "Hazardous Materials Prohibited",
@@ -3127,14 +3123,14 @@
     "type": "square",
     "variant": "104",
     "tooltip": "Place at regular intervals outside of sharp curves",
-    "note": "This should be used in multiples  alongside the outside edge of sharp curves."
+    "note": "This should be used in multiples alongside the outside edge of sharp curves."
   },
   {
     "name": "Chevron Arrow (Black on Yellow, Right)",
     "type": "square",
     "variant": "105",
     "tooltip": "Place at regular intervals outside of sharp curves",
-    "note": "This should be used in multiples  alongside the outside edge of sharp curves."
+    "note": "This should be used in multiples alongside the outside edge of sharp curves."
   },
   {
     "name": "WORK ZONE",
@@ -3936,6 +3932,452 @@
     "type": "triangle",
     "variant": "95"
   },
+ {
+    "name": "Left Curve (Construction)",
+    "type": "diamond",
+    "variant": "148"
+  },
+  {
+    "name": "Right Curve (Construction)",
+    "type": "diamond",
+    "variant": "149"
+  },
+  {
+    "name": "Left Turn (Construction)",
+    "type": "diamond",
+    "variant": "150"
+  },
+  {
+    "name": "Right Turn (Construction)",
+    "type": "diamond",
+    "variant": "151"
+  },
+  {
+    "name": "Left S-Curve (Construction)",
+    "type": "diamond",
+    "variant": "152"
+  },
+  {
+    "name": "Right S-Curve (Construction)",
+    "type": "diamond",
+    "variant": "153"
+  },
+  {
+    "name": "Left Z-Turn (Construction)",
+    "type": "diamond",
+    "variant": "154"
+  },
+  {
+    "name": "Right Z-Turn (Construction)",
+    "type": "diamond",
+    "variant": "155"
+  },
+  {
+    "name": "Left Winding Road (Construction)",
+    "type": "diamond",
+    "variant": "156"
+  },
+  {
+    "name": "Right Winding Road (Construction)",
+    "type": "diamond",
+    "variant": "157"
+  },
+  {
+    "name": "Left Hairpin Turn (Construction)",
+    "type": "diamond",
+    "variant": "158"
+  },
+  {
+    "name": "Right Hairpin Turn (Construction)",
+    "type": "diamond",
+    "variant": "189"
+  },
+  {
+    "name": "STOP AHEAD (Construction)",
+    "type": "diamond",
+    "variant": "160"
+  },
+  {
+    "name": "YIELD AHEAD (Construction)",
+    "type": "diamond",
+    "variant": "161"
+  },
+  {
+    "name": "SIGNAL AHEAD (Construction)",
+    "type": "diamond",
+    "variant": "162"
+  },
+  {
+    "name": "DEAD END (Construction)",
+    "type": "diamond",
+    "variant": "163"
+  },
+  {
+    "name": "Left Side Road (Construction)",
+    "type": "diamond",
+    "variant": "164"
+  },
+  {
+    "name": "Right Side Road (Construction)",
+    "type": "diamond",
+    "variant": "165"
+  },
+  {
+    "name": "Left Acute-Angled Side Road (Construction)",
+    "type": "diamond",
+    "variant": "166"
+  },
+  {
+    "name": "Right Acute-Angled Side Road (Construction)",
+    "type": "diamond",
+    "variant": "167"
+  },
+  {
+    "name": "T-Intersection (Construction)",
+    "type": "diamond",
+    "variant": "168"
+  },
+  {
+    "name": "Y-Intersection (Construction)",
+    "type": "diamond",
+    "variant": "169"
+  },
+  {
+    "name": "Cross-Roads (Construction)",
+    "type": "diamond",
+    "variant": "170"
+  },
+  {
+    "name": "Roundabout (Construction)",
+    "type": "diamond",
+    "variant": "171"
+  },
+  {
+    "name": "Left Curve with Right Intersection (Construction)",
+    "type": "diamond",
+    "variant": "172"
+  },
+  {
+    "name": "Right Curve with Left Intersection (Construction)",
+    "type": "diamond",
+    "variant": "173"
+  },
+  {
+    "name": "Right-Turning 270-Degree Loop (Net Turn Left, Construction)",
+    "type": "diamond",
+    "variant": "174",
+    "tooltip": "The loop should be roughly 235 degrees or more",
+    "note": "A turn of at least 235 degrees justifies this sign."
+  },
+  {
+    "name": "Left-Turning 270-Degree Loop (Net Turn Right, Construction)",
+    "type": "diamond",
+    "variant": "175",
+    "tooltip": "The loop should be roughly 235 degrees or more",
+    "note": "A turn of at least 235 degrees justifies this sign."
+  },
+  {
+    "name": "Two Way Traffic (Construction)",
+    "type": "diamond",
+    "variant": "176"
+  },
+  {
+    "name": "Divided Highway Begins (Construction)",
+    "type": "diamond",
+    "variant": "177"
+  },
+  {
+    "name": "Divided Highway Ends (Construction)",
+    "type": "diamond",
+    "variant": "178"
+  },
+  {
+    "name": "Slippery When Wet (Construction)",
+    "type": "diamond",
+    "variant": "179"
+  },
+  {
+    "name": "BUMP (Construction)",
+    "type": "diamond",
+    "variant": "180"
+  },
+  {
+    "name": "Cross-Roads, Railroad to Right (Construction)",
+    "type": "diamond",
+    "variant": "181",
+    "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
+    "note": "The MUTCD says this sign should be 100 feet (30 blocks) from the RXR (50 [15 blocks] for pedestrian paths), displayed everywhere it can be."
+  },
+  {
+    "name": "Cross-Roads, Railroad to Left (Construction)",
+    "type": "diamond",
+    "variant": "182",
+    "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
+    "note": "The MUTCD says this sign should be 100 feet (30 blocks) from the RXR (50 [15 blocks] for pedestrian paths), displayed everywhere it can be."
+  },
+  {
+    "name": "Right Side Road Crosses Railroad (Construction)",
+    "type": "diamond",
+    "variant": "183",
+    "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
+    "note": "The MUTCD says this sign should be 100 feet (30 blocks) from the RXR (50 [15 blocks] for pedestrian paths), displayed everywhere it can be."
+  },
+  {
+    "name": "Left Side Road Crosses Railroad (Construction)",
+    "type": "diamond",
+    "variant": "184",
+    "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
+    "note": "The MUTCD says this sign should be 100 feet (30 blocks) from the RXR (50 [15 blocks] for pedestrian paths), displayed everywhere it can be."
+  },
+  {
+    "name": "T-Intersection, Railroad to Right (Construction)",
+    "type": "diamond",
+    "variant": "185",
+    "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
+    "note": "The MUTCD says this sign should be 100 feet (30 blocks) from the RXR (50 [15 blocks] for pedestrian paths), displayed everywhere it can be."
+  },
+  {
+    "name": "T-Intersection, Railroad to Left (Construction)",
+    "type": "diamond",
+    "variant": "186",
+    "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
+    "note": "The MUTCD says this sign should be 100 feet (30 blocks) from the RXR (50 [15 blocks] for pedestrian paths), displayed everywhere it can be."
+  },
+  {
+    "name": "T-Intersection After Railroad (Construction)",
+    "type": "diamond",
+    "variant": "187",
+    "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
+    "note": "The MUTCD says this sign should be 100 feet (30 blocks) from the RXR (50 [15 blocks] for pedestrian paths), displayed everywhere it can be."
+  },
+  {
+    "name": "Skewed Railroad Crossing (Construction)",
+    "type": "diamond",
+    "variant": "188"
+  },
+  {
+    "name": "Bikes (Construction)",
+    "type": "diamond",
+    "variant": "189"
+  },
+  {
+    "name": "Pedestrians (Construction)",
+    "type": "diamond",
+    "variant": "190"
+  },
+  {
+    "name": "Large Trucks (Construction)",
+    "type": "diamond",
+    "variant": "191"
+  },
+  {
+    "name": "Roll-Over Hazard (Construction)",
+    "type": "diamond",
+    "variant": "192",
+    "tooltip": "Handy if vehicles can overturn. Use on sharp turns",
+    "note": "Can find more utility if vehicles from your mod can roll over. Advised to be used with sharp turns."
+  },
+  {
+    "name": "Loose Pavement (Construction)",
+    "type": "diamond",
+    "variant": "193"
+  },
+  {
+    "name": "Pavement Ends (Construction)",
+    "type": "diamond",
+    "variant": "194"
+  },
+  {
+    "name": "DIP (Construction)",
+    "type": "diamond",
+    "variant": "195"
+  },
+  {
+    "name": "Lattice Grid (Construction)",
+    "type": "diamond",
+    "variant": "196"
+  },
+  {
+    "name": "Lattice Grid Left (Construction)",
+    "type": "diamond",
+    "variant": "197"
+  },
+  {
+    "name": "Lattice Grid Right (Construction)",
+    "type": "diamond",
+    "variant": "198"
+  },
+  {
+    "name": "Bikes (Lime)",
+    "type": "diamond",
+    "variant": "199"
+  },
+  {
+    "name": "Pedestrians (Lime)",
+    "type": "diamond",
+    "variant": "200"
+  },
+  {
+    "name": "Pedestrian Crossing (Lime)",
+    "type": "diamond",
+    "variant": "201",
+    "tooltip": "Place at the location of the pedestrian crossing"
+  },
+  {
+    "name": "EMERGENCY SCENE AHEAD",
+    "type": "diamond",
+    "variant": "202",
+    "tooltip": "For general emergency scenes"
+  },
+  {
+    "name": "Crime Scene Ahead",
+    "type": "diamond",
+    "variant": "203"
+  },
+  {
+    "name": "Bomb Scene Ahead",
+    "type": "diamond",
+    "variant": "204",
+    "tooltip": "For scenes where there is a known or exploded bomb"
+  },
+  {
+    "name": "Possible Bomb Scene Ahead",
+    "type": "diamond",
+    "variant": "205",
+    "tooltip": "For scenes where a bomb is suspected or a threat to use one was made"
+  },
+  {
+    "name": "TNT Scene Ahead",
+    "type": "diamond",
+    "variant": "206"
+  },
+  {
+    "name": "Fire Scene Ahead",
+    "type": "diamond",
+    "variant": "207",
+    "tooltip": "For any fire, whether unintended, arson, or natural"
+  },
+  {
+    "name": "INV CHECK AHEAD",
+    "type": "diamond",
+    "variant": "208",
+    "tooltip": "\"Inventory Check Ahead\""
+  },
+  {
+    "name": "Children Playing",
+    "type": "diamond",
+    "variant": "209"
+  },
+  {
+    "name": "PVP Area Ahead",
+    "type": "diamond",
+    "variant": "210"
+  },
+  {
+    "name": "Have Food?",
+    "type": "diamond",
+    "variant": "211",
+    "tooltip": "Use this somewhere that a player won't be able to get food for a long stretch"
+  },
+  {
+    "name": "Ice",
+    "type": "diamond",
+    "variant": "212",
+    "tooltip": "This sign is fit for the snow."
+  },
+  {
+    "name": "LAG",
+    "type": "diamond",
+    "variant": "213",
+    "tooltip": "Use near areas prone to lag spikes"
+  },
+  {
+    "name": "CHUNKS MAY BE INVISIBLE OR GLITCHED",
+    "type": "diamond",
+    "variant": "214",
+    "tooltip": "Use near areas prone to frequent chunk errors"
+  },
+  {
+    "name": "KEEP AWAY FROM INVISIBLE CHUNKS",
+    "type": "diamond",
+    "variant": "215",
+    "tooltip": "Use near areas with hazardous blocks (lava, cacti, magma blocks) that chunk errors could hide"
+  },
+  {
+    "name": "Left-Right Arrow (Construction Warning)",
+    "type": "misc",
+    "variant": "100",
+    "tooltip": "At a T-intersection, place on opposite side to ending road",
+    "note": "At a T-intersection, place on the side opposite to the terminating road, facing the terminating road."
+  },
+  {
+    "name": "Left Arrow (Construction Warning)",
+    "type": "misc",
+    "variant": "101",
+    "tooltip": "Place at a largely sharp left curve",
+    "note": "Place at a largely sharp left curve, facing traffic and largely straight ahead."
+  },
+  {
+    "name": "Right Arrow (Construction Warning)",
+    "type": "misc",
+    "variant": "102",
+    "tooltip": "Place at a largely sharp right curve",
+    "note": "Place at a largely sharp right curve, facing traffic and largely straight ahead."
+  },
+  {
+    "name": "\"DAY\" Plaque (Simple)",
+    "type": "misc",
+    "variant": "103"
+  },
+  {
+    "name": "\"DAY\" Plaque (Fancy)",
+    "type": "misc",
+    "variant": "104"
+  },
+  {
+    "name": "\"NIGHT\" Plaque (Simple)",
+    "type": "misc",
+    "variant": "105"
+  },
+  {
+    "name": "\"NIGHT\" Plaque (Fancy)",
+    "type": "misc",
+    "variant": "106"
+  },
+  {
+    "name": "Chevron Arrow (Black on Orange, Left)",
+    "type": "square",
+    "variant": "167",
+    "tooltip": "Place at regular intervals outside of sharp curves",
+    "note": "This should be used in multiples alongside the outside edge of sharp curves."
+  },
+  {
+    "name": "Chevron Arrow (Black on Orange, Right)",
+    "type": "square",
+    "variant": "168",
+    "tooltip": "Place at regular intervals outside of sharp curves",
+    "note": "This should be used in multiples alongside the outside edge of sharp curves."
+  },
+  {
+    "name": "No Potions",
+    "type": "square",
+    "variant": "169"
+  },
+  {
+    "name": "No PVP",
+    "type": "square",
+    "variant": "170"
+  },
+  {
+    "name": "No Weapons",
+    "type": "square",
+    "variant": "171"
+  },
+  {
+    "name": "SPAWN AREA, No PVP",
+    "type": "square",
+    "variant": "172"
+  }
   {
     "name": "Error",
     "type": "circle",
