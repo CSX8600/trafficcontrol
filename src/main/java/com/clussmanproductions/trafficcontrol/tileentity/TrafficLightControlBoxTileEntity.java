@@ -942,6 +942,8 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 			yellowTime = nbt.getDouble(getNbtKey("yellowTime"));
 			redTime = nbt.getDouble(getNbtKey("redTime"));
 			arrowMinimum = nbt.getDouble(getNbtKey("arrowMinimum"));
+			crossTime = nbt.getDouble(getNbtKey("crossTime"));
+			crossWarningTime = nbt.getDouble(getNbtKey("crossWarningTime"));
 		}
 		
 		public void setSyncData(NBTTagCompound nbt)
@@ -950,6 +952,8 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 			nbt.setDouble(getNbtKey("yellowTime"), yellowTime);
 			nbt.setDouble(getNbtKey("redTime"), redTime);
 			nbt.setDouble(getNbtKey("arrowMinimum"), arrowMinimum);
+			nbt.setDouble(getNbtKey("crossTime"), crossTime);
+			nbt.setDouble(getNbtKey("crossWarningTime"), crossWarningTime);
 		}
 		
 		private String getNbtKey(String key)
