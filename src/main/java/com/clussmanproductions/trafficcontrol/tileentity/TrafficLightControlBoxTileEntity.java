@@ -545,7 +545,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 			return;
 		}
 		
-		if (!sensors.isEmpty())
+		if (!sensors.isEmpty() || !northSouthPedButtons.isEmpty() || !westEastPedButtons.isEmpty())
 		{
 			getAutomator().update();
 		}
@@ -606,6 +606,8 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 		private double yellowTime = 3;
 		private double redTime = 2;
 		private double arrowMinimum = 5;
+		private double crossTime = 5;
+		private double crossWarningTime = 7;
 		private boolean northSouthPedQueued;
 		private boolean westEastPedQueued;
 		
@@ -641,6 +643,22 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 			this.arrowMinimum = arrowMinimum;
 		}
 				
+		public double getCrossTime() {
+			return crossTime;
+		}
+
+		public void setCrossTime(double crossTime) {
+			this.crossTime = crossTime;
+		}
+
+		public double getCrossWarningTime() {
+			return crossWarningTime;
+		}
+
+		public void setCrossWarningTime(double crossWarningTime) {
+			this.crossWarningTime = crossWarningTime;
+		}
+
 		public boolean isNorthSouthPedQueued() {
 			return northSouthPedQueued;
 		}
@@ -784,8 +802,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 						tl.setActive(EnumTrafficLightBulbTypes.Red, true, false);
 						tl.setActive(EnumTrafficLightBulbTypes.RedArrowLeft, true, false);
 					});
-					
-					return Stages.Red;
+					break;
 				case Direction1TurnArrow:					
 					trafficLightsForRightOfWay
 						.stream()
@@ -800,8 +817,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 							tl.setActive(EnumTrafficLightBulbTypes.GreenArrowLeft, true, false);
 							tl.setActive(EnumTrafficLightBulbTypes.Green, true, false);
 						});
-					
-					return Stages.Direction1TurnArrow;
+					break;
 				case Direction2TurnArrow:
 					trafficLightsForRightOfWay
 					.stream()
@@ -816,7 +832,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 						tl.setActive(EnumTrafficLightBulbTypes.GreenArrowLeft, true, false);
 						tl.setActive(EnumTrafficLightBulbTypes.Green, true, false);
 					});
-					return Stages.Direction2TurnArrow;
+					break;
 				case BothTurnArrow:
 					trafficLightsForRightOfWay
 					.stream()
@@ -826,8 +842,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 						tl.setActive(EnumTrafficLightBulbTypes.Red, true, false);
 						tl.setActive(EnumTrafficLightBulbTypes.GreenArrowLeft, true, false);
 					});
-
-					return Stages.BothTurnArrow;
+					break;
 				case Direction1TurnArrowYellow:
 					trafficLightsForRightOfWay
 						.stream()
@@ -842,8 +857,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 							tl.setActive(EnumTrafficLightBulbTypes.YellowArrowLeft, true, false);
 							tl.setActive(EnumTrafficLightBulbTypes.Green, true, false);
 						});
-					
-					return Stages.Direction1TurnArrowYellow;
+					break;
 				case Direction2TurnArrowYellow:
 					trafficLightsForRightOfWay
 					.stream()
@@ -858,7 +872,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 						tl.setActive(EnumTrafficLightBulbTypes.YellowArrowLeft, true, false);
 						tl.setActive(EnumTrafficLightBulbTypes.Green, true, false);
 					});
-					return Stages.Direction2TurnArrowYellow;
+					break;
 				case BothTurnArrowYellow:
 					trafficLightsForRightOfWay
 					.stream()
@@ -868,8 +882,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 						tl.setActive(EnumTrafficLightBulbTypes.Red, true, false);
 						tl.setActive(EnumTrafficLightBulbTypes.YellowArrowLeft, true, false);
 					});
-					
-					return Stages.BothTurnArrowYellow;
+					break;
 				case Yellow:
 					trafficLightsForRightOfWay
 					.stream()
@@ -879,8 +892,10 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 						tl.setActive(EnumTrafficLightBulbTypes.YellowArrowLeft, true, false);
 						tl.setActive(EnumTrafficLightBulbTypes.Yellow, true, false);
 					});
-					return Stages.Yellow;
+					break;
 				case Green:
+				case GreenCross:
+				case GreenDontCrossWarning:
 					trafficLightsForRightOfWay
 					.stream()
 					.forEach(tl ->
@@ -888,8 +903,18 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 						tl.powerOff();
 						tl.setActive(EnumTrafficLightBulbTypes.YellowArrowLeft, true, true);
 						tl.setActive(EnumTrafficLightBulbTypes.Green, true, false);
+						
+						if (stage == Stages.GreenCross)
+						{
+							tl.setActive(EnumTrafficLightBulbTypes.DontCross, false, false);
+							tl.setActive(EnumTrafficLightBulbTypes.Cross, true, false);
+						}
+						else if (stage == Stages.GreenDontCrossWarning)
+						{
+							tl.setActive(EnumTrafficLightBulbTypes.DontCross, true, true);
+						}
 					});
-					return Stages.Green;
+					break;
 			}
 			
 			return stage;
@@ -947,6 +972,10 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 			
 			ArrayList<BlockPos> invalidSensors = new ArrayList<>();
 			SensorCheckResult result = new SensorCheckResult();
+			
+			boolean pedTripped = direction1 == EnumFacing.NORTH ? isNorthSouthPedQueued() : isWestEastPedQueued();
+			result.Direction1Sensor = pedTripped;
+			result.Direction2Sensor = pedTripped;
 			
 			for(BlockPos sensePos : sensors)
 			{
@@ -1046,26 +1075,23 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 						return Stages.Direction2TurnArrow;
 					}					
 					
-					setNextUpdate(greenMinimum);				
-					return Stages.Green;
+					return pedCheckedGreen(currentRightOfWay);
 				case BothTurnArrow:
 					setNextUpdate(yellowTime);
 					return Stages.BothTurnArrowYellow;
 				case BothTurnArrowYellow:
-					setNextUpdate(greenMinimum);
-					return Stages.Green;
+					return pedCheckedGreen(currentRightOfWay);
 				case Direction1TurnArrow:
 					setNextUpdate(yellowTime);
 					return Stages.Direction1TurnArrowYellow;
 				case Direction1TurnArrowYellow:
-					setNextUpdate(greenMinimum);
-					return Stages.Green;
+					return pedCheckedGreen(currentRightOfWay);
 				case Direction2TurnArrow:
 					setNextUpdate(yellowTime);
 					return Stages.Direction2TurnArrowYellow;
 				case Direction2TurnArrowYellow:
-					setNextUpdate(greenMinimum);
-					return Stages.Green;
+					return pedCheckedGreen(currentRightOfWay);
+				case GreenDontCrossWarning:
 				case Green:
 					Automator.SensorCheckResult crossSensorCheck = checkSensors(currentRightOfWay.getNext());
 					if (crossSensorCheck.Direction1Sensor || 
@@ -1077,14 +1103,40 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 						return Stages.Yellow;
 					}
 
+					Stages nextStage = pedCheckedGreen(currentRightOfWay);
 					setNextUpdate(yellowTime);
-					return Stages.Green;
+					return nextStage;
 				case Yellow:
 					setNextUpdate(redTime);
 					return Stages.Red;
+				case GreenCross:
+					setNextUpdate(crossWarningTime);
+					return Stages.GreenDontCrossWarning;
 			}
 			
 			return null;
+		}
+		
+		private Stages pedCheckedGreen(RightOfWays rightOfWay)
+		{
+			if ((rightOfWay == RightOfWays.NorthSouth && isNorthSouthPedQueued()) ||
+					(rightOfWay == RightOfWays.EastWest && isWestEastPedQueued()))
+			{
+				if (rightOfWay == RightOfWays.NorthSouth)
+				{
+					setNorthSouthPedQueued(false);
+				}
+				else
+				{
+					setWestEastPedQueued(false);
+				}
+				
+				setNextUpdate(crossTime);
+				return Stages.GreenCross;
+			}
+			
+			setNextUpdate(greenMinimum);
+			return Stages.Green;
 		}
 	
 		private void setNextUpdate(double secondsIntoFuture)

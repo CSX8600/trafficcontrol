@@ -161,6 +161,8 @@ public class BaseTrafficLightTileEntity extends TileEntity implements ITickable 
 			flashBySlot.put(i, false);
 		}
 		
+		setActive(EnumTrafficLightBulbTypes.DontCross, true, false);
+		
 		markDirty();
 		world.notifyBlockUpdate(getPos(), world.getBlockState(getPos()), world.getBlockState(getPos()), 3);
 	}
