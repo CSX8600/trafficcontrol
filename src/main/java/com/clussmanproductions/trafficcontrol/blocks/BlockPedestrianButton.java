@@ -6,6 +6,7 @@ import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightControlBoxT
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -16,6 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -26,6 +28,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockPedestrianButton extends Block {
 
 	public static PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+	public static PropertyBool ABOVE = PropertyBool.create("above");
+
 	public BlockPedestrianButton() {
 		super(Material.IRON);
 		setRegistryName("pedestrian_button");
@@ -34,59 +38,64 @@ public class BlockPedestrianButton extends Block {
 		setHarvestLevel("pickaxe", 2);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
-	
+
 	@SideOnly(Side.CLIENT)
-	public void initModel()
-	{
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+	public void initModel() {
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0,
+				new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
-	
+
 	@Override
 	public int getMetaFromState(IBlockState state) {
 		return state.getValue(FACING).getHorizontalIndex();
 	}
-	
+
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
 		return getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta));
 	}
-	
+
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, FACING);
+		return new BlockStateContainer(this, FACING, ABOVE);
+	}
+
+	@Override
+	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+		return state.withProperty(ABOVE, !worldIn.isAirBlock(pos.up()));
 	}
 
 	@Override
 	public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean causesSuffocation(IBlockState state) {
 		return false;
 	}
-	
+
 	@Override
 	public float getAmbientOcclusionLightValue(IBlockState state) {
 		return 1;
 	}
-	
+
 	@Override
 	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,
 			float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
 		return getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
 	}
 
-	 @Override
+	@Override
 	public TileEntity createTileEntity(World world, IBlockState state) {
 		return new PedestrianButtonTileEntity();
 	}
-	 
+
 	@Override
 	public boolean hasTileEntity(IBlockState state) {
 		return true;
@@ -95,54 +104,62 @@ public class BlockPedestrianButton extends Block {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (worldIn.isRemote)
-		{
+		if (worldIn.isRemote) {
 			return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 		}
-		
+
 		TileEntity te = worldIn.getTileEntity(pos);
-		if (te != null && te instanceof PedestrianButtonTileEntity)
-		{
-			PedestrianButtonTileEntity pedTE = (PedestrianButtonTileEntity)te;
-			for(BlockPos controller : pedTE.getPairedBoxes())
-			{
+		if (te != null && te instanceof PedestrianButtonTileEntity) {
+			PedestrianButtonTileEntity pedTE = (PedestrianButtonTileEntity) te;
+			for (BlockPos controller : pedTE.getPairedBoxes()) {
 				TileEntity prelimCtrlrTE = worldIn.getTileEntity(controller);
-				if (prelimCtrlrTE == null || !(prelimCtrlrTE instanceof TrafficLightControlBoxTileEntity))
-				{
+				if (prelimCtrlrTE == null || !(prelimCtrlrTE instanceof TrafficLightControlBoxTileEntity)) {
 					pedTE.removePairedBox(controller);
 					continue;
 				}
-				
+
 				EnumFacing myFacing = state.getValue(FACING);
-				TrafficLightControlBoxTileEntity ctrlr = (TrafficLightControlBoxTileEntity)prelimCtrlrTE;
-				if (myFacing == EnumFacing.NORTH || myFacing == EnumFacing.SOUTH)
-				{
+				TrafficLightControlBoxTileEntity ctrlr = (TrafficLightControlBoxTileEntity) prelimCtrlrTE;
+				if (myFacing == EnumFacing.NORTH || myFacing == EnumFacing.SOUTH) {
 					ctrlr.getAutomator().setWestEastPedQueued(true);
-				}
-				else
-				{
+				} else {
 					ctrlr.getAutomator().setNorthSouthPedQueued(true);
 				}
 			}
 		}
-		
+
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 	}
-	
+
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		if (worldIn.isRemote)
-		{
+		if (worldIn.isRemote) {
 			super.breakBlock(worldIn, pos, state);
 			return;
 		}
-		
-		PedestrianButtonTileEntity te = (PedestrianButtonTileEntity)worldIn.getTileEntity(pos);
-		if (te != null)
-		{
+
+		PedestrianButtonTileEntity te = (PedestrianButtonTileEntity) worldIn.getTileEntity(pos);
+		if (te != null) {
 			te.onBreak(worldIn, state.getValue(FACING));
 		}
-		
+
 		super.breakBlock(worldIn, pos, state);
+	}
+
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		EnumFacing currentFacing = state.getValue(FACING);
+		switch (currentFacing) {
+		case NORTH:
+			return new AxisAlignedBB(0.71875, 0, 0.4375, 0.28125, 0.625, 0.625);
+		case SOUTH:
+			return new AxisAlignedBB(0.71875, 0, 0.375, 0.28125, 0.625, 0.5625);
+		case WEST:
+			return new AxisAlignedBB(0.4375, 0, 0.71875, 0.625, 0.625, 0.28125);
+		case EAST:
+			return new AxisAlignedBB(0.375, 0, 0.71875, 0.5625, 0.625, 0.28125);
+
+		}
+		return super.getBoundingBox(state, source, pos);
 	}
 }

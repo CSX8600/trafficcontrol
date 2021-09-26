@@ -6,9 +6,36 @@
     "variants": {
         "normal": [{}],
         "inventory": [{}],
-        "facing=north": { "model": "trafficcontrol:pedestrian_button" },
-        "facing=west": { "model": "trafficcontrol:pedestrian_button", "y": 270 },
-        "facing=south": { "model": "trafficcontrol:pedestrian_button", "y": 180 },
-        "facing=east": { "model": "trafficcontrol:pedestrian_button", "y": 90 }
+        "above=false,facing=north": { "model": "trafficcontrol:pedestrian_button" },
+        "above=false,facing=west": { "model": "trafficcontrol:pedestrian_button", "y": 270 },
+        "above=false,facing=south": { "model": "trafficcontrol:pedestrian_button", "y": 180 },
+        "above=false,facing=east": { "model": "trafficcontrol:pedestrian_button", "y": 90 },
+        "above=true,facing=north": { 
+        	"model": "trafficcontrol:pedestrian_button",
+        	"submodel": {
+        		"top": { "model": "trafficcontrol:pedestrian_button_top" } 
+        	}
+        },
+        "above=true,facing=south": { 
+        	"model": "trafficcontrol:pedestrian_button",
+        	"y": 180,
+        	"submodel": {
+        		"top": { "model": "trafficcontrol:pedestrian_button_top" } 
+        	}
+        },
+        "above=true,facing=west": { 
+        	"model": "trafficcontrol:pedestrian_button",
+        	"y": 270,
+        	"submodel": {
+        		"top": { "model": "trafficcontrol:pedestrian_button_top" } 
+        	}
+        },
+        "above=true,facing=east": { 
+        	"model": "trafficcontrol:pedestrian_button",
+        	"y": 90,
+        	"submodel": {
+        		"top": { "model": "trafficcontrol:pedestrian_button_top" } 
+        	}
+        }
     }
 }
