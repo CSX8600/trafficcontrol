@@ -26,7 +26,8 @@ public class Config {
 				"net.minecraft.entity.passive.EntityDonkey",
 				"net.minecraft.entity.passive.EntityMule",
 				"net.minecraft.entity.passive.EntitySkeletonHorse",
-				"net.minecraft.entity.passive.EntityZombieHorse"
+				"net.minecraft.entity.passive.EntityZombieHorse",
+				"de.maxhenkel.car.entity.car.base.EntityVehicleBase"
 			};
 	public static int sensorScanHeight = 5;
 	
