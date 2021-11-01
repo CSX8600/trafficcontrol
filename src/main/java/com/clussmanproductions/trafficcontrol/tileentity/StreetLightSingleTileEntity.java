@@ -3,16 +3,20 @@ package com.clussmanproductions.trafficcontrol.tileentity;
 import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLightSource;
 import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightSingle;
+import com.clussmanproductions.trafficcontrol.util.CustomAngleCalculator;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class StreetLightSingleTileEntity extends TileEntity {
+	private boolean powered;
 	private int[] blockPos1 = new int[] { 0, -1, 0 };
 	private int[] blockPos2 = new int[] { 0, -1, 0 };
 	
@@ -22,12 +26,14 @@ public class StreetLightSingleTileEntity extends TileEntity {
 		
 		blockPos1 = compound.getIntArray("blockPos1");
 		blockPos2 = compound.getIntArray("blockPos2");
+		powered = compound.getBoolean("powered");
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setIntArray("blockPos1", blockPos1);
 		compound.setIntArray("blockPos2", blockPos2);
+		compound.setBoolean("powered", powered);
 		
 		return super.writeToNBT(compound);
 	}
@@ -42,7 +48,7 @@ public class StreetLightSingleTileEntity extends TileEntity {
 		IBlockState state = world.getBlockState(pos);
 		
 		if (state.getBlock() == ModBlocks.street_light_single &&
-			!state.getValue(BlockStreetLightSingle.POWERED))
+			!powered)
 		{
 			addLightSources();
 		}
@@ -129,35 +135,36 @@ public class StreetLightSingleTileEntity extends TileEntity {
 	public void addLightSources()
 	{
 		IBlockState lampState = world.getBlockState(getPos());
-		EnumFacing facing = lampState.getValue(BlockStreetLightSingle.FACING);
+		int rotation = lampState.getValue(BlockStreetLightSingle.ROTATION);
 		
 		BlockPos angle;
-		switch(facing)
+		if (CustomAngleCalculator.isNorth(rotation))
 		{
-			case NORTH:
-				angle = getPos().south(2).west(2);
-				tryPlaceLightSource(angle);
-				angle = angle.east(4);
-				tryPlaceLightSource(angle);
-				break;
-			case WEST:
-				angle = getPos().east(2).north(2);
-				tryPlaceLightSource(angle);
-				angle = angle.south(4);
-				tryPlaceLightSource(angle);
-				break;
-			case SOUTH:
-				angle = getPos().north(2).west(2);
-				tryPlaceLightSource(angle);
-				angle = angle.east(4);
-				tryPlaceLightSource(angle);
-				break;
-			case EAST:
-				angle = getPos().west(2).north(2);
-				tryPlaceLightSource(angle);
-				angle = angle.south(4);
-				tryPlaceLightSource(angle);
-				break;
+			angle = getPos().south(2).west(2);
+			tryPlaceLightSource(angle);
+			angle = angle.east(4);
+			tryPlaceLightSource(angle);
+		}
+		else if (CustomAngleCalculator.isWest(rotation))
+		{
+			angle = getPos().east(2).north(2);
+			tryPlaceLightSource(angle);
+			angle = angle.south(4);
+			tryPlaceLightSource(angle);
+		}
+		else if (CustomAngleCalculator.isSouth(rotation))
+		{
+			angle = getPos().north(2).west(2);
+			tryPlaceLightSource(angle);
+			angle = angle.east(4);
+			tryPlaceLightSource(angle);
+		}
+		else if (CustomAngleCalculator.isEast(rotation))
+		{
+			angle = getPos().west(2).north(2);
+			tryPlaceLightSource(angle);
+			angle = angle.south(4);
+			tryPlaceLightSource(angle);
 		}
 	}
 	
@@ -169,5 +176,40 @@ public class StreetLightSingleTileEntity extends TileEntity {
 		}
 		
 		return super.shouldRefresh(world, pos, oldState, newSate);
+	}
+
+	public boolean isPowered()
+	{
+		return powered;
+	}
+	
+	public void setPowered(boolean powered)
+	{
+		this.powered = powered;
+		markDirty();
+	}
+	
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		NBTTagCompound tag = super.getUpdateTag();
+		tag.setBoolean("powered", powered);
+		return tag;
+	}
+	
+	@Override
+	public void handleUpdateTag(NBTTagCompound tag) {
+		super.handleUpdateTag(tag);
+		powered = tag.getBoolean("powered");
+	}
+	
+	@Override
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		return new SPacketUpdateTileEntity(pos, 0, getUpdateTag());
+	}
+	
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+		super.onDataPacket(net, pkt);
+		handleUpdateTag(pkt.getNbtCompound());
 	}
 }

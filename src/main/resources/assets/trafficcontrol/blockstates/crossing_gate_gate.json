@@ -6,9 +6,21 @@
     "variants": {
         "normal": [{}],
         "inventory": [{}],
-        "facing=north": { "model": "trafficcontrol:crossing_gate_gate" },
-        "facing=west": { "model": "trafficcontrol:crossing_gate_gate", "y": 270 },
-        "facing=south": { "model": "trafficcontrol:crossing_gate_gate", "y": 180 },
-        "facing=east": { "model": "trafficcontrol:crossing_gate_gate", "y": 90 }
+        "rotation=0": { "model": "trafficcontrol:crossing_gate_gate" },
+        "rotation=1": { "model": "trafficcontrol:crossing_gate_gate", "transform": { "rotation": { "y": 337 } } },
+        "rotation=2": { "model": "trafficcontrol:crossing_gate_gate", "transform": { "rotation": { "y": 315  } } },
+        "rotation=3": { "model": "trafficcontrol:crossing_gate_gate", "transform": { "rotation": { "y": 292 } } },
+        "rotation=4": { "model": "trafficcontrol:crossing_gate_gate", "transform": { "rotation": { "y": 270 } } },
+        "rotation=5": { "model": "trafficcontrol:crossing_gate_gate", "transform": { "rotation": { "y": 247 } } },
+        "rotation=6": { "model": "trafficcontrol:crossing_gate_gate", "transform": { "rotation": { "y": 225 } } },
+        "rotation=7": { "model": "trafficcontrol:crossing_gate_gate", "transform": { "rotation": { "y": 202 } } },
+        "rotation=8": { "model": "trafficcontrol:crossing_gate_gate", "transform": { "rotation": { "y": 180 } } },
+        "rotation=9": { "model": "trafficcontrol:crossing_gate_gate", "transform": { "rotation": { "y": 157 } } },
+        "rotation=10": { "model": "trafficcontrol:crossing_gate_gate", "transform": { "rotation": { "y": 135 } } },
+        "rotation=11": { "model": "trafficcontrol:crossing_gate_gate", "transform": { "rotation": { "y": 112 } } },
+        "rotation=12": { "model": "trafficcontrol:crossing_gate_gate", "transform": { "rotation": { "y": 90 } } },
+        "rotation=13": { "model": "trafficcontrol:crossing_gate_gate", "transform": { "rotation": { "y": 67 } } },
+        "rotation=14": { "model": "trafficcontrol:crossing_gate_gate", "transform": { "rotation": { "y": 45 } } },
+        "rotation=15": { "model": "trafficcontrol:crossing_gate_gate", "transform": { "rotation": { "y": 22 } } }
     }
 }

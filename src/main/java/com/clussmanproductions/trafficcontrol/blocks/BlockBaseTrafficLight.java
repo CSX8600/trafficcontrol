@@ -8,6 +8,7 @@ import com.clussmanproductions.trafficcontrol.ModItems;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.item.BaseItemTrafficLightFrame;
 import com.clussmanproductions.trafficcontrol.tileentity.BaseTrafficLightTileEntity;
+import com.clussmanproductions.trafficcontrol.util.CustomAngleCalculator;
 import com.clussmanproductions.trafficcontrol.util.EnumTrafficLightBulbTypes;
 
 import net.minecraft.block.Block;
@@ -160,7 +161,18 @@ public abstract class BlockBaseTrafficLight extends Block {
 		
 		if (state.getBlock() == ModBlocks.sign)
 		{
-			EnumFacing facing = state.getValue(BlockSign.FACING);
+			int signRotation = state.getValue(BlockSign.ROTATION);
+			if (!CustomAngleCalculator.isCardinal(signRotation))
+			{
+				return false;
+			}
+			EnumFacing workingFacing = EnumFacing.NORTH;
+			int rotationSteps = signRotation / 4;
+			for(int i = 0; i < rotationSteps; i++)
+			{
+				workingFacing = workingFacing.rotateY();
+			}
+			final EnumFacing facing = workingFacing;
 			
 			return Arrays.stream(validFacings).noneMatch(vf -> vf.equals(facing));
 		}

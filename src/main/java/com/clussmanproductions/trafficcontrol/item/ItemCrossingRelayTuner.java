@@ -1,6 +1,5 @@
 package com.clussmanproductions.trafficcontrol.item;
 
-import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockBaseTrafficLight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase;
@@ -11,6 +10,7 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorStraight;
 import com.clussmanproductions.trafficcontrol.tileentity.BaseTrafficLightTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.BellBaseTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.CrossingLampsTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.RelayTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.ShuntBorderTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.ShuntIslandTileEntity;
@@ -81,18 +81,8 @@ public class ItemCrossingRelayTuner extends Item {
 		IBlockState state = world.getBlockState(pos);
 		if (te instanceof RelayTileEntity)
 		{
-			RelayTileEntity relay = (RelayTileEntity)te;			
-			if (state.getBlock() instanceof BlockLampBase)
-			{
-				if (relay.addOrRemoveCrossingGateLamp(pos))
-				{
-					player.sendMessage(new TextComponentString("Paired Crossing Lamps to Relay Box"));
-				}
-				else
-				{
-					player.sendMessage(new TextComponentString("Unpaired Crossing Lamps from Relay Box"));
-				}
-			}
+			RelayTileEntity relay = (RelayTileEntity)te;
+			// There are currently no blocks that pair to relay
 		}
 		
 		if (te instanceof TrafficLightControlBoxTileEntity)
@@ -313,6 +303,18 @@ public class ItemCrossingRelayTuner extends Item {
 				{
 					shuntIslandTileEntity.removePairedRelayBox(relay.getPos());
 					player.sendMessage(new TextComponentString("Unpaired Island Shunt from Relay Box"));
+				}
+			}
+			
+			if (te instanceof CrossingLampsTileEntity)
+			{
+				if (relay.addOrRemoveCrossingGateLamp(te.getPos()))
+				{
+					player.sendMessage(new TextComponentString("Paired Crossing Lamps to Relay Box"));
+				}
+				else
+				{
+					player.sendMessage(new TextComponentString("Unpaired Crossing Lamps from Relay Box"));
 				}
 			}
 		}

@@ -5,13 +5,7 @@
     },
     "variants": {
         "normal": [{}],
-        "inventory": [{}],
-        "facing": {
-			"north": {},
-			"west": { "y": 270 },
-			"south": { "y": 180 },
-			"east": { "y": 90 }
-		},
+        "inventory": { "model": "trafficcontrol:sign_item" },
         "validhorizontalbar": {
 	        "true": {
 	        	"submodel": {
@@ -20,6 +14,33 @@
 	        	}
 	    	},
 	    	"false": { }
+        },
+        "rotation": { 
+        	"0": { },
+        	"1": { "model": "trafficcontrol:sign", "transform": { "rotation": { "y": 337 } } },
+        	"2": { "model": "trafficcontrol:sign", "transform": { "rotation": { "y": 315 } } },
+        	"3": { "model": "trafficcontrol:sign", "transform": { "rotation": { "y": 292 } } },
+        	"4": { "model": "trafficcontrol:sign", "transform": { "rotation": { "y": 270 } } },
+        	"5": { "model": "trafficcontrol:sign", "transform": { "rotation": { "y": 247 } } },
+        	"6": { "model": "trafficcontrol:sign", "transform": { "rotation": { "y": 225 } } },
+        	"7": { "model": "trafficcontrol:sign", "transform": { "rotation": { "y": 202 } } },
+        	"8": { "model": "trafficcontrol:sign", "transform": { "rotation": { "y": 180 } } },
+        	"9": { "model": "trafficcontrol:sign", "transform": { "rotation": { "y": 157 } } },
+        	"10": { "model": "trafficcontrol:sign", "transform": { "rotation": { "y": 135 } } },
+        	"11": { "model": "trafficcontrol:sign", "transform": { "rotation": { "y": 112 } } },
+        	"12": { "model": "trafficcontrol:sign", "transform": { "rotation": { "y": 90 } } },
+        	"13": { "model": "trafficcontrol:sign", "transform": { "rotation": { "y": 67 } } },
+        	"14": { "model": "trafficcontrol:sign", "transform": { "rotation": { "y": 45 } } },
+        	"15": { "model": "trafficcontrol:sign", "transform": { "rotation": { "y": 22 } } }
+        },
+        "ishalfheight":
+        { 
+        	"true": { },
+        	"false": {
+        		"submodel": { 
+        			"upper": { "model": "trafficcontrol:sign_upper" }
+        		}
+        	}
         }
     }
 }
