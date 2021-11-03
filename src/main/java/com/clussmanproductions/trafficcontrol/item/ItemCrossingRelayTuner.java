@@ -16,6 +16,7 @@ import com.clussmanproductions.trafficcontrol.tileentity.ShuntBorderTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.ShuntIslandTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightControlBoxTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.WigWagTileEntity;
+import com.clussmanproductions.trafficcontrol.util.CustomAngleCalculator;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -328,10 +329,10 @@ public class ItemCrossingRelayTuner extends Item {
 				
 				if (state.getBlock() instanceof BlockBaseTrafficLight)
 				{
-					EnumFacing facing = state.getValue(BlockBaseTrafficLight.FACING);
+					int rotation = state.getValue(BlockBaseTrafficLight.ROTATION);
 					
 					boolean operationResult = false;
-					if (facing == EnumFacing.EAST || facing == EnumFacing.WEST)
+					if (CustomAngleCalculator.isEast(rotation) || CustomAngleCalculator.isWest(rotation))
 					{
 						operationResult = controlBox.addOrRemoveWestEastTrafficLight(te.getPos());
 					}

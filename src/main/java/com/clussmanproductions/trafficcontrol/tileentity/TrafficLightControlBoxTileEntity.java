@@ -12,6 +12,7 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockBaseTrafficLight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorLeft;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorStraight;
+import com.clussmanproductions.trafficcontrol.util.CustomAngleCalculator;
 import com.clussmanproductions.trafficcontrol.util.EnumTrafficLightBulbTypes;
 import com.google.common.collect.ImmutableList;
 
@@ -673,7 +674,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 						.stream()
 						.forEach(tl -> {
 							IBlockState tlBs = world.getBlockState(tl.getPos());
-							if (!tlBs.getValue(BlockBaseTrafficLight.FACING).equals(direction1))
+							if (!CustomAngleCalculator.isRotationFacing(tlBs.getValue(BlockBaseTrafficLight.ROTATION), direction1))
 							{
 								return;
 							}
@@ -689,7 +690,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 					.stream()
 					.forEach(tl -> {
 						IBlockState tlBs = world.getBlockState(tl.getPos());
-						if (!tlBs.getValue(BlockBaseTrafficLight.FACING).equals(direction2))
+						if (!CustomAngleCalculator.isRotationFacing(tlBs.getValue(BlockBaseTrafficLight.ROTATION), direction2))
 						{
 							return;
 						}
@@ -715,7 +716,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 						.stream()
 						.forEach(tl -> {
 							IBlockState tlBs = world.getBlockState(tl.getPos());
-							if (!tlBs.getValue(BlockBaseTrafficLight.FACING).equals(direction1))
+							if (!CustomAngleCalculator.isRotationFacing(tlBs.getValue(BlockBaseTrafficLight.ROTATION), direction1))
 							{
 								return;
 							}
@@ -731,7 +732,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 					.stream()
 					.forEach(tl -> {
 						IBlockState tlBs = world.getBlockState(tl.getPos());
-						if (!tlBs.getValue(BlockBaseTrafficLight.FACING).equals(direction2))
+						if (!CustomAngleCalculator.isRotationFacing(tlBs.getValue(BlockBaseTrafficLight.ROTATION), direction2))
 						{
 							return;
 						}

@@ -84,7 +84,13 @@ public class BlockCrossingGatePole extends Block {
 		
 		if (state.getBlock() instanceof BlockBaseTrafficLight)
 		{
-			EnumFacing stateFacing = state.getValue(BlockTrafficLight.FACING);
+			int stateRotation = state.getValue(BlockBaseTrafficLight.ROTATION);
+			if (!CustomAngleCalculator.isCardinal(stateRotation))
+			{
+				return false;
+			}
+			
+			EnumFacing stateFacing = CustomAngleCalculator.getFacingFromRotation(stateRotation);
 			return stateFacing != facing;
 		}
 		

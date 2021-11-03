@@ -246,30 +246,6 @@ public class BaseTrafficLightTileEntity extends TileEntity implements ITickable 
 
 		return false;
 	}
-	
-	public int getYRotation()
-	{
-		IBlockState state = world.getBlockState(getPos());
-		if (!(state.getBlock() instanceof BlockBaseTrafficLight))
-		{
-			return 0;
-		}
-		
-		switch(state.getValue(BlockBaseTrafficLight.FACING))
-		{
-			case EAST:
-				return 270;
-			case NORTH:
-				return 0;
-			case SOUTH:
-				return 180;
-			case WEST:
-				return 90;
-			
-		}
-		
-		return 0;
-	}
 
 	@Override
 	public void update() {

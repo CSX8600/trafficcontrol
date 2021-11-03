@@ -405,8 +405,9 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 			{
 				try
 				{
-					IBlockState currentState = world.getBlockState(pos);
-					world.setBlockState(pos, currentState.withProperty(BlockWigWag.ACTIVE, getPowered()));
+					WigWagTileEntity te = (WigWagTileEntity)world.getTileEntity(pos);
+					te.setActive(getPowered());
+					world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 				}
 				catch (Exception ex)
 				{

@@ -2,6 +2,7 @@ package com.clussmanproductions.trafficcontrol.util;
 
 import java.util.Arrays;
 
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.MathHelper;
 
 public class CustomAngleCalculator {
@@ -52,5 +53,35 @@ public class CustomAngleCalculator {
 	public static boolean isWest(int rotation)
 	{
 		return rotation >= 10 && rotation < 14; 
+	}
+
+	// ONLY USE WHEN ROTATION IS CARDINAL!!
+	public static EnumFacing getFacingFromRotation(int rotation)
+	{
+		EnumFacing workingFacing = EnumFacing.NORTH;
+		int rotationSteps = rotation / 4;
+		for(int i = 0; i < rotationSteps; i++)
+		{
+			workingFacing = workingFacing.rotateY();
+		}
+		
+		return workingFacing;
+	}
+	
+	public static boolean isRotationFacing(int rotation, EnumFacing facing)
+	{
+		switch(facing)
+		{
+			case NORTH:
+				return isNorth(rotation);
+			case SOUTH:
+				return isSouth(rotation);
+			case WEST:
+				return isWest(rotation);
+			case EAST:
+				return isEast(rotation);
+		}
+		
+		return false;
 	}
 }
