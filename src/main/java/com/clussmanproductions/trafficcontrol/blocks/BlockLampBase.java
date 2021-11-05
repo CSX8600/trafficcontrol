@@ -83,19 +83,12 @@ public abstract class BlockLampBase extends Block {
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
 		CrossingLampsTileEntity crossingLampsTE = null;
-		if (worldIn instanceof ChunkCache)
+		TileEntity te = worldIn.getTileEntity(pos);
+		if (te == null || !(te instanceof CrossingLampsTileEntity))
 		{
-			TileEntity te = ((ChunkCache)worldIn).getTileEntity(pos);
-			
-			if (te != null)
-			{
-				crossingLampsTE = (CrossingLampsTileEntity)te;
-			}
+			return state;
 		}
-		else
-		{
-			crossingLampsTE = (CrossingLampsTileEntity)((World)worldIn).getTileEntity(pos);
-		}
+		crossingLampsTE = (CrossingLampsTileEntity)te;
 		
 		EnumState flashState = EnumState.Off;
 		if (crossingLampsTE != null)
@@ -157,26 +150,12 @@ public abstract class BlockLampBase extends Block {
 	@Override
 	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
 		CrossingLampsTileEntity crossingLampsTE = null;
-		if (world instanceof ChunkCache)
-		{
-			TileEntity te = ((ChunkCache)world).getTileEntity(pos);
-			
-			if (te != null && te instanceof CrossingLampsTileEntity)
-			{
-				crossingLampsTE = (CrossingLampsTileEntity)te;
-			}
-		}
-		else
-		{
-			crossingLampsTE = (CrossingLampsTileEntity)((World)world).getTileEntity(pos);
-		}
-		
-		if (crossingLampsTE == null)
+		TileEntity te = world.getTileEntity(pos);
+		if (te == null || !(te instanceof CrossingLampsTileEntity))
 		{
 			return 0;
 		}
-		
-//		EnumState flashState = state.getValue(STATE);
+		crossingLampsTE = (CrossingLampsTileEntity)te;
 		
 		EnumState flashState = EnumState.Off;
 		if (crossingLampsTE != null)

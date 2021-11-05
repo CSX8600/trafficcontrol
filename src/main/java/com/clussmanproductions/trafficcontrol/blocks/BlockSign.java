@@ -94,28 +94,22 @@ public class BlockSign extends Block implements ITileEntityProvider {
 									|| getValidStateForAttachableSubModels(state, worldIn.getBlockState(pos.south()), EnumFacing.WEST, EnumFacing.EAST);
 		}
 		
-		SignTileEntity signTE;
-		if (worldIn instanceof ChunkCache)
+		TileEntity te = worldIn.getTileEntity(pos);
+		if (te != null && te instanceof SignTileEntity)
 		{
-			ChunkCache chunkCache = (ChunkCache)worldIn;
-			signTE = (SignTileEntity)chunkCache.getTileEntity(pos);
-		}
-		else
-		{
-			World world = (World)worldIn;
-			signTE = (SignTileEntity)world.getTileEntity(pos);
-		}
-		
-		if (signTE.getType() == 2)
-		{
-			int variant = signTE.getVariant();
+			SignTileEntity signTE = (SignTileEntity)te;
 			
-			if ((variant >= 33 && variant <= 40) || 
-				(variant >= 106 && variant <= 107) ||
-				(variant >= 110 && variant <= 111) ||
-				(variant >= 120 && variant <= 124))
+			if (signTE.getType() == 2)
 			{
-				isHalfHeight = true;
+				int variant = signTE.getVariant();
+				
+				if ((variant >= 33 && variant <= 40) || 
+					(variant >= 106 && variant <= 107) ||
+					(variant >= 110 && variant <= 111) ||
+					(variant >= 120 && variant <= 124))
+				{
+					isHalfHeight = true;
+				}
 			}
 		}
 		

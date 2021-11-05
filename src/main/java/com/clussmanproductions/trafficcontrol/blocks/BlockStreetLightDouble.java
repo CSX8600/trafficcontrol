@@ -85,22 +85,13 @@ public class BlockStreetLightDouble extends Block implements ITileEntityProvider
 	
 	@Override
 	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-		StreetLightDoubleTileEntity streetLightDoubleTileEntity;
-		if (world instanceof ChunkCache)
+		TileEntity te = world.getTileEntity(pos);
+		if (te == null || !(te instanceof StreetLightDoubleTileEntity))
 		{
-			ChunkCache cache = (ChunkCache)world;
-			TileEntity te = cache.getTileEntity(pos);
-			if (te == null || !(te instanceof StreetLightDoubleTileEntity))
-			{
-				return 0;
-			}
-			
-			streetLightDoubleTileEntity = (StreetLightDoubleTileEntity)te;
+			return 0;
 		}
-		else
-		{
-			streetLightDoubleTileEntity = (StreetLightDoubleTileEntity)((World)world).getTileEntity(pos);
-		}
+		
+		StreetLightDoubleTileEntity streetLightDoubleTileEntity = (StreetLightDoubleTileEntity)te;
 		
 		return streetLightDoubleTileEntity.isPowered() ? 0 : 15;
 	}
