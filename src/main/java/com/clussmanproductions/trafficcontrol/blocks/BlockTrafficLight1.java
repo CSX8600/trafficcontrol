@@ -9,6 +9,9 @@ import com.clussmanproductions.trafficcontrol.tileentity.render.TrafficLightRend
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -26,6 +29,22 @@ public class BlockTrafficLight1 extends BlockBaseTrafficLight
 	public void initModel()
 	{
 		ClientRegistry.bindTileEntitySpecialRenderer(TrafficLight1TileEntity.class, new TrafficLight1Renderer());
+	}
+	
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		switch(state.getValue(BlockBaseTrafficLight.FACING))
+		{
+			case EAST:
+				return new AxisAlignedBB(0.2375, 0.13, 0.1875, 0.65, 0.98, 0.8125);
+			case NORTH:
+				return new AxisAlignedBB(0.1875, 0.13, 0.38, 0.8125, 0.98, 0.7625);
+			case SOUTH:
+				return new AxisAlignedBB(0.1875, 0.13, 0.25, 0.8125, 0.98, 0.5625);
+			case WEST:
+				return new AxisAlignedBB(0.4375, 0.13, 0.1875, 0.75, 0.98, 0.8125);
+		}
+		return super.getBoundingBox(state, source, pos);
 	}
 	
 	@Override

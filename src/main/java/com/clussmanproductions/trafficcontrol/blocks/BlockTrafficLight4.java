@@ -11,8 +11,14 @@ import com.clussmanproductions.trafficcontrol.tileentity.render.TrafficLight1Ren
 import com.clussmanproductions.trafficcontrol.tileentity.render.TrafficLightRenderer;
 import com.clussmanproductions.trafficcontrol.tileentity.render.TrafficLight2Renderer;
 
+import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -30,6 +36,22 @@ public class BlockTrafficLight4 extends BlockBaseTrafficLight
 	public void initModel()
 	{
 		ClientRegistry.bindTileEntitySpecialRenderer(TrafficLight4TileEntity.class, new TrafficLight4Renderer());
+	}
+	
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		switch(state.getValue(BlockBaseTrafficLight.FACING))
+		{
+			case EAST:
+				return new AxisAlignedBB(0.2375, 0.05, 0.1875, 0.65, 1.9, 0.8125);
+			case NORTH:
+				return new AxisAlignedBB(0.1875, 0.05, 0.38, 0.8125, 1.9, 0.7625);
+			case SOUTH:
+				return new AxisAlignedBB(0.1875, 0.05, 0.25, 0.8125, 1.9, 0.5625);
+			case WEST:
+				return new AxisAlignedBB(0.4375, 0.05, 0.1875, 0.75, 1.9, 0.8125);
+		}
+		return super.getBoundingBox(state, source, pos);
 	}
 	
 	@Override
