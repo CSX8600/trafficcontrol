@@ -1,10 +1,11 @@
 package com.clussmanproductions.trafficcontrol.blocks;
 
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
+import com.clussmanproductions.trafficcontrol.util.CustomAngleCalculator;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -21,7 +22,7 @@ import net.minecraftforge.client.model.ModelLoader;
 
 public class BlockDrum extends Block {
 
-	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+	public static final PropertyInteger ROTATION = PropertyInteger.create("rotation", 0, 15);
 	
 	public BlockDrum()
 	{
@@ -57,23 +58,23 @@ public class BlockDrum extends Block {
 	
 	@Override
 	public BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, FACING);
+		return new BlockStateContainer(this, ROTATION);
 	}
 	
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		return state.getValue(FACING).getHorizontalIndex();
+		return CustomAngleCalculator.rotationToMeta(state.getValue(ROTATION));
 	}
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta));
+		return getDefaultState().withProperty(ROTATION, CustomAngleCalculator.metaToRotation(meta));
 	}
 	
 	@Override
 	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,
 			float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-		return getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
+		return getDefaultState().withProperty(ROTATION, CustomAngleCalculator.getRotationForYaw(placer.rotationYaw));
 	}
 	
 	@Override

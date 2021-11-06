@@ -4,12 +4,13 @@ import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.tileentity.WigWagTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.render.RendererWigWag;
+import com.clussmanproductions.trafficcontrol.util.CustomAngleCalculator;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -20,6 +21,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.ChunkCache;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
@@ -28,7 +30,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockWigWag extends Block implements ITileEntityProvider {
-	public static PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+	public static PropertyInteger ROTATION = PropertyInteger.create("rotation", 0, 15);
 	public static PropertyBool ACTIVE = PropertyBool.create("active");
 	public BlockWigWag()
 	{
@@ -50,24 +52,46 @@ public class BlockWigWag extends Block implements ITileEntityProvider {
 	
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		int modifier = 0;
-		if (state.getValue(ACTIVE))
-		{
-			modifier = 4;
-		}
-		return state.getValue(FACING).getHorizontalIndex() + modifier;
+		return CustomAngleCalculator.rotationToMeta(state.getValue(ROTATION));
 	}
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		boolean active = meta >= 4;
-		meta = active ? meta - 4 : meta;
-		return getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta)).withProperty(ACTIVE, active);
+		return getDefaultState().withProperty(ROTATION, CustomAngleCalculator.metaToRotation(meta));
 	}
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, FACING, ACTIVE);
+		return new BlockStateContainer(this, ROTATION, ACTIVE);
+	}
+	
+	@Override
+	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+		WigWagTileEntity wigWagTE = null;
+		if (worldIn instanceof ChunkCache)
+		{
+			ChunkCache chunkCache = (ChunkCache)worldIn;
+			TileEntity te = chunkCache.getTileEntity(pos);
+			if (!(te instanceof WigWagTileEntity))
+			{
+				return super.getActualState(state, worldIn, pos);
+			}
+			
+			wigWagTE = (WigWagTileEntity)te;
+		}
+		else
+		{
+			World world = (World)worldIn;
+			TileEntity te = world.getTileEntity(pos);
+			if (!(te instanceof WigWagTileEntity))
+			{
+				return super.getActualState(state, worldIn, pos);
+			}
+			
+			wigWagTE = (WigWagTileEntity)te;
+		}
+		
+		return state.withProperty(ACTIVE, wigWagTE.isActive());
 	}
 	
 	@Override
@@ -77,18 +101,35 @@ public class BlockWigWag extends Block implements ITileEntityProvider {
 			return FULL_BLOCK_AABB;
 		}
 		
-		switch(state.getValue(FACING))
+		int rotation = state.getValue(ROTATION);
+		
+		switch(rotation)
 		{
-			case WEST:
-				return new AxisAlignedBB(0.375,0,0.375,0.625,1,1.3125);
-			case EAST:
-				return new AxisAlignedBB(0.375,0,0.5625,0.625,1,-0.375);
-			case NORTH:
+			case 0:
 				return new AxisAlignedBB(-0.375,0,0.625,0.5625,1,0.375);
-			case SOUTH:
+			case 8:
 				return new AxisAlignedBB(0.4375,0,0.625,1.375,1,0.375);
+			case 4:
+				return new AxisAlignedBB(0.375,0,0.5625,0.625,1,-0.375);
+			case 12:
+				return new AxisAlignedBB(0.375,0,0.375,0.625,1,1.3125);
+			case 1:
+			case 15:
+			case 7:
+			case 9:
+			case 3:
+			case 5:
+			case 11:
+			case 13:
+				return new AxisAlignedBB(0.375, 0, 0.375, 0.75, 1, 0.75);
+			case 2:
+			case 6:
+			case 10:
+			case 14:
+				return new AxisAlignedBB(0.2, 0, 0.2, 0.8, 1, 0.8);
 		}
-		return super.getBoundingBox(state, source, pos);
+		
+		return FULL_BLOCK_AABB;
 	}
 	
 	@Override
@@ -99,7 +140,7 @@ public class BlockWigWag extends Block implements ITileEntityProvider {
 	@Override
 	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,
 			float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-		return getDefaultState().withProperty(FACING, placer.getHorizontalFacing()).withProperty(ACTIVE, false);
+		return getDefaultState().withProperty(ROTATION, CustomAngleCalculator.getRotationForYaw(placer.rotationYaw)).withProperty(ACTIVE, false);
 	}
 
 	@Override

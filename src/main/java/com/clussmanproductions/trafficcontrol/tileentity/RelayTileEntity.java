@@ -7,7 +7,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
-import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase.EnumState;
 import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
 import com.clussmanproductions.trafficcontrol.scanner.IScannerSubscriber;
@@ -338,8 +337,13 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 		{
 			try
 			{
-				IBlockState lampState = world.getBlockState(lampLocation);
-				world.setBlockState(lampLocation, lampState.withProperty(BlockLampBase.STATE, state));
+//				IBlockState lampState = world.getBlockState(lampLocation);
+//				world.setBlockState(lampLocation, lampState.withProperty(BlockLampBase.STATE, state));
+				
+				CrossingLampsTileEntity te = (CrossingLampsTileEntity)world.getTileEntity(lampLocation);
+				te.setState(state);
+				
+				world.notifyBlockUpdate(lampLocation, world.getBlockState(lampLocation), world.getBlockState(lampLocation), 3);
 			}
 			catch (Exception ex)
 			{
@@ -401,8 +405,9 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 			{
 				try
 				{
-					IBlockState currentState = world.getBlockState(pos);
-					world.setBlockState(pos, currentState.withProperty(BlockWigWag.ACTIVE, getPowered()));
+					WigWagTileEntity te = (WigWagTileEntity)world.getTileEntity(pos);
+					te.setActive(getPowered());
+					world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 				}
 				catch (Exception ex)
 				{
