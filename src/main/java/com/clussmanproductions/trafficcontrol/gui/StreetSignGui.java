@@ -311,7 +311,7 @@ public class StreetSignGui extends GuiScreen {
 	
 	private void clearAllColorSelections(int signIndex)
 	{
-		for(int i = 2; i <= 5; i++)
+		for(int i = 1; i <= 4; i++)
 		{
 			findButtonByID(signIndex * 10 + i).setIsSelected(false);
 		}
