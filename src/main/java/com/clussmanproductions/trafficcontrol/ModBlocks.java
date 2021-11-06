@@ -23,6 +23,7 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockOverhead;
 import com.clussmanproductions.trafficcontrol.blocks.BlockOverheadCrossbuck;
 import com.clussmanproductions.trafficcontrol.blocks.BlockOverheadLamps;
 import com.clussmanproductions.trafficcontrol.blocks.BlockOverheadPole;
+import com.clussmanproductions.trafficcontrol.blocks.BlockPedestrianButton;
 import com.clussmanproductions.trafficcontrol.blocks.BlockSafetranMechanical;
 import com.clussmanproductions.trafficcontrol.blocks.BlockSafetranType3;
 import com.clussmanproductions.trafficcontrol.blocks.BlockShuntBorder;
@@ -137,6 +138,8 @@ public class ModBlocks {
 	public static BlockTrafficLight5Upper traffic_light_5_upper;
 	@ObjectHolder("traffic_light_doghouse")
 	public static BlockTrafficLightDoghouse traffic_light_doghouse;
+	@ObjectHolder("pedestrian_button")
+	public static BlockPedestrianButton pedestrian_button;
 
 	@SideOnly(Side.CLIENT)
 	public static void initModels(ModelRegistryEvent e)
@@ -174,5 +177,6 @@ public class ModBlocks {
 		street_sign.initModel();
 		traffic_light_5.initModel();
 		traffic_light_doghouse.initModel();
+		pedestrian_button.initModel();
 	}
 }

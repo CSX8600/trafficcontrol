@@ -129,4 +129,15 @@ public class BlockTrafficLightControlBox extends Block implements ITileEntityPro
 		}
 		return super.getBoundingBox(state, source, pos);
 	}
+
+	@Override
+	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+		TrafficLightControlBoxTileEntity te = (TrafficLightControlBoxTileEntity)worldIn.getTileEntity(pos);
+		if (te != null)
+		{
+			te.onBreak(worldIn);
+		}
+		
+		super.breakBlock(worldIn, pos, state);
+	}
 }
