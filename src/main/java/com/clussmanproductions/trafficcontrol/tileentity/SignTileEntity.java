@@ -158,7 +158,8 @@ public class SignTileEntity extends TileEntity {
 		}
 		else if ((variant >= 33 && variant <= 40) || 
 				(variant >= 106 && variant <= 107) ||
-				(variant >= 110 && variant <= 111))
+				(variant >= 110 && variant <= 111) ||
+				(variant >= 120 && variant <= 124))
 		{
 			return "misc4b";
 		}

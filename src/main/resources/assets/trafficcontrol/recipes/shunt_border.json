@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#",
+        "R",
+        "S"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:stained_hardened_clay",
+			"data": 1
+        },
+        "R": {
+            "item": "minecraft:redstone"
+        },
+        "S": {
+            "item": "minecraft:stone",
+			"data": 0
+        }
+    },
+    "result": {
+        "item": "trafficcontrol:shunt_border",
+        "count": 1
+    }
+}

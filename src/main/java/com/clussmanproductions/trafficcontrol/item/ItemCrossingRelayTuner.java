@@ -5,6 +5,7 @@ import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockBaseTrafficLight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase;
+import com.clussmanproductions.trafficcontrol.blocks.BlockPedestrianButton;
 import com.clussmanproductions.trafficcontrol.blocks.BlockShuntBorder;
 import com.clussmanproductions.trafficcontrol.blocks.BlockShuntIsland;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorLeft;
@@ -12,6 +13,7 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorStraight;
 import com.clussmanproductions.trafficcontrol.tileentity.BaseTrafficLightTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.BellBaseTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.PedestrianButtonTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.RelayTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.ShuntBorderTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.ShuntIslandTileEntity;
@@ -53,7 +55,7 @@ public class ItemCrossingRelayTuner extends Item {
 		setMaxStackSize(1);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
-	
+
 	public void initModel()
 	{
 		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
@@ -81,18 +83,18 @@ public class ItemCrossingRelayTuner extends Item {
 		{
 			return EnumActionResult.SUCCESS;
 		}
-		
+
 		TileEntity selectedTE = worldIn.getTileEntity(pos);
 		if (!performPairCheck(player, worldIn, selectedTE))
 		{
 			return EnumActionResult.SUCCESS;
 		}
-		
+
 		NBTTagCompound nbt = player.inventory.getCurrentItem().getTagCompound();
 		int[] relayPosArray = nbt.getIntArray("pairingpos");
 		BlockPos relayPos = new BlockPos(relayPosArray[0], relayPosArray[1], relayPosArray[2]);
 		TileEntity pairedTE = worldIn.getTileEntity(relayPos);
-		
+
 		if (selectedTE != null)
 		{
 			checkUseOnTileEntity(worldIn, selectedTE, pairedTE, player);
@@ -101,16 +103,16 @@ public class ItemCrossingRelayTuner extends Item {
 		{
 			checkUseOnBlock(worldIn, pos, pairedTE, player);
 		}
-		
+
 		return EnumActionResult.SUCCESS;
 	}
-	
+
 	private void checkUseOnBlock(World world, BlockPos pos, TileEntity te, EntityPlayer player)
 	{
 		IBlockState state = world.getBlockState(pos);
 		if (te instanceof RelayTileEntity)
 		{
-			RelayTileEntity relay = (RelayTileEntity)te;			
+			RelayTileEntity relay = (RelayTileEntity)te;
 			if (state.getBlock() instanceof BlockLampBase)
 			{
 				if (relay.addOrRemoveCrossingGateLamp(pos))
@@ -123,11 +125,11 @@ public class ItemCrossingRelayTuner extends Item {
 				}
 			}
 		}
-		
+
 		if (te instanceof TrafficLightControlBoxTileEntity)
 		{
 			TrafficLightControlBoxTileEntity tlBox = (TrafficLightControlBoxTileEntity)te;
-			
+
 			if (state.getBlock() instanceof BlockTrafficSensorLeft || state.getBlock() instanceof BlockTrafficSensorStraight)
 			{
 				if (tlBox.addOrRemoveSensor(pos))
@@ -141,11 +143,11 @@ public class ItemCrossingRelayTuner extends Item {
 			}
 		}
 	}
-	
+
 	private boolean performPairCheck(EntityPlayer player, World world, TileEntity te)
 	{
 		NBTTagCompound nbt = player.inventory.getCurrentItem().getTagCompound();
-		
+
 		if (nbt == null || !nbt.hasKey("pairingpos"))
 		{
 			if (te == null || (!(te instanceof RelayTileEntity) && !(te instanceof TrafficLightControlBoxTileEntity)))
@@ -153,12 +155,12 @@ public class ItemCrossingRelayTuner extends Item {
 				return false;
 			}
 			BlockPos relayPos = null;
-			
+
 			if (nbt == null)
 			{
 				nbt = new NBTTagCompound();
 			}
-			
+
 			String typeOfPairing = "";
 			if (te instanceof RelayTileEntity)
 			{
@@ -166,25 +168,25 @@ public class ItemCrossingRelayTuner extends Item {
 				relay = relay.getMaster(world);
 				relayPos = relay.getPos();
 				addTileEntityPosToNBT(nbt, "pairingpos", relay);
-				
+
 				typeOfPairing = "Relay Box";
 			}
-			
+
 			if (te instanceof TrafficLightControlBoxTileEntity)
 			{
 				TrafficLightControlBoxTileEntity controlBox = (TrafficLightControlBoxTileEntity)te;
 				relayPos = controlBox.getPos();
 				addTileEntityPosToNBT(nbt, "pairingpos", controlBox);
-				
+
 				typeOfPairing = "Traffic Light Control Box";
 			}
-			
+
 			player.inventory.getCurrentItem().setTagCompound(nbt);
 			player.sendMessage(new TextComponentString("Started pairing with " + typeOfPairing + " at "
 					+ relayPos.getX() + ", "
 					+ relayPos.getY() + ", "
 					+ relayPos.getZ()));
-			
+
 		}
 		else
 		{
@@ -198,30 +200,30 @@ public class ItemCrossingRelayTuner extends Item {
 					RelayTileEntity relayTE = (RelayTileEntity)te;
 					relayTE = relayTE.getMaster(world);
 					relayPos = relayTE.getPos();
-					
+
 					typeOfPairing = "Relay Box";
 				}
-				
+
 				if (te instanceof TrafficLightControlBoxTileEntity)
 				{
 					TrafficLightControlBoxTileEntity controlBoxTE = (TrafficLightControlBoxTileEntity)te;
 					relayPos = controlBoxTE.getPos();
-					
+
 					typeOfPairing = "Traffic Light Control Box";
 				}
-				
+
 				nbt.removeTag("pairingpos");
 				player.sendMessage(new TextComponentString("Stopped pairing with " + typeOfPairing + " at "
 						+ pairingpos[0] + ", "
 						+ pairingpos[1] + ", "
 						+ pairingpos[2]));
-				
+
 				if (pairingpos[0] ==  relayPos.getX() && pairingpos[1] == relayPos.getY() && pairingpos[2] == relayPos.getZ())
 				{
 					player.inventory.getCurrentItem().setTagCompound(nbt);
 					return false;
 				}
-				
+
 				if (te instanceof RelayTileEntity)
 				{
 					addTileEntityPosToNBT(nbt, "pairingpos", ((RelayTileEntity)te).getMaster(world));
@@ -230,11 +232,11 @@ public class ItemCrossingRelayTuner extends Item {
 				{
 					addTileEntityPosToNBT(nbt, "pairingpos", te);
 				}
-				
+
 				player.inventory.getCurrentItem().setTagCompound(nbt);
-				
+
 				pairingpos = nbt.getIntArray("pairingpos");
-				
+
 				player.sendMessage(new TextComponentString("Started pairing with " + typeOfPairing + " at "
 						+ pairingpos[0] + ", "
 						+ pairingpos[1] + ", "
@@ -244,34 +246,34 @@ public class ItemCrossingRelayTuner extends Item {
 			{
 				BlockPos pos = new BlockPos(pairingpos[0], pairingpos[1], pairingpos[2]);
 				TileEntity teAtPairingPos = world.getTileEntity(pos);
-				
+
 				if (teAtPairingPos == null || (!(teAtPairingPos instanceof RelayTileEntity) && !(teAtPairingPos instanceof TrafficLightControlBoxTileEntity)))
 				{
 					nbt.removeTag("pairingpos");
 					player.inventory.getCurrentItem().setTagCompound(nbt);
-					
+
 					player.sendMessage(new TextComponentString("Could not find pair at "
 							+ pairingpos[0] + ", "
 							+ pairingpos[1] + ", "
 							+ pairingpos[2] + ".  Unpaired."));
-					
+
 					return false;
 				}
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	private void addTileEntityPosToNBT(NBTTagCompound nbt, String key, TileEntity te)
 	{
 		BlockPos tePos = te.getPos();
 		int[] pos = new int[] { tePos.getX(), tePos.getY(), tePos.getZ() };
 		nbt.setIntArray(key, pos);
 	}
-	
+
 	private void checkUseOnTileEntity(World world, TileEntity te, TileEntity pairedTE, EntityPlayer player)
-	{		
+	{
 		if (pairedTE instanceof RelayTileEntity)
 		{
 			RelayTileEntity relay = (RelayTileEntity)pairedTE;
@@ -286,7 +288,7 @@ public class ItemCrossingRelayTuner extends Item {
 					player.sendMessage(new TextComponentString("Unpaired Crossing Gate from Relay Box"));
 				}
 			}
-			
+
 			if (te instanceof BellBaseTileEntity)
 			{
 				if (relay.addOrRemoveBell((BellBaseTileEntity)te))
@@ -298,7 +300,7 @@ public class ItemCrossingRelayTuner extends Item {
 					player.sendMessage(new TextComponentString("Unpaired Bell from Relay Box"));
 				}
 			}
-			
+
 			if (te instanceof WigWagTileEntity)
 			{
 				if (relay.addOrRemoveWigWag(te.getPos()))
@@ -310,7 +312,7 @@ public class ItemCrossingRelayTuner extends Item {
 					player.sendMessage(new TextComponentString("Unpaired Wig Wag from Relay Box"));
 				}
 			}
-			
+
 			if (te instanceof ShuntBorderTileEntity)
 			{
 				ShuntBorderTileEntity shuntBorderTileEntity = (ShuntBorderTileEntity)te;
@@ -327,7 +329,7 @@ public class ItemCrossingRelayTuner extends Item {
 					player.sendMessage(new TextComponentString("Unpaired Border Shunt from Relay Box"));
 				}
 			}
-			
+
 			if (te instanceof ShuntIslandTileEntity)
 			{
 				ShuntIslandTileEntity shuntIslandTileEntity = (ShuntIslandTileEntity)te;
@@ -345,18 +347,18 @@ public class ItemCrossingRelayTuner extends Item {
 				}
 			}
 		}
-		
+
 		if (pairedTE instanceof TrafficLightControlBoxTileEntity)
 		{
 			TrafficLightControlBoxTileEntity controlBox = (TrafficLightControlBoxTileEntity)pairedTE;
 			if (te instanceof BaseTrafficLightTileEntity)
 			{
 				IBlockState state = world.getBlockState(te.getPos());
-				
+
 				if (state.getBlock() instanceof BlockBaseTrafficLight)
 				{
 					EnumFacing facing = state.getValue(BlockBaseTrafficLight.FACING);
-					
+
 					boolean operationResult = false;
 					if (facing == EnumFacing.EAST || facing == EnumFacing.WEST)
 					{
@@ -366,7 +368,7 @@ public class ItemCrossingRelayTuner extends Item {
 					{
 						operationResult = controlBox.addOrRemoveNorthSouthTrafficLight(te.getPos());
 					}
-					
+
 					if (operationResult)
 					{
 						player.sendMessage(new TextComponentString("Paired Traffic Light to Traffic Light Control Box"));
@@ -374,6 +376,38 @@ public class ItemCrossingRelayTuner extends Item {
 					else
 					{
 						player.sendMessage(new TextComponentString("Unpaired Traffic Light to Traffic Light Control Box"));
+					}
+				}
+			}
+
+			if (te instanceof PedestrianButtonTileEntity)
+			{
+				IBlockState state = world.getBlockState(te.getPos());
+
+				if (state.getBlock() instanceof BlockPedestrianButton)
+				{
+					EnumFacing facing = state.getValue(BlockPedestrianButton.FACING);
+
+					boolean operationResult = false;
+					if (facing == EnumFacing.EAST || facing == EnumFacing.WEST)
+					{
+						operationResult = controlBox.addOrRemoveNorthSouthPedButton(te.getPos());
+					}
+					else
+					{
+						operationResult = controlBox.addOrRemoveWestEastPedButton(te.getPos());
+					}
+
+					PedestrianButtonTileEntity pedTE = (PedestrianButtonTileEntity)te;
+					if (operationResult)
+					{
+						pedTE.addPairedBox(controlBox.getPos());
+						player.sendMessage(new TextComponentString("Paired Pedestrian Button to Traffic Light Control Box"));
+					}
+					else
+					{
+						pedTE.removePairedBox(controlBox.getPos());
+						player.sendMessage(new TextComponentString("Unpaired Pedestrian Button to Traffic Light Control Box"));
 					}
 				}
 			}

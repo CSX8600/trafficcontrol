@@ -27,6 +27,7 @@ tile.trafficcontrol.wch_bell.name=WCH Electronic Bell
 tile.trafficcontrol.horizontal_pole.name=Horizontal Pole
 tile.trafficcontrol.traffic_sensor_left.name=Traffic Sensor (Left)
 tile.trafficcontrol.traffic_sensor_straight.name=Traffic Sensor (Straight)
+tile.trafficcontrol.pedestrian_button.name=Pedestrian Button
 
 #items
 item.trafficcontrol.crossing_relay_box.name=Crossing Gate Relay
