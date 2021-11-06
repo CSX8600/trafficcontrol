@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 
 public class BlockCone extends Block {
-	public static PropertyInteger ROTATION = PropertyInteger.create("rotation", 0, 15); 
+	public static PropertyInteger ROTATION = PropertyInteger.create("rotation", 0, 15);
 	public BlockCone()
 	{
 		super(Material.ROCK);
@@ -31,27 +31,27 @@ public class BlockCone extends Block {
         setHarvestLevel("pickaxe", 0);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
-	
+
 	public void initModel()
 	{
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
-	
+
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
 		return false;
 	}
-	
+
 	@Override
 	public float getAmbientOcclusionLightValue(IBlockState state) {
 		return 1;
 	}
-	
+
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return new AxisAlignedBB(0.3,0,0.3,0.7,1,0.7);
@@ -61,22 +61,22 @@ public class BlockCone extends Block {
 	public boolean causesSuffocation(IBlockState state) {
 		return false;
 	}
-	
+
 	@Override
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, ROTATION);
 	}
-	
+
 	@Override
 	public int getMetaFromState(IBlockState state) {
 		return state.getValue(ROTATION);
 	}
-	
+
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
 		return getDefaultState().withProperty(ROTATION, meta);
 	}
-	
+
 	@Override
 	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,
 			float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {

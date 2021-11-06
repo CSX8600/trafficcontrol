@@ -36,6 +36,9 @@ item.trafficcontrol.traffic_light_frame.name=Traffic Light Frame
 tile.trafficcontrol.street_sign.name=Street Sign
 item.trafficcontrol.traffic_light_5_frame.name=Traffic Light Frame (5 Bulb)
 item.trafficcontrol.traffic_light_doghouse_frame.name=Traffic Light Frame (Doghouse)
+item.trafficcontrol.traffic_light_1_frame.name=Traffic Light Frame (One Bulb)
+item.trafficcontrol.traffic_light_2_frame.name=Traffic Light Frame (Two Bulbs)
+item.trafficcontrol.traffic_light_4_frame.name=Traffic Light Frame (Four Bulbs)
 trafficcontrol.traffic_light_bulb.green.name=Bulb (Green)
 trafficcontrol.traffic_light_bulb.yellow.name=Bulb (Yellow)
 trafficcontrol.traffic_light_bulb.red.name=Bulb (Red)
@@ -65,3 +68,10 @@ itemGroup.Traffic Control=Traffic Control
 #Keys
 key.entityclassrenderer.toggle=Toggle Entity Class Display
 key.trafficcontrol.category=Traffic Control
+
+#Tooltips
+trafficcontrol.tooltip.tuner=Use to link components to Crossing Gate Relays or Traffic Light Control Boxes.
+trafficcontrol.tooltip.crossingrelay=Uses Shunts or Redstone to control crossing components.
+trafficcontrol.tooltip.trafficbox=Uses Redstone or Traffic Sensors to control traffic signal components.
+trafficcontrol.tooltip.cone=Can be worn as a hat.
+trafficcontrol.tooltip.help=[Press SHIFT for more info]

@@ -1,167 +1,199 @@
 {
-    "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
-    "textures": {
-        "0": "trafficcontrol:blocks/generic",
-        "1": "trafficcontrol:blocks/catwalk_side",
-        "2": "trafficcontrol:blocks/catwalk",
-        "particle": "trafficcontrol:blocks/generic"
-    },
-    "elements": [
-        {
-            "name": "Pole",
-            "from": [ 7.0, 0.0, 7.0 ], 
-            "to": [ 9.0, 16.0, 9.0 ], 
-            "faces": {
-                "north": { "texture": "#0", "uv": [ 2.0, 0.0, 4.0, 16.0 ] },
-                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 16.0 ] },
-                "south": { "texture": "#0", "uv": [ 4.0, 0.0, 6.0, 16.0 ] },
-                "west": { "texture": "#0", "uv": [ 6.0, 0.0, 8.0, 16.0 ] },
-                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
-                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 2.0 ] }
-            }
-        },
-        {
-            "name": "North Top Handrail",
-            "from": [ 0.0, 15.0, 0.0 ], 
-            "to": [ 9.0, 16.0, 1.0 ], 
-            "faces": {
-                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 9.0, 1.0 ] },
-                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
-                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 7.0, 1.0 ] },
-                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
-                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 7.0, 1.0 ] },
-                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 7.0, 1.0 ] }
-            }
-        },
-        {
-            "name": "South Top Handrail",
-            "from": [ 0.0, 15.0, 15.0 ], 
-            "to": [ 9.0, 16.0, 16.0 ], 
-            "faces": {
-                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 9.0, 1.0 ] },
-                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
-                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 9.0, 1.0 ] },
-                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
-                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 9.0, 1.0 ] },
-                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 9.0, 1.0 ] }
-            }
-        },
-        {
-            "name": "South Top Handrail Connection",
-            "from": [ 7.0, 15.0, 9.0 ], 
-            "to": [ 9.0, 16.0, 15.0 ], 
-            "faces": {
-                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
-                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 5.0, 1.0 ] },
-                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
-                "west": { "texture": "#0", "uv": [ 0.0, 4.0, 5.0, 5.0 ] },
-                "up": { "texture": "#0", "uv": [ 4.0, 0.0, 6.0, 5.0 ] },
-                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 5.0 ] }
-            }
-        },
-        {
-            "name": "Platform",
-            "from": [ 0.0, 0.0, 0.0 ], 
-            "to": [ 7.0, 1.0, 16.0 ], 
-            "faces": {
-                "north": { "texture": "#1", "uv": [ 0.0, 0.0, 7.0, 1.0 ] },
-                "east": { "texture": "#1", "uv": [ 0.0, 0.0, 16.0, 1.0 ] },
-                "south": { "texture": "#1", "uv": [ 0.0, 0.0, 7.0, 1.0 ] },
-                "west": { "texture": "#1", "uv": [ 0.0, 0.0, 16.0, 1.0 ] },
-                "up": { "texture": "#2", "uv": [ 0.0, 0.0, 7.0, 16.0 ] },
-                "down": { "texture": "#2", "uv": [ 0.0, 0.0, 7.0, 16.0 ] }
-            }
-        },
-        {
-            "name": "NW Support",
-            "from": [ 0.0, 1.0, 0.0 ], 
-            "to": [ 1.0, 15.0, 1.0 ], 
-            "faces": {
-                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 14.0 ] },
-                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 14.0 ] },
-                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 14.0 ] },
-                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 14.0 ] },
-                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
-                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 1.0 ] }
-            }
-        },
-        {
-            "name": "SW Support",
-            "from": [ 0.0, 1.0, 15.0 ], 
-            "to": [ 1.0, 15.0, 16.0 ], 
-            "faces": {
-                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 14.0 ] },
-                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 14.0 ] },
-                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 14.0 ] },
-                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 14.0 ] },
-                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
-                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 1.0 ] }
-            }
-        },
-        {
-            "name": "SE Support",
-            "from": [ 8.0, 1.0, 15.0 ], 
-            "to": [ 9.0, 15.0, 16.0 ], 
-            "faces": {
-                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 14.0 ] },
-                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 14.0 ] },
-                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 14.0 ] },
-                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 14.0 ] },
-                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
-                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 1.0 ] }
-            }
-        },
-        {
-            "name": "Pre-Platform South",
-            "from": [ 7.0, 0.0, 9.0 ], 
-            "to": [ 9.0, 1.0, 16.0 ], 
-            "faces": {
-                "north": { "texture": "#1", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
-                "east": { "texture": "#1", "uv": [ 0.0, 0.0, 7.0, 1.0 ] },
-                "south": { "texture": "#1", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
-                "west": { "texture": "#1", "uv": [ 0.0, 0.0, 7.0, 1.0 ] },
-                "up": { "texture": "#2", "uv": [ 0.0, 0.0, 2.0, 7.0 ] },
-                "down": { "texture": "#2", "uv": [ 1.0, 0.0, 3.0, 7.0 ] }
-            }
-        },
-        {
-            "name": "Pre-Platform North",
-            "from": [ 7.0, 0.0, 0.0 ], 
-            "to": [ 9.0, 1.0, 7.0 ], 
-            "faces": {
-                "north": { "texture": "#1", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
-                "east": { "texture": "#1", "uv": [ 0.0, 0.0, 7.0, 1.0 ] },
-                "south": { "texture": "#1", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
-                "west": { "texture": "#1", "uv": [ 0.0, 0.0, 7.0, 1.0 ] },
-                "up": { "texture": "#2", "uv": [ 1.0, 0.0, 3.0, 7.0 ] },
-                "down": { "texture": "#2", "uv": [ 1.0, 0.0, 3.0, 7.0 ] }
-            }
-        },
-        {
-            "name": "NE Support",
-            "from": [ 8.0, 1.0, 0.0 ], 
-            "to": [ 9.0, 15.0, 1.0 ], 
-            "faces": {
-                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 14.0 ] },
-                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 14.0 ] },
-                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 14.0 ] },
-                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 14.0 ] },
-                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
-                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 1.0 ] }
-            }
-        },
-        {
-            "name": "North Handrail Connection",
-            "from": [ 7.0, 15.0, 1.0 ], 
-            "to": [ 9.0, 16.0, 7.0 ], 
-            "faces": {
-                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
-                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 5.0, 1.0 ] },
-                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
-                "west": { "texture": "#0", "uv": [ 0.0, 4.0, 5.0, 5.0 ] },
-                "up": { "texture": "#0", "uv": [ 4.0, 0.0, 6.0, 5.0 ] },
-                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 5.0 ] }
-            }
-        }
-    ]
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "trafficcontrol:blocks/generic",
+		"1": "trafficcontrol:blocks/catwalk_side",
+		"2": "trafficcontrol:blocks/catwalk",
+		"particle": "trafficcontrol:blocks/generic"
+	},
+	"elements": [
+		{
+			"name": "Pole",
+			"from": [7, 0, 7],
+			"to": [9, 16, 9],
+			"faces": {
+				"north": {"uv": [2, 0, 4, 16], "texture": "#0"},
+				"east": {"uv": [0, 0, 2, 16], "texture": "#0"},
+				"south": {"uv": [4, 0, 6, 16], "texture": "#0"},
+				"west": {"uv": [6, 0, 8, 16], "texture": "#0"},
+				"up": {"uv": [0, 0, 2, 2], "texture": "#0"},
+				"down": {"uv": [0, 0, 2, 2], "texture": "#0"}
+			}
+		},
+		{
+			"name": "North Top Handrail",
+			"from": [0, 15, 0],
+			"to": [9, 16, 1],
+			"faces": {
+				"north": {"uv": [0, 0, 9, 1], "texture": "#0"},
+				"east": {"uv": [0, 0, 1, 1], "texture": "#0"},
+				"south": {"uv": [0, 0, 7, 1], "texture": "#0"},
+				"west": {"uv": [0, 0, 1, 1], "texture": "#0"},
+				"up": {"uv": [0, 0, 7, 1], "texture": "#0"},
+				"down": {"uv": [0, 0, 7, 1], "texture": "#0"}
+			}
+		},
+		{
+			"name": "South Top Handrail",
+			"from": [0, 15, 15],
+			"to": [9, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 9, 1], "texture": "#0"},
+				"east": {"uv": [0, 0, 1, 1], "texture": "#0"},
+				"south": {"uv": [0, 0, 9, 1], "texture": "#0"},
+				"west": {"uv": [0, 0, 1, 1], "texture": "#0"},
+				"up": {"uv": [0, 0, 9, 1], "texture": "#0"},
+				"down": {"uv": [0, 0, 9, 1], "texture": "#0"}
+			}
+		},
+		{
+			"name": "South Top Handrail Connection",
+			"from": [7, 15, 9],
+			"to": [9, 16, 15],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 1], "texture": "#0"},
+				"east": {"uv": [0, 0, 5, 1], "texture": "#0"},
+				"south": {"uv": [0, 0, 2, 1], "texture": "#0"},
+				"west": {"uv": [0, 4, 5, 5], "texture": "#0"},
+				"up": {"uv": [4, 0, 6, 5], "texture": "#0"},
+				"down": {"uv": [0, 0, 2, 5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Platform",
+			"from": [0, 0, 0],
+			"to": [7, 1, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 7, 1], "texture": "#1"},
+				"east": {"uv": [0, 0, 16, 1], "texture": "#1"},
+				"south": {"uv": [0, 0, 7, 1], "texture": "#1"},
+				"west": {"uv": [0, 0, 16, 1], "texture": "#1"},
+				"up": {"uv": [0, 0, 7, 16], "texture": "#2"},
+				"down": {"uv": [0, 0, 7, 16], "texture": "#2"}
+			}
+		},
+		{
+			"name": "NW Support",
+			"from": [0, 1, 0],
+			"to": [1, 15, 1],
+			"faces": {
+				"north": {"uv": [0, 0, 1, 14], "texture": "#0"},
+				"east": {"uv": [0, 0, 1, 14], "texture": "#0"},
+				"south": {"uv": [0, 0, 1, 14], "texture": "#0"},
+				"west": {"uv": [0, 0, 1, 14], "texture": "#0"},
+				"up": {"uv": [0, 0, 1, 1], "texture": "#0"},
+				"down": {"uv": [0, 0, 1, 1], "texture": "#0"}
+			}
+		},
+		{
+			"name": "SW Support",
+			"from": [0, 1, 15],
+			"to": [1, 15, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 1, 14], "texture": "#0"},
+				"east": {"uv": [0, 0, 1, 14], "texture": "#0"},
+				"south": {"uv": [0, 0, 1, 14], "texture": "#0"},
+				"west": {"uv": [0, 0, 1, 14], "texture": "#0"},
+				"up": {"uv": [0, 0, 1, 1], "texture": "#0"},
+				"down": {"uv": [0, 0, 1, 1], "texture": "#0"}
+			}
+		},
+		{
+			"name": "SE Support",
+			"from": [8, 1, 15],
+			"to": [9, 15, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 1, 14], "texture": "#0"},
+				"east": {"uv": [0, 0, 1, 14], "texture": "#0"},
+				"south": {"uv": [0, 0, 1, 14], "texture": "#0"},
+				"west": {"uv": [0, 0, 1, 14], "texture": "#0"},
+				"up": {"uv": [0, 0, 1, 1], "texture": "#0"},
+				"down": {"uv": [0, 0, 1, 1], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Pre-Platform South",
+			"from": [7, 0, 9],
+			"to": [9, 1, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 1], "texture": "#1"},
+				"east": {"uv": [0, 0, 7, 1], "texture": "#1"},
+				"south": {"uv": [0, 0, 2, 1], "texture": "#1"},
+				"west": {"uv": [0, 0, 7, 1], "texture": "#1"},
+				"up": {"uv": [0, 0, 2, 7], "texture": "#2"},
+				"down": {"uv": [1, 0, 3, 7], "texture": "#2"}
+			}
+		},
+		{
+			"name": "Pre-Platform North",
+			"from": [7, 0, 0],
+			"to": [9, 1, 7],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 1], "texture": "#1"},
+				"east": {"uv": [0, 0, 7, 1], "texture": "#1"},
+				"south": {"uv": [0, 0, 2, 1], "texture": "#1"},
+				"west": {"uv": [0, 0, 7, 1], "texture": "#1"},
+				"up": {"uv": [1, 0, 3, 7], "texture": "#2"},
+				"down": {"uv": [1, 0, 3, 7], "texture": "#2"}
+			}
+		},
+		{
+			"name": "NE Support",
+			"from": [8, 1, 0],
+			"to": [9, 15, 1],
+			"faces": {
+				"north": {"uv": [0, 0, 1, 14], "texture": "#0"},
+				"east": {"uv": [0, 0, 1, 14], "texture": "#0"},
+				"south": {"uv": [0, 0, 1, 14], "texture": "#0"},
+				"west": {"uv": [0, 0, 1, 14], "texture": "#0"},
+				"up": {"uv": [0, 0, 1, 1], "texture": "#0"},
+				"down": {"uv": [0, 0, 1, 1], "texture": "#0"}
+			}
+		},
+		{
+			"name": "North Handrail Connection",
+			"from": [7, 15, 1],
+			"to": [9, 16, 7],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 1], "texture": "#0"},
+				"east": {"uv": [0, 0, 5, 1], "texture": "#0"},
+				"south": {"uv": [0, 0, 2, 1], "texture": "#0"},
+				"west": {"uv": [0, 4, 5, 5], "texture": "#0"},
+				"up": {"uv": [4, 0, 6, 5], "texture": "#0"},
+				"down": {"uv": [0, 0, 2, 5], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"translation": [-0.75, -1.25, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"fixed": {
+			"scale": [0.5, 0.5, 0.5]
+		}
+	}
 }

@@ -9,7 +9,7 @@
   "updateUrl": "",
   "authorList": ["CSX8600", "KillerMapper"],
   "credits": "KillerMapper for making this the first time and creating many of the wonderful road sign textures.  The_Epicness9000, Alex9327, RavenholmZombie, South Texas Railfan for community sign submissions.",
-  "logoFile": "",
+  "logoFile": "assets/logo.png",
   "screenshots": [],
   "dependencies": []
 }

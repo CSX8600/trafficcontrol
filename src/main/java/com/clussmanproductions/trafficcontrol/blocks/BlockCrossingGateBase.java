@@ -27,43 +27,56 @@ public class BlockCrossingGateBase extends Block {
 		setRegistryName("crossing_gate_base");
 		setUnlocalizedName(ModTrafficControl.MODID + ".crossing_gate_base");
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
+		setLightOpacity(15);
 	}
-	
+
 	public void initModel()
 	{
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
-	
+
 	@Override
 	public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
-	
+
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return new AxisAlignedBB(0.375, 0, .375, 0.625, 1, 0.625);
 	}
-	
+
+	@Override
+	public boolean causesSuffocation(IBlockState state)
+	{
+		return false;
+	}
+
+	@Override
+	public float getAmbientOcclusionLightValue(IBlockState state)
+	{
+		return 1;
+	}
+
 	@Override
 	public int getMetaFromState(IBlockState state) {
 		return CustomAngleCalculator.rotationToMeta(state.getValue(ROTATION));
 	}
-	
+
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
 		return getDefaultState().withProperty(ROTATION, CustomAngleCalculator.metaToRotation(meta));
 	}
-	
+
 	@Override
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, ROTATION);
 	}
-	
+
 	@Override
 	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,
 			float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {

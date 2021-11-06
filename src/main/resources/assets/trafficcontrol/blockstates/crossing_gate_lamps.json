@@ -10,7 +10,11 @@
     },
     "variants": {
         "normal": [{}],
-        "inventory": [{}],
+        "inventory": [{
+			"gui": {
+				"rotation": [30, 225, 0],
+				"scale": [0.5, 0.5, 0.5]
+        }}],
         "rotation":
         {
             "0": { "model": "trafficcontrol:crossing_gate_lamps" },
@@ -33,14 +37,14 @@
         "state":
         {
             "off": {},
-            "flash1": 
+            "flash1":
             {
                 "textures":
                 {
-                    "leftlamp": "trafficcontrol:blocks/red" 
+                    "leftlamp": "trafficcontrol:blocks/red"
                 }
             },
-            "flash2": 
+            "flash2":
             {
                 "textures":
                 {

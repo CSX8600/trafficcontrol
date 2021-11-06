@@ -30,23 +30,7 @@
         },
         "inventory": 
         {
-        	"model": "trafficcontrol:wig_wag",
-        	"transform":
-        	{
-        		"firstperson":
-        		{
-        			"scale": 0.5
-        		},
-        		"firstperson_lefthand":
-        		{
-        			"scale": 0.5
-        		},
-        		"gui":
-        		{
-        			"scale": [0.75, 0.8, 1],
-        			"translation": [0.25, -0.1, 0]
-        		}
-        	}
+        	"model": "trafficcontrol:wig_wag"
         },
         "normal": [{}]
     }

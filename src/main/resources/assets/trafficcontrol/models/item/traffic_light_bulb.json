@@ -1,87 +1,117 @@
 {
-    "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
-    "textures": {
-        "0": "trafficcontrol:blocks/black",
-        "2": "trafficcontrol:blocks/generic"
-    },
-    "elements": [
-        {
-            "name": "Backing",
-            "from": [ 0.0, 0.0, 7.500000007450581 ], 
-            "to": [ 16.0, 16.0, 8.50000000745058 ], 
-            "faces": {
-                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 16.0 ] },
-                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 16.0 ] },
-                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 16.0, 1.0 ] },
-                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 16.0, 1.0 ] }
-            }
-        },
-        {
-            "name": "Lamp",
-            "from": [ 2.0, 2.0, 8.50000000745058 ], 
-            "to": [ 14.0, 14.0, 9.50000000745058 ], 
-            "faces": {
-                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 12.0, 12.0 ] },
-                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 12.0 ] },
-                "south": { "texture": "#lampTex", "uv": [ 2.0, 1.0, 14.0, 13.0 ] },
-                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 1.0, 12.0 ] },
-                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 12.0, 1.0 ] },
-                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 12.0, 1.0 ] }
-            }
-        },
-        {
-            "name": "Bulb",
-            "from": [ 2.0, 2.0, 6.500000007450581 ], 
-            "to": [ 14.0, 14.0, 7.500000007450581 ], 
-            "faces": {
-                "north": { "texture": "#2", "uv": [ 0.0, 0.0, 12.0, 12.0 ] },
-                "east": { "texture": "#2", "uv": [ 0.0, 0.0, 1.0, 12.0 ] },
-                "south": { "texture": "#2", "uv": [ 0.0, 0.0, 12.0, 12.0 ] },
-                "west": { "texture": "#2", "uv": [ 0.0, 0.0, 1.0, 12.0 ] },
-                "up": { "texture": "#2", "uv": [ 0.0, 0.0, 12.0, 1.0 ] },
-                "down": { "texture": "#2", "uv": [ 0.0, 0.0, 12.0, 1.0 ] }
-            }
-        },
-        {
-            "name": "Upper Blinder",
-            "from": [ 2.0, 14.0, 8.50000000745058 ], 
-            "to": [ 14.0, 16.0, 14.50000000745058 ], 
-            "faces": {
-                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 12.0, 2.0 ] },
-                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 6.0, 2.0 ] },
-                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 12.0, 2.0 ] },
-                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 6.0, 2.0 ] },
-                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 12.0, 6.0 ] },
-                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 12.0, 6.0 ] }
-            }
-        },
-        {
-            "name": "Left Blinder",
-            "from": [ 0.0, 8.0, 8.50000000745058 ], 
-            "to": [ 2.0, 16.0, 14.50000000745058 ], 
-            "faces": {
-                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
-                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 6.0, 8.0 ] },
-                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
-                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 6.0, 8.0 ] },
-                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 6.0 ] },
-                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 6.0 ] }
-            }
-        },
-        {
-            "name": "Right Blinder",
-            "from": [ 14.0, 8.0, 8.50000000745058 ], 
-            "to": [ 16.0, 16.0, 14.50000000745058 ], 
-            "faces": {
-                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
-                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 6.0, 8.0 ] },
-                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
-                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 6.0, 8.0 ] },
-                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 6.0 ] },
-                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 6.0 ] }
-            }
-        }
-    ]
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "trafficcontrol:blocks/black",
+		"2": "trafficcontrol:blocks/generic"
+	},
+	"elements": [
+		{
+			"name": "Backing",
+			"from": [0, 0, 7.5],
+			"to": [16, 16, 8.5],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"east": {"uv": [0, 0, 1, 16], "texture": "#0"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"west": {"uv": [0, 0, 1, 16], "texture": "#0"},
+				"up": {"uv": [0, 0, 16, 1], "texture": "#0"},
+				"down": {"uv": [0, 0, 16, 1], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Lamp",
+			"from": [2, 2, 8.5],
+			"to": [14, 14, 9.5],
+			"faces": {
+				"north": {"uv": [0, 0, 12, 12], "texture": "#0"},
+				"east": {"uv": [0, 0, 1, 12], "texture": "#0"},
+				"south": {"uv": [2, 1, 14, 13], "texture": "#lampTex"},
+				"west": {"uv": [0, 0, 1, 12], "texture": "#0"},
+				"up": {"uv": [0, 0, 12, 1], "texture": "#0"},
+				"down": {"uv": [0, 0, 12, 1], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Bulb",
+			"from": [2, 2, 6.5],
+			"to": [14, 14, 7.5],
+			"faces": {
+				"north": {"uv": [0, 0, 12, 12], "texture": "#2"},
+				"east": {"uv": [0, 0, 1, 12], "texture": "#2"},
+				"south": {"uv": [0, 0, 12, 12], "texture": "#2"},
+				"west": {"uv": [0, 0, 1, 12], "texture": "#2"},
+				"up": {"uv": [0, 0, 12, 1], "texture": "#2"},
+				"down": {"uv": [0, 0, 12, 1], "texture": "#2"}
+			}
+		},
+		{
+			"name": "Upper Blinder",
+			"from": [2, 14, 8.5],
+			"to": [14, 16, 14.5],
+			"faces": {
+				"north": {"uv": [0, 0, 12, 2], "texture": "#0"},
+				"east": {"uv": [0, 0, 6, 2], "texture": "#0"},
+				"south": {"uv": [0, 0, 12, 2], "texture": "#0"},
+				"west": {"uv": [0, 0, 6, 2], "texture": "#0"},
+				"up": {"uv": [0, 0, 12, 6], "texture": "#0"},
+				"down": {"uv": [0, 0, 12, 6], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Left Blinder",
+			"from": [0, 8, 8.5],
+			"to": [2, 16, 14.5],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 8], "texture": "#0"},
+				"east": {"uv": [0, 0, 6, 8], "texture": "#0"},
+				"south": {"uv": [0, 0, 2, 8], "texture": "#0"},
+				"west": {"uv": [0, 0, 6, 8], "texture": "#0"},
+				"up": {"uv": [0, 0, 2, 6], "texture": "#0"},
+				"down": {"uv": [0, 0, 2, 6], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Right Blinder",
+			"from": [14, 8, 8.5],
+			"to": [16, 16, 14.5],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 8], "texture": "#0"},
+				"east": {"uv": [0, 0, 6, 8], "texture": "#0"},
+				"south": {"uv": [0, 0, 2, 8], "texture": "#0"},
+				"west": {"uv": [0, 0, 6, 8], "texture": "#0"},
+				"up": {"uv": [0, 0, 2, 6], "texture": "#0"},
+				"down": {"uv": [0, 0, 2, 6], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"fixed": {
+			"scale": [0.5, 0.5, 0.5]
+		}
+	}
 }
