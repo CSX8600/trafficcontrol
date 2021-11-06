@@ -7,11 +7,14 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightDouble;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class StreetLightDoubleTileEntity extends TileEntity  {
+	private boolean powered;
 	private int[] blockPos1 = new int[] { 0, -1, 0 };
 	private int[] blockPos2 = new int[] { 0, -1, 0 };
 	private int[] blockPos3 = new int[] { 0, -1, 0 };
@@ -25,6 +28,7 @@ public class StreetLightDoubleTileEntity extends TileEntity  {
 		blockPos2 = compound.getIntArray("blockPos2");
 		blockPos3 = compound.getIntArray("blockPos3");
 		blockPos4 = compound.getIntArray("blockPos4");		
+		powered = compound.getBoolean("powered");
 	}
 	
 	@Override
@@ -33,6 +37,7 @@ public class StreetLightDoubleTileEntity extends TileEntity  {
 		compound.setIntArray("blockPos2", blockPos2);
 		compound.setIntArray("blockPos3", blockPos3);
 		compound.setIntArray("blockPos4", blockPos4);
+		compound.setBoolean("powered", powered);
 		
 		return super.writeToNBT(compound);
 	}
@@ -47,7 +52,7 @@ public class StreetLightDoubleTileEntity extends TileEntity  {
 		IBlockState state = world.getBlockState(pos);
 		
 		if (state.getBlock() == ModBlocks.street_light_double &&
-			!state.getValue(BlockStreetLightDouble.POWERED))
+			!powered)
 		{
 			addLightSources();
 		}
@@ -190,5 +195,40 @@ public class StreetLightDoubleTileEntity extends TileEntity  {
 		}
 		
 		return super.shouldRefresh(world, pos, oldState, newSate);
+	}
+
+	public boolean isPowered()
+	{
+		return powered;
+	}
+	
+	public void setPowered(boolean powered)
+	{
+		this.powered = powered;
+		markDirty();
+	}
+	
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		NBTTagCompound tag = super.getUpdateTag();
+		tag.setBoolean("powered", powered);
+		return tag;
+	}
+	
+	@Override
+	public void handleUpdateTag(NBTTagCompound tag) {
+		super.handleUpdateTag(tag);
+		powered = tag.getBoolean("powered");
+	}
+	
+	@Override
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		return new SPacketUpdateTileEntity(pos, 0, getUpdateTag());
+	}
+	
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+		super.onDataPacket(net, pkt);
+		handleUpdateTag(pkt.getNbtCompound());
 	}
 }

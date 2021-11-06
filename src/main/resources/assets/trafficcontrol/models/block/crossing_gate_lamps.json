@@ -12,6 +12,7 @@
 			"name": "Pole",
 			"from": [7, 0, 7],
 			"to": [9, 16, 9],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [2, 0, 0, 16], "texture": "#0"},
 				"east": {"uv": [3, 0, 1, 14], "texture": "#0"},
@@ -25,6 +26,7 @@
 			"name": "Left Lamp",
 			"from": [1, 10, 16],
 			"to": [6, 15, 17],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 5, 5], "texture": "#leftlamptex"},
 				"east": {"uv": [0, 0, 1, 5], "texture": "#leftlamptex"},
@@ -38,6 +40,7 @@
 			"name": "Right Lamp",
 			"from": [10, 10, 16],
 			"to": [15, 15, 17],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 5, 5], "texture": "#rightlamptex"},
 				"east": {"uv": [0, 0, 1, 5], "texture": "#rightlamptex"},
@@ -51,6 +54,7 @@
 			"name": "Left Back Plate",
 			"from": [0, 9, 15],
 			"to": [7, 16, 16],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 7, 7], "texture": "#1"},
 				"east": {"uv": [0, 0, 1, 7], "texture": "#1"},
@@ -64,6 +68,7 @@
 			"name": "Right Back Plate",
 			"from": [9, 9, 15],
 			"to": [16, 16, 16],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 7, 7], "texture": "#1"},
 				"east": {"uv": [0, 0, 1, 7], "texture": "#1"},
@@ -77,6 +82,7 @@
 			"name": "Right Back Plate 2",
 			"from": [10, 10, 13],
 			"to": [15, 15, 15],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 5, 5], "texture": "#0"},
 				"east": {"uv": [0, 0, 2, 5], "texture": "#0"},
@@ -90,6 +96,7 @@
 			"name": "Left Back Plate 2",
 			"from": [1, 10, 13],
 			"to": [6, 15, 15],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [2, 2, 7, 7], "texture": "#0"},
 				"east": {"uv": [2, 2, 4, 7], "texture": "#0"},
@@ -103,6 +110,7 @@
 			"name": "Left Lamp Cover Top",
 			"from": [1, 15, 16],
 			"to": [6, 16, 19],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 5, 1], "texture": "#1"},
 				"east": {"uv": [0, 0, 3, 1], "texture": "#1"},
@@ -116,6 +124,7 @@
 			"name": "Left Lamp Cover Left",
 			"from": [0, 13, 16],
 			"to": [1, 16, 19],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 1, 3], "texture": "#1"},
 				"east": {"uv": [0, 0, 3, 3], "texture": "#1"},
@@ -129,6 +138,7 @@
 			"name": "Left Lamp Cover Right",
 			"from": [6, 13, 16],
 			"to": [7, 16, 19],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 1, 3], "texture": "#1"},
 				"east": {"uv": [0, 0, 3, 3], "texture": "#1"},
@@ -142,6 +152,7 @@
 			"name": "Right Lamp Cover Top",
 			"from": [10, 15, 16],
 			"to": [15, 16, 19],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 5, 1], "texture": "#1"},
 				"east": {"uv": [0, 0, 3, 1], "texture": "#1"},
@@ -155,6 +166,7 @@
 			"name": "Right Lamp Cover Left",
 			"from": [9, 13, 16],
 			"to": [10, 16, 19],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 1, 3], "texture": "#1"},
 				"east": {"uv": [0, 0, 3, 3], "texture": "#1"},
@@ -168,6 +180,7 @@
 			"name": "Right Lamp Cover Right",
 			"from": [15, 13, 16],
 			"to": [16, 16, 19],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 1, 3], "texture": "#1"},
 				"east": {"uv": [0, 0, 3, 3], "texture": "#1"},
@@ -181,6 +194,7 @@
 			"name": "Right Lamp Support",
 			"from": [12, 15, 13],
 			"to": [13, 16, 15],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 1, 1], "texture": "#0"},
 				"east": {"uv": [0, 0, 2, 1], "texture": "#0"},
@@ -194,6 +208,7 @@
 			"name": "Left Lamp Support",
 			"from": [3, 15, 13],
 			"to": [4, 16, 15],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 1, 1], "texture": "#0"},
 				"east": {"uv": [0, 0, 2, 1], "texture": "#0"},
@@ -207,6 +222,7 @@
 			"name": "Support Connection",
 			"from": [3, 15, 13],
 			"to": [12, 16, 14],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 9, 1], "texture": "#0"},
 				"east": {"uv": [0, 0, 1, 1], "texture": "#0"},
@@ -220,6 +236,7 @@
 			"name": "Left Pole Support",
 			"from": [6, 15, 1],
 			"to": [7, 16, 14],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 1, 1], "texture": "#0"},
 				"east": {"uv": [0, 0, 13, 1], "texture": "#0"},
@@ -233,6 +250,7 @@
 			"name": "Right Pole Support",
 			"from": [9, 15, 1],
 			"to": [10, 16, 14],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [2, 2, 3, 3], "texture": "#0"},
 				"east": {"uv": [1, 1, 14, 2], "texture": "#0"},
@@ -246,6 +264,7 @@
 			"name": "Support Connection Back",
 			"from": [3, 15, 1],
 			"to": [12, 16, 2],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 9, 1], "texture": "#0"},
 				"east": {"uv": [0, 0, 1, 1], "texture": "#0"},
@@ -259,6 +278,7 @@
 			"name": "Right Lamp Support Back",
 			"from": [12, 15, 0],
 			"to": [13, 16, 2],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 1, 1], "texture": "#0"},
 				"east": {"uv": [0, 0, 2, 1], "texture": "#0"},
@@ -272,6 +292,7 @@
 			"name": "Left Lamp Support Back",
 			"from": [3, 15, 0],
 			"to": [4, 16, 2],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 1, 1], "texture": "#0"},
 				"east": {"uv": [0, 0, 2, 1], "texture": "#0"},
@@ -285,6 +306,7 @@
 			"name": "Right Back Plate 2 Back",
 			"from": [10, 10, 0],
 			"to": [15, 15, 2],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 5, 5], "texture": "#0"},
 				"east": {"uv": [0, 0, 2, 5], "texture": "#0"},
@@ -298,6 +320,7 @@
 			"name": "Right Back Plate Back",
 			"from": [9, 9, -1],
 			"to": [16, 16, 0],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 7, 7], "texture": "#1"},
 				"east": {"uv": [0, 0, 1, 7], "texture": "#1"},
@@ -311,6 +334,7 @@
 			"name": "Right Lamp Back",
 			"from": [10, 10, -2],
 			"to": [15, 15, -1],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 5, 5], "texture": "#rightlamptex"},
 				"east": {"uv": [0, 0, 1, 5], "texture": "#rightlamptex"},
@@ -324,6 +348,7 @@
 			"name": "Right Lamp Cover Top Back",
 			"from": [10, 15, -4],
 			"to": [15, 16, -1],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 5, 1], "texture": "#1"},
 				"east": {"uv": [0, 0, 3, 1], "texture": "#1"},
@@ -337,6 +362,7 @@
 			"name": "Right Lamp Cover Left Back",
 			"from": [9, 13, -4],
 			"to": [10, 16, -1],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 1, 3], "texture": "#1"},
 				"east": {"uv": [0, 0, 3, 3], "texture": "#1"},
@@ -350,6 +376,7 @@
 			"name": "Right Lamp Cover Right Back",
 			"from": [15, 13, -4],
 			"to": [16, 16, -1],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 1, 3], "texture": "#1"},
 				"east": {"uv": [0, 0, 3, 3], "texture": "#1"},
@@ -363,6 +390,7 @@
 			"name": "Left Back Plate 2 Back",
 			"from": [1, 10, 0],
 			"to": [6, 15, 2],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 5, 5], "texture": "#0"},
 				"east": {"uv": [0, 0, 2, 5], "texture": "#0"},
@@ -376,6 +404,7 @@
 			"name": "Left Back Plate Back",
 			"from": [0, 9, -1],
 			"to": [7, 16, 0],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 7, 7], "texture": "#1"},
 				"east": {"uv": [0, 0, 1, 7], "texture": "#1"},
@@ -389,6 +418,7 @@
 			"name": "Left Lamp Back",
 			"from": [1, 10, -2],
 			"to": [6, 15, -1],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 5, 5], "texture": "#leftlamptex"},
 				"east": {"uv": [0, 0, 1, 5], "texture": "#leftlamptex"},
@@ -402,6 +432,7 @@
 			"name": "Left Lamp Cover Top Back",
 			"from": [1, 15, -4],
 			"to": [6, 16, -1],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 5, 1], "texture": "#1"},
 				"east": {"uv": [0, 0, 3, 1], "texture": "#1"},
@@ -415,6 +446,7 @@
 			"name": "Left Lamp Cover Left Back",
 			"from": [0, 13, -4],
 			"to": [1, 16, -1],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 1, 3], "texture": "#1"},
 				"east": {"uv": [0, 0, 3, 3], "texture": "#1"},
@@ -428,6 +460,7 @@
 			"name": "Left Lamp Cover Right Back",
 			"from": [6, 13, -4],
 			"to": [7, 16, -1],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 1, 3], "texture": "#1"},
 				"east": {"uv": [0, 0, 3, 3], "texture": "#1"},

@@ -11,6 +11,7 @@
 			"name": "Base",
 			"from": [1, 0, 2],
 			"to": [15, 1, 14],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 14, 1], "texture": "#0"},
 				"east": {"uv": [0, 0, 12, 1], "texture": "#0"},
@@ -24,6 +25,7 @@
 			"name": "Base 1",
 			"from": [2, 0, 1],
 			"to": [14, 1, 2],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 12, 1], "texture": "#0"},
 				"east": {"uv": [0, 0, 1, 1], "texture": "#0"},
@@ -37,6 +39,7 @@
 			"name": "Base S",
 			"from": [2, 0, 14],
 			"to": [14, 1, 15],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 12, 1], "texture": "#0"},
 				"east": {"uv": [0, 0, 1, 1], "texture": "#0"},
@@ -50,6 +53,7 @@
 			"name": "Core",
 			"from": [4, 1, 5],
 			"to": [12, 14, 11],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 2, 8, 15], "texture": "#2"},
 				"east": {"uv": [0, 2, 6, 15], "texture": "#2"},
@@ -63,6 +67,7 @@
 			"name": "Core N",
 			"from": [5, 1, 4],
 			"to": [11, 14, 5],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 2, 6, 15], "texture": "#2"},
 				"east": {"uv": [0, 2, 1, 15], "texture": "#2"},
@@ -76,6 +81,7 @@
 			"name": "Core S",
 			"from": [5, 1, 11],
 			"to": [11, 14, 12],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 2, 6, 15], "texture": "#2"},
 				"east": {"uv": [0, 2, 1, 15], "texture": "#2"},
@@ -89,6 +95,7 @@
 			"name": "Handle W",
 			"from": [5, 14, 7],
 			"to": [6, 16, 9],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 1, 2], "texture": "#2"},
 				"east": {"uv": [0, 0, 2, 2], "texture": "#2"},
@@ -102,6 +109,7 @@
 			"name": "Handle E",
 			"from": [10, 14, 7],
 			"to": [11, 16, 9],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 1, 2], "texture": "#2"},
 				"east": {"uv": [0, 0, 2, 2], "texture": "#2"},
@@ -115,6 +123,7 @@
 			"name": "Handle Top",
 			"from": [6, 15, 7],
 			"to": [10, 16, 9],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 4, 1], "texture": "#2"},
 				"east": {"uv": [0, 0, 2, 1], "texture": "#2"},

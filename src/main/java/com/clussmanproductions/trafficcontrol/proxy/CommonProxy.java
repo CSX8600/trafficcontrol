@@ -99,6 +99,7 @@ public class CommonProxy {
 		GameRegistry.registerTileEntity(StreetSignTileEntity.class, ModTrafficControl.MODID + "_streetsign");
 		GameRegistry.registerTileEntity(TrafficLight5TileEntity.class, ModTrafficControl.MODID + "_trafficlight5");
 		GameRegistry.registerTileEntity(TrafficLightDoghouseTileEntity.class, ModTrafficControl.MODID + "_trafficlightdoghouse");
+		GameRegistry.registerTileEntity(CrossingLampsTileEntity.class, ModTrafficControl.MODID + "_crossinglamps");
 		GameRegistry.registerTileEntity(TrafficLight1TileEntity.class, ModTrafficControl.MODID + "_trafficlight1");
 		GameRegistry.registerTileEntity(TrafficLight2TileEntity.class, ModTrafficControl.MODID + "_trafficlight2");
 		GameRegistry.registerTileEntity(TrafficLight4TileEntity.class, ModTrafficControl.MODID + "_trafficlight4");

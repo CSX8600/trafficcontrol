@@ -1,6 +1,7 @@
 package com.clussmanproductions.trafficcontrol.blocks.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
@@ -79,7 +80,8 @@ public class BakedModelStreetLightSingle extends BaseBakedModel {
 		quads.addAll(createBox(7, 32, 7, 2, 16, 2, postThinBoxTextureCollection));
 		quads.addAll(createBox(7, 48, 7, 2, 16, 2, postThinBoxTextureCollection));
 		
-		EnumFacing facing = state.getValue(BlockStreetLightSingle.FACING);
+//		EnumFacing facing = state.getValue(BlockStreetLightSingle.FACING);
+		EnumFacing facing = EnumFacing.NORTH;
 		
 		switch(facing)
 		{
@@ -125,7 +127,8 @@ public class BakedModelStreetLightSingle extends BaseBakedModel {
 				break;
 		}
 		
-		return quads;
+//		return quads;
+		return Collections.emptyList();
 	}
 
 	@Override

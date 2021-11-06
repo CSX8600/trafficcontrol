@@ -6,6 +6,7 @@ import java.util.List;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockBaseTrafficLight;
 import com.clussmanproductions.trafficcontrol.tileentity.BaseTrafficLightTileEntity;
+import com.clussmanproductions.trafficcontrol.util.CustomAngleCalculator;
 import com.clussmanproductions.trafficcontrol.util.EnumTrafficLightBulbTypes;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -74,7 +75,7 @@ public abstract class BaseItemTrafficLightFrame extends Item {
 			pos = pos.offset(facing);
 		}
 		
-		worldIn.setBlockState(pos, getBaseBlockTrafficLight().getDefaultState().withProperty(BlockBaseTrafficLight.FACING, player.getHorizontalFacing()));
+		worldIn.setBlockState(pos, getBaseBlockTrafficLight().getDefaultState().withProperty(BlockBaseTrafficLight.ROTATION, CustomAngleCalculator.getRotationForYaw(player.rotationYaw)));
 		BaseTrafficLightTileEntity trafficLight = (BaseTrafficLightTileEntity)worldIn.getTileEntity(pos);
 		
 		int bulbCount = getBulbCount();

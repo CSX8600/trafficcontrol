@@ -6,6 +6,7 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockStreetSign;
 import com.clussmanproductions.trafficcontrol.gui.GuiProxy;
 import com.clussmanproductions.trafficcontrol.tileentity.StreetSign;
 import com.clussmanproductions.trafficcontrol.tileentity.StreetSignTileEntity;
+import com.clussmanproductions.trafficcontrol.util.CustomAngleCalculator;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -39,7 +40,7 @@ public class ItemStreetSign extends ItemBlock {
 			StreetSignTileEntity streetSignTileEntity = (StreetSignTileEntity)worldIn.getTileEntity(pos);
 			
 			StreetSign newSign = new StreetSign();
-			newSign.setFacing(player.getHorizontalFacing());
+			newSign.setRotation(CustomAngleCalculator.getRotationForYaw(player.rotationYaw));
 			
 			if (streetSignTileEntity.addStreetSign(newSign))
 			{

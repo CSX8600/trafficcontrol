@@ -6,6 +6,7 @@ import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.blocks.BlockBaseTrafficLight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight5Upper;
 import com.clussmanproductions.trafficcontrol.gui.GuiProxy;
+import com.clussmanproductions.trafficcontrol.util.CustomAngleCalculator;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -107,7 +108,7 @@ public class ItemTrafficLight5Frame extends BaseItemTrafficLightFrame {
 			return EnumActionResult.FAIL;
 		}
 		
-		worldIn.setBlockState(stateAbovePos, ModBlocks.traffic_light_5_upper.getDefaultState().withProperty(BlockTrafficLight5Upper.FACING, player.getHorizontalFacing()));
+		worldIn.setBlockState(stateAbovePos, ModBlocks.traffic_light_5_upper.getDefaultState().withProperty(BlockTrafficLight5Upper.ROTATION, CustomAngleCalculator.getRotationForYaw(player.rotationYaw)));
 		
 		return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
 	}

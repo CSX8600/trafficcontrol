@@ -5,9 +5,11 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
+import com.clussmanproductions.trafficcontrol.blocks.BlockBaseTrafficLight;
 import com.clussmanproductions.trafficcontrol.tileentity.BaseTrafficLightTileEntity;
 import com.clussmanproductions.trafficcontrol.util.EnumTrafficLightBulbTypes;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -29,8 +31,9 @@ public abstract class BaseTrafficLightRenderer extends TileEntitySpecialRenderer
 		double scale = (double)1/(double)16;
 		GlStateManager.scale(scale, scale, scale);
 		
+		IBlockState state = te.getWorld().getBlockState(te.getPos());
 		GlStateManager.translate(8, 8, 8);
-		GlStateManager.rotate(te.getYRotation(), 0, 1, 0);
+		GlStateManager.rotate(state.getValue(BlockBaseTrafficLight.ROTATION) * -22.5F, 0, 1, 0);
 		GlStateManager.translate(-8, -8, -8);
 		
 		GlStateManager.translate(0, 0, getBulbZLocation());

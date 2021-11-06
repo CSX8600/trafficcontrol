@@ -13,12 +13,14 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorStraight;
 import com.clussmanproductions.trafficcontrol.tileentity.BaseTrafficLightTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.BellBaseTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.CrossingLampsTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.PedestrianButtonTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.RelayTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.ShuntBorderTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.ShuntIslandTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightControlBoxTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.WigWagTileEntity;
+import com.clussmanproductions.trafficcontrol.util.CustomAngleCalculator;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -113,17 +115,7 @@ public class ItemCrossingRelayTuner extends Item {
 		if (te instanceof RelayTileEntity)
 		{
 			RelayTileEntity relay = (RelayTileEntity)te;
-			if (state.getBlock() instanceof BlockLampBase)
-			{
-				if (relay.addOrRemoveCrossingGateLamp(pos))
-				{
-					player.sendMessage(new TextComponentString("Paired Crossing Lamps to Relay Box"));
-				}
-				else
-				{
-					player.sendMessage(new TextComponentString("Unpaired Crossing Lamps from Relay Box"));
-				}
-			}
+			// There are currently no blocks that pair to relay
 		}
 
 		if (te instanceof TrafficLightControlBoxTileEntity)
@@ -346,6 +338,18 @@ public class ItemCrossingRelayTuner extends Item {
 					player.sendMessage(new TextComponentString("Unpaired Island Shunt from Relay Box"));
 				}
 			}
+
+			if (te instanceof CrossingLampsTileEntity)
+			{
+				if (relay.addOrRemoveCrossingGateLamp(te.getPos()))
+				{
+					player.sendMessage(new TextComponentString("Paired Crossing Lamps to Relay Box"));
+				}
+				else
+				{
+					player.sendMessage(new TextComponentString("Unpaired Crossing Lamps from Relay Box"));
+				}
+			}
 		}
 
 		if (pairedTE instanceof TrafficLightControlBoxTileEntity)
@@ -357,10 +361,10 @@ public class ItemCrossingRelayTuner extends Item {
 
 				if (state.getBlock() instanceof BlockBaseTrafficLight)
 				{
-					EnumFacing facing = state.getValue(BlockBaseTrafficLight.FACING);
+					int rotation = state.getValue(BlockBaseTrafficLight.ROTATION);
 
 					boolean operationResult = false;
-					if (facing == EnumFacing.EAST || facing == EnumFacing.WEST)
+					if (CustomAngleCalculator.isEast(rotation) || CustomAngleCalculator.isWest(rotation))
 					{
 						operationResult = controlBox.addOrRemoveWestEastTrafficLight(te.getPos());
 					}

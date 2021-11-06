@@ -12,6 +12,7 @@
 			"name": "Base",
 			"from": [4, 0, 4],
 			"to": [12, 1, 12],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 8, 1], "texture": "#0"},
 				"east": {"uv": [0, 0, 8, 1], "texture": "#0"},
@@ -25,6 +26,7 @@
 			"name": "Base 2",
 			"from": [6, 1, 6],
 			"to": [10, 2, 10],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 4, 1], "texture": "#2"},
 				"east": {"uv": [0, 0, 4, 1], "texture": "#2"},
@@ -38,6 +40,7 @@
 			"name": "Tube",
 			"from": [7, 2, 7],
 			"to": [9, 18, 9],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 2, 16], "texture": "#3"},
 				"east": {"uv": [0, 0, 2, 16], "texture": "#3"},

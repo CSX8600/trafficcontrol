@@ -9,6 +9,7 @@
 			"name": "Base",
 			"from": [6, 0, 6],
 			"to": [10, 3, 10],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 4, 3], "texture": "#0"},
 				"east": {"uv": [3, 0, 7, 3], "texture": "#0"},
@@ -22,6 +23,7 @@
 			"name": "Pole",
 			"from": [7, 2, 7],
 			"to": [9, 16, 9],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [2, 0, 0, 16], "texture": "#0"},
 				"east": {"uv": [3, 0, 1, 14], "texture": "#0"},

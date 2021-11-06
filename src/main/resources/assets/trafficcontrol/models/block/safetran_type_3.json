@@ -11,6 +11,7 @@
 			"name": "Base",
 			"from": [6, 0, 6],
 			"to": [10, 3, 10],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 2, 4, 5], "texture": "#0"},
 				"east": {"uv": [2, 2, 6, 5], "texture": "#0"},
@@ -24,6 +25,7 @@
 			"name": "Top",
 			"from": [6, 9, 6],
 			"to": [10, 13, 10],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 4, 4], "texture": "#0"},
 				"east": {"uv": [2, 0, 6, 4], "texture": "#0"},
@@ -37,6 +39,7 @@
 			"name": "Cage 1",
 			"from": [6, 3, 9],
 			"to": [9, 9, 10],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 10, 16], "texture": "#1"},
 				"east": {"uv": [0, 0, 4, 16], "texture": "#1"},
@@ -50,6 +53,7 @@
 			"name": "Cage 2",
 			"from": [7, 3, 6],
 			"to": [10, 9, 7],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 10, 16], "texture": "#2"},
 				"east": {"uv": [0, 0, 4, 16], "texture": "#2"},
@@ -63,6 +67,7 @@
 			"name": "Cage 3",
 			"from": [6, 3, 6],
 			"to": [7, 9, 9],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 4, 16], "texture": "#2"},
 				"east": {"uv": [0, 0, 10, 16], "texture": "#1"},
@@ -76,6 +81,7 @@
 			"name": "Cage 4",
 			"from": [9, 3, 7],
 			"to": [10, 9, 10],
+			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 4, 16], "texture": "#2"},
 				"east": {"uv": [0, 0, 10, 16], "texture": "#2"},
