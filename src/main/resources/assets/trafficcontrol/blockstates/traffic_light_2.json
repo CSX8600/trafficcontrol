@@ -7,12 +7,25 @@
 	"variants":
 	{
 		"normal": [{}],
-		"facing": {
-			"north": {},
-			"west": { "y": 270 },
-			"south": { "y": 180 },
-			"east": { "y": 90 }
-		},
+		"rotation":
+        {
+            "0": { "model": "trafficcontrol:traffic_light_2" },
+	        "1": { "model": "trafficcontrol:traffic_light_2", "transform": { "rotation": { "y": 337 } } },
+	        "2": { "model": "trafficcontrol:traffic_light_2", "transform": { "rotation": { "y": 315  } } },
+	        "3": { "model": "trafficcontrol:traffic_light_2", "transform": { "rotation": { "y": 292 } } },
+	        "4": { "model": "trafficcontrol:traffic_light_2", "transform": { "rotation": { "y": 270 } } },
+	        "5": { "model": "trafficcontrol:traffic_light_2", "transform": { "rotation": { "y": 247 } } },
+	        "6": { "model": "trafficcontrol:traffic_light_2", "transform": { "rotation": { "y": 225 } } },
+	        "7": { "model": "trafficcontrol:traffic_light_2", "transform": { "rotation": { "y": 202 } } },
+	        "8": { "model": "trafficcontrol:traffic_light_2", "transform": { "rotation": { "y": 180 } } },
+	        "9": { "model": "trafficcontrol:traffic_light_2", "transform": { "rotation": { "y": 157 } } },
+	        "10": { "model": "trafficcontrol:traffic_light_2", "transform": { "rotation": { "y": 135 } } },
+	        "11": { "model": "trafficcontrol:traffic_light_2", "transform": { "rotation": { "y": 112 } } },
+	        "12": { "model": "trafficcontrol:traffic_light_2", "transform": { "rotation": { "y": 90 } } },
+	        "13": { "model": "trafficcontrol:traffic_light_2", "transform": { "rotation": { "y": 67 } } },
+	        "14": { "model": "trafficcontrol:traffic_light_2", "transform": { "rotation": { "y": 45 } } },
+	        "15": { "model": "trafficcontrol:traffic_light_2", "transform": { "rotation": { "y": 22 } } }
+        },
         "validbackbar": {
         	"true": {
         		"submodel": "trafficcontrol:crossing_gate_pole_ext"

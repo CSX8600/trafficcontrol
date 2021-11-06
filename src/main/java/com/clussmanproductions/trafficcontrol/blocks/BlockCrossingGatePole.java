@@ -34,7 +34,7 @@ public class BlockCrossingGatePole extends Block {
 		setRegistryName("crossing_gate_pole");
 		setUnlocalizedName(ModTrafficControl.MODID + ".crossing_gate_pole");
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
-		setLightOpacity(15);
+		setLightOpacity(1);
 		setHardness(2f);
 	}
 

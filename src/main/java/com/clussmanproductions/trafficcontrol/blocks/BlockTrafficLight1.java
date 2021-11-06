@@ -6,6 +6,7 @@ import com.clussmanproductions.trafficcontrol.tileentity.TrafficLight1TileEntity
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.render.TrafficLight1Renderer;
 import com.clussmanproductions.trafficcontrol.tileentity.render.TrafficLightRenderer;
+import com.clussmanproductions.trafficcontrol.util.CustomAngleCalculator;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -33,16 +34,27 @@ public class BlockTrafficLight1 extends BlockBaseTrafficLight
 	
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		switch(state.getValue(BlockBaseTrafficLight.FACING))
+		int rotation = state.getValue(BlockBaseTrafficLight.ROTATION);
+		if (!CustomAngleCalculator.isCardinal(rotation))
 		{
-			case EAST:
-				return new AxisAlignedBB(0.2375, 0.13, 0.1875, 0.65, 0.98, 0.8125);
-			case NORTH:
-				return new AxisAlignedBB(0.1875, 0.13, 0.38, 0.8125, 0.98, 0.7625);
-			case SOUTH:
-				return new AxisAlignedBB(0.1875, 0.13, 0.25, 0.8125, 0.98, 0.5625);
-			case WEST:
-				return new AxisAlignedBB(0.4375, 0.13, 0.1875, 0.75, 0.98, 0.8125);
+			return super.getBoundingBox(state, source, pos);
+		}
+		
+		if (CustomAngleCalculator.isEast(rotation))
+		{
+			return new AxisAlignedBB(0.2375, 0.13, 0.1875, 0.65, 0.98, 0.8125);
+		}
+		else if (CustomAngleCalculator.isNorth(rotation))
+		{
+			return new AxisAlignedBB(0.1875, 0.13, 0.38, 0.8125, 0.98, 0.7625);
+		}
+		else if (CustomAngleCalculator.isSouth(rotation))
+		{
+			return new AxisAlignedBB(0.1875, 0.13, 0.25, 0.8125, 0.98, 0.5625);
+		}
+		else if (CustomAngleCalculator.isWest(rotation))
+		{
+			return new AxisAlignedBB(0.4375, 0.13, 0.1875, 0.75, 0.98, 0.8125);
 		}
 		return super.getBoundingBox(state, source, pos);
 	}
