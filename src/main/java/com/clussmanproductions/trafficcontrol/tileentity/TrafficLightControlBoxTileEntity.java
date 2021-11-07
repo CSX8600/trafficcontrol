@@ -747,51 +747,62 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 		
 		private Stages updateLightsByStage(Stages stage)
 		{
+			List<BlockPos> trafficLightPosForRightOfWay;
+			List<BlockPos> trafficLightPosOpposingRightOfWay;
 			List<BaseTrafficLightTileEntity> trafficLightsForRightOfWay;
+			List<BaseTrafficLightTileEntity> trafficLightsOpposingRightOfWay;
 			EnumFacing direction1;
 			EnumFacing direction2;
 			
 			if (lastRightOfWay == RightOfWays.NorthSouth)
 			{
-				trafficLightsForRightOfWay = northSouthLights
-						.stream()
-						.map(p ->
-						{
-							TileEntity te = world.getTileEntity(p);
-							if (te instanceof BaseTrafficLightTileEntity)
-							{
-								return (BaseTrafficLightTileEntity)te;
-							}
-							
-							return null;
-						})
-						.filter(Objects::nonNull)
-						.collect(Collectors.toList());
+				trafficLightPosForRightOfWay = northSouthLights;
+				trafficLightPosOpposingRightOfWay = westEastLights;
 				
 				direction1 = EnumFacing.NORTH;
 				direction2 = EnumFacing.SOUTH;
 			}
 			else
 			{
-				trafficLightsForRightOfWay = westEastLights
-						.stream()
-						.map(p ->
-						{
-							TileEntity te = world.getTileEntity(p);
-							if (te instanceof BaseTrafficLightTileEntity)
-							{
-								return (BaseTrafficLightTileEntity)te;
-							}
-							
-							return null;
-						})
-						.filter(Objects::nonNull)
-						.collect(Collectors.toList());
+				trafficLightPosForRightOfWay = westEastLights;
+				trafficLightPosOpposingRightOfWay = northSouthLights;
 				
 				direction1 = EnumFacing.EAST;
 				direction2 = EnumFacing.WEST;
 			}
 			
+			trafficLightsForRightOfWay = trafficLightPosForRightOfWay
+					.stream()
+					.map(p ->
+					{
+						TileEntity te = world.getTileEntity(p);
+						if (te instanceof BaseTrafficLightTileEntity)
+						{
+							return (BaseTrafficLightTileEntity)te;
+						}
+						
+						return null;
+					})
+					.filter(Objects::nonNull)
+					.collect(Collectors.toList());
+			
+			trafficLightsOpposingRightOfWay = trafficLightPosOpposingRightOfWay
+					.stream()
+					.map(p ->
+					{
+						TileEntity te = world.getTileEntity(p);
+						if (te instanceof BaseTrafficLightTileEntity)
+						{
+							return (BaseTrafficLightTileEntity)te;
+						}
+						
+						return null;
+					})
+					.filter(Objects::nonNull)
+					.collect(Collectors.toList());
+			
+			EnumFacing direction1cw = direction1.rotateY();
+			EnumFacing direction2cw = direction2.rotateY();
 			switch(stage)
 			{
 				case Red:
@@ -802,6 +813,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 						tl.powerOff();
 						tl.setActive(EnumTrafficLightBulbTypes.Red, true, false);
 						tl.setActive(EnumTrafficLightBulbTypes.RedArrowLeft, true, false);
+						tl.setActive(EnumTrafficLightBulbTypes.RedArrowRight, true, false);
 					});
 					break;
 				case Direction1TurnArrow:					
@@ -817,7 +829,22 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 							tl.powerOff();
 							tl.setActive(EnumTrafficLightBulbTypes.GreenArrowLeft, true, false);
 							tl.setActive(EnumTrafficLightBulbTypes.Green, true, false);
+							tl.setActive(EnumTrafficLightBulbTypes.GreenArrowRight, true, false);
 						});
+					
+					trafficLightsOpposingRightOfWay
+					.stream()
+					.forEach(tl -> {
+						IBlockState tlBs = world.getBlockState(tl.getPos());
+						if (!CustomAngleCalculator.isRotationFacing(tlBs.getValue(BlockBaseTrafficLight.ROTATION), direction1cw))
+						{
+							return;
+						}
+						
+						tl.powerOff();
+						tl.setActive(EnumTrafficLightBulbTypes.Red, true, false);
+						tl.setActive(EnumTrafficLightBulbTypes.GreenArrowRight, true, false);
+					});
 					break;
 				case Direction2TurnArrow:
 					trafficLightsForRightOfWay
@@ -832,6 +859,21 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 						tl.powerOff();
 						tl.setActive(EnumTrafficLightBulbTypes.GreenArrowLeft, true, false);
 						tl.setActive(EnumTrafficLightBulbTypes.Green, true, false);
+						tl.setActive(EnumTrafficLightBulbTypes.GreenArrowRight, true, false);
+					});
+					
+					trafficLightsOpposingRightOfWay
+					.stream()
+					.forEach(tl -> {
+						IBlockState tlBs = world.getBlockState(tl.getPos());
+						if (!CustomAngleCalculator.isRotationFacing(tlBs.getValue(BlockBaseTrafficLight.ROTATION), direction2cw))
+						{
+							return;
+						}
+						
+						tl.powerOff();
+						tl.setActive(EnumTrafficLightBulbTypes.Red, true, false);
+						tl.setActive(EnumTrafficLightBulbTypes.GreenArrowRight, true, false);
 					});
 					break;
 				case BothTurnArrow:
@@ -842,6 +884,15 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 						tl.powerOff();
 						tl.setActive(EnumTrafficLightBulbTypes.Red, true, false);
 						tl.setActive(EnumTrafficLightBulbTypes.GreenArrowLeft, true, false);
+						tl.setActive(EnumTrafficLightBulbTypes.RedArrowRight, true, false);
+					});
+					
+					trafficLightsOpposingRightOfWay
+					.stream()
+					.forEach(tl -> {
+						tl.powerOff();
+						tl.setActive(EnumTrafficLightBulbTypes.Red, true, false);
+						tl.setActive(EnumTrafficLightBulbTypes.GreenArrowRight, true, false);
 					});
 					break;
 				case Direction1TurnArrowYellow:
@@ -857,7 +908,22 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 							tl.powerOff();
 							tl.setActive(EnumTrafficLightBulbTypes.YellowArrowLeft, true, false);
 							tl.setActive(EnumTrafficLightBulbTypes.Green, true, false);
+							tl.setActive(EnumTrafficLightBulbTypes.YellowArrowRight, true, false);
 						});
+					
+					trafficLightsOpposingRightOfWay
+					.stream()
+					.forEach(tl -> {
+						IBlockState tlBs = world.getBlockState(tl.getPos());
+						if (!CustomAngleCalculator.isRotationFacing(tlBs.getValue(BlockBaseTrafficLight.ROTATION), direction1cw))
+						{
+							return;
+						}
+						
+						tl.powerOff();
+						tl.setActive(EnumTrafficLightBulbTypes.Red, true, false);
+						tl.setActive(EnumTrafficLightBulbTypes.YellowArrowRight, true, false);
+					});
 					break;
 				case Direction2TurnArrowYellow:
 					trafficLightsForRightOfWay
@@ -872,6 +938,21 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 						tl.powerOff();
 						tl.setActive(EnumTrafficLightBulbTypes.YellowArrowLeft, true, false);
 						tl.setActive(EnumTrafficLightBulbTypes.Green, true, false);
+						tl.setActive(EnumTrafficLightBulbTypes.YellowArrowRight, true, false);
+					});
+					
+					trafficLightsOpposingRightOfWay
+					.stream()
+					.forEach(tl -> {
+						IBlockState tlBs = world.getBlockState(tl.getPos());
+						if (!CustomAngleCalculator.isRotationFacing(tlBs.getValue(BlockBaseTrafficLight.ROTATION), direction2cw))
+						{
+							return;
+						}
+						
+						tl.powerOff();
+						tl.setActive(EnumTrafficLightBulbTypes.Red, true, false);
+						tl.setActive(EnumTrafficLightBulbTypes.YellowArrowRight, true, false);
 					});
 					break;
 				case BothTurnArrowYellow:
@@ -882,6 +963,15 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 						tl.powerOff();
 						tl.setActive(EnumTrafficLightBulbTypes.Red, true, false);
 						tl.setActive(EnumTrafficLightBulbTypes.YellowArrowLeft, true, false);
+						tl.setActive(EnumTrafficLightBulbTypes.RedArrowRight, true, false);
+					});
+					
+					trafficLightsOpposingRightOfWay
+					.stream()
+					.forEach(tl -> {
+						tl.powerOff();
+						tl.setActive(EnumTrafficLightBulbTypes.Red, true, false);
+						tl.setActive(EnumTrafficLightBulbTypes.YellowArrowRight, true, false);
 					});
 					break;
 				case Yellow:
@@ -892,6 +982,15 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 						tl.powerOff();
 						tl.setActive(EnumTrafficLightBulbTypes.YellowArrowLeft, true, false);
 						tl.setActive(EnumTrafficLightBulbTypes.Yellow, true, false);
+						tl.setActive(EnumTrafficLightBulbTypes.RedArrowRight, true, false);
+					});
+					
+					trafficLightsOpposingRightOfWay
+					.stream()
+					.forEach(tl -> {
+						tl.powerOff();
+						tl.setActive(EnumTrafficLightBulbTypes.Red, true, false);
+						tl.setActive(EnumTrafficLightBulbTypes.RedArrowRight, true, false);
 					});
 					break;
 				case Green:
@@ -904,6 +1003,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 						tl.powerOff();
 						tl.setActive(EnumTrafficLightBulbTypes.YellowArrowLeft, true, true);
 						tl.setActive(EnumTrafficLightBulbTypes.Green, true, false);
+						tl.setActive(EnumTrafficLightBulbTypes.RedArrowRight, true, false);
 						
 						if (stage == Stages.GreenCross)
 						{
@@ -914,6 +1014,14 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 						{
 							tl.setActive(EnumTrafficLightBulbTypes.DontCross, true, true);
 						}
+					});
+					
+					trafficLightsOpposingRightOfWay
+					.stream()
+					.forEach(tl -> {
+						tl.powerOff();
+						tl.setActive(EnumTrafficLightBulbTypes.Red, true, false);
+						tl.setActive(EnumTrafficLightBulbTypes.RedArrowRight, true, false);
 					});
 					break;
 			}

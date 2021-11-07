@@ -27,7 +27,7 @@ public class BlockCrossingGateBase extends Block {
 		setRegistryName("crossing_gate_base");
 		setUnlocalizedName(ModTrafficControl.MODID + ".crossing_gate_base");
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
-		setLightOpacity(15);
+		setLightOpacity(1);
 	}
 
 	public void initModel()
