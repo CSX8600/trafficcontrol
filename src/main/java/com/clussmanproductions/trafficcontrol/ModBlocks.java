@@ -103,6 +103,8 @@ public class ModBlocks {
 	public static BlockTrafficLight4 traffic_light_4;
 	@ObjectHolder("pedestrian_button")
 	public static BlockPedestrianButton pedestrian_button;
+	@ObjectHolder("traffic_sensor_right")
+	public static BlockTrafficSensorRight traffic_sensor_right;
 
 	@SideOnly(Side.CLIENT)
 	public static void initModels(ModelRegistryEvent e)
@@ -144,5 +146,6 @@ public class ModBlocks {
 		traffic_light_2.initModel();
 		traffic_light_4.initModel();
 		pedestrian_button.initModel();
+		traffic_sensor_right.initModel();
 	}
 }

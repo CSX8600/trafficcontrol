@@ -87,11 +87,11 @@ public class ItemTrafficLightBulb extends Item {
 		}
 		else if (meta == EnumTrafficLightBulbTypes.Cross.getIndex())
 		{
-			unlocalizedName = "cross";
+			unlocalizedName += "cross";
 		}
 		else if (meta == EnumTrafficLightBulbTypes.DontCross.getIndex())
 		{
-			unlocalizedName = "dont_cross";
+			unlocalizedName += "dont_cross";
 		}
 		else if (meta == EnumTrafficLightBulbTypes.RedArrowRight.getIndex())
 		{
