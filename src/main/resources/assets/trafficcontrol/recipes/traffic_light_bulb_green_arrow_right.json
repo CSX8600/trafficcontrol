@@ -1,11 +1,11 @@
 { 
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "GL ",
+    "LGG",
     "   ",
     "   "  ],
   "key": {
-  	"G":
+  "G":
 	  {
 	  	"type": "forge:ore_dict",
 	  	"ore": "dyeGreen"
@@ -19,6 +19,6 @@
   "result": {
     "item": "trafficcontrol:traffic_light_bulb",
     "count": 1,
-    "data": 2
+    "data": 10
   }
 }

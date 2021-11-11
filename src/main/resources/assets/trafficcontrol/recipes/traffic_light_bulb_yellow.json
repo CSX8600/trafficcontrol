@@ -8,8 +8,7 @@
   "Y":
 	  {
 	  	"type": "forge:ore_dict",
-	  	"ore": "dye",
-	  	"data": 11
+	  	"ore": "dyeYellow"
 	  },
 	"L":
 	  {

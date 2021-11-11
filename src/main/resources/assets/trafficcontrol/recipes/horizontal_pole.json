@@ -1,0 +1,16 @@
+{ 
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP"  
+	],
+  "key": {
+    "P":
+	{
+	    "item": "trafficcontrol:crossing_gate_pole"
+	}
+  },
+  "result": {
+    "item": "trafficcontrol:horizontal_pole",
+    "count": 3
+  }
+}
