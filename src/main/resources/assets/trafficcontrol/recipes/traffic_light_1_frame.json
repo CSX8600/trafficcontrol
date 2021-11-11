@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "trafficcontrol:traffic_light_frame"
+        }
+    ],
+    "result": {
+        "item": "trafficcontrol:traffic_light_1_frame",
+        "count": 3
+    }
+}
