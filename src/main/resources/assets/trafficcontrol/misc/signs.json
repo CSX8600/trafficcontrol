@@ -11,7 +11,7 @@
     "type": "circle",
     "variant": "1",
     "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
-    "note": "The MUTCD says this sign should be 100 feet (30 blocks) from the RXR (50 [15 blocks] for pedestrian paths), displayed everywhere it can be."
+    "note": "The MUTCD says this sign should be 100 feet (30 blocks) from the RXR (50 [15 blocks] for pedestrian paths), displayed on the direct approach."
   },
   {
     "name": "No Left Turn",
@@ -242,10 +242,10 @@
     "variant": "39"
   },
   {
-    "name": "Deleted Sign",
+    "name": "Toll Ahead §c(DUPLICATE)",
     "type": "circle",
     "variant": "40",
-    "tooltip": "This sign was a duplicate of Circle 37. Please use that.",
+    "tooltip": "This sign is a duplicate of Circle 37. Please use that, since this sign could get deleted or overwritten in the future.",
   },
   {
     "name": "Go Straight",
@@ -1087,12 +1087,14 @@
     "type": "diamond",
     "variant": "80",
     "tooltip": "Drawbridges need not look like drawbridges!",
-    "note": "Some forms of English consider ANY opening bridge as a drawbridge."
+    "note": "Some forms of English consider ANY opening bridge as a drawbridge. Even adding/deleting/moving the bridge with command blocks would qualify."
   },
   {
     "name": "Opening Bridge",
     "type": "diamond",
     "variant": "81"
+    "tooltip": "Don't limit this sign to just bascule bridges!"
+    "note": "Shown on the sign is a bascule bridge, one of many forms of opening bridge. Don't limit this sign to just bascule bridges!"
   },
   {
     "name": "TUNNEL",
@@ -1219,14 +1221,14 @@
     "type": "diamond",
     "variant": "102",
     "tooltip": "Use near ghast-prone areas or on roads that ghasts can destroy",
-    "note": "This sign is fit for the Nether. Recommended in areas that are prone to ghasts or ghast ambushes, as well as on roads made of blocks that ghasts can destroy."
+    "note": "Fit for the Nether. Recommended in areas that are prone to ghasts or ghast ambushes, as well as on roads made of blocks that ghasts can destroy."
   },
   {
     "name": "Slimes/Magma Cubes",
     "type": "diamond",
     "variant": "103",
     "tooltip": "Use near slime- or magma cube-prone areas",
-    "note": "Recommended in  areas prone to slimes or magma cubes or slime or magma cube ambushes. Advise players to report slime chunks."
+    "note": "Recommended in areas prone to slimes or magma cubes or slime or magma cube ambushes. Advise players to report slime chunks."
   },
   {
     "name": "Tram Crossing",
@@ -1497,7 +1499,7 @@
     "name": "Japanese Stop Sign",
     "type": "misc",
     "variant": "8",
-    "tooltip": "This isn't a yield sign."
+    "tooltip": "§cThis isn't a yield sign."
   },
   {
     "name": "Right Arrow Plaque",
@@ -1672,7 +1674,7 @@
     "name": "'JCT' Plaque",
     "type": "misc",
     "variant": "38",
-    "tooltip": "Junction with this route."
+    "tooltip": "Junction with this route"
   },
   {
     "name": "'DETOUR' Plaque",
@@ -1681,7 +1683,7 @@
     "tooltip": "Show a temporary alternative route."
   },
   {
-    "name": "'BUS' Plaque",
+    "name": "'BUS' (Business) Plaque",
     "type": "misc",
     "variant": "40",
     "tooltip": "Show a business route."
@@ -1728,21 +1730,21 @@
     "type": "misc",
     "variant": "48",
     "tooltip": "Place on the opposite shoulder of traffic if a passing zone ends on a two-way road",
-    "note": "Should be used at the start of a no passing zone on a two-way road. Place on the opposite shoulder of traffic. (In the US this would be on the left side.)"
+    "note": "Should be used at the start of a no passing zone on a two-way road. Place on the opposite shoulder of traffic (on the left in the US)."
   },
   {
     "name": "NO ADELANTAR",
     "type": "misc",
     "variant": "49",
     "tooltip": "Place on the opposite shoulder of traffic if a passing zone ends on a two-way road",
-    "note": "Should be used at the start of a no passing zone on a two-way road. Place on the opposite shoulder of traffic. (In the US this would be on the left side.)"
+    "note": "Should be used at the start of a no passing zone on a two-way road. Place on the opposite shoulder of traffic (on the left in the US)."
   },
   {
     "name": "ZONA DE NO PASAR",
     "type": "misc",
     "variant": "50",
     "tooltip": "Place on the opposite shoulder of traffic if a passing zone ends on a two-way road",
-    "note": "Should be used at the start of a no passing zone on a two-way road. Place on the opposite shoulder of traffic. (In the US this would be on the left side.)"
+    "note": "Should be used at the start of a no passing zone on a two-way road. Place on the opposite shoulder of traffic (on the left in the US)."
   },
   {
     "name": "Up Arrow Strip",
@@ -2310,28 +2312,28 @@
     "type": "rectangle",
     "variant": "45",
     "tooltip": "Place at regular intervals along a right curve",
-    "note": "This should be used in multiples alongside the outside edge of sharp curves."
+    "note": "Place at regular intervals on the outside edge of a curve."
   },
   {
     "name": "Chevron Left Arrow (Black on Yellow)",
     "type": "rectangle",
     "variant": "46",
     "tooltip": "Place at regular intervals along a left curve",
-    "note": "This should be used in multiples alongside the outside edge of sharp curves."
+    "note": "Place at regular intervals on the outside edge of a curve."
   },
   {
     "name": "Chevron Right Arrow (Red on White)",
     "type": "rectangle",
     "variant": "47",
     "tooltip": "Place at regular intervals along a right curve",
-    "note": "This should be used in multiples alongside the outside edge of sharp curves."
+    "note": "Place at regular intervals on the outside edge of a curve."
   },
   {
     "name": "Chevron Left Arrow (Red on White)",
     "type": "rectangle",
     "variant": "48",
     "tooltip": "Place at regular intervals along a left curve",
-    "note": "This should be used in multiples alongside the outside edge of sharp curves."
+    "note": "Place at regular intervals on the outside edge of a curve."
   },
   {
     "name": "Chevron Pattern Left (Yellow And Black) ",
@@ -2442,6 +2444,8 @@
     "name": "Hotel",
     "type": "rectangle",
     "variant": "66"
+    "tooltip": "Handy with mods that allow players to sleep in beds without setting their spawn",
+    "note": "Can find utility if you have a mod that lets players sleep in beds without setting their spawn."
   },
   {
     "name": "Hospital",
@@ -2770,6 +2774,8 @@
     "name": "Home Zone",
     "type": "square",
     "variant": "40"
+    "tooltip": "Home zones often involve a lot of traffic calming",
+    "note": "Home zones often use a lot of traffic calming measures, such as speed bumps, narrow roads, and sharp curves."
   },
   {
     "name": "End of Home Zone",
@@ -2892,12 +2898,12 @@
     "variant": "64"
   },
   {
-    "name": "Turn Right on the Left Lane",
+    "name": "Hook Turn Right on the Left Lane",
     "type": "square",
     "variant": "65"
   },
   {
-    "name": "Turn Left on the Right Lane",
+    "name": "Hook Turn Left on the Right Lane",
     "type": "square",
     "variant": "66"
   },
@@ -3027,56 +3033,56 @@
     "type": "square",
     "variant": "88",
     "tooltip": "Place at regular intervals outside of sharp curves",
-    "note": "This should be used in multiples alongside the outside edge of sharp curves."
+    "note": "Place at regular intervals on the outside edge of a curve."
   },
   {
     "name": "Chevron Arrow (Yellow on Black, Left)",
     "type": "square",
     "variant": "89",
     "tooltip": "Place at regular intervals outside of sharp curves",
-    "note": "This should be used in multiples alongside the outside edge of sharp curves."
+    "note": "Place at regular intervals on the outside edge of a curve."
   },
   {
     "name": "Chevron Arrow (Yellow on Blue, Right)",
     "type": "square",
     "variant": "90",
     "tooltip": "Place at regular intervals outside of sharp curves",
-    "note": "This should be used in multiples alongside the outside edge of sharp curves."
+    "note": "Place at regular intervals on the outside edge of a curve."
   },
   {
     "name": "Chevron Arrow (Yellow on Blue, Left)",
     "type": "square",
     "variant": "91",
     "tooltip": "Place at regular intervals outside of sharp curves",
-    "note": "This should be used in multiples alongside the outside edge of sharp curves."
+    "note": "Place at regular intervals on the outside edge of a curve."
   },
   {
     "name": "Chevron Arrow (White on Blue, Right)",
     "type": "square",
     "variant": "92",
     "tooltip": "Place at regular intervals outside of sharp curves",
-    "note": "This should be used in multiples alongside the outside edge of sharp curves."
+    "note": "Place at regular intervals on the outside edge of a curve."
   },
   {
     "name": "Chevron Arrow (White on Blue, Left)",
     "type": "square",
     "variant": "93",
     "tooltip": "Place at regular intervals outside of sharp curves",
-    "note": "This should be used in multiples alongside the outside edge of sharp curves."
+    "note": "Place at regular intervals on the outside edge of a curve."
   },
   {
     "name": "Chevron Arrow (White on Red, Right)",
     "type": "square",
     "variant": "94",
     "tooltip": "Place at regular intervals outside of sharp curves",
-    "note": "This should be used in multiples alongside the outside edge of sharp curves."
+    "note": "Place at regular intervals on the outside edge of a curve."
   },
   {
     "name": "Chevron Arrow (White on Red, Left)",
     "type": "square",
     "variant": "95",
     "tooltip": "Place at regular intervals outside of sharp curves",
-    "note": "This should be used in multiples alongside the outside edge of sharp curves."
+    "note": "Place at regular intervals on the outside edge of a curve."
   },
   {
     "name": "Main Road Turns Left at Intersection",
@@ -3123,14 +3129,14 @@
     "type": "square",
     "variant": "104",
     "tooltip": "Place at regular intervals outside of sharp curves",
-    "note": "This should be used in multiples alongside the outside edge of sharp curves."
+    "note": "Place at regular intervals on the outside edge of a curve."
   },
   {
     "name": "Chevron Arrow (Black on Yellow, Right)",
     "type": "square",
     "variant": "105",
     "tooltip": "Place at regular intervals outside of sharp curves",
-    "note": "This should be used in multiples alongside the outside edge of sharp curves."
+    "note": "Place at regular intervals on the outside edge of a curve."
   },
   {
     "name": "WORK ZONE",
@@ -3642,6 +3648,8 @@
     "name": "Opening Bridge",
     "type": "triangle",
     "variant": "38"
+    "tooltip": "Don't limit this sign to just bascule bridges!"
+    "note": "Shown on the sign is a bascule bridge, one of many forms of opening bridge. Don't limit this sign to just bascule bridges!"
   },
   {
     "name": "Open Edge to Water",
@@ -3886,6 +3894,8 @@
     "name": "Opening Bridge",
     "type": "triangle",
     "variant": "86"
+    "tooltip": "Don't limit this sign to just bascule bridges!"
+    "note": "Shown on the sign is a bascule bridge, one of many forms of opening bridge. Don't limit this sign to just bascule bridges!"
   },
   {
     "name": "Open Edge to Water",
@@ -3931,1413 +3941,4 @@
     "name": "Cross-Roads",
     "type": "triangle",
     "variant": "95"
-  },
- {
-    "name": "Left Curve (Construction)",
-    "type": "diamond",
-    "variant": "148"
-  },
-  {
-    "name": "Right Curve (Construction)",
-    "type": "diamond",
-    "variant": "149"
-  },
-  {
-    "name": "Left Turn (Construction)",
-    "type": "diamond",
-    "variant": "150"
-  },
-  {
-    "name": "Right Turn (Construction)",
-    "type": "diamond",
-    "variant": "151"
-  },
-  {
-    "name": "Left S-Curve (Construction)",
-    "type": "diamond",
-    "variant": "152"
-  },
-  {
-    "name": "Right S-Curve (Construction)",
-    "type": "diamond",
-    "variant": "153"
-  },
-  {
-    "name": "Left Z-Turn (Construction)",
-    "type": "diamond",
-    "variant": "154"
-  },
-  {
-    "name": "Right Z-Turn (Construction)",
-    "type": "diamond",
-    "variant": "155"
-  },
-  {
-    "name": "Left Winding Road (Construction)",
-    "type": "diamond",
-    "variant": "156"
-  },
-  {
-    "name": "Right Winding Road (Construction)",
-    "type": "diamond",
-    "variant": "157"
-  },
-  {
-    "name": "Left Hairpin Turn (Construction)",
-    "type": "diamond",
-    "variant": "158"
-  },
-  {
-    "name": "Right Hairpin Turn (Construction)",
-    "type": "diamond",
-    "variant": "189"
-  },
-  {
-    "name": "STOP AHEAD (Construction)",
-    "type": "diamond",
-    "variant": "160"
-  },
-  {
-    "name": "YIELD AHEAD (Construction)",
-    "type": "diamond",
-    "variant": "161"
-  },
-  {
-    "name": "SIGNAL AHEAD (Construction)",
-    "type": "diamond",
-    "variant": "162"
-  },
-  {
-    "name": "DEAD END (Construction)",
-    "type": "diamond",
-    "variant": "163"
-  },
-  {
-    "name": "Left Side Road (Construction)",
-    "type": "diamond",
-    "variant": "164"
-  },
-  {
-    "name": "Right Side Road (Construction)",
-    "type": "diamond",
-    "variant": "165"
-  },
-  {
-    "name": "Left Acute-Angled Side Road (Construction)",
-    "type": "diamond",
-    "variant": "166"
-  },
-  {
-    "name": "Right Acute-Angled Side Road (Construction)",
-    "type": "diamond",
-    "variant": "167"
-  },
-  {
-    "name": "T-Intersection (Construction)",
-    "type": "diamond",
-    "variant": "168"
-  },
-  {
-    "name": "Y-Intersection (Construction)",
-    "type": "diamond",
-    "variant": "169"
-  },
-  {
-    "name": "Cross-Roads (Construction)",
-    "type": "diamond",
-    "variant": "170"
-  },
-  {
-    "name": "Roundabout (Construction)",
-    "type": "diamond",
-    "variant": "171"
-  },
-  {
-    "name": "Left Curve with Right Intersection (Construction)",
-    "type": "diamond",
-    "variant": "172"
-  },
-  {
-    "name": "Right Curve with Left Intersection (Construction)",
-    "type": "diamond",
-    "variant": "173"
-  },
-  {
-    "name": "Right-Turning 270-Degree Loop (Net Turn Left, Construction)",
-    "type": "diamond",
-    "variant": "174",
-    "tooltip": "The loop should be roughly 235 degrees or more",
-    "note": "A turn of at least 235 degrees justifies this sign."
-  },
-  {
-    "name": "Left-Turning 270-Degree Loop (Net Turn Right, Construction)",
-    "type": "diamond",
-    "variant": "175",
-    "tooltip": "The loop should be roughly 235 degrees or more",
-    "note": "A turn of at least 235 degrees justifies this sign."
-  },
-  {
-    "name": "Two Way Traffic (Construction)",
-    "type": "diamond",
-    "variant": "176"
-  },
-  {
-    "name": "Divided Highway Begins (Construction)",
-    "type": "diamond",
-    "variant": "177"
-  },
-  {
-    "name": "Divided Highway Ends (Construction)",
-    "type": "diamond",
-    "variant": "178"
-  },
-  {
-    "name": "Slippery When Wet (Construction)",
-    "type": "diamond",
-    "variant": "179"
-  },
-  {
-    "name": "BUMP (Construction)",
-    "type": "diamond",
-    "variant": "180"
-  },
-  {
-    "name": "Cross-Roads, Railroad to Right (Construction)",
-    "type": "diamond",
-    "variant": "181",
-    "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
-    "note": "The MUTCD says this sign should be 100 feet (30 blocks) from the RXR (50 [15 blocks] for pedestrian paths), displayed everywhere it can be."
-  },
-  {
-    "name": "Cross-Roads, Railroad to Left (Construction)",
-    "type": "diamond",
-    "variant": "182",
-    "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
-    "note": "The MUTCD says this sign should be 100 feet (30 blocks) from the RXR (50 [15 blocks] for pedestrian paths), displayed everywhere it can be."
-  },
-  {
-    "name": "Right Side Road Crosses Railroad (Construction)",
-    "type": "diamond",
-    "variant": "183",
-    "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
-    "note": "The MUTCD says this sign should be 100 feet (30 blocks) from the RXR (50 [15 blocks] for pedestrian paths), displayed everywhere it can be."
-  },
-  {
-    "name": "Left Side Road Crosses Railroad (Construction)",
-    "type": "diamond",
-    "variant": "184",
-    "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
-    "note": "The MUTCD says this sign should be 100 feet (30 blocks) from the RXR (50 [15 blocks] for pedestrian paths), displayed everywhere it can be."
-  },
-  {
-    "name": "T-Intersection, Railroad to Right (Construction)",
-    "type": "diamond",
-    "variant": "185",
-    "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
-    "note": "The MUTCD says this sign should be 100 feet (30 blocks) from the RXR (50 [15 blocks] for pedestrian paths), displayed everywhere it can be."
-  },
-  {
-    "name": "T-Intersection, Railroad to Left (Construction)",
-    "type": "diamond",
-    "variant": "186",
-    "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
-    "note": "The MUTCD says this sign should be 100 feet (30 blocks) from the RXR (50 [15 blocks] for pedestrian paths), displayed everywhere it can be."
-  },
-  {
-    "name": "T-Intersection After Railroad (Construction)",
-    "type": "diamond",
-    "variant": "187",
-    "tooltip": "Place 30 blocks from the crossing for a road, or 15 for pedestrian paths",
-    "note": "The MUTCD says this sign should be 100 feet (30 blocks) from the RXR (50 [15 blocks] for pedestrian paths), displayed everywhere it can be."
-  },
-  {
-    "name": "Skewed Railroad Crossing (Construction)",
-    "type": "diamond",
-    "variant": "188"
-  },
-  {
-    "name": "Bikes (Construction)",
-    "type": "diamond",
-    "variant": "189"
-  },
-  {
-    "name": "Pedestrians (Construction)",
-    "type": "diamond",
-    "variant": "190"
-  },
-  {
-    "name": "Large Trucks (Construction)",
-    "type": "diamond",
-    "variant": "191"
-  },
-  {
-    "name": "Roll-Over Hazard (Construction)",
-    "type": "diamond",
-    "variant": "192",
-    "tooltip": "Handy if vehicles can overturn. Use on sharp turns",
-    "note": "Can find more utility if vehicles from your mod can roll over. Advised to be used with sharp turns."
-  },
-  {
-    "name": "Loose Pavement (Construction)",
-    "type": "diamond",
-    "variant": "193"
-  },
-  {
-    "name": "Pavement Ends (Construction)",
-    "type": "diamond",
-    "variant": "194"
-  },
-  {
-    "name": "DIP (Construction)",
-    "type": "diamond",
-    "variant": "195"
-  },
-  {
-    "name": "Lattice Grid (Construction)",
-    "type": "diamond",
-    "variant": "196"
-  },
-  {
-    "name": "Lattice Grid Left (Construction)",
-    "type": "diamond",
-    "variant": "197"
-  },
-  {
-    "name": "Lattice Grid Right (Construction)",
-    "type": "diamond",
-    "variant": "198"
-  },
-  {
-    "name": "Bikes (Lime)",
-    "type": "diamond",
-    "variant": "199"
-  },
-  {
-    "name": "Pedestrians (Lime)",
-    "type": "diamond",
-    "variant": "200"
-  },
-  {
-    "name": "Pedestrian Crossing (Lime)",
-    "type": "diamond",
-    "variant": "201",
-    "tooltip": "Place at the location of the pedestrian crossing"
-  },
-  {
-    "name": "EMERGENCY SCENE AHEAD",
-    "type": "diamond",
-    "variant": "202",
-    "tooltip": "For general emergency scenes"
-  },
-  {
-    "name": "Crime Scene Ahead",
-    "type": "diamond",
-    "variant": "203"
-  },
-  {
-    "name": "Bomb Scene Ahead",
-    "type": "diamond",
-    "variant": "204",
-    "tooltip": "For scenes where there is a known or exploded bomb"
-  },
-  {
-    "name": "Possible Bomb Scene Ahead",
-    "type": "diamond",
-    "variant": "205",
-    "tooltip": "For scenes where a bomb is suspected or a threat to use one was made"
-  },
-  {
-    "name": "TNT Scene Ahead",
-    "type": "diamond",
-    "variant": "206"
-  },
-  {
-    "name": "Fire Scene Ahead",
-    "type": "diamond",
-    "variant": "207",
-    "tooltip": "For any fire, whether unintended, arson, or natural"
-  },
-  {
-    "name": "INV CHECK AHEAD",
-    "type": "diamond",
-    "variant": "208",
-    "tooltip": "\"Inventory Check Ahead\""
-  },
-  {
-    "name": "Children Playing",
-    "type": "diamond",
-    "variant": "209"
-  },
-  {
-    "name": "PVP Area Ahead",
-    "type": "diamond",
-    "variant": "210"
-  },
-  {
-    "name": "Have Food?",
-    "type": "diamond",
-    "variant": "211",
-    "tooltip": "Use this somewhere that a player won't be able to get food for a long stretch"
-  },
-  {
-    "name": "Ice",
-    "type": "diamond",
-    "variant": "212",
-    "tooltip": "This sign is fit for the snow."
-  },
-  {
-    "name": "LAG",
-    "type": "diamond",
-    "variant": "213",
-    "tooltip": "Use near areas prone to lag spikes"
-  },
-  {
-    "name": "CHUNKS MAY BE INVISIBLE OR GLITCHED",
-    "type": "diamond",
-    "variant": "214",
-    "tooltip": "Use near areas prone to frequent chunk errors"
-  },
-  {
-    "name": "KEEP AWAY FROM INVISIBLE CHUNKS",
-    "type": "diamond",
-    "variant": "215",
-    "tooltip": "Use near areas with hazardous blocks (lava, cacti, magma blocks) that chunk errors could hide"
-  },
-  {
-    "name": "Left-Right Arrow (Construction Warning)",
-    "type": "misc",
-    "variant": "100",
-    "tooltip": "At a T-intersection, place on opposite side to ending road",
-    "note": "At a T-intersection, place on the side opposite to the terminating road, facing the terminating road."
-  },
-  {
-    "name": "Left Arrow (Construction Warning)",
-    "type": "misc",
-    "variant": "101",
-    "tooltip": "Place at a largely sharp left curve",
-    "note": "Place at a largely sharp left curve, facing traffic and largely straight ahead."
-  },
-  {
-    "name": "Right Arrow (Construction Warning)",
-    "type": "misc",
-    "variant": "102",
-    "tooltip": "Place at a largely sharp right curve",
-    "note": "Place at a largely sharp right curve, facing traffic and largely straight ahead."
-  },
-  {
-    "name": "\"DAY\" Plaque (Simple)",
-    "type": "misc",
-    "variant": "103"
-  },
-  {
-    "name": "\"DAY\" Plaque (Fancy)",
-    "type": "misc",
-    "variant": "104"
-  },
-  {
-    "name": "\"NIGHT\" Plaque (Simple)",
-    "type": "misc",
-    "variant": "105"
-  },
-  {
-    "name": "\"NIGHT\" Plaque (Fancy)",
-    "type": "misc",
-    "variant": "106"
-  },
-  {
-    "name": "Chevron Arrow (Black on Orange, Left)",
-    "type": "square",
-    "variant": "167",
-    "tooltip": "Place at regular intervals outside of sharp curves",
-    "note": "This should be used in multiples alongside the outside edge of sharp curves."
-  },
-  {
-    "name": "Chevron Arrow (Black on Orange, Right)",
-    "type": "square",
-    "variant": "168",
-    "tooltip": "Place at regular intervals outside of sharp curves",
-    "note": "This should be used in multiples alongside the outside edge of sharp curves."
-  },
-  {
-    "name": "No Potions",
-    "type": "square",
-    "variant": "169"
-  },
-  {
-    "name": "No PVP",
-    "type": "square",
-    "variant": "170"
-  },
-  {
-    "name": "No Weapons",
-    "type": "square",
-    "variant": "171"
-  },
-  {
-    "name": "SPAWN AREA, No PVP",
-    "type": "square",
-    "variant": "172"
   }
-  {
-    "name": "Error",
-    "type": "circle",
-    "variant": "114"
-  },
-  {
-    "name": "Bicycle Route",
-    "type": "diamond",
-    "variant": "148"
-  },
-  {
-    "name": "Bicycle Route",
-    "type": "diamond",
-    "variant": "149"
-  },
-  {
-    "name": "Bomb Scene Ahead",
-    "type": "diamond",
-    "variant": "150"
-  },
-  {
-    "name": "Bomb Threat Ahead",
-    "type": "diamond",
-    "variant": "151"
-  },
-  {
-    "name": "Bump",
-    "type": "diamond",
-    "variant": "152"
-  },
-  {
-    "name": "Children Playing",
-    "type": "diamond",
-    "variant": "153"
-  },
-  {
-    "name": "Chunks May Be Invisible Or Glitched",
-    "type": "diamond",
-    "variant": "154"
-  },
-  {
-    "name": "Crime Scene Ahead",
-    "type": "diamond",
-    "variant": "155"
-  },
-  {
-    "name": "Cross Roads",
-    "type": "diamond",
-    "variant": "156"
-  },
-  {
-    "name": "Cross Roads (Railroad To Right)",
-    "type": "diamond",
-    "variant": "157"
-  },
-  {
-    "name": "Dead End",
-    "type": "diamond",
-    "variant": "158"
-  },
-  {
-    "name": "Dip",
-    "type": "diamond",
-    "variant": "159"
-  },
-  {
-    "name": "Divided Highway Begins",
-    "type": "diamond",
-    "variant": "160"
-  },
-  {
-    "name": "Emergency Scene Ahead",
-    "type": "diamond",
-    "variant": "161"
-  },
-  {
-    "name": "Error",
-    "type": "diamond",
-    "variant": "162"
-  },
-  {
-    "name": "Fire Scene Ahead",
-    "type": "diamond",
-    "variant": "163"
-  },
-  {
-    "name": "Have Food?",
-    "type": "diamond",
-    "variant": "164"
-  },
-  {
-    "name": "Ice",
-    "type": "diamond",
-    "variant": "165"
-  },
-  {
-    "name": "Inventory Check Ahead",
-    "type": "diamond",
-    "variant": "166"
-  },
-  {
-    "name": "Lag Warning",
-    "type": "diamond",
-    "variant": "167"
-  },
-  {
-    "name": "Large Trucks",
-    "type": "diamond",
-    "variant": "168"
-  },
-  {
-    "name": "Lattice Grid",
-    "type": "diamond",
-    "variant": "169"
-  },
-  {
-    "name": "Lattice Grid Left",
-    "type": "diamond",
-    "variant": "170"
-  },
-  {
-    "name": "Left Curve",
-    "type": "diamond",
-    "variant": "171"
-  },
-  {
-    "name": "Left Curve With Right Side Road",
-    "type": "diamond",
-    "variant": "172"
-  },
-  {
-    "name": "Hairpin Turn",
-    "type": "diamond",
-    "variant": "173"
-  },
-  {
-    "name": "Left S Curve",
-    "type": "diamond",
-    "variant": "174"
-  },
-  {
-    "name": "Left Side Road",
-    "type": "diamond",
-    "variant": "175"
-  },
-  {
-    "name": "Left Skewed Road",
-    "type": "diamond",
-    "variant": "176"
-  },
-  {
-    "name": "Left Turn",
-    "type": "diamond",
-    "variant": "177"
-  },
-  {
-    "name": "Left Winding Road",
-    "type": "diamond",
-    "variant": "178"
-  },
-  {
-    "name": "Left Z Turn",
-    "type": "diamond",
-    "variant": "179"
-  },
-  {
-    "name": "Loose Pavement",
-    "type": "diamond",
-    "variant": "180"
-  },
-  {
-    "name": "Nether Portal Ahead",
-    "type": "diamond",
-    "variant": "181"
-  },
-  {
-    "name": "Pavement Ends",
-    "type": "diamond",
-    "variant": "182"
-  },
-  {
-    "name": "Pedestrian Crossing",
-    "type": "diamond",
-    "variant": "183"
-  },
-  {
-    "name": "Pedestrian Crossing",
-    "type": "diamond",
-    "variant": "184"
-  },
-  {
-    "name": "Pedestrian Crossing",
-    "type": "diamond",
-    "variant": "185"
-  },
-  {
-    "name": "PVP Warning",
-    "type": "diamond",
-    "variant": "186"
-  },
-  {
-    "name": "Right 270 To Left",
-    "type": "diamond",
-    "variant": "187"
-  },
-  {
-    "name": "Roundabout",
-    "type": "diamond",
-    "variant": "188"
-  },
-  {
-    "name": "Right Side Road (Railroad To Right)",
-    "type": "diamond",
-    "variant": "189"
-  },
-  {
-    "name": "Signal Ahead",
-    "type": "diamond",
-    "variant": "190"
-  },
-  {
-    "name": "Skewed Crossing",
-    "type": "diamond",
-    "variant": "191"
-  },
-  {
-    "name": "Slippery When Wet",
-    "type": "diamond",
-    "variant": "192"
-  },
-  {
-    "name": "Stop Ahead",
-    "type": "diamond",
-    "variant": "193"
-  },
-  {
-    "name": "T Intersection After Railroad",
-    "type": "diamond",
-    "variant": "194"
-  },
-  {
-    "name": "T Intersection",
-    "type": "diamond",
-    "variant": "195"
-  },
-  {
-    "name": "T Intersection (Railroad To Right)",
-    "type": "diamond",
-    "variant": "196"
-  },
-  {
-    "name": "TNT Scene Ahead",
-    "type": "diamond",
-    "variant": "197"
-  },
-  {
-    "name": "Truck Rollover",
-    "type": "diamond",
-    "variant": "198"
-  },
-  {
-    "name": "Two Way Traffic",
-    "type": "diamond",
-    "variant": "199"
-  },
-  {
-    "name": "Undercutter Assited Repaving",
-    "type": "diamond",
-    "variant": "200"
-  },
-  {
-    "name": "Village Ahead",
-    "type": "diamond",
-    "variant": "201"
-  },
-  {
-    "name": "Yield Ahead",
-    "type": "diamond",
-    "variant": "202"
-  },
-  {
-    "name": "Y Intersection",
-    "type": "diamond",
-    "variant": "203"
-  },
-  {
-    "name": "Alto",
-    "type": "misc",
-    "variant": "100"
-  },
-  {
-    "name": "Arret",
-    "type": "misc",
-    "variant": "101"
-  },
-  {
-    "name": "Down Left Arrow",
-    "type": "misc",
-    "variant": "102"
-  },
-  {
-    "name": "Down Right Arrow",
-    "type": "misc",
-    "variant": "103"
-  },
-  {
-    "name": "Up Left Arrow",
-    "type": "misc",
-    "variant": "104"
-  },
-  {
-    "name": "Up Right Arrow",
-    "type": "misc",
-    "variant": "105"
-  },
-  {
-    "name": "Day (Fancy)",
-    "type": "misc",
-    "variant": "106"
-  },
-  {
-    "name": "Day (Simple)",
-    "type": "misc",
-    "variant": "107"
-  },
-  {
-    "name": "Left Arrow",
-    "type": "misc",
-    "variant": "108"
-  },
-  {
-    "name": "Left Arrow",
-    "type": "misc",
-    "variant": "109"
-  },
-  {
-    "name": "Night (Fancy)",
-    "type": "misc",
-    "variant": "110"
-  },
-  {
-    "name": "Night (Simple)",
-    "type": "misc",
-    "variant": "111"
-  },
-  {
-    "name": "On Red",
-    "type": "misc",
-    "variant": "112"
-  },
-  {
-    "name": "Stop",
-    "type": "misc",
-    "variant": "113"
-  },
-  {
-    "name": "Two Way Arrow",
-    "type": "misc",
-    "variant": "114"
-  },
-  {
-    "name": "Two Way Arrow",
-    "type": "misc",
-    "variant": "115"
-  },
-  {
-    "name": "Wrong Way",
-    "type": "misc",
-    "variant": "116"
-  },
-  {
-    "name": "Yield",
-    "type": "misc",
-    "variant": "117"
-  },
-  {
-    "name": "Yield",
-    "type": "misc",
-    "variant": "118"
-  },
-  {
-    "name": "Do Not Enter",
-    "type": "square",
-    "variant": "167"
-  },
-  {
-    "name": "Error",
-    "type": "square",
-    "variant": "168"
-  },
-  {
-    "name": "Florida's Turnpike",
-    "type": "square",
-    "variant": "169"
-  },
-  {
-    "name": "Hurricane Evacuation Route Left",
-    "type": "square",
-    "variant": "170"
-  },
-  {
-    "name": "Hurricane Evacuation Route Right",
-    "type": "square",
-    "variant": "171"
-  },
-  {
-    "name": "Hurricane Evacuation Route Straight",
-    "type": "square",
-    "variant": "172"
-  },
-  {
-    "name": "Hurricane Evacuation Route",
-    "type": "square",
-    "variant": "173"
-  },
-  {
-    "name": "Eisenhower Interstate System",
-    "type": "square",
-    "variant": "174"
-  },
-  {
-    "name": "Kansas Turnpike",
-    "type": "square",
-    "variant": "175"
-  },
-  {
-    "name": "Left Chevron",
-    "type": "square",
-    "variant": "176"
-  },
-  {
-    "name": "Left Chevron",
-    "type": "square",
-    "variant": "177"
-  },
-  {
-    "name": "No Potions",
-    "type": "square",
-    "variant": "178"
-  },
-  {
-    "name": "No PVP",
-    "type": "square",
-    "variant": "179"
-  },
-  {
-    "name": "No Weapons",
-    "type": "square",
-    "variant": "180"
-  },
-  {
-    "name": "Ohio Turnpike",
-    "type": "square",
-    "variant": "181"
-  },
-  {
-    "name": "Turnpike",
-    "type": "square",
-    "variant": "182"
-  },
-  {
-    "name": "U Turns Permitted",
-    "type": "square",
-    "variant": "183"
-  },
-  {
-    "name": "Left Or U Turn",
-    "type": "square",
-    "variant": "184"
-  },
-  {
-    "name": "Spawn Area No PVP",
-    "type": "square",
-    "variant": "185"
-  },
-  {
-    "name": "Right Turning Vehicles Yield To Pedestrians",
-    "type": "square",
-    "variant": "186"
-  },
-  {
-    "name": "Error",
-    "type": "triangle",
-    "variant": "96"
-  },
-  {
-    "name": "Error",
-    "type": "misc",
-    "variant": "119"
-  },
-  {
-    "name": "Accessible Parking Only",
-    "type": "rectangle",
-    "variant": "90"
-  },
-  {
-    "name": "Error",
-    "type": "rectangle",
-    "variant": "91"
-  },
-  {
-    "name": "Speed Limit 100 KMH",
-    "type": "rectangle",
-    "variant": "92"
-  },
-  {
-    "name": "Speed Limit 110 KMH",
-    "type": "rectangle",
-    "variant": "93"
-  },
-  {
-    "name": "Speed Limit 120 KMH",
-    "type": "rectangle",
-    "variant": "94"
-  },
-  {
-    "name": "Speed Limit 130 KMH",
-    "type": "rectangle",
-    "variant": "95"
-  },
-  {
-    "name": "Speed Limit 30 KMH",
-    "type": "rectangle",
-    "variant": "96"
-  },
-  {
-    "name": "Speed Limit 50 KMH",
-    "type": "rectangle",
-    "variant": "97"
-  },
-  {
-    "name": "Speed Limit 70 KMH",
-    "type": "rectangle",
-    "variant": "98"
-  },
-  {
-    "name": "Speed Limit 90 KMH",
-    "type": "rectangle",
-    "variant": "99"
-  },
-  {
-    "name": "Checkpoint (Cycling Arrows)",
-    "type": "circle",
-    "variant": "115"
-  },
-  {
-    "name": "Checkpoint (Diamond)",
-    "type": "circle",
-    "variant": "116"
-  },
-  {
-    "name": "Turn Left Or Right",
-    "type": "circle",
-    "variant": "117",
-    "tooltip": "",
-    "note": ""
-  },
-  {
-    "name": "Turn Left",
-    "type": "circle",
-    "variant": "118"
-  },
-  {
-    "name": "Turn Right",
-    "type": "circle",
-    "variant": "119"
-  },
-  {
-    "name": "Bridge Out",
-    "type": "diamond",
-    "variant": "204"
-  },
-  {
-    "name": "Checkpoint Ahead",
-    "type": "diamond",
-    "variant": "205"
-  },
-  {
-    "name": "Checkpoint Ahead (Cycling Arrows)",
-    "type": "diamond",
-    "variant": "206"
-  },
-  {
-    "name": "Checkpoint Ahead (Diamond)",
-    "type": "diamond",
-    "variant": "207"
-  },
-  {
-    "name": "Road Construction 1/2 Mile",
-    "type": "diamond",
-    "variant": "208"
-  },
-  {
-    "name": "Road Construction 1 Mile",
-    "type": "diamond",
-    "variant": "209"
-  },
-  {
-    "name": "Road construction 2 Miles",
-    "type": "diamond",
-    "variant": "210"
-  },
-  {
-    "name": "Road Construction Ahead",
-    "type": "diamond",
-    "variant": "211"
-  },
-  {
-    "name": "Sinkhole/Crater",
-    "type": "diamond",
-    "variant": "212"
-  },
-  {
-    "name": "Speed Limit 10 Ahead",
-    "type": "diamond",
-    "variant": "213"
-  },
-  {
-    "name": "Speed Limit 15 Ahead",
-    "type": "diamond",
-    "variant": "214"
-  },
-  {
-    "name": "Speed Limit 20 Ahead",
-    "type": "diamond",
-    "variant": "215"
-  },
-  {
-    "name": "Speed Limit 25 Ahead",
-    "type": "diamond",
-    "variant": "216"
-  },
-  {
-    "name": "Speed Limit 30 Ahead",
-    "type": "diamond",
-    "variant": "217"
-  },
-  {
-    "name": "Speed Limit 35 Ahead",
-    "type": "diamond",
-    "variant": "218"
-  },
-  {
-    "name": "Speed Limit 40 Ahead",
-    "type": "diamond",
-    "variant": "219"
-  },
-  {
-    "name": "Speed Limit 45 Ahead",
-    "type": "diamond",
-    "variant": "220"
-  },
-  {
-    "name": "Speed Limit 50 Ahead",
-    "type": "diamond",
-    "variant": "221"
-  },
-  {
-    "name": "Speed Limit 55 Ahead",
-    "type": "diamond",
-    "variant": "222"
-  },
-  {
-    "name": "Speed Limit 5 Ahead",
-    "type": "diamond",
-    "variant": "223"
-  },
-  {
-    "name": "Speed Limit 60 Ahead",
-    "type": "diamond",
-    "variant": "224"
-  },
-  {
-    "name": "Speed Limit 65 Ahead",
-    "type": "diamond",
-    "variant": "225"
-  },
-  {
-    "name": "Speed Limit 70 Ahead",
-    "type": "diamond",
-    "variant": "226"
-  },
-  {
-    "name": "Speed Limit 75 Ahead",
-    "type": "diamond",
-    "variant": "227"
-  },
-  {
-    "name": "Speed Limit 80 Ahead",
-    "type": "diamond",
-    "variant": "228"
-  },
-  {
-    "name": "Speed Limit 85 Ahead",
-    "type": "diamond",
-    "variant": "229"
-  },
-  {
-    "name": "Uneven Intersection",
-    "type": "diamond",
-    "variant": "230"
-  },
-  {
-    "name": "Uneven Intersection",
-    "type": "diamond",
-    "variant": "231"
-  },
-  {
-    "name": "Clear Plaque",
-    "type": "misc",
-    "variant": "120"
-  },
-  {
-    "name": "Rain Plaque (Fancy)",
-    "type": "misc",
-    "variant": "121"
-  },
-  {
-    "name": "Rain Plaque (Simple)",
-    "type": "misc",
-    "variant": "122"
-  },
-  {
-    "name": "Storm Plaque (Fancy)",
-    "type": "misc",
-    "variant": "123"
-  },
-  {
-    "name": "Storm Plaque (Simple)",
-    "type": "misc",
-    "variant": "124"
-  },
-  { 
-	"name": "Object Marker",
-	"type": "misc",
-	"variant": "125"
-  },
-  {
-    "name": "End of Fast Traffic",
-    "type": "rectangle",
-    "variant": "100"
-  },
-  {
-    "name": "Fast Traffic",
-    "type": "rectangle",
-    "variant": "101"
-  },
-  {
-    "name": "Stop Here (Left)",
-    "type": "rectangle",
-    "variant": "102"
-  },
-  {
-    "name": "Stop Here (Right)",
-    "type": "rectangle",
-    "variant": "103"
-  },
-  {
-    "name": "Adventure Activity",
-    "type": "square",
-    "variant": "187"
-  },
-  {
-    "name": "Drop Survival Activity",
-    "type": "square",
-    "variant": "188"
-  },
-  {
-    "name": "Parkour Race Activity",
-    "type": "square",
-    "variant": "189"
-  },
-  {
-    "name": "Parkour Activity",
-    "type": "square",
-    "variant": "190"
-  },
-  {
-    "name": "Prop Hunt Activity",
-    "type": "square",
-    "variant": "191"
-  },
-  {
-    "name": "Treasure Hunt Activity",
-    "type": "square",
-    "variant": "192"
-  },
-  {
-    "name": "Checkpoint Plaque (Death)",
-    "type": "square",
-    "variant": "193"
-  },
-  {
-    "name": "Checkpoint Plaque (Fall)",
-    "type": "square",
-    "variant": "194"
-  },
-  {
-    "name": "Checkpoint Plaque (Loss)",
-    "type": "square",
-    "variant": "195"
-  },
-  {
-    "name": "Driveway Entrance Left",
-    "type": "square",
-    "variant": "196"
-  },
-  {
-    "name": "Driveway Entrance Right",
-    "type": "square",
-    "variant": "197"
-  },
-  {
-    "name": "End Work Zone Speed Limit",
-    "type": "square",
-    "variant": "198"
-  },
-  {
-    "name": "Exit Closed",
-    "type": "square",
-    "variant": "199"
-  },
-  {
-    "name": "Exit Left",
-    "type": "square",
-    "variant": "200"
-  },
-  {
-    "name": "Exit Left (Construction)",
-    "type": "square",
-    "variant": "201"
-  },
-  {
-    "name": "Exit Right (Construction)",
-    "type": "square",
-    "variant": "202"
-  },
-  {
-    "name": "Exit RIght",
-    "type": "square",
-    "variant": "203"
-  },
-  {
-    "name": "Road Work Ahead Expect Delays",
-    "type": "square",
-    "variant": "204"
-  },
-  {
-    "name": "Cobblestone Generator Service",
-    "type": "square",
-    "variant": "205"
-  },
-  {
-    "name": "Crafting Service",
-    "type": "square",
-    "variant": "206"
-  },
-  {
-    "name": "Crafting Service",
-    "type": "square",
-    "variant": "207"
-  },
-  {
-    "name": "Smelting Service",
-    "type": "square",
-    "variant": "208"
-  },
-  {
-    "name": "Smelting Service",
-    "type": "square",
-    "variant": "209"
-  },
-  {
-    "name": "Slip Lane Closed",
-    "type": "square",
-    "variant": "210"
-  },
-  {
-    "name": "Turn Left Early",
-    "type": "square",
-    "variant": "211"
-  },
-  {
-    "name": "Turn Left Late",
-    "type": "square",
-    "variant": "212"
-  },
-  {
-    "name": "Turn Right Early",
-    "type": "square",
-    "variant": "213"
-  },
-  {
-    "name": "Turn Right Late",
-    "type": "square",
-    "variant": "214"
-  },
-  {
-    "name": "Use Slip Lane To Turn Right",
-    "type": "square",
-    "variant": "215"
-  },
-  {
-    "name": "When Flashing",
-    "type": "square",
-    "variant": "216"
-  },
-  {
-    "name": "When Flashing",
-    "type": "square",
-    "variant": "217"
-  },
-  {
-    "name": "When Lights Flash",
-    "type": "square",
-    "variant": "218"
-  },
-  {
-    "name": "When Lights Flash",
-    "type": "square",
-    "variant": "219"
-  },
-  {
-    "name": "Speed Limit 100 Ahead",
-    "type": "triangle",
-    "variant": "97"
-  },
-  {
-    "name": "Speed Limit 110 Ahead",
-    "type": "triangle",
-    "variant": "98"
-  },
-  {
-    "name": "Speed Limit 120 Ahead",
-    "type": "triangle",
-    "variant": "99"
-  },
-  {
-    "name": "Speed Limit 130 Ahead",
-    "type": "triangle",
-    "variant": "100"
-  },
-  {
-    "name": "Speed Limit 30 Ahead",
-    "type": "triangle",
-    "variant": "101"
-  },
-  {
-    "name": "Speed Limit 50 Ahead",
-    "type": "triangle",
-    "variant": "102"
-  },
-  {
-    "name": "Speed Limit 70 Ahead",
-    "type": "triangle",
-    "variant": "103"
-  },
-  {
-    "name": "Speed Limit 90 Ahead",
-    "type": "triangle",
-    "variant": "104"
-  }
-]
