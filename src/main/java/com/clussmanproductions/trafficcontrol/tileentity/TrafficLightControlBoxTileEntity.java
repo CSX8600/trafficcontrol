@@ -1130,6 +1130,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 			arrowMinimum = nbt.getDouble(getNbtKey("arrowMinimum"));
 			crossTime = nbt.getDouble(getNbtKey("crossTime"));
 			crossWarningTime = nbt.getDouble(getNbtKey("crossWarningTime"));
+			rightArrowTime = nbt.getDouble(getNbtKey("rightArrowMinimum"));
 		}
 		
 		public void setSyncData(NBTTagCompound nbt)
@@ -1140,6 +1141,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 			nbt.setDouble(getNbtKey("arrowMinimum"), arrowMinimum);
 			nbt.setDouble(getNbtKey("crossTime"), crossTime);
 			nbt.setDouble(getNbtKey("crossWarningTime"), crossWarningTime);
+			nbt.setDouble(getNbtKey("rightArrowMinimum"), rightArrowTime);
 		}
 		
 		private String getNbtKey(String key)
@@ -1285,12 +1287,12 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 						setNextUpdate(arrowMinimum);
 						return Stages.BothTurnArrow;
 					}
-					else if (sensorResult.Direction1SensorLeft || sensorResult.Direction1SensorRight)
+					else if (sensorResult.Direction1SensorLeft)
 					{
 						setNextUpdate(arrowMinimum);
 						return Stages.Direction1LeftTurnArrow;
 					}
-					else if (sensorResult.Direction2SensorLeft || sensorResult.Direction2SensorRight)
+					else if (sensorResult.Direction2SensorLeft)
 					{
 						setNextUpdate(arrowMinimum);
 						return Stages.Direction2LeftTurnArrow;

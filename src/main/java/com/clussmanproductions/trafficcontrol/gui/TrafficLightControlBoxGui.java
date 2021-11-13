@@ -74,6 +74,7 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 	
 	private GuiTextField greenMinimum;
 	private GuiTextField arrowMinimum;
+	private GuiTextField rightArrowMinimum;
 	private GuiTextField yellowTime;
 	private GuiTextField redTime;
 	private GuiTextField crossTime;
@@ -199,6 +200,7 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		arrowMinimum = new GuiTextField(ELEMENT_IDS.arrowMinimum, fontRenderer, horizontalCenter - 54, verticalCenter + 15, 105, 20);
 		crossTime = new GuiTextField(ELEMENT_IDS.crossTime, fontRenderer, horizontalCenter - 54, verticalCenter + 50, 105, 20);
 		crossWarningTime = new GuiTextField(ELEMENT_IDS.crossWarningTime, fontRenderer, horizontalCenter - 54, verticalCenter + 85, 105, 20);
+		rightArrowMinimum = new GuiTextField(ELEMENT_IDS.rightArrowMinimum, fontRenderer, horizontalCenter - 54, verticalCenter + 120, 105, 20);
 		
 		greenMinimum.setText(Double.toString(_te.getAutomator().getGreenMinimum()));
 		yellowTime.setText(Double.toString(_te.getAutomator().getYellowTime()));
@@ -206,6 +208,7 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		arrowMinimum.setText(Double.toString(_te.getAutomator().getArrowMinimum()));
 		crossTime.setText(Double.toString(_te.getAutomator().getCrossTime()));
 		crossWarningTime.setText(Double.toString(_te.getAutomator().getCrossWarningTime()));
+		rightArrowMinimum.setText(Double.toString(_te.getAutomator().getRightArrowTime()));
 		
 		setButtonVisibilityForMode();
 	}
@@ -279,7 +282,7 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		int verticalCenter = height / 2;
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		Minecraft.getMinecraft().getTextureManager().bindTexture(background);
-		drawScaledCustomSizeModalRect(horizontalCenter - 115, verticalCenter - 128, 0, 0, 16, 16, 230, 260, 16, 16);
+		drawScaledCustomSizeModalRect(horizontalCenter - 115, verticalCenter - 138, 0, 0, 16, 16, 230, 280, 16, 16);
 		
 		if (_currentMode == Modes.ManualNorthSouth || _currentMode == Modes.ManualWestEast)
 		{
@@ -360,6 +363,8 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		crossTime.drawTextBox();
 		drawString(fontRenderer, "Cross Warning Time", leftMargin, verticalCenter + 75, 0xFFFFFF);
 		crossWarningTime.drawTextBox();
+		drawString(fontRenderer, "Right Arrow Minimum", leftMargin, verticalCenter + 110, 0xFFFFFF);
+		rightArrowMinimum.drawTextBox();
 	}
 	
 	@Override
@@ -570,6 +575,7 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		redTime.mouseClicked(mouseX, mouseY, mouseButton);
 		crossTime.mouseClicked(mouseX, mouseY, mouseButton);
 		crossWarningTime.mouseClicked(mouseX, mouseY, mouseButton);
+		rightArrowMinimum.mouseClicked(mouseX, mouseY, mouseButton);
 		
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 	}
@@ -582,6 +588,7 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		checkedKeyTyped(redTime, typedChar, keyCode, (value) -> _te.getAutomator().setRedTime(value));
 		checkedKeyTyped(crossTime, typedChar, keyCode, (value) -> _te.getAutomator().setCrossTime(value));
 		checkedKeyTyped(crossWarningTime, typedChar, keyCode, (value) -> _te.getAutomator().setCrossWarningTime(value));
+		checkedKeyTyped(rightArrowMinimum, typedChar, keyCode, (value) -> _te.getAutomator().setRightArrowTime(value));
 		
 		super.keyTyped(typedChar, keyCode);
 	}
@@ -668,6 +675,7 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		public static final int greenArrowRightOffFlash = 50;
 		public static final int yellowArrowRightOffFlash = 51;
 		public static final int redArrowRightOffFlash = 52;
+		public static final int rightArrowMinimum = 53;
 	}
 
 	private enum Modes
