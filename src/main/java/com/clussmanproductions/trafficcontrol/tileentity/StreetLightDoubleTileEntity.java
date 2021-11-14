@@ -1,6 +1,7 @@
 package com.clussmanproductions.trafficcontrol.tileentity;
 
 import com.clussmanproductions.trafficcontrol.ModBlocks;
+import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLightSource;
 import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightDouble;
 
@@ -237,4 +238,8 @@ public class StreetLightDoubleTileEntity extends TileEntity  {
 	public AxisAlignedBB getRenderBoundingBox() {
 		return new AxisAlignedBB(pos).expand(2, 5, 2).expand(-2, 0, -2);
 	}
-}
+
+	@Override
+	public double getMaxRenderDistanceSquared() {
+		return ModTrafficControl.MAX_RENDER_DISTANCE;
+	}}

@@ -1,6 +1,7 @@
 package com.clussmanproductions.trafficcontrol.tileentity;
 
 import com.clussmanproductions.trafficcontrol.ModSounds;
+import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateGate;
 import com.clussmanproductions.trafficcontrol.util.ILoopableSoundTileEntity;
 import com.clussmanproductions.trafficcontrol.util.LoopableTileEntitySound;
@@ -352,5 +353,10 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 		setUpperRotationLimit(compound.getFloat("upperRotation"));
 		setLowerRotationLimit(compound.getFloat("lowerRotation"));
 		setDelay(compound.getFloat("delay"));
+	}
+
+	@Override
+	public double getMaxRenderDistanceSquared() {
+		return ModTrafficControl.MAX_RENDER_DISTANCE;
 	}
 }

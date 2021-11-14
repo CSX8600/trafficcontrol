@@ -434,4 +434,9 @@ public class SignTileEntity extends TileEntity {
 			
 		}
 	}
+
+	@Override
+	public double getMaxRenderDistanceSquared() {
+		return ModTrafficControl.MAX_RENDER_DISTANCE;
+	}
 }

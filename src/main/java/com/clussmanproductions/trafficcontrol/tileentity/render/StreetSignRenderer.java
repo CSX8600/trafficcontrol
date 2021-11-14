@@ -8,6 +8,7 @@ import com.clussmanproductions.trafficcontrol.tileentity.StreetSignTileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -20,6 +21,11 @@ public class StreetSignRenderer extends TileEntitySpecialRenderer<StreetSignTile
 			float alpha) {
 		
 		GlStateManager.pushMatrix();
+		float brightness = te.getWorld().getLightBrightness(te.getPos());
+		float j = brightness % 0x10000;
+		float k = brightness / 0x10000;
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, j / 1.0F, k / 1.0F);
+//		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0F, 240.0F);
 		GlStateManager.translate(x, y, z);
 		
 		GlStateManager.scale(0.0625, 0.0625, 0.0625);
