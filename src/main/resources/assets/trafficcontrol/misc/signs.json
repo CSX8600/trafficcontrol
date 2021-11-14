@@ -4130,7 +4130,7 @@
     "name": "Nether Portal Ahead",
     "type": "diamond",
     "variant": "181",
-    "tooltip": "Nether Portals can let dangerous mobs through them!"
+    "tooltip": "Nether Portals can let dangerous mobs through them!",
     "note": "Nether Portals can let dangerous mobs through them! Educate players on proper portal quarantine."
   },
   {
@@ -4751,9 +4751,9 @@
     "variant": "124"
   },
   { 
-	  "name": "Chevrons (Either Side, Black and Yellow"",
-  	"type": "misc",
-	  "variant": "125"
+    "name": "Chevrons (Either Side, Black and Yellow)",
+    "type": "misc",
+    "variant": "125",
     "tooltip": "Place in middle of road to mark obstacles",
     "note": "Place in the middle the roadway to mark obstacles, as centered in front of the obstacle as possible."
   },
