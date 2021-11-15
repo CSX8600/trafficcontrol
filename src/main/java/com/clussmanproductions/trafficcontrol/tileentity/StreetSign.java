@@ -1,23 +1,21 @@
 package com.clussmanproductions.trafficcontrol.tileentity;
 
+import com.clussmanproductions.trafficcontrol.util.CustomAngleCalculator;
+
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.util.INBTSerializable;
 
 public class StreetSign implements INBTSerializable<NBTBase> {
-	private EnumFacing facing = EnumFacing.NORTH;
+	private int rotation = 0;
 	private StreetSignColors color = StreetSignColors.Green;
 	private String text = "";
 	private boolean isNew = true;
 	
-	public EnumFacing getFacing() {
-		return facing;
-	}
-
-	public void setFacing(EnumFacing facing) {
-		this.facing = facing;
-	}
+	public int getRotation() { return rotation; }
+	
+	public void setRotation(int rotation) { this.rotation = rotation; }
 
 	public StreetSignColors getColor() {
 		return color;
@@ -98,7 +96,7 @@ public class StreetSign implements INBTSerializable<NBTBase> {
 	@Override
 	public NBTBase serializeNBT() {
 		NBTTagCompound tag = new NBTTagCompound();
-		tag.setInteger("facing", getFacing().getHorizontalIndex());
+		tag.setInteger("rotation", CustomAngleCalculator.rotationToMeta(getRotation()));
 		tag.setInteger("color", getColor().getIndex());
 		tag.setString("text", getText());
 		tag.setBoolean("isNew", getIsNew());
@@ -110,7 +108,10 @@ public class StreetSign implements INBTSerializable<NBTBase> {
 	public void deserializeNBT(NBTBase nbt) {
 		NBTTagCompound compound = (NBTTagCompound)nbt;
 		
-		setFacing(EnumFacing.getHorizontal(compound.getInteger("facing")));
+		// Account for legacy
+		String rotationKey = compound.hasKey("facing") ? "facing" : "rotation";
+		
+		setRotation(CustomAngleCalculator.metaToRotation(compound.getInteger(rotationKey)));
 		setColor(StreetSignColors.getByIndex(compound.getInteger("color")));
 		setText(compound.getString("text"));
 		setIsNew(compound.getBoolean("isNew"));

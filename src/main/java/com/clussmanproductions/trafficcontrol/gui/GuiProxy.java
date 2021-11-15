@@ -37,6 +37,24 @@ public class GuiProxy implements IGuiHandler {
 					return new TrafficLightDoghouseFrameContainer(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
+			case GUI_IDs.TRAFFIC_LIGHT_1_FRAME:
+				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_1_frame)
+				{
+					return new TrafficLight1FrameContainer(player.inventory, player.getHeldItemMainhand());
+				}
+				break;
+			case GUI_IDs.TRAFFIC_LIGHT_2_FRAME:
+				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_2_frame)
+				{
+					return new TrafficLight2FrameContainer(player.inventory, player.getHeldItemMainhand());
+				}
+				break;
+			case GUI_IDs.TRAFFIC_LIGHT_4_FRAME:
+				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_4_frame)
+				{
+					return new TrafficLight4FrameContainer(player.inventory, player.getHeldItemMainhand());
+				}
+				break;
 		}
 
 		return null;
@@ -110,6 +128,24 @@ public class GuiProxy implements IGuiHandler {
 					return new TrafficLightDoghouseFrameGui(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
+			case GUI_IDs.TRAFFIC_LIGHT_1_FRAME:
+				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_1_frame)
+				{
+					return new TrafficLight1FrameGui(player.inventory, player.getHeldItemMainhand());
+				}
+				break;
+			case GUI_IDs.TRAFFIC_LIGHT_2_FRAME:
+				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_2_frame)
+				{
+					return new TrafficLight2FrameGui(player.inventory, player.getHeldItemMainhand());
+				}
+				break;
+			case GUI_IDs.TRAFFIC_LIGHT_4_FRAME:
+				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_4_frame)
+				{
+					return new TrafficLight4FrameGui(player.inventory, player.getHeldItemMainhand());
+				}
+				break;
 		}
 
 		return null;
@@ -125,5 +161,8 @@ public class GuiProxy implements IGuiHandler {
 		public static final int STREET_SIGN = 6;
 		public static final int TRAFFIC_LIGHT_5_FRAME = 7;
 		public static final int TRAFFIC_LIGHT_DOGHOUSE_FRAME = 8;
+		public static final int TRAFFIC_LIGHT_1_FRAME = 9;
+		public static final int TRAFFIC_LIGHT_2_FRAME = 10;
+		public static final int TRAFFIC_LIGHT_4_FRAME = 11;
 	}
 }

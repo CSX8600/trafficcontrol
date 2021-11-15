@@ -3,6 +3,7 @@ package com.clussmanproductions.trafficcontrol.tileentity;
 import java.util.HashMap;
 
 import com.clussmanproductions.trafficcontrol.ModBlocks;
+import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockBaseTrafficLight;
 import com.clussmanproductions.trafficcontrol.util.EnumTrafficLightBulbTypes;
 
@@ -161,6 +162,8 @@ public class BaseTrafficLightTileEntity extends TileEntity implements ITickable 
 			flashBySlot.put(i, false);
 		}
 		
+		setActive(EnumTrafficLightBulbTypes.DontCross, true, false);
+		
 		markDirty();
 		world.notifyBlockUpdate(getPos(), world.getBlockState(getPos()), world.getBlockState(getPos()), 3);
 	}
@@ -246,30 +249,6 @@ public class BaseTrafficLightTileEntity extends TileEntity implements ITickable 
 
 		return false;
 	}
-	
-	public int getYRotation()
-	{
-		IBlockState state = world.getBlockState(getPos());
-		if (!(state.getBlock() instanceof BlockBaseTrafficLight))
-		{
-			return 0;
-		}
-		
-		switch(state.getValue(BlockBaseTrafficLight.FACING))
-		{
-			case EAST:
-				return 270;
-			case NORTH:
-				return 0;
-			case SOUTH:
-				return 180;
-			case WEST:
-				return 90;
-			
-		}
-		
-		return 0;
-	}
 
 	@Override
 	public void update() {
@@ -320,5 +299,10 @@ public class BaseTrafficLightTileEntity extends TileEntity implements ITickable 
 	public boolean getIsPigAbove()
 	{
 		return isPigAbove;
+	}
+
+	@Override
+	public double getMaxRenderDistanceSquared() {
+		return ModTrafficControl.MAX_RENDER_DISTANCE;
 	}
 }

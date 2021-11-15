@@ -1,13 +1,16 @@
 package com.clussmanproductions.trafficcontrol.scanner;
 
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.UUID;
 
 import com.clussmanproductions.trafficcontrol.Config;
+import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.util.ImmersiveRailroadingHelper;
 import com.clussmanproductions.trafficcontrol.util.Tuple;
-import com.google.common.collect.ImmutableList;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -21,14 +24,9 @@ public class Scanner
 	private ScannerData _data;
 	public static HashMap<Integer, Scanner> ScannersByWorld = new HashMap<>();
 	
-	private Vec3d lastPosition = null;
-	private Vec3d lastMotion = null;
-	private IScannerSubscriber lastSubscriber = null;
-	private ScanRequest lastRequest = null;
-	private int blocksScannedThisRequest = 0;
-	private boolean foundTrainThisRequest = false;
-	private boolean trainMovingTowardsDestThisRequest = false;
-	private int blocksScannedThisTick = 0;
+	private ScanSession[] scansInProgress;
+	private HashSet<IScannerSubscriber> requestsHandledThisTick = new HashSet<>();
+	private int lastIndex = 0;
 	
 	public Scanner(World world)
 	{
@@ -38,6 +36,12 @@ public class Scanner
 		{
 			_data = new ScannerData();
 			world.setData(_data.mapName, _data);
+		}
+		
+		scansInProgress = new ScanSession[Config.parallelScans];
+		for(int i = 0; i < Config.parallelScans; i++)
+		{
+			scansInProgress[i] = new ScanSession();
 		}
 	}
 	
@@ -49,222 +53,195 @@ public class Scanner
 	public void tick(World world) {
 		try
 		{
-//			for(BlockPos pos : _data.getSubscribers())
-//			{
-//				if (!_world.isBlockLoaded(pos))
-//				{
-//					continue;
-//				}
-//				
-//				TileEntity tileEntity = _world.getTileEntity(pos);
-//				if (!(tileEntity instanceof IScannerSubscriber))
-//				{
-//					_data.removeSubscriber(pos);
-//					continue;
-//				}
-//				
-//				IScannerSubscriber subscriber = (IScannerSubscriber)tileEntity;
-//				boolean hasCanceled = false;
-//				for(ScanRequest req : subscriber.getScanRequests())
-//				{
-//					ScanCompleteData data = performScan(req);
-//					
-//					if (!_world.isBlockLoaded(pos))
-//					{
-//						break;
-//					}
-//					
-//					subscriber.onScanComplete(data);
-//					
-//					if (!data.getContinueScanningForTileEntity())
-//					{
-//						hasCanceled = true;
-//						break;
-//					}
-//				}
-//				
-//				if (!hasCanceled)
-//				{
-//					subscriber.onScanRequestsCompleted();
-//				}
-//			}
-			
-			blocksScannedThisTick = 0;
-			
-			int subscribersCheckedThisTick = 0;
-			int subscriberTotal = _data.getSubscribers().size();
-			
-			while(blocksScannedThisTick < Config.borderTick && subscribersCheckedThisTick < subscriberTotal)
+			if (_data.getSubscribers().size() == 0)
 			{
-				if (lastSubscriber == null)
+				return;
+			}
+			
+			for(ScanSession scanSession : scansInProgress)
+			{
+				if (scanSession.getScanSubscriber() == null)
 				{
-					// Get next first available subscriber
-					lastSubscriber = getNextSubscriber(null, world);
+					tryFindNextSubscriber(scanSession, world);
 				}
 				
-				if (lastSubscriber == null)
+				if (scanSession.getScanRequest() == null)
 				{
-					return;
+					scanSession.setScanSubscriber(null);
+					continue;
 				}
 				
-				List<ScanRequest> scannerRequests = lastSubscriber.getScanRequests();
-				if (lastRequest == null && scannerRequests.size() > 0)
+				ScanRequest request = scanSession.getScanRequest();
+				while(scanSession.getBlocksScannedThisSession() < Config.borderTimeout && scanSession.getBlocksScannedThisTick() < Config.borderTick && request != null)
 				{
-					lastRequest = scannerRequests.get(0);
-				}
-				
-				while(lastRequest != null)
-				{
-					ScanCompleteData data = performScan(lastRequest, world);
-					
-					if (data == null)
+					Vec3d lastPosition = scanSession.getLastPosition();
+					Vec3d motion = scanSession.getMotion();
+					if (lastPosition == null)
 					{
-						break;
+						lastPosition = new Vec3d(request.getStartingPos());
+						motion = new Vec3d(request.getStartDirection().getDirectionVec());
 					}
 					
-					lastPosition = null;
-					lastMotion = null;
-					blocksScannedThisRequest = 0;
-					lastSubscriber.onScanComplete(data);
-					
-					if (!data.getContinueScanningForTileEntity())
+					Vec3d nextPosition = ImmersiveRailroadingHelper.getNextPosition(lastPosition, motion, world);
+					scanSession.addBlockScannedThisTick();
+					if (nextPosition.equals(lastPosition))
 					{
-						lastRequest = null;
-						break;
+						ScanCompleteData completeData = new ScanCompleteData(request, true, false, false);
+						scanSession.getScanSubscriber().onScanComplete(completeData);
+						if (completeData.getContinueScanningForTileEntity())
+						{
+							scanSession.popRequest();
+						}
+						
+						if (!completeData.getContinueScanningForTileEntity() || scanSession.getScanRequest() == null)
+						{
+							tryFindNextSubscriber(scanSession, world);
+						}
+
+						request = scanSession.getScanRequest();
+						continue;
 					}
 					
-					int nextRequestIndex = scannerRequests.indexOf(lastRequest) + 1;
-					if (nextRequestIndex >= scannerRequests.size())
+					motion = new Vec3d(nextPosition.x - lastPosition.x,
+									   nextPosition.y - lastPosition.y,
+									   nextPosition.z - lastPosition.z);
+					
+					Tuple<Boolean, Boolean> trainResultHere = checkPosition(nextPosition, motion, world);
+					if (trainResultHere.getFirst())
 					{
-						lastSubscriber.onScanRequestsCompleted();
-						lastRequest = null;
+						scanSession.setFoundTrain(true);
+						scanSession.setTrainMovingTowardsDestination(scanSession.isTrainMovingTowardsDestination() || trainResultHere.getSecond());
 					}
-					else
+					
+					boolean whileLoopContinue = false;
+					for(BlockPos endingPos : request.getEndingPositions())
 					{
-						lastRequest = scannerRequests.get(nextRequestIndex);
+						AxisAlignedBB endingBB = new AxisAlignedBB(endingPos);
+						endingBB = endingBB.expand(-1, -1, -1).expand(1, 1, 1);
+						
+						if (endingBB.contains(nextPosition))
+						{
+							ScanCompleteData data = new ScanCompleteData(request, false, scanSession.isFoundTrain(), scanSession.isTrainMovingTowardsDestination());
+							scanSession.getScanSubscriber().onScanComplete(data);
+							if (data.getContinueScanningForTileEntity())
+							{
+								scanSession.popRequest();
+							}
+							
+							if (!data.getContinueScanningForTileEntity() || data.getScanRequest() == null)
+							{
+								tryFindNextSubscriber(scanSession, world);
+							}
+							
+							request = scanSession.getScanRequest();
+							whileLoopContinue = true;
+							break;
+						}
 					}
+					
+					if (whileLoopContinue)
+					{
+						continue;
+					}
+					
+					scanSession.setLastPosition(nextPosition);
+					scanSession.setMotion(motion);
 				}
 				
-				if (lastRequest == null)
+				if (request == null && scanSession.getScanSubscriber() != null)
 				{
-					blocksScannedThisRequest = 0;
-					foundTrainThisRequest = false;
-					trainMovingTowardsDestThisRequest = false;
-					lastSubscriber = getNextSubscriber(lastSubscriber, world);
+					scanSession.getScanSubscriber().onScanRequestsCompleted();
+					tryFindNextSubscriber(scanSession, world);
 				}
 				
-				subscribersCheckedThisTick++;
+				if (scanSession.getBlocksScannedThisSession() >= Config.borderTimeout)
+				{
+					ScanCompleteData timeout = new ScanCompleteData(request, true, false, false);
+					scanSession.getScanSubscriber().onScanComplete(timeout);
+					
+					if (timeout.getContinueScanningForTileEntity())
+					{
+						scanSession.popRequest();
+					}
+					
+					if (!timeout.getContinueScanningForTileEntity() || scanSession.getScanRequest() == null)
+					{
+						tryFindNextSubscriber(scanSession, world);
+					}
+					
+					request = scanSession.getScanRequest();
+				}
+			}
+			
+			// Cleanup tick-based variables
+			requestsHandledThisTick.clear();
+			for(ScanSession scanSession : scansInProgress)
+			{
+				scanSession.resetBlocksScannedThisTick();
 			}
 		}
 		catch(Exception ex) // Something went wrong - report it and try again
 		{
-			ex.printStackTrace();
+			ModTrafficControl.logger.error("Error in scanner", ex);
 		} 
 	}
 	
-	private IScannerSubscriber getNextSubscriber(IScannerSubscriber lastSubscriber, World world)
+	private void tryFindNextSubscriber(ScanSession scan, World world)
 	{
-		ImmutableList<BlockPos> scannerPoses = _data.getSubscribers();
-		if (scannerPoses.size() == 0)
+		lastIndex++;
+		if (lastIndex >= _data.getSubscribers().size())
 		{
-			return null;
+			lastIndex = 0;
 		}
 		
-		BlockPos lastSubscriberPos = null;
-		if (lastSubscriber != null)
-		{
-			lastSubscriberPos = ((TileEntity)lastSubscriber).getPos();
-		}
+		HashSet<BlockPos> invalidScanSubscribers = new HashSet<BlockPos>();
 		
-		int lastIndex = scannerPoses.indexOf(lastSubscriberPos);		
-		int nextIndex = lastIndex + 1;
-		if (nextIndex >= scannerPoses.size())
+		IScannerSubscriber thisScanSubscriber = null;
+		do
 		{
-			nextIndex = 0;
-		}
-		
-		IScannerSubscriber retVal = null;
-		while(nextIndex != lastIndex)
-		{
-			BlockPos nextPos = scannerPoses.get(nextIndex);
-			if (nextPos != null && world.isBlockLoaded(nextPos))
+			BlockPos subscriberPos = _data.getSubscribers().get(lastIndex);
+			if (world.isBlockLoaded(subscriberPos, false))
 			{
-				TileEntity teAtPos = world.getTileEntity(nextPos);
-				if (teAtPos == null || teAtPos.isInvalid() || !(teAtPos instanceof IScannerSubscriber))
+				TileEntity te = world.getTileEntity(subscriberPos);
+				
+				if (te == null)
 				{
-					_data.removeSubscriber(nextPos);
+					invalidScanSubscribers.add(subscriberPos);
+					lastIndex++;
+					continue;
 				}
-				else
+				
+				if (IScannerSubscriber.class.isAssignableFrom(te.getClass()))
 				{
-					retVal = (IScannerSubscriber)teAtPos;
-					break;
+					thisScanSubscriber = (IScannerSubscriber)te;
+					
+					if (thisScanSubscriber.getScanRequests().size() != 0)
+					{
+						final IScannerSubscriber finalThisScanSubscriber = thisScanSubscriber;
+						if (!requestsHandledThisTick.add(thisScanSubscriber) || Arrays.stream(scansInProgress).anyMatch(ss -> ss.getScanSubscriber() == finalThisScanSubscriber))
+						{
+							thisScanSubscriber = null;
+						}
+					}
 				}
 			}
 			
-			nextIndex++;
-			if (nextIndex >= scannerPoses.size())
+			if (thisScanSubscriber == null)
 			{
-				nextIndex = 0;
-			}
-			
-			// Special check in case lastSubscriber passed in is null
-			if (nextIndex == 0 && lastIndex == -1)
-			{
-				break;
+				lastIndex++;
 			}
 		}
+		while(lastIndex < _data.getSubscribers().size() && thisScanSubscriber == null);
 		
-		return retVal;
+		for(BlockPos invalidSub : invalidScanSubscribers)
+		{
+			_data.removeSubscriber(invalidSub);
+		}
+		
+		scan.setScanSubscriber(thisScanSubscriber);
 	}
-	
-	private ScanCompleteData performScan(ScanRequest req, World world)
-	{
-		Vec3d currentPosition = lastPosition != null ? lastPosition : new Vec3d(req.getStartingPos().getX(), req.getStartingPos().getY(), req.getStartingPos().getZ());
-		Vec3d motion = lastMotion != null ? lastMotion : new Vec3d(req.getStartDirection().getDirectionVec());
 		
-		while(blocksScannedThisTick < Config.borderTick)
-		{					
-			Vec3d nextPosition = ImmersiveRailroadingHelper.getNextPosition(currentPosition, motion, world);
-			
-			if (nextPosition.equals(currentPosition))
-			{
-				return new ScanCompleteData(req, true, false, false);
-			}
-			
-			motion = new Vec3d(nextPosition.x - currentPosition.x,
-								nextPosition.y - currentPosition.y,
-								nextPosition.z - currentPosition.z);
-			
-			currentPosition = nextPosition;
-			
-			Tuple<Boolean, Boolean> foundTrainData = checkPosition(req, currentPosition, motion, world);
-			foundTrainThisRequest = foundTrainThisRequest || foundTrainData.getFirst();
-			trainMovingTowardsDestThisRequest = trainMovingTowardsDestThisRequest || foundTrainData.getSecond();
-			
-			for(BlockPos endingPos : req.getEndingPositions())
-			{
-				AxisAlignedBB bb = new AxisAlignedBB(endingPos.down().south(2).west(2), endingPos.up(3).east(2).north(2));
-				if (bb.contains(currentPosition))
-				{
-					return new ScanCompleteData(req, false, foundTrainThisRequest, trainMovingTowardsDestThisRequest);
-				}
-			}
-			
-			blocksScannedThisTick++;
-			blocksScannedThisRequest++;
-			
-			if (blocksScannedThisRequest >= Config.borderTimeout)
-			{
-				return new ScanCompleteData(req, true, false, false);
-			}
-		}
-		
-		lastPosition = currentPosition;
-		lastMotion = motion;
-		return null;
-	}
-	
-	private Tuple<Boolean, Boolean> checkPosition(ScanRequest req, Vec3d position, Vec3d motion, World world)
+	private Tuple<Boolean, Boolean> checkPosition(Vec3d position, Vec3d motion, World world)
 	{		
 		net.minecraft.util.Tuple<UUID, Vec3d> moveableRollingStockNearby = ImmersiveRailroadingHelper.getStockNearby(position, world);
 		if (moveableRollingStockNearby != null)
@@ -284,5 +261,110 @@ public class Scanner
 		}
 		
 		return new Tuple<Boolean, Boolean>(false, false);
+	}
+
+	private static class ScanSession
+	{
+		private IScannerSubscriber scanSubscriber = null;
+		private Queue<ScanRequest> scanRequestsToDo;
+		private int blocksScannedThisTick = 0;
+		private int blocksScannedThisSession = 0;
+		private Vec3d lastPosition = null;
+		private Vec3d motion = null;
+		private boolean foundTrain = false;
+		private boolean trainMovingTowardsDestination = false;
+		
+		public IScannerSubscriber getScanSubscriber() {
+			return scanSubscriber;
+		}
+		
+		public void setScanSubscriber(IScannerSubscriber scanSubscriber) {
+			this.scanSubscriber = scanSubscriber;
+			
+			if (this.scanSubscriber != null)
+			{
+				scanRequestsToDo = new LinkedList<>(scanSubscriber.getScanRequests());
+			}
+			else
+			{
+				scanRequestsToDo = new LinkedList<>();
+			}
+			
+			lastPosition = null;
+			motion = null;
+			blocksScannedThisSession = 0;
+			foundTrain = false;
+			trainMovingTowardsDestination = false;
+		}
+		
+		public ScanRequest getScanRequest()
+		{
+			return scanRequestsToDo.peek();
+		}
+		
+		public void popRequest()
+		{
+			scanRequestsToDo.poll();
+			lastPosition = null;
+			motion = null;
+			blocksScannedThisSession = 0;
+			foundTrain = false;
+			trainMovingTowardsDestination = false;
+		}
+		
+		public int getBlocksScannedThisTick()
+		{
+			return blocksScannedThisTick;
+		}
+		
+		public void addBlockScannedThisTick()
+		{
+			blocksScannedThisTick++;
+			blocksScannedThisSession++;
+		}
+		
+		public void resetBlocksScannedThisTick()
+		{
+			blocksScannedThisTick = 0;
+		}
+		
+		public int getBlocksScannedThisSession()
+		{
+			return blocksScannedThisSession;
+		}
+		
+		public Vec3d getLastPosition() {
+			return lastPosition;
+		}
+
+		public void setLastPosition(Vec3d lastPosition) {
+			this.lastPosition = lastPosition;
+		}
+		
+		public Vec3d getMotion() {
+			return motion;
+		}
+
+		public void setMotion(Vec3d motion) {
+			this.motion = motion;
+		}
+
+		public boolean isFoundTrain() {
+			return foundTrain;
+		}
+
+		public void setFoundTrain(boolean foundTrain) {
+			this.foundTrain = foundTrain;
+		}
+
+		public boolean isTrainMovingTowardsDestination() {
+			return trainMovingTowardsDestination;
+		}
+
+		public void setTrainMovingTowardsDestination(boolean trainMovingTowardsDestination) {
+			this.trainMovingTowardsDestination = trainMovingTowardsDestination;
+		}
+		
+		
 	}
 }

@@ -8,6 +8,7 @@ import com.clussmanproductions.trafficcontrol.tileentity.StreetSignTileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -40,13 +41,9 @@ public class StreetSignRenderer extends TileEntitySpecialRenderer<StreetSignTile
 	private void renderStreetSign(StreetSign sign, int signIndex)
 	{
 		Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("trafficcontrol:textures/blocks/street_sign.png"));
-		
-		if (sign.getFacing() == EnumFacing.WEST || sign.getFacing() == EnumFacing.EAST)
-		{
-			GlStateManager.translate(8, 8, 8);
-			GlStateManager.rotate(90, 0, 1, 0);
-			GlStateManager.translate(-8F, -8F, -8F);
-		}
+		GlStateManager.translate(8, 8, 8);
+		GlStateManager.rotate(sign.getRotation() * -22.5F, 0, 1, 0);
+		GlStateManager.translate(-8F, -8F, -8F);
 		
 		double xOffset = 1 * (sign.getColor().getCol() - 1);
 		double yOffset = 0.25 * (sign.getColor().getRow() - 1);
@@ -100,11 +97,8 @@ public class StreetSignRenderer extends TileEntitySpecialRenderer<StreetSignTile
 		
 		GlStateManager.rotate(-180, 0, 1, 0);
 		
-		if (sign.getFacing() == EnumFacing.WEST || sign.getFacing() == EnumFacing.EAST)
-		{
-			GlStateManager.translate(8, 8, 8);
-			GlStateManager.rotate(-90, 0, 1, 0);
-			GlStateManager.translate(-8F, -8F, -8F);
-		}
+		GlStateManager.translate(8, 8, 8);
+		GlStateManager.rotate(sign.getRotation() * 22.5F, 0, 1, 0);
+		GlStateManager.translate(-8F, -8F, -8F);
 	}
 }

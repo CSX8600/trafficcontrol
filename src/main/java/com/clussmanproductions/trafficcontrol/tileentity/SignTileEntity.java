@@ -33,15 +33,8 @@ public class SignTileEntity extends TileEntity {
 	private int variant = 0;
 	
 	private final int MAXTYPE = 5;
-	public static final ImmutableMap<Integer, Integer> MAXVARIANTS = ImmutableMap.<Integer, Integer>builder()
-			.put(0, 113)
-			.put(1, 147)
-			.put(2, 99)
-			.put(3, 89)
-			.put(4, 166)
-			.put(5, 95)
-			.build();
 	public static ImmutableMap<Tuple<Integer, Integer>, Sign> SIGNS_BY_TYPE_VARIANT;
+	public static ImmutableMap<Integer, Integer> MAX_VARIANTS_BY_TYPE;
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
@@ -70,13 +63,31 @@ public class SignTileEntity extends TileEntity {
 	}
 	
 	public void setVariant(int variant)
-	{
-		if (variant > MAXVARIANTS.get(getType()))
+	{		
+		if (variant > MAX_VARIANTS_BY_TYPE.get(getType()))
 		{
-			this.variant = 0;
-			return;
+			switch(getType()) // Use new error textures because it's fun
+			{
+				case 0:
+					variant = 114;
+					break;
+				case 1:
+					variant = 162;
+					break;
+				case 2:
+					variant = 119;
+					break;
+				case 3:
+					variant = 91;
+					break;
+				case 4:
+					variant = 168;
+					break;
+				case 5:
+					variant = 96;
+					break;
+			}
 		}
-		
 		this.variant = variant;
 	}
 	
@@ -124,19 +135,31 @@ public class SignTileEntity extends TileEntity {
 		{
 			return "misc0b";
 		}
-		else if (variant >= 1 && variant <= 4)
+		else if ((variant >= 1 && variant <= 4) || 
+				(variant >= 100 && variant <= 101) ||
+				variant == 113 ||
+				variant == 119)
 		{
 			return "misc1b";
 		}
-		else if (variant >= 5 && variant <= 8)
+		else if ((variant >= 5 && variant <= 8) ||
+				(variant >= 117 && variant <= 118))
 		{
 			return "misc2b";
 		}
-		else if ((variant >= 9 && variant <= 32) || (variant >= 76 && variant <= 99))
+		else if ((variant >= 9 && variant <= 32) || 
+				(variant >= 76 && variant <= 99) ||
+				(variant >= 102 && variant <= 105) ||
+				(variant >= 108 && variant <= 109) ||
+				variant == 112 ||
+				(variant >= 114 && variant <= 116))
 		{
 			return "misc3b";
 		}
-		else if (variant >= 33 && variant <= 40)
+		else if ((variant >= 33 && variant <= 40) || 
+				(variant >= 106 && variant <= 107) ||
+				(variant >= 110 && variant <= 111) ||
+				(variant >= 120 && variant <= 124))
 		{
 			return "misc4b";
 		}
@@ -199,20 +222,6 @@ public class SignTileEntity extends TileEntity {
 		
 		return "Unknown";
 	}
-
-	public void prevType()
-	{
-		if (type == 0)
-		{
-			type = 5;
-		}
-		else
-		{
-			type--;
-		}
-		
-		variant = 0;
-	}
 	
 	public void nextType()
 	{
@@ -226,33 +235,6 @@ public class SignTileEntity extends TileEntity {
 		}
 		
 		variant = 0;
-	}
-	
-	public void prevVariant()
-	{
-		if (variant == 0)
-		{
-			int maxVariant = MAXVARIANTS.get(type);
-			variant = maxVariant;
-		}
-		else
-		{
-			variant--;
-		}
-	}
-	
-	public void nextVariant()
-	{
-		int maxVariant = MAXVARIANTS.get(type);
-		
-		if (variant == maxVariant)
-		{
-			variant = 0;
-		}
-		else
-		{
-			variant++;
-		}
 	}
 	
 	@Override
@@ -288,9 +270,15 @@ public class SignTileEntity extends TileEntity {
 		handleUpdateTag(nbt);
 	}
 
+	private static boolean signsInitialized = false;
 	@SideOnly(Side.CLIENT)
 	public static void initializeSigns()
 	{
+		if (signsInitialized)
+		{
+			return;
+		}
+		
 		try
 		{
 			ResourceLocation signJsonRL = new ResourceLocation("trafficcontrol:misc/signs.json");
@@ -301,6 +289,8 @@ public class SignTileEntity extends TileEntity {
 			Iterator<JsonElement> arrayIterator = jsonArray.iterator();
 			
 			HashMap<Tuple<Integer, Integer>, Sign> signsbyTypeVariant = new HashMap<>();
+			HashMap<Integer, Integer> maxVariantsByType = new HashMap<>();
+			
 			while(arrayIterator.hasNext())
 			{
 				JsonElement element = arrayIterator.next();
@@ -314,6 +304,13 @@ public class SignTileEntity extends TileEntity {
 				String type = obj.get("type").getAsString();
 				int typeID = SignTileEntity.getSignTypeByName(type);
 				int variant = obj.get("variant").getAsInt();
+				
+				int currentMaxVariant = maxVariantsByType.getOrDefault(typeID, 0);
+				if (variant > currentMaxVariant)
+				{
+					maxVariantsByType.put(typeID, variant);
+				}
+				
 				String tooltip = null;
 				String note = null;
 				
@@ -344,6 +341,9 @@ public class SignTileEntity extends TileEntity {
 			}
 			
 			SIGNS_BY_TYPE_VARIANT = ImmutableMap.copyOf(signsbyTypeVariant);
+			MAX_VARIANTS_BY_TYPE = ImmutableMap.copyOf(maxVariantsByType);
+			
+			signsInitialized = true;
 		}
 		catch(Exception ex)
 		{
@@ -433,5 +433,10 @@ public class SignTileEntity extends TileEntity {
 			}
 			
 		}
+	}
+
+	@Override
+	public double getMaxRenderDistanceSquared() {
+		return ModTrafficControl.MAX_RENDER_DISTANCE;
 	}
 }

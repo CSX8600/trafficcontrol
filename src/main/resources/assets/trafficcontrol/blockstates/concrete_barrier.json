@@ -36,288 +36,96 @@
 		},
 		"dye=0,inventory": 
     	{
-        	"model": "trafficcontrol:concrete_barrier",
-    		"transform": 
-	        {
-	        	"gui": 
-	        	{
-	        		"rotation": 
-	        		[
-	        			{ "y": 30 },
-	        			{ "x": 30 }
-	        		],
-	        		"scale": [0.75, 0.75, 0.75]
-	        	}
-	        }
+        	"model": "trafficcontrol:concrete_barrier"
     	},
     	"dye=1,inventory":
     	{
         	"model": "trafficcontrol:concrete_barrier",
-    		"textures": { "color": "minecraft:blocks/concrete_orange" },
-	        "transform": 
-	        {
-	        	"gui": 
-	        	{
-	        		"rotation": 
-	        		[
-	        			{ "y": 30 },
-	        			{ "x": 30 }
-	        		],
-	        		"scale": [0.75, 0.75, 0.75]
-	        	}
-	        } 
+    		"textures": { "color": "minecraft:blocks/concrete_orange" }
     		
     	},
     	"dye=2,inventory":
     	{
         	"model": "trafficcontrol:concrete_barrier",
-    		"textures": { "color": "minecraft:blocks/concrete_magenta" },
-	        "transform": 
-	        {
-	        	"gui": 
-	        	{
-	        		"rotation": 
-	        		[
-	        			{ "y": 30 },
-	        			{ "x": 30 }
-	        		],
-	        		"scale": [0.75, 0.75, 0.75]
-	        	}
-	        } 
+    		"textures": { "color": "minecraft:blocks/concrete_magenta" }
     		
     	},
     	"dye=3,inventory":
     	{
         	"model": "trafficcontrol:concrete_barrier",
-    		"textures": { "color": "minecraft:blocks/concrete_light_blue" },
-	        "transform": 
-	        {
-	        	"gui": 
-	        	{
-	        		"rotation": 
-	        		[
-	        			{ "y": 30 },
-	        			{ "x": 30 }
-	        		],
-	        		"scale": [0.75, 0.75, 0.75]
-	        	}
-	        } 
+    		"textures": { "color": "minecraft:blocks/concrete_light_blue" }
     		
     	},
     	"dye=4,inventory":
     	{
         	"model": "trafficcontrol:concrete_barrier",
-    		"textures": { "color": "minecraft:blocks/concrete_yellow" },
-	        "transform": 
-	        {
-	        	"gui": 
-	        	{
-	        		"rotation": 
-	        		[
-	        			{ "y": 30 },
-	        			{ "x": 30 }
-	        		],
-	        		"scale": [0.75, 0.75, 0.75]
-	        	}
-	        } 
+    		"textures": { "color": "minecraft:blocks/concrete_yellow" }
     		
     	},
     	"dye=5,inventory":
     	{
         	"model": "trafficcontrol:concrete_barrier",
-    		"textures": { "color": "minecraft:blocks/concrete_lime" },
-	        "transform": 
-	        {
-	        	"gui": 
-	        	{
-	        		"rotation": 
-	        		[
-	        			{ "y": 30 },
-	        			{ "x": 30 }
-	        		],
-	        		"scale": [0.75, 0.75, 0.75]
-	        	}
-	        } 
+    		"textures": { "color": "minecraft:blocks/concrete_lime" }
     		
     	},
     	"dye=6,inventory":
     	{
         	"model": "trafficcontrol:concrete_barrier",
-    		"textures": { "color": "minecraft:blocks/concrete_pink" },
-	        "transform": 
-	        {
-	        	"gui": 
-	        	{
-	        		"rotation": 
-	        		[
-	        			{ "y": 30 },
-	        			{ "x": 30 }
-	        		],
-	        		"scale": [0.75, 0.75, 0.75]
-	        	}
-	        } 
+    		"textures": { "color": "minecraft:blocks/concrete_pink" }
     		
     	},
     	"dye=7,inventory":
     	{
         	"model": "trafficcontrol:concrete_barrier",
-    		"textures": { "color": "minecraft:blocks/concrete_gray" },
-	        "transform": 
-	        {
-	        	"gui": 
-	        	{
-	        		"rotation": 
-	        		[
-	        			{ "y": 30 },
-	        			{ "x": 30 }
-	        		],
-	        		"scale": [0.75, 0.75, 0.75]
-	        	}
-	        } 
+    		"textures": { "color": "minecraft:blocks/concrete_gray" }
     		
     	},
     	"dye=8,inventory":
     	{
         	"model": "trafficcontrol:concrete_barrier",
-    		"textures": { "color": "minecraft:blocks/concrete_silver" },
-	        "transform": 
-	        {
-	        	"gui": 
-	        	{
-	        		"rotation": 
-	        		[
-	        			{ "y": 30 },
-	        			{ "x": 30 }
-	        		],
-	        		"scale": [0.75, 0.75, 0.75]
-	        	}
-	        } 
+    		"textures": { "color": "minecraft:blocks/concrete_silver" }
     		
     	},
     	"dye=9,inventory":
     	{
         	"model": "trafficcontrol:concrete_barrier",
-    		"textures": { "color": "minecraft:blocks/concrete_cyan" },
-	        "transform": 
-	        {
-	        	"gui": 
-	        	{
-	        		"rotation": 
-	        		[
-	        			{ "y": 30 },
-	        			{ "x": 30 }
-	        		],
-	        		"scale": [0.75, 0.75, 0.75]
-	        	}
-	        } 
+    		"textures": { "color": "minecraft:blocks/concrete_cyan" }
     		
     	},
     	"dye=10,inventory":
     	{
         	"model": "trafficcontrol:concrete_barrier",
-    		"textures": { "color": "minecraft:blocks/concrete_purple" },
-	        "transform": 
-	        {
-	        	"gui": 
-	        	{
-	        		"rotation": 
-	        		[
-	        			{ "y": 30 },
-	        			{ "x": 30 }
-	        		],
-	        		"scale": [0.75, 0.75, 0.75]
-	        	}
-	        } 
+    		"textures": { "color": "minecraft:blocks/concrete_purple" }
     		
     	},
     	"dye=11,inventory":
     	{
         	"model": "trafficcontrol:concrete_barrier",
-    		"textures": { "color": "minecraft:blocks/concrete_blue" },
-	        "transform": 
-	        {
-	        	"gui": 
-	        	{
-	        		"rotation": 
-	        		[
-	        			{ "y": 30 },
-	        			{ "x": 30 }
-	        		],
-	        		"scale": [0.75, 0.75, 0.75]
-	        	}
-	        } 
+    		"textures": { "color": "minecraft:blocks/concrete_blue" }
     		
     	},
     	"dye=12,inventory":
     	{
         	"model": "trafficcontrol:concrete_barrier",
-    		"textures": { "color": "minecraft:blocks/concrete_brown" },
-	        "transform": 
-	        {
-	        	"gui": 
-	        	{
-	        		"rotation": 
-	        		[
-	        			{ "y": 30 },
-	        			{ "x": 30 }
-	        		],
-	        		"scale": [0.75, 0.75, 0.75]
-	        	}
-	        } 
+    		"textures": { "color": "minecraft:blocks/concrete_brown" }
     		
     	},
     	"dye=13,inventory":
     	{
         	"model": "trafficcontrol:concrete_barrier",
-    		"textures": { "color": "minecraft:blocks/concrete_green" },
-	        "transform": 
-	        {
-	        	"gui": 
-	        	{
-	        		"rotation": 
-	        		[
-	        			{ "y": 30 },
-	        			{ "x": 30 }
-	        		],
-	        		"scale": [0.75, 0.75, 0.75]
-	        	}
-	        } 
+    		"textures": { "color": "minecraft:blocks/concrete_green" }
     		
     	},
     	"dye=14,inventory":
     	{
         	"model": "trafficcontrol:concrete_barrier",
-    		"textures": { "color": "minecraft:blocks/concrete_red" },
-	        "transform": 
-	        {
-	        	"gui": 
-	        	{
-	        		"rotation": 
-	        		[
-	        			{ "y": 30 },
-	        			{ "x": 30 }
-	        		],
-	        		"scale": [0.75, 0.75, 0.75]
-	        	}
-	        } 
+    		"textures": { "color": "minecraft:blocks/concrete_red" }
     		
     	},
     	"dye=15,inventory":
     	{
         	"model": "trafficcontrol:concrete_barrier",
-    		"textures": { "color": "minecraft:blocks/concrete_black" },
-	        "transform": 
-	        {
-	        	"gui": 
-	        	{
-	        		"rotation": 
-	        		[
-	        			{ "y": 30 },
-	        			{ "x": 30 }
-	        		],
-	        		"scale": [0.75, 0.75, 0.75]
-	        	}
-	        } 
+    		"textures": { "color": "minecraft:blocks/concrete_black" }
     		
     	}
     }

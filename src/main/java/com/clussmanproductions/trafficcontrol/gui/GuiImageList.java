@@ -45,6 +45,7 @@ public class GuiImageList {
 	private boolean isMouseHover = false;
 	private int clickY = 0;
 	private int preClickScrollBarStep = 0;
+	private boolean isVisible = true;
 	
  	public GuiImageList(int x, int y, int width, int height, String filter, Consumer<Sign> imageClickCallback)
 	{
@@ -81,6 +82,11 @@ public class GuiImageList {
 	
 	public void draw(int mouseX, int mouseY, FontRenderer renderer, Function<List<String>, Function<Integer, Consumer<Integer>>> drawHoveringTextCallback)
 	{
+		if (!isVisible())
+		{
+			return;
+		}
+		
 		GlStateManager.color(255, 255, 255);
 		if (didLoadFail)
 		{
@@ -261,6 +267,11 @@ public class GuiImageList {
 	
 	public void onMouseClick(int mouseX, int mouseY)
 	{
+		if (!isVisible())
+		{
+			return;
+		}
+		
 		if (mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height)
 		{
 			// Check to see if it's on the scroll bar
@@ -365,5 +376,15 @@ public class GuiImageList {
 				scrollBarHeight = this.height;
 			}
 		}
+	}
+
+	
+	public boolean isVisible() {
+		return isVisible;
+	}
+
+	
+	public void setVisible(boolean isVisible) {
+		this.isVisible = isVisible;
 	}
 }

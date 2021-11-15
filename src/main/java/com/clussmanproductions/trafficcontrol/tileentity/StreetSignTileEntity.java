@@ -1,6 +1,7 @@
 package com.clussmanproductions.trafficcontrol.tileentity;
 
 import com.clussmanproductions.trafficcontrol.ModBlocks;
+import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -128,4 +129,8 @@ public class StreetSignTileEntity extends SyncableTileEntity {
 		
 		world.notifyBlockUpdate(getPos(), world.getBlockState(getPos()), world.getBlockState(getPos()), 3);
 	}
-}
+
+	@Override
+	public double getMaxRenderDistanceSquared() {
+		return ModTrafficControl.MAX_RENDER_DISTANCE;
+	}}

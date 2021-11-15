@@ -1,5 +1,6 @@
 package com.clussmanproductions.trafficcontrol.tileentity;
 
+import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockType3BarrierBase;
 import com.google.common.collect.Comparators;
 
@@ -113,6 +114,31 @@ public class Type3BarrierTileEntity extends SyncableTileEntity {
 	
 	public void setThisSignVariant(int thisSignVariant)
 	{
+		if (thisSignVariant > SignTileEntity.MAX_VARIANTS_BY_TYPE.get(getThisSignType()))
+		{
+			switch(getThisSignType()) // Use new error textures because it's fun
+			{
+				case 0:
+					thisSignVariant = 114;
+					break;
+				case 1:
+					thisSignVariant = 162;
+					break;
+				case 2:
+					thisSignVariant = 119;
+					break;
+				case 3:
+					thisSignVariant = 91;
+					break;
+				case 4:
+					thisSignVariant = 168;
+					break;
+				case 5:
+					thisSignVariant = 96;
+					break;
+			}
+		}
+		
 		boolean shouldMarkDirty = thisSignVariant != this.thisSignVariant;
 		
 		this.thisSignVariant = thisSignVariant;
@@ -275,52 +301,6 @@ public class Type3BarrierTileEntity extends SyncableTileEntity {
 		setSignType(SignType.getByIndex(nextIndex));
 	}
 	
-	public void nextThisSignType()
-	{
-		int nextType = thisSignType + 1;
-		if (nextType > SignTileEntity.MAXVARIANTS.keySet().stream().max(Integer::compare).get())
-		{
-			nextType = 0;
-		}
-		
-		setThisSignVariant(0);
-		setThisSignType(nextType);
-	}
-	
-	public void prevThisSignType()
-	{
-		int nextType = thisSignType - 1;
-		if (nextType < 0)
-		{
-			nextType = SignTileEntity.MAXVARIANTS.keySet().stream().max(Integer::compare).get();
-		}
-
-		setThisSignVariant(0);
-		setThisSignType(nextType);
-	}
-	
-	public void nextThisSignVariant()
-	{
-		int nextVariant = thisSignVariant + 1;
-		if (nextVariant > SignTileEntity.MAXVARIANTS.get(getThisSignType()))
-		{
-			nextVariant = 0;
-		}
-		
-		setThisSignVariant(nextVariant);
-	}
-	
-	public void prevThisSignVariant()
-	{
-		int nextVariant = thisSignVariant - 1;
-		if (nextVariant < 1)
-		{
-			nextVariant = SignTileEntity.MAXVARIANTS.get(getThisSignType());
-		}
-		
-		setThisSignVariant(nextVariant);
-	}
-	
 	public enum SignType
 	{
 		RoadClosed(0),
@@ -364,5 +344,10 @@ public class Type3BarrierTileEntity extends SyncableTileEntity {
 			
 			return maxIndex;
 		}
+	}
+
+	@Override
+	public double getMaxRenderDistanceSquared() {
+		return ModTrafficControl.MAX_RENDER_DISTANCE;
 	}
 }

@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 @Mod(modid = ModTrafficControl.MODID, version = ModTrafficControl.VERSION, name = "Traffic Control", useMetadata = true)
 public class ModTrafficControl {
 	public static final String MODID = "trafficcontrol";
-	public static final String VERSION = "0.3.0";
+	public static final String VERSION = "0.3.7";
 	public static boolean IR_INSTALLED = false;
 	public static CreativeTabs CREATIVE_TAB = new CreativeTabs("Traffic Control") {
 
@@ -27,6 +27,7 @@ public class ModTrafficControl {
 			return new ItemStack(ModBlocks.cone);
 		}
 	};
+	public static final double MAX_RENDER_DISTANCE = 262144; // Optifine's max render distance is 32 chunks.  (32 x 16) ^ 2 = 262144
 
 	@SidedProxy(clientSide = "com.clussmanproductions.trafficcontrol.proxy.ClientProxy", serverSide = "com.clussmanproductions.trafficcontrol.proxy.ServerProxy")
 	public static CommonProxy proxy;

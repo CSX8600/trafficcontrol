@@ -2,20 +2,25 @@ package com.clussmanproductions.trafficcontrol.gui;
 
 import java.io.IOException;
 
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.Type3BarrierTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.Type3BarrierTileEntity.SignType;
+import com.clussmanproductions.trafficcontrol.util.Tuple;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.client.config.GuiButtonExt;
 import net.minecraftforge.fml.client.config.GuiCheckBox;
 
 public class GuiType3Barrier extends GuiScreen {
@@ -24,10 +29,10 @@ public class GuiType3Barrier extends GuiScreen {
 	private GuiButton prevSignType;
 	private GuiButton nextSignType;
 	private GuiCheckBox renderThisSign;
-	private GuiButton prevThisSignType;
-	private GuiButton nextThisSignType;
-	private GuiButton prevThisSignVariant;
-	private GuiButton nextThisSignVariant;
+	private GuiButton selectThisSign;
+	private GuiImageList imageList;
+	private GuiTextField imageListFilter;
+	private GuiButtonExt close;
 	
 	public GuiType3Barrier(Type3BarrierTileEntity barrierTE)
 	{
@@ -60,44 +65,30 @@ public class GuiType3Barrier extends GuiScreen {
 		renderThisSign.x = (width / 2) - renderSign.width - 4;
 		renderThisSign.y = (height / 2) + 8 /* 1/2 height of sign */;
 		
-		prevThisSignType = new GuiButton(CMPT_IDs.PREV_THIS_SIGN_TYPE, 0, 0, "<");
-		prevThisSignType.width = 20;
-		prevThisSignType.x = (width / 2) + 4;
-		prevThisSignType.y = (height / 2) + 8 /* 1/2 height of sign */ - ((prevThisSignType.height - renderThisSign.height)/2);
-		prevThisSignType.visible = tileEntity.getRenderThisSign();
+		selectThisSign = new GuiButtonExt(CMPT_IDs.SELECT_THIS_SIGN, (width / 2) + 4 /* margin from center */ + 32 /* sign width */ + 4 /* margin from sign */, (height / 2) + 6, 75, 20, "Select Sign");
+		selectThisSign.visible = tileEntity.getRenderThisSign();
 		
-		nextThisSignType = new GuiButton(CMPT_IDs.NEXT_THIS_SIGN_TYPE, 0, 0, ">");
-		nextThisSignType.width = 20;
-		nextThisSignType.x = (width / 2) + 4 /* Margin from center */ + prevThisSignType.width + 4 /* Sign margin from prev */ 
-				+ 32 /* Sign width */ + 4 /* Margin from sign */;
-		nextThisSignType.y = (height / 2) + 8 /* 1/2 height of sign */ - ((nextThisSignType.height - renderThisSign.height)/2);
-		nextThisSignType.visible = tileEntity.getRenderThisSign();
+		imageList = new GuiImageList(((width / 2) + 4) - 100, (height / 2) - 100, 200, 200, (sign) -> 
+		{
+			tileEntity.setThisSignType(sign.getType());
+			tileEntity.setThisSignVariant(sign.getVariant());
+			imageList.setVisible(false);
+		});
+		imageList.setVisible(false);
 		
-		prevThisSignVariant = new GuiButton(CMPT_IDs.PREV_THIS_SIGN_VARIANT, 0, 0, "<");
-		prevThisSignVariant.width = 20;
-		prevThisSignVariant.x = (width / 2) + 4;
-		prevThisSignVariant.y = (height / 2) + 8 /* 1/2 height of sign */ + 32 /* height of type sign */ + 4 /* margin from type sign */;
-		prevThisSignVariant.visible = tileEntity.getRenderThisSign();
-		
-		nextThisSignVariant = new GuiButton(CMPT_IDs.NEXT_THIS_SIGN_VARIANT, 0, 0, ">");
-		nextThisSignVariant.width = 20;
-		nextThisSignVariant.x = (width / 2) + 4 /* Margin from center */ + prevThisSignVariant.width + 4 /* Sign margin from prev */ 
-				+ 32 /* Sign width */ + 4 /* Margin from sign */;
-		nextThisSignVariant.y = (height / 2) + 8 /* 1/2 height of sign */ + 32 /* height of type sign */ + 4 /* margin from type sign */;
-		nextThisSignVariant.visible = tileEntity.getRenderThisSign();
+		imageListFilter = new GuiTextField(0, fontRenderer, ((width / 2) + 4) - 100, (height / 2) + 100 + 4, 200, 20);
 		
 		buttonList.add(renderSign);
 		buttonList.add(prevSignType);
 		buttonList.add(nextSignType);
 		buttonList.add(renderThisSign);
-		buttonList.add(prevThisSignType);
-		buttonList.add(nextThisSignType);
-		buttonList.add(prevThisSignVariant);
-		buttonList.add(nextThisSignVariant);
+		buttonList.add(selectThisSign);
 	}
 	
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+		drawDefaultBackground();
+		
 		if (tileEntity.getRenderSign())
 		{
 			renderSign((width / 2) + 4 /* margin from center */ + 4 /* margin from prev */ + prevSignType.width, (height / 2) - 32 - 16 - (prevSignType.height / 2));
@@ -105,17 +96,22 @@ public class GuiType3Barrier extends GuiScreen {
 		
 		if (tileEntity.getRenderThisSign())
 		{
-			renderThisSignType((width / 2) + 4 /* margin from center */ + prevThisSignType.width + 4 /* margin from prevThisSignType */,
-					(height / 2));
-			renderThisSignVariant((width / 2) + 4 /* margin from center */ + prevThisSignVariant.width + 4 /* margin from prevThisSignType */,
-					(height / 2) + 32 + 4);
+			renderThisSignVariant((width / 2) + 4 /* margin from center */, height / 2);
 		}
 		
-		drawDefaultBackground();
 		
 		super.drawScreen(mouseX, mouseY, partialTicks);
+		
+		imageList.draw(mouseX, mouseY, fontRenderer, text -> x -> y -> drawHoveringText(text, x, y));
+		
+		if (imageList.isVisible())
+		{
+			GlStateManager.color(1, 1, 1);
+			GlStateManager.disableLighting();
+			imageListFilter.drawTextBox();
+			GlStateManager.enableLighting();
+		}
 	}
-	
 	
 	private void renderSign(int left, int top)
 	{
@@ -139,54 +135,10 @@ public class GuiType3Barrier extends GuiScreen {
 		BufferBuilder builder = tess.getBuffer();
 		builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
 		
-		builder.pos(left + 64, top, 1).tex(0.5, signTextureBottomY - heightFactor).endVertex();
-		builder.pos(left, top, 1).tex(0, signTextureBottomY - heightFactor).endVertex();
-		builder.pos(left, top + 32, 1).tex(0, signTextureBottomY).endVertex();
-		builder.pos(left + 64, top + 32, 1).tex(0.5, signTextureBottomY).endVertex();
-		
-		tess.draw();
-		GlStateManager.popMatrix();
-	}
-	
-	private void renderThisSignType(int left, int top)
-	{
-		ResourceLocation typeLocation = new ResourceLocation("trafficcontrol:textures/gui/signconfig.png");
-		Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(typeLocation);
-		
-		float xFactor = 0;
-		switch(tileEntity.getThisSignType())
-		{
-			case 0:
-				xFactor = 1;
-				break;
-			case 1:
-				xFactor = 3;
-				break;
-			case 2:
-				xFactor = 5;
-				break;
-			case 3:
-				xFactor = 4;
-				break;
-			case 4:
-				xFactor = 0;
-				break;
-			case 5:
-				xFactor = 2;
-				break;
-		}
-		
-		float x = 0.25F + (0.125F * xFactor);
-		
-		GlStateManager.pushMatrix();
-		Tessellator tess = Tessellator.getInstance();
-		BufferBuilder builder = tess.getBuffer();
-		builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-		
-		builder.pos(left + 32, top, 1).tex(x + 0.125, 0).endVertex();
-		builder.pos(left, top, 1).tex(x, 0).endVertex();
-		builder.pos(left, top + 32, 1).tex(x, 0.125).endVertex();
-		builder.pos(left + 32, top + 32, 1).tex(x + 0.125, 0.125).endVertex();
+		builder.pos(left + 64, top, 0).tex(0.5, signTextureBottomY - heightFactor).endVertex();
+		builder.pos(left, top, 0).tex(0, signTextureBottomY - heightFactor).endVertex();
+		builder.pos(left, top + 32, 0).tex(0, signTextureBottomY).endVertex();
+		builder.pos(left + 64, top + 32, 0).tex(0.5, signTextureBottomY).endVertex();
 		
 		tess.draw();
 		GlStateManager.popMatrix();
@@ -194,10 +146,7 @@ public class GuiType3Barrier extends GuiScreen {
 	
 	private void renderThisSignVariant(int left, int top)
 	{
-		String signTypeName = SignTileEntity.getSignTypeName(tileEntity.getThisSignType());
-		String signName = signTypeName + tileEntity.getThisSignVariant();
-		
-		ResourceLocation signTexture = new ResourceLocation("trafficcontrol:textures/blocks/sign/" + signTypeName + "/" + signName + ".png");
+		ResourceLocation signTexture = SignTileEntity.SIGNS_BY_TYPE_VARIANT.get(new Tuple<Integer, Integer>(tileEntity.getThisSignType(), tileEntity.getThisSignVariant())).getImageResourceLocation();
 		Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(signTexture);
 		
 		GlStateManager.pushMatrix();
@@ -205,10 +154,10 @@ public class GuiType3Barrier extends GuiScreen {
 		BufferBuilder builder = tess.getBuffer();
 		builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
 		
-		builder.pos(left + 32, top, 1).tex(1, 0).endVertex();
-		builder.pos(left, top, 1).tex(0, 0).endVertex();
-		builder.pos(left, top + 32, 1).tex(0, 1).endVertex();
-		builder.pos(left + 32, top + 32, 1).tex(1, 1).endVertex();
+		builder.pos(left + 32, top, 0).tex(1, 0).endVertex();
+		builder.pos(left, top, 0).tex(0, 0).endVertex();
+		builder.pos(left, top + 32, 0).tex(0, 1).endVertex();
+		builder.pos(left + 32, top + 32, 0).tex(1, 1).endVertex();
 		
 		tess.draw();
 		GlStateManager.popMatrix();
@@ -233,27 +182,66 @@ public class GuiType3Barrier extends GuiScreen {
 			case CMPT_IDs.RENDER_THIS_SIGN:
 				boolean thisSignChecked = ((GuiCheckBox)button).isChecked();
 				tileEntity.setRenderThisSign(thisSignChecked);
-				prevThisSignType.visible = thisSignChecked;
-				nextThisSignType.visible = thisSignChecked;
-				prevThisSignVariant.visible = thisSignChecked;
-				nextThisSignVariant.visible = thisSignChecked;
+				selectThisSign.visible = thisSignChecked;
 				break;
-			case CMPT_IDs.NEXT_THIS_SIGN_TYPE:
-				tileEntity.nextThisSignType();
-				break;
-			case CMPT_IDs.PREV_THIS_SIGN_TYPE:
-				tileEntity.prevThisSignType();
-				break;
-			case CMPT_IDs.NEXT_THIS_SIGN_VARIANT:
-				tileEntity.nextThisSignVariant();
-				break;
-			case CMPT_IDs.PREV_THIS_SIGN_VARIANT:
-				tileEntity.prevThisSignVariant();
+			case CMPT_IDs.SELECT_THIS_SIGN:
+				imageList.setVisible(true);
+				imageListFilter.setVisible(true);
 				break;
 		}
 		super.actionPerformed(button);
 	}
 	
+	@Override
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+		if (imageList.isVisible())
+		{
+			imageList.onMouseClick(mouseX, mouseY);
+			imageListFilter.mouseClicked(mouseX, mouseY, mouseButton);
+		}
+		else
+		{
+			super.mouseClicked(mouseX, mouseY, mouseButton);
+		}
+	}
+	
+	@Override
+	protected void mouseReleased(int mouseX, int mouseY, int state) {
+		super.mouseReleased(mouseX, mouseY, state);
+		imageList.onMouseRelease();
+	}
+	
+	@Override
+	protected void keyTyped(char typedChar, int keyCode) throws IOException {
+		if (keyCode != Keyboard.KEY_ESCAPE || !imageList.isVisible())
+		{
+			super.keyTyped(typedChar, keyCode);
+		}
+		
+		if (imageList.isVisible())
+		{
+			imageListFilter.textboxKeyTyped(typedChar, keyCode);
+			imageList.filter(imageListFilter.getText());
+			
+			if (keyCode == Keyboard.KEY_ESCAPE)
+			{
+				imageList.setVisible(false);
+				imageList.filter(null);
+				imageListFilter.setVisible(false);
+			}
+		}
+	}
+	
+	@Override
+	public void handleMouseInput() throws IOException {
+		super.handleMouseInput();
+		
+		if (imageList.isVisible())
+		{
+			int scroll = Integer.signum(Mouse.getEventDWheel());
+			imageList.scroll(scroll);
+		}
+	}
 	
 	@Override
 	public void onGuiClosed() {
@@ -267,9 +255,6 @@ public class GuiType3Barrier extends GuiScreen {
 		public static final int PREV_SIGN_TYPE = 2;
 		public static final int NEXT_SIGN_TYPE = 3;
 		public static final int RENDER_THIS_SIGN = 4;
-		public static final int NEXT_THIS_SIGN_TYPE = 5;
-		public static final int PREV_THIS_SIGN_TYPE = 6;
-		public static final int NEXT_THIS_SIGN_VARIANT = 7;
-		public static final int PREV_THIS_SIGN_VARIANT = 8;
+		public static final int SELECT_THIS_SIGN = 5;
 	}
 }

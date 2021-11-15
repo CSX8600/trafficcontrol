@@ -1,5 +1,6 @@
 package com.clussmanproductions.trafficcontrol.item;
 
+import com.clussmanproductions.trafficcontrol.Config;
 import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayNE;
@@ -12,7 +13,11 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayTopSE;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayTopSW;
 import com.clussmanproductions.trafficcontrol.tileentity.RelayTileEntity;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -22,8 +27,15 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemCrossingRelayBox extends Item {
 	public ItemCrossingRelayBox()
@@ -37,6 +49,21 @@ public class ItemCrossingRelayBox extends Item {
 	public void initModel()
 	{
 		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flag)
+	{
+		if(GuiScreen.isShiftKeyDown())
+		{
+			String info = I18n.format("trafficcontrol.tooltip.crossingrelay");
+			tooltip.addAll(Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(info, Config.tooltipCharWrapLength));
+		}
+		else
+		{
+			tooltip.add(TextFormatting.YELLOW + I18n.format("trafficcontrol.tooltip.help"));
+		}
 	}
 	
 	@Override

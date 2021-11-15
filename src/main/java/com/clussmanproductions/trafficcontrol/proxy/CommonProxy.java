@@ -29,6 +29,7 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockOverhead;
 import com.clussmanproductions.trafficcontrol.blocks.BlockOverheadCrossbuck;
 import com.clussmanproductions.trafficcontrol.blocks.BlockOverheadLamps;
 import com.clussmanproductions.trafficcontrol.blocks.BlockOverheadPole;
+import com.clussmanproductions.trafficcontrol.blocks.BlockPedestrianButton;
 import com.clussmanproductions.trafficcontrol.blocks.BlockSafetranMechanical;
 import com.clussmanproductions.trafficcontrol.blocks.BlockSafetranType3;
 import com.clussmanproductions.trafficcontrol.blocks.BlockShuntBorder;
@@ -38,21 +39,29 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightDouble;
 import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightSingle;
 import com.clussmanproductions.trafficcontrol.blocks.BlockStreetSign;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight1;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight2;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight4;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight5;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight5Upper;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightControlBox;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightDoghouse;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficRail;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorLeft;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorRight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorStraight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockType3Barrier;
 import com.clussmanproductions.trafficcontrol.blocks.BlockType3BarrierRight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockWCHBell;
 import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
 import com.clussmanproductions.trafficcontrol.gui.GuiProxy;
+import com.clussmanproductions.trafficcontrol.item.ItemCone;
 import com.clussmanproductions.trafficcontrol.item.ItemCrossingRelayBox;
 import com.clussmanproductions.trafficcontrol.item.ItemCrossingRelayTuner;
 import com.clussmanproductions.trafficcontrol.item.ItemStreetSign;
+import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight1Frame;
+import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight2Frame;
+import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight4Frame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight5Frame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightBulb;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightDoghouseFrame;
@@ -60,6 +69,8 @@ import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightFrame;
 import com.clussmanproductions.trafficcontrol.network.PacketHandler;
 import com.clussmanproductions.trafficcontrol.tileentity.ConcreteBarrierTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.CrossingLampsTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.PedestrianButtonTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.RelayTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.SafetranMechanicalTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.SafetranType3TileEntity;
@@ -69,6 +80,9 @@ import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.StreetLightDoubleTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.StreetLightSingleTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.StreetSignTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.TrafficLight1TileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.TrafficLight2TileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.TrafficLight4TileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLight5TileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightControlBoxTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightDoghouseTileEntity;
@@ -141,6 +155,11 @@ public class CommonProxy {
 		e.getRegistry().register(new BlockTrafficLight5());
 		e.getRegistry().register(new BlockTrafficLight5Upper());
 		e.getRegistry().register(new BlockTrafficLightDoghouse());
+		e.getRegistry().register(new BlockTrafficLight1());
+		e.getRegistry().register(new BlockTrafficLight2());
+		e.getRegistry().register(new BlockTrafficLight4());
+		e.getRegistry().register(new BlockPedestrianButton());
+		e.getRegistry().register(new BlockTrafficSensorRight());
 
 		GameRegistry.registerTileEntity(CrossingGateGateTileEntity.class, ModTrafficControl.MODID + "_crossinggategate");
 		GameRegistry.registerTileEntity(SafetranType3TileEntity.class, ModTrafficControl.MODID + "_safetrantyp3");
@@ -160,6 +179,11 @@ public class CommonProxy {
 		GameRegistry.registerTileEntity(StreetSignTileEntity.class, ModTrafficControl.MODID + "_streetsign");
 		GameRegistry.registerTileEntity(TrafficLight5TileEntity.class, ModTrafficControl.MODID + "_trafficlight5");
 		GameRegistry.registerTileEntity(TrafficLightDoghouseTileEntity.class, ModTrafficControl.MODID + "_trafficlightdoghouse");
+		GameRegistry.registerTileEntity(CrossingLampsTileEntity.class, ModTrafficControl.MODID + "_crossinglamps");
+		GameRegistry.registerTileEntity(TrafficLight1TileEntity.class, ModTrafficControl.MODID + "_trafficlight1");
+		GameRegistry.registerTileEntity(TrafficLight2TileEntity.class, ModTrafficControl.MODID + "_trafficlight2");
+		GameRegistry.registerTileEntity(TrafficLight4TileEntity.class, ModTrafficControl.MODID + "_trafficlight4");
+		GameRegistry.registerTileEntity(PedestrianButtonTileEntity.class, ModTrafficControl.MODID + "_pedestrianbutton");
 	}
 
 	@SubscribeEvent
@@ -171,6 +195,9 @@ public class CommonProxy {
 		e.getRegistry().register(new ItemTrafficLightFrame());
 		e.getRegistry().register(new ItemTrafficLight5Frame());
 		e.getRegistry().register(new ItemTrafficLightDoghouseFrame());
+		e.getRegistry().register(new ItemTrafficLight1Frame());
+		e.getRegistry().register(new ItemTrafficLight2Frame());
+		e.getRegistry().register(new ItemTrafficLight4Frame());
 
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_base).setRegistryName(ModBlocks.crossing_gate_base.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_gate).setRegistryName(ModBlocks.crossing_gate_gate.getRegistryName()));
@@ -184,9 +211,9 @@ public class CommonProxy {
 		e.getRegistry().register(new ItemBlock(ModBlocks.overhead_crossbuck).setRegistryName(ModBlocks.overhead_crossbuck.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.safetran_mechanical).setRegistryName(ModBlocks.safetran_mechanical.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.sign).setRegistryName(ModBlocks.sign.getRegistryName()));
-		e.getRegistry().register(new ItemBlock(ModBlocks.cone).setRegistryName(ModBlocks.cone.getRegistryName()));
-		e.getRegistry().register(new ItemBlock(ModBlocks.channelizer).setRegistryName(ModBlocks.channelizer.getRegistryName()));
-		e.getRegistry().register(new ItemBlock(ModBlocks.drum).setRegistryName(ModBlocks.drum.getRegistryName()));
+		e.getRegistry().register(new ItemCone(ModBlocks.cone).setRegistryName(ModBlocks.cone.getRegistryName()));
+		e.getRegistry().register(new ItemCone(ModBlocks.channelizer).setRegistryName(ModBlocks.channelizer.getRegistryName()));
+		e.getRegistry().register(new ItemCone(ModBlocks.drum).setRegistryName(ModBlocks.drum.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.street_light_single).setRegistryName(ModBlocks.street_light_single.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.street_light_double).setRegistryName(ModBlocks.street_light_double.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.traffic_light_control_box).setRegistryName(ModBlocks.traffic_light_control_box.getRegistryName()));
@@ -218,6 +245,8 @@ public class CommonProxy {
 		e.getRegistry().register(new ItemBlock(ModBlocks.traffic_sensor_left).setRegistryName(ModBlocks.traffic_sensor_left.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.traffic_sensor_straight).setRegistryName(ModBlocks.traffic_sensor_straight.getRegistryName()));
 		e.getRegistry().register(new ItemStreetSign(ModBlocks.street_sign).setRegistryName(ModBlocks.street_sign.getRegistryName()));
+		e.getRegistry().register(new ItemBlock(ModBlocks.pedestrian_button).setRegistryName(ModBlocks.pedestrian_button.getRegistryName()));
+		e.getRegistry().register(new ItemBlock(ModBlocks.traffic_sensor_right).setRegistryName(ModBlocks.traffic_sensor_right.getRegistryName()));
 	}
 
 	public static void registerSounds(RegistryEvent.Register<SoundEvent> e)

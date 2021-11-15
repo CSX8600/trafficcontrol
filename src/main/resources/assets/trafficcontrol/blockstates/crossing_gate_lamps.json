@@ -10,25 +10,41 @@
     },
     "variants": {
         "normal": [{}],
-        "inventory": [{}],
-        "facing":
+        "inventory": [{
+			"gui": {
+				"rotation": [30, 225, 0],
+				"scale": [0.5, 0.5, 0.5]
+        }}],
+        "rotation":
         {
-            "north": {},
-            "west": { "y": 90 },
-            "south": {},
-            "east": { "y": 90 }
+            "0": { "model": "trafficcontrol:crossing_gate_lamps" },
+	        "1": { "model": "trafficcontrol:crossing_gate_lamps", "transform": { "rotation": { "y": 337 } } },
+	        "2": { "model": "trafficcontrol:crossing_gate_lamps", "transform": { "rotation": { "y": 315  } } },
+	        "3": { "model": "trafficcontrol:crossing_gate_lamps", "transform": { "rotation": { "y": 292 } } },
+	        "4": { "model": "trafficcontrol:crossing_gate_lamps", "transform": { "rotation": { "y": 270 } } },
+	        "5": { "model": "trafficcontrol:crossing_gate_lamps", "transform": { "rotation": { "y": 247 } } },
+	        "6": { "model": "trafficcontrol:crossing_gate_lamps", "transform": { "rotation": { "y": 225 } } },
+	        "7": { "model": "trafficcontrol:crossing_gate_lamps", "transform": { "rotation": { "y": 202 } } },
+	        "8": { "model": "trafficcontrol:crossing_gate_lamps", "transform": { "rotation": { "y": 180 } } },
+	        "9": { "model": "trafficcontrol:crossing_gate_lamps", "transform": { "rotation": { "y": 157 } } },
+	        "10": { "model": "trafficcontrol:crossing_gate_lamps", "transform": { "rotation": { "y": 135 } } },
+	        "11": { "model": "trafficcontrol:crossing_gate_lamps", "transform": { "rotation": { "y": 112 } } },
+	        "12": { "model": "trafficcontrol:crossing_gate_lamps", "transform": { "rotation": { "y": 90 } } },
+	        "13": { "model": "trafficcontrol:crossing_gate_lamps", "transform": { "rotation": { "y": 67 } } },
+	        "14": { "model": "trafficcontrol:crossing_gate_lamps", "transform": { "rotation": { "y": 45 } } },
+	        "15": { "model": "trafficcontrol:crossing_gate_lamps", "transform": { "rotation": { "y": 22 } } }
         },
         "state":
         {
             "off": {},
-            "flash1": 
+            "flash1":
             {
                 "textures":
                 {
-                    "leftlamp": "trafficcontrol:blocks/red" 
+                    "leftlamp": "trafficcontrol:blocks/red"
                 }
             },
-            "flash2": 
+            "flash2":
             {
                 "textures":
                 {

@@ -4,87 +4,33 @@
         "model": "trafficcontrol:wig_wag"
     },
     "variants": {
-        "active=false,facing=north": 
-        [{
-        	"textures":
-        	{
-        		"lamp": "trafficcontrol:blocks/black"
-        	}
-        }],
-        "active=false,facing=west": 
-        {
-        	"y": 270,
-        	"textures":
-        	{
-        		"lamp": "trafficcontrol:blocks/black"
-        	}
+    	"active":
+    	{ 
+    		"true": { "textures": { "lamp": "trafficcontrol:blocks/red" } },
+    		"false": { "textures": { "lamp": "trafficcontrol:blocks/black" } }
     	},
-        "active=false,facing=south":
-         {
-         	"y": 180,
-        	"textures":
-        	{
-        		"lamp": "trafficcontrol:blocks/black"
-        	}
-     	},
-        "active=false,facing=east": 
+    	"rotation":
         {
-        	"y": 90,
-        	"textures":
-        	{
-        		"lamp": "trafficcontrol:blocks/black"
-        	}
-    	},
-        "active=true,facing=north":
-        [{
-        	"textures":
-        	{
-        		"lamp": "trafficcontrol:blocks/red"
-        	}
-    	}],
-        "active=true,facing=west": 
-        {
-        	"y": 270,
-        	"textures":
-        	{
-        		"lamp": "trafficcontrol:blocks/red"
-        	}
-    	},
-        "active=true,facing=south": 
-        {
-        	"y": 180,
-        	"textures":
-        	{
-        		"lamp": "trafficcontrol:blocks/red"
-        	}
-    	},
-        "active=true,facing=east":
-        {
-        	"y": 90,
-        	"textures":
-        	{
-        		"lamp": "trafficcontrol:blocks/red"
-        	}
-    	},
+            "0": { "model": "trafficcontrol:wig_wag" },
+	        "1": { "model": "trafficcontrol:wig_wag", "transform": { "rotation": { "y": 337 } } },
+	        "2": { "model": "trafficcontrol:wig_wag", "transform": { "rotation": { "y": 315  } } },
+	        "3": { "model": "trafficcontrol:wig_wag", "transform": { "rotation": { "y": 292 } } },
+	        "4": { "model": "trafficcontrol:wig_wag", "transform": { "rotation": { "y": 270 } } },
+	        "5": { "model": "trafficcontrol:wig_wag", "transform": { "rotation": { "y": 247 } } },
+	        "6": { "model": "trafficcontrol:wig_wag", "transform": { "rotation": { "y": 225 } } },
+	        "7": { "model": "trafficcontrol:wig_wag", "transform": { "rotation": { "y": 202 } } },
+	        "8": { "model": "trafficcontrol:wig_wag", "transform": { "rotation": { "y": 180 } } },
+	        "9": { "model": "trafficcontrol:wig_wag", "transform": { "rotation": { "y": 157 } } },
+	        "10": { "model": "trafficcontrol:wig_wag", "transform": { "rotation": { "y": 135 } } },
+	        "11": { "model": "trafficcontrol:wig_wag", "transform": { "rotation": { "y": 112 } } },
+	        "12": { "model": "trafficcontrol:wig_wag", "transform": { "rotation": { "y": 90 } } },
+	        "13": { "model": "trafficcontrol:wig_wag", "transform": { "rotation": { "y": 67 } } },
+	        "14": { "model": "trafficcontrol:wig_wag", "transform": { "rotation": { "y": 45 } } },
+	        "15": { "model": "trafficcontrol:wig_wag", "transform": { "rotation": { "y": 22 } } }
+        },
         "inventory": 
         {
-        	"model": "trafficcontrol:wig_wag",
-        	"transform":
-        	{
-        		"firstperson":
-        		{
-        			"scale": 0.5
-        		},
-        		"firstperson_lefthand":
-        		{
-        			"scale": 0.5
-        		},
-        		"gui":
-        		{
-        			"scale": [0.75, 0.8, 1],
-        			"translation": [0.25, -0.1, 0]
-        		}
-        	}
+        	"model": "trafficcontrol:wig_wag"
         },
         "normal": [{}]
     }

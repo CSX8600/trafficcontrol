@@ -1,8 +1,5 @@
 package com.clussmanproductions.trafficcontrol;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.logging.log4j.Level;
 
 import com.clussmanproductions.trafficcontrol.proxy.CommonProxy;
@@ -16,67 +13,22 @@ public class Config {
 	public static int islandTimeout = 20;
 	public static int borderTimeout = 150;
 	public static int borderTick = 10; 
-	public static String[] sensorEntities = new String[] 
+	public static int parallelScans = 1;
+	public static int tooltipCharWrapLength = 256;
+	public static String[] sensorClasses = new String[] 
 			{
-				"mts:vehicleg_car",
-				"vehicle:bumper_car",
-				"vehicle:couch",
-				"vehicle:dirt_bike",
-				"vehicle:moped",
-				"vehicle:tractor",
-				"vehicle:smart_car",
-				"vehicle:dune_buggy",
-				"vehicle:go_kart",
-				"vehicle:golf_cart",
-				"vehicle:mini_bike",
-				"vehicle:mini_bus",
-				"vehicle:off_roader",
-				"vehicle:atv",
-				"flansmod:panzer",
-				"flansmod:sasjeep",
-				"flansmod:sdkfz251",
-				"flansmod:tiger",
-				"flansmod:hellcat",
-				"flansmod:uc2pdr",
-				"flansmod:m3halftrack",
-				"flansmod:sdkfz2",
-				"flansmod:b1",
-				"flansmod:kv1",
-				"flansmod:humvee",
-				"flansmod:t90",
-				"flansmod:leo2a6",
-				"flansmod:abrams",
-				"flansmod:buggy",
-				"flansmod:sdkfz222",
-				"flansmod:cromwell",
-				"flansmod:tigerii",
-				"flansmod:bmwr75",
-				"flansmod:tiger131",
-				"flansmod:t34",
-				"flansmod:crusader",
-				"flansmod:stug",
-				"flansmod:churchill",
-				"flansmod:greyhound",
-				"flansmod:sherman",
-				"flansmod:chaffee",
-				"flansmod:kubel",
-				"fvp:t1p",
-				"fvp:c11",
-				"fvp:c10",
-				"fvp:c1r1",
-				"fvp:ab1",
-				"fvp:c4",
-				"fvp:c5",
-				"fvp:c8",
-				"fvp:t2",
-				"fvp:tr1",
-				"fvp:sentinel",
-				"minecraft:pig",
-				"minecraft:horse",
-				"minecraft:donkey",
-				"minecraft:mule",
-				"minecraft:skeleton_horse",
-				"minecraft:zombie_horse"
+				"minecraftransportsimulator.vehicles.main.EntityVehicleD_Moving",
+				"com.mrcrayfish.vehicle.entity.EntityVehicle",
+				"com.flansmod.common.driveables.EntityDriveable",
+				"net.fexcraft.mod.fvtm.sys.legacy.LandVehicle",
+				"net.fexcraft.mod.fvtm.sys.uni12.ULandVehicle",
+				"net.minecraft.entity.passive.EntityPig",
+				"net.minecraft.entity.passive.EntityHorse",
+				"net.minecraft.entity.passive.EntityDonkey",
+				"net.minecraft.entity.passive.EntityMule",
+				"net.minecraft.entity.passive.EntitySkeletonHorse",
+				"net.minecraft.entity.passive.EntityZombieHorse",
+				"de.maxhenkel.car.entity.car.base.EntityVehicleBase"
 			};
 	public static int sensorScanHeight = 5;
 	
@@ -107,7 +59,9 @@ public class Config {
 		islandTimeout = cfg.getInt("islandTimeout", CATEGORY_GENERAL, islandTimeout, 1, 100, "How far (in blocks) should each island shunt scan for the next island shunt?");
 		borderTimeout = cfg.getInt("borderTimeout", CATEGORY_GENERAL, borderTimeout, 1, 2000, "How far (in blocks) should border shunts scan for the next island shunt?");
 		borderTick = cfg.getInt("borderTick", CATEGORY_GENERAL, borderTick, 1, 2000, "How far (in blocks) should border shunts scan for the next island shunt per tick?");
-		sensorEntities = cfg.getStringList("sensorEntities", CATEGORY_TRAFFIC_LIGHT, sensorEntities, "What entities will activate the traffic signal sensors?");
+		sensorClasses = cfg.getStringList("sensorClasses", CATEGORY_TRAFFIC_LIGHT, sensorClasses, "What entity classes will activate the traffic signal sensors?");
 		sensorScanHeight = cfg.getInt("sensorScanHeight", CATEGORY_TRAFFIC_LIGHT, sensorScanHeight, 0, 10, "How far up (in blocks) should traffic signal sensors scan for entities? [Min = 0, Max = 10, Default = 5]");
+		parallelScans = cfg.getInt("parallelScans", CATEGORY_GENERAL, parallelScans, 1, 20, "How many crossing relay boxes should be scanned per tick?  PERFORMANCE NOTE: Total blocks scanned = borderTick * parallelScans.  The higher this number, the amount of blocks scanned per tick is multiplied.");
+		tooltipCharWrapLength = cfg.getInt("tooltipCharWrapLength", CATEGORY_GENERAL, tooltipCharWrapLength, 64, 5412, "How many letters should be rendered in a tooltip before it wraps down to the next line?");
 	}
 }
