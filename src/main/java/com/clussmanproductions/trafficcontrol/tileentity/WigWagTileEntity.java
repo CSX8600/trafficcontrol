@@ -1,6 +1,7 @@
 package com.clussmanproductions.trafficcontrol.tileentity;
 
 import com.clussmanproductions.trafficcontrol.ModBlocks;
+import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
 
 import net.minecraft.block.state.IBlockState;
@@ -126,5 +127,10 @@ public class WigWagTileEntity extends TileEntity implements ITickable {
 	@Override
 	public NBTTagCompound getUpdateTag() {
 		return writeToNBT(new NBTTagCompound());
+	}
+
+	@Override
+	public double getMaxRenderDistanceSquared() {
+		return ModTrafficControl.MAX_RENDER_DISTANCE;
 	}
 }

@@ -28,6 +28,7 @@ tile.trafficcontrol.horizontal_pole.name=Horizontal Pole
 tile.trafficcontrol.traffic_sensor_left.name=Traffic Sensor (Left)
 tile.trafficcontrol.traffic_sensor_straight.name=Traffic Sensor (Straight)
 tile.trafficcontrol.pedestrian_button.name=Pedestrian Button
+tile.trafficcontrol.traffic_sensor_right.name=Traffic Sensor (Right)
 
 #items
 item.trafficcontrol.crossing_relay_box.name=Crossing Gate Relay
@@ -45,6 +46,11 @@ trafficcontrol.traffic_light_bulb.red.name=Bulb (Red)
 trafficcontrol.traffic_light_bulb.greenArrowLeft.name=Left Arrow Bulb (Green)
 trafficcontrol.traffic_light_bulb.yellowArrowLeft.name=Left Arrow Bulb (Yellow)
 trafficcontrol.traffic_light_bulb.redArrowLeft.name=Left Arrow Bulb (Red)
+trafficcontrol.traffic_light_bulb.greenArrowRight.name=Right Arrow Bulb (Green)
+trafficcontrol.traffic_light_bulb.yellowArrowRight.name=Right Arrow Bulb (Yellow)
+trafficcontrol.traffic_light_bulb.redArrowRight.name=Right Arrow Bulb (Red)
+trafficcontrol.traffic_light_bulb.cross.name=Cross Bulb
+trafficcontrol.traffic_light_bulb.dont_cross.name=Don't Cross Bulb
 trafficcontrol.concrete_barrier.white.name=White Concrete Barrier
 trafficcontrol.concrete_barrier.orange.name=Orange Concrete Barrier
 trafficcontrol.concrete_barrier.magenta.name=Magenta Concrete Barrier

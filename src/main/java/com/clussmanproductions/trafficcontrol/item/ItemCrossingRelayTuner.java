@@ -9,6 +9,7 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockPedestrianButton;
 import com.clussmanproductions.trafficcontrol.blocks.BlockShuntBorder;
 import com.clussmanproductions.trafficcontrol.blocks.BlockShuntIsland;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorLeft;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorRight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorStraight;
 import com.clussmanproductions.trafficcontrol.tileentity.BaseTrafficLightTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.BellBaseTileEntity;
@@ -122,7 +123,7 @@ public class ItemCrossingRelayTuner extends Item {
 		{
 			TrafficLightControlBoxTileEntity tlBox = (TrafficLightControlBoxTileEntity)te;
 
-			if (state.getBlock() instanceof BlockTrafficSensorLeft || state.getBlock() instanceof BlockTrafficSensorStraight)
+			if (state.getBlock() instanceof BlockTrafficSensorLeft || state.getBlock() instanceof BlockTrafficSensorStraight || state.getBlock() instanceof BlockTrafficSensorRight)
 			{
 				if (tlBox.addOrRemoveSensor(pos))
 				{

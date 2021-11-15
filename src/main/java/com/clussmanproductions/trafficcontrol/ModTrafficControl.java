@@ -27,6 +27,7 @@ public class ModTrafficControl {
 			return new ItemStack(ModBlocks.cone);
 		}
 	};
+	public static final double MAX_RENDER_DISTANCE = 262144; // Optifine's max render distance is 32 chunks.  (32 x 16) ^ 2 = 262144
 
 	@SidedProxy(clientSide = "com.clussmanproductions.trafficcontrol.proxy.ClientProxy", serverSide = "com.clussmanproductions.trafficcontrol.proxy.ServerProxy")
 	public static CommonProxy proxy;

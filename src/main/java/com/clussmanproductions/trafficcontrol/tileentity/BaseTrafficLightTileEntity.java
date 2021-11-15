@@ -3,6 +3,7 @@ package com.clussmanproductions.trafficcontrol.tileentity;
 import java.util.HashMap;
 
 import com.clussmanproductions.trafficcontrol.ModBlocks;
+import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockBaseTrafficLight;
 import com.clussmanproductions.trafficcontrol.util.EnumTrafficLightBulbTypes;
 
@@ -298,5 +299,10 @@ public class BaseTrafficLightTileEntity extends TileEntity implements ITickable 
 	public boolean getIsPigAbove()
 	{
 		return isPigAbove;
+	}
+
+	@Override
+	public double getMaxRenderDistanceSquared() {
+		return ModTrafficControl.MAX_RENDER_DISTANCE;
 	}
 }
