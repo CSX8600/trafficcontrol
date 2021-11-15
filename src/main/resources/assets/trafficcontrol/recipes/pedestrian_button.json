@@ -1,0 +1,26 @@
+{ 
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " P ",
+    " RB",
+    " P "  
+	],
+  "key": {
+    "P":
+	{
+	    "item": "trafficcontrol:crossing_gate_pole"
+	},
+	"B":
+	{
+		"item": "minecraft:stone_button"
+	},
+    "R":
+	{
+	    "item": "minecraft:redstone"
+	}
+  },
+  "result": {
+    "item": "trafficcontrol:pedestrian_button",
+    "count": 1
+  }
+}

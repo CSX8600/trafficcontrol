@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "trafficcontrol:traffic_sensor_left"
+        }
+    ],
+    "result": {
+        "item": "trafficcontrol:traffic_sensor_straight",
+        "count": 1
+    }
+}
