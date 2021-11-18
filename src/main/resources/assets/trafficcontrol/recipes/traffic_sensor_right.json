@@ -3,10 +3,13 @@
     "ingredients": [
         {
             "item": "trafficcontrol:traffic_sensor_straight"
-        }
+        },
+		{
+			"item": "trafficcontrol:traffic_sensor_straight"
+		}
     ],
     "result": {
-        "item": "trafficcontrol:traffic_sensor_left",
+        "item": "trafficcontrol:traffic_sensor_right",
         "count": 1
     }
 }
