@@ -130,7 +130,7 @@ public class BlockSign extends Block implements ITileEntityProvider {
 			return Arrays.stream(validFacings).noneMatch(vf -> vf.equals(facing));
 		}
 		
-		if (state.getBlock() == ModBlocks.traffic_light)
+		if (state.getBlock() instanceof BlockBaseTrafficLight)
 		{
 			return true;
 		}
