@@ -6,36 +6,31 @@
     "variants": {
         "normal": [{}],
         "inventory": [{}],
-        "above=false,facing=north": { "model": "trafficcontrol:pedestrian_button" },
-        "above=false,facing=west": { "model": "trafficcontrol:pedestrian_button", "y": 270 },
-        "above=false,facing=south": { "model": "trafficcontrol:pedestrian_button", "y": 180 },
-        "above=false,facing=east": { "model": "trafficcontrol:pedestrian_button", "y": 90 },
-        "above=true,facing=north": { 
-        	"model": "trafficcontrol:pedestrian_button",
-        	"submodel": {
-        		"top": { "model": "trafficcontrol:pedestrian_button_top" } 
+        "above": { 
+        	"false": { },
+        	"true": { 
+        		"submodel": {
+        			"top": { "model": "trafficcontrol:pedestrian_button_top" } 
+        		}
         	}
         },
-        "above=true,facing=south": { 
-        	"model": "trafficcontrol:pedestrian_button",
-        	"y": 180,
-        	"submodel": {
-        		"top": { "model": "trafficcontrol:pedestrian_button_top" } 
-        	}
-        },
-        "above=true,facing=west": { 
-        	"model": "trafficcontrol:pedestrian_button",
-        	"y": 270,
-        	"submodel": {
-        		"top": { "model": "trafficcontrol:pedestrian_button_top" } 
-        	}
-        },
-        "above=true,facing=east": { 
-        	"model": "trafficcontrol:pedestrian_button",
-        	"y": 90,
-        	"submodel": {
-        		"top": { "model": "trafficcontrol:pedestrian_button_top" } 
-        	}
+        "rotation": { 
+        	"0": { },
+        	"1": { "model": "trafficcontrol:pedestrian_button", "transform": { "rotation": { "y": 337 } } },
+        	"2": { "model": "trafficcontrol:pedestrian_button", "transform": { "rotation": { "y": 315 } } },
+        	"3": { "model": "trafficcontrol:pedestrian_button", "transform": { "rotation": { "y": 292 } } },
+        	"4": { "model": "trafficcontrol:pedestrian_button", "transform": { "rotation": { "y": 270 } } },
+        	"5": { "model": "trafficcontrol:pedestrian_button", "transform": { "rotation": { "y": 247 } } },
+        	"6": { "model": "trafficcontrol:pedestrian_button", "transform": { "rotation": { "y": 225 } } },
+        	"7": { "model": "trafficcontrol:pedestrian_button", "transform": { "rotation": { "y": 202 } } },
+        	"8": { "model": "trafficcontrol:pedestrian_button", "transform": { "rotation": { "y": 180 } } },
+        	"9": { "model": "trafficcontrol:pedestrian_button", "transform": { "rotation": { "y": 157 } } },
+        	"10": { "model": "trafficcontrol:pedestrian_button", "transform": { "rotation": { "y": 135 } } },
+        	"11": { "model": "trafficcontrol:pedestrian_button", "transform": { "rotation": { "y": 112 } } },
+        	"12": { "model": "trafficcontrol:pedestrian_button", "transform": { "rotation": { "y": 90 } } },
+        	"13": { "model": "trafficcontrol:pedestrian_button", "transform": { "rotation": { "y": 67 } } },
+        	"14": { "model": "trafficcontrol:pedestrian_button", "transform": { "rotation": { "y": 45 } } },
+        	"15": { "model": "trafficcontrol:pedestrian_button", "transform": { "rotation": { "y": 22 } } }
         }
     }
 }

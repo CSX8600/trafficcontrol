@@ -3,11 +3,13 @@ package com.clussmanproductions.trafficcontrol.blocks;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.tileentity.PedestrianButtonTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightControlBoxTileEntity;
+import com.clussmanproductions.trafficcontrol.util.CustomAngleCalculator;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -27,7 +29,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockPedestrianButton extends Block {
 
-	public static PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+	public static PropertyInteger ROTATION = PropertyInteger.create("rotation", 0, 15);
 	public static PropertyBool ABOVE = PropertyBool.create("above");
 
 	public BlockPedestrianButton() {
@@ -47,17 +49,17 @@ public class BlockPedestrianButton extends Block {
 
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		return state.getValue(FACING).getHorizontalIndex();
+		return state.getValue(ROTATION);
 	}
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta));
+		return getDefaultState().withProperty(ROTATION, meta);
 	}
 
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, FACING, ABOVE);
+		return new BlockStateContainer(this, ROTATION, ABOVE);
 	}
 
 	@Override
@@ -88,7 +90,8 @@ public class BlockPedestrianButton extends Block {
 	@Override
 	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,
 			float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-		return getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
+		int rotation = CustomAngleCalculator.getRotationForYaw(placer.rotationYaw);
+		return getDefaultState().withProperty(ROTATION, rotation);
 	}
 
 	@Override
@@ -118,9 +121,10 @@ public class BlockPedestrianButton extends Block {
 					continue;
 				}
 
-				EnumFacing myFacing = state.getValue(FACING);
 				TrafficLightControlBoxTileEntity ctrlr = (TrafficLightControlBoxTileEntity) prelimCtrlrTE;
-				if (myFacing == EnumFacing.NORTH || myFacing == EnumFacing.SOUTH) {
+				
+				int rotation = state.getValue(ROTATION);
+				if (!CustomAngleCalculator.isNorthSouth(rotation)) {
 					ctrlr.getAutomator().setWestEastPedQueued(true);
 				} else {
 					ctrlr.getAutomator().setNorthSouthPedQueued(true);
@@ -140,7 +144,8 @@ public class BlockPedestrianButton extends Block {
 
 		PedestrianButtonTileEntity te = (PedestrianButtonTileEntity) worldIn.getTileEntity(pos);
 		if (te != null) {
-			te.onBreak(worldIn, state.getValue(FACING));
+			int rotation = state.getValue(ROTATION);
+			te.onBreak(worldIn, CustomAngleCalculator.isNorthSouth(rotation));
 		}
 
 		super.breakBlock(worldIn, pos, state);
@@ -148,18 +153,39 @@ public class BlockPedestrianButton extends Block {
 
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		EnumFacing currentFacing = state.getValue(FACING);
-		switch (currentFacing) {
-		case NORTH:
-			return new AxisAlignedBB(0.71875, 0, 0.4375, 0.28125, 0.625, 0.625);
-		case SOUTH:
-			return new AxisAlignedBB(0.71875, 0, 0.375, 0.28125, 0.625, 0.5625);
-		case WEST:
-			return new AxisAlignedBB(0.4375, 0, 0.71875, 0.625, 0.625, 0.28125);
-		case EAST:
-			return new AxisAlignedBB(0.375, 0, 0.71875, 0.5625, 0.625, 0.28125);
-
+		if (!(state.getBlock() instanceof BlockPedestrianButton))
+		{
+			return FULL_BLOCK_AABB;
 		}
-		return super.getBoundingBox(state, source, pos);
+		
+		int rotation = state.getValue(ROTATION);
+		
+		switch(rotation)
+		{
+			case 0:
+				return new AxisAlignedBB(0.71875, 0, 0.4375, 0.28125, 0.625, 0.625);
+			case 8:
+				return new AxisAlignedBB(0.71875, 0, 0.375, 0.28125, 0.625, 0.5625);
+			case 4:
+				return new AxisAlignedBB(0.375, 0, 0.71875, 0.5625, 0.625, 0.28125);
+			case 12:
+				return new AxisAlignedBB(0.4375, 0, 0.71875, 0.625, 0.625, 0.28125);
+			case 1:
+			case 15:
+			case 7:
+			case 9:
+			case 3:
+			case 5:
+			case 11:
+			case 13:
+				return new AxisAlignedBB(0.375, 0, 0.375, 0.75, 1, 0.75);
+			case 2:
+			case 6:
+			case 10:
+			case 14:
+				return new AxisAlignedBB(0.2, 0, 0.2, 0.8, 1, 0.8);
+		}
+		
+		return FULL_BLOCK_AABB;
 	}
 }
