@@ -247,6 +247,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 			{
 				BaseTrafficLightTileEntity light = (BaseTrafficLightTileEntity)te;
 				light.powerOff();
+				light.setActive(EnumTrafficLightBulbTypes.DontCross, false, false);
 			}
 		}
 		
@@ -257,6 +258,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 			{
 				BaseTrafficLightTileEntity light = (BaseTrafficLightTileEntity)te;
 				light.powerOff();
+				light.setActive(EnumTrafficLightBulbTypes.DontCross, false, false);
 			}
 		}
 		
