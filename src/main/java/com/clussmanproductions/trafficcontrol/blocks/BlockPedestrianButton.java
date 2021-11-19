@@ -1,5 +1,6 @@
 package com.clussmanproductions.trafficcontrol.blocks;
 
+import com.clussmanproductions.trafficcontrol.ModItems;
 import com.clussmanproductions.trafficcontrol.ModSounds;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.tileentity.PedestrianButtonTileEntity;
@@ -109,7 +110,11 @@ public class BlockPedestrianButton extends Block {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		worldIn.playSound(null, pos, ModSounds.pedButton, SoundCategory.BLOCKS, 0.3F, 1F);
+		
+		if (playerIn.getHeldItem(hand).getItem() != ModItems.crossing_relay_tuner)
+		{
+			worldIn.playSound(null, pos, ModSounds.pedButton, SoundCategory.BLOCKS, 0.3F, 1F);
+		}
 		
 		if (worldIn.isRemote) {
 			return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
