@@ -128,7 +128,7 @@ public class BlockPedestrianButton extends Block {
 				TrafficLightControlBoxTileEntity ctrlr = (TrafficLightControlBoxTileEntity) prelimCtrlrTE;
 				
 				int rotation = state.getValue(ROTATION);
-				if (!CustomAngleCalculator.isNorthSouth(rotation)) {
+				if (CustomAngleCalculator.isNorthSouth(rotation)) {
 					ctrlr.getAutomator().setWestEastPedQueued(true);
 				} else {
 					ctrlr.getAutomator().setNorthSouthPedQueued(true);
