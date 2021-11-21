@@ -49,6 +49,7 @@ public class SignRenderer extends TileEntitySpecialRenderer<SignTileEntity> {
 		tess.draw();
 		
 		// Draw back
+		GlStateManager.translate(0, 0, -0.01);
 		resourceLocation = String.format(rlFormat, ModTrafficControl.MODID, typeName, SignTileEntity.getBackSignName(te.getType(), te.getVariant()));
 		texManager.bindTexture(new ResourceLocation(resourceLocation));
 		
