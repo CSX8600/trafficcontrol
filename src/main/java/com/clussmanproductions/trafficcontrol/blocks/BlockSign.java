@@ -31,6 +31,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockSign extends Block implements ITileEntityProvider {
 
@@ -47,7 +49,8 @@ public class BlockSign extends Block implements ITileEntityProvider {
 		setHarvestLevel("pickaxe", 1);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
-	
+
+	@SideOnly(Side.CLIENT)
 	public void initModel()
 	{
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
@@ -130,7 +133,7 @@ public class BlockSign extends Block implements ITileEntityProvider {
 			return Arrays.stream(validFacings).noneMatch(vf -> vf.equals(facing));
 		}
 		
-		if (state.getBlock() == ModBlocks.traffic_light)
+		if (state.getBlock() instanceof BlockBaseTrafficLight)
 		{
 			return true;
 		}

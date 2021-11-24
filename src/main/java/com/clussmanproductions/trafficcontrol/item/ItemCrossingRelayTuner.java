@@ -391,10 +391,10 @@ public class ItemCrossingRelayTuner extends Item {
 
 				if (state.getBlock() instanceof BlockPedestrianButton)
 				{
-					EnumFacing facing = state.getValue(BlockPedestrianButton.FACING);
+					int rotation = state.getValue(BlockPedestrianButton.ROTATION);
 
 					boolean operationResult = false;
-					if (facing == EnumFacing.EAST || facing == EnumFacing.WEST)
+					if (!CustomAngleCalculator.isNorthSouth(rotation))
 					{
 						operationResult = controlBox.addOrRemoveNorthSouthPedButton(te.getPos());
 					}

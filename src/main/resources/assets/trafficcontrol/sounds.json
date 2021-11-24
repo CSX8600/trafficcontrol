@@ -18,5 +18,10 @@
     {
     	"category": "block",
     	"sounds": [ "trafficcontrol:wch" ]
+    },
+	"ped_button":
+    {
+    	"category": "block",
+    	"sounds": [ "trafficcontrol:ped_button" ]
     }
 }

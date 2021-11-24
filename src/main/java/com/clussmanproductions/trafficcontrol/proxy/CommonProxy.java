@@ -249,12 +249,14 @@ public class CommonProxy {
 		e.getRegistry().register(new ItemBlock(ModBlocks.traffic_sensor_right).setRegistryName(ModBlocks.traffic_sensor_right.getRegistryName()));
 	}
 
+	@SubscribeEvent
 	public static void registerSounds(RegistryEvent.Register<SoundEvent> e)
 	{
 		e.getRegistry().register(ModSounds.gateEvent);
 		e.getRegistry().register(ModSounds.safetranType3Event);
 		e.getRegistry().register(ModSounds.safetranMechanicalEvent);
 		e.getRegistry().register(ModSounds.wchEvent);
+		e.getRegistry().register(ModSounds.pedButton);
 	}
 
 	public void preInit(FMLPreInitializationEvent e)

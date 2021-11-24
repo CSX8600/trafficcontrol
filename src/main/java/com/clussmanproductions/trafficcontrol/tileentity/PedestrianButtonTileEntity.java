@@ -59,7 +59,7 @@ public class PedestrianButtonTileEntity extends TileEntity {
 		return ImmutableList.copyOf(pairedBoxes);
 	}
 
-	public void onBreak(World world, EnumFacing currentFacing)
+	public void onBreak(World world, boolean isNorthSouth)
 	{
 		for(BlockPos pos : pairedBoxes)
 		{
@@ -70,7 +70,7 @@ public class PedestrianButtonTileEntity extends TileEntity {
 			}
 			
 			TrafficLightControlBoxTileEntity ctrlr = (TrafficLightControlBoxTileEntity)prelimCtrlr;
-			if (currentFacing == EnumFacing.NORTH || currentFacing == EnumFacing.SOUTH)
+			if (isNorthSouth)
 			{
 				ctrlr.addOrRemoveWestEastPedButton(getPos());
 			}

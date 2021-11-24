@@ -44,19 +44,19 @@ public class BlockTrafficLight2 extends BlockBaseTrafficLight
 		
 		if (CustomAngleCalculator.isEast(rotation))
 		{
-			return new AxisAlignedBB(0.2375, 0.05, 0.1875, 0.65, 1.05, 0.8125);
+			return new AxisAlignedBB(0.2375, 0.05, 0.1875, 0.65, 1, 0.8125);
 		}
 		else if (CustomAngleCalculator.isNorth(rotation))
 		{
-			return new AxisAlignedBB(0.1875, 0.05, 0.38, 0.8125, 1.05, 0.7625);
+			return new AxisAlignedBB(0.1875, 0.05, 0.38, 0.8125, 1, 0.7625);
 		}
 		else if (CustomAngleCalculator.isSouth(rotation))
 		{
-			return new AxisAlignedBB(0.1875, 0.05, 0.25, 0.8125, 1.05, 0.5625);
+			return new AxisAlignedBB(0.1875, 0.05, 0.25, 0.8125, 1, 0.5625);
 		}
 		else if (CustomAngleCalculator.isWest(rotation))
 		{
-			return new AxisAlignedBB(0.4375, 0.05, 0.1875, 0.75, 1.05, 0.8125);
+			return new AxisAlignedBB(0.4375, 0.05, 0.1875, 0.75, 1, 0.8125);
 		}
 		return super.getBoundingBox(state, source, pos);
 	}
