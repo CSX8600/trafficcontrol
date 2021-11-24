@@ -27,6 +27,8 @@ tile.trafficcontrol.wch_bell.name=WCH Electronic Bell
 tile.trafficcontrol.horizontal_pole.name=Horizontal Pole
 tile.trafficcontrol.traffic_sensor_left.name=Traffic Sensor (Left)
 tile.trafficcontrol.traffic_sensor_straight.name=Traffic Sensor (Straight)
+tile.trafficcontrol.pedestrian_button.name=Pedestrian Button
+tile.trafficcontrol.traffic_sensor_right.name=Traffic Sensor (Right)
 
 #items
 item.trafficcontrol.crossing_relay_box.name=Crossing Gate Relay
@@ -35,12 +37,20 @@ item.trafficcontrol.traffic_light_frame.name=Traffic Light Frame
 tile.trafficcontrol.street_sign.name=Street Sign
 item.trafficcontrol.traffic_light_5_frame.name=Traffic Light Frame (5 Bulb)
 item.trafficcontrol.traffic_light_doghouse_frame.name=Traffic Light Frame (Doghouse)
+item.trafficcontrol.traffic_light_1_frame.name=Traffic Light Frame (One Bulb)
+item.trafficcontrol.traffic_light_2_frame.name=Traffic Light Frame (Two Bulbs)
+item.trafficcontrol.traffic_light_4_frame.name=Traffic Light Frame (Four Bulbs)
 trafficcontrol.traffic_light_bulb.green.name=Bulb (Green)
 trafficcontrol.traffic_light_bulb.yellow.name=Bulb (Yellow)
 trafficcontrol.traffic_light_bulb.red.name=Bulb (Red)
 trafficcontrol.traffic_light_bulb.greenArrowLeft.name=Left Arrow Bulb (Green)
 trafficcontrol.traffic_light_bulb.yellowArrowLeft.name=Left Arrow Bulb (Yellow)
 trafficcontrol.traffic_light_bulb.redArrowLeft.name=Left Arrow Bulb (Red)
+trafficcontrol.traffic_light_bulb.greenArrowRight.name=Right Arrow Bulb (Green)
+trafficcontrol.traffic_light_bulb.yellowArrowRight.name=Right Arrow Bulb (Yellow)
+trafficcontrol.traffic_light_bulb.redArrowRight.name=Right Arrow Bulb (Red)
+trafficcontrol.traffic_light_bulb.cross.name=Cross Bulb
+trafficcontrol.traffic_light_bulb.dont_cross.name=Don't Cross Bulb
 trafficcontrol.concrete_barrier.white.name=White Concrete Barrier
 trafficcontrol.concrete_barrier.orange.name=Orange Concrete Barrier
 trafficcontrol.concrete_barrier.magenta.name=Magenta Concrete Barrier
@@ -64,3 +74,10 @@ itemGroup.Traffic Control=Traffic Control
 #Keys
 key.entityclassrenderer.toggle=Toggle Entity Class Display
 key.trafficcontrol.category=Traffic Control
+
+#Tooltips
+trafficcontrol.tooltip.tuner=Use to link components to Crossing Gate Relays or Traffic Light Control Boxes.
+trafficcontrol.tooltip.crossingrelay=Uses Shunts or Redstone to control crossing components.
+trafficcontrol.tooltip.trafficbox=Uses Redstone or Traffic Sensors to control traffic signal components.
+trafficcontrol.tooltip.cone=Can be worn as a hat.
+trafficcontrol.tooltip.help=[Press SHIFT for more info]

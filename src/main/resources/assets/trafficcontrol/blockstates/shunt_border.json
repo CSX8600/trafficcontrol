@@ -7,14 +7,7 @@
         "normal": [{}],
         "inventory": 
         {
-        	"model": "trafficcontrol:shunt_border",
-        	"transform":
-        	{
-        		"gui":
-        		{
-        			"translation": [0.375, 0, 0]
-        		}
-        	}
+        	"model": "trafficcontrol:shunt_border"
         },
         "facing=north": [{}],
         "facing=west": { "y": 270 },

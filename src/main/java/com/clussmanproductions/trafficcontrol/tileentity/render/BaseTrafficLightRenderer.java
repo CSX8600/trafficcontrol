@@ -5,9 +5,11 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
+import com.clussmanproductions.trafficcontrol.blocks.BlockBaseTrafficLight;
 import com.clussmanproductions.trafficcontrol.tileentity.BaseTrafficLightTileEntity;
 import com.clussmanproductions.trafficcontrol.util.EnumTrafficLightBulbTypes;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -29,8 +31,9 @@ public abstract class BaseTrafficLightRenderer extends TileEntitySpecialRenderer
 		double scale = (double)1/(double)16;
 		GlStateManager.scale(scale, scale, scale);
 		
+		IBlockState state = te.getWorld().getBlockState(te.getPos());
 		GlStateManager.translate(8, 8, 8);
-		GlStateManager.rotate(te.getYRotation(), 0, 1, 0);
+		GlStateManager.rotate(state.getValue(BlockBaseTrafficLight.ROTATION) * -22.5F, 0, 1, 0);
 		GlStateManager.translate(-8, -8, -8);
 		
 		GlStateManager.translate(0, 0, getBulbZLocation());
@@ -127,10 +130,10 @@ public abstract class BaseTrafficLightRenderer extends TileEntitySpecialRenderer
 			BufferBuilder builder = tess.getBuffer();
 			
 			builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-			builder.pos(5.6, 0, 0).tex(1, 0).endVertex();
-			builder.pos(5.6, 5.5, 0).tex(1, 1).endVertex();
-			builder.pos(0, 5.5, 0).tex(0, 1).endVertex();
-			builder.pos(0, 0, 0).tex(0, 0).endVertex();
+			builder.pos(5.6, 0, 0).tex(1, 1).endVertex();
+			builder.pos(5.6, 5.5, 0).tex(1, 0).endVertex();
+			builder.pos(0, 5.5, 0).tex(0, 0).endVertex();
+			builder.pos(0, 0, 0).tex(0, 1).endVertex();
 			
 			tess.draw();
 			
@@ -156,6 +159,16 @@ public abstract class BaseTrafficLightRenderer extends TileEntitySpecialRenderer
 				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/yellow_solid.png");
 			case YellowArrowLeft:
 				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/yellow_arrow_left.png");
+			case Cross:
+				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/cross.png");
+			case DontCross:
+				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/dontcross.png");
+			case GreenArrowRight:
+				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/green_arrow_right.png");
+			case RedArrowRight:
+				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/red_arrow_right.png");
+			case YellowArrowRight:
+				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/yellow_arrow_right.png");
 		}
 		return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/black.png");
 	}

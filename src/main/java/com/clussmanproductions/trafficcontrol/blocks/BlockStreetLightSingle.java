@@ -3,35 +3,38 @@ package com.clussmanproductions.trafficcontrol.blocks;
 import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.tileentity.StreetLightSingleTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.render.StreetLightSingleRenderer;
+import com.clussmanproductions.trafficcontrol.util.CustomAngleCalculator;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.ChunkCache;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @EventBusSubscriber
 public class BlockStreetLightSingle extends Block implements ITileEntityProvider {
-	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
-	public static final PropertyBool POWERED = PropertyBool.create("powered");
+	public static final PropertyInteger ROTATION = PropertyInteger.create("rotation", 0, 15);
 	
 	public BlockStreetLightSingle()
 	{
@@ -42,10 +45,13 @@ public class BlockStreetLightSingle extends Block implements ITileEntityProvider
 		setHarvestLevel("pickaxe", 1);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
-	
+
+	@SideOnly(Side.CLIENT)
 	public void initModel()
 	{
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+		
+		ClientRegistry.bindTileEntitySpecialRenderer(StreetLightSingleTileEntity.class, new StreetLightSingleRenderer());
 	}
 	
 	@Override
@@ -60,40 +66,38 @@ public class BlockStreetLightSingle extends Block implements ITileEntityProvider
 	
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		int modifier = (state.getValue(POWERED)) ? 0 : 4;
-		
-		return state.getValue(FACING).getHorizontalIndex() + modifier;
+		return CustomAngleCalculator.rotationToMeta(state.getValue(ROTATION));
 	}
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		boolean powered = false;
-		
-		if (meta > 3)
-		{
-			meta -= 4;
-			powered = true;
-		}
-		
-		return getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta)).withProperty(POWERED, powered);
+		return getDefaultState().withProperty(ROTATION, CustomAngleCalculator.metaToRotation(meta));
 	}
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, FACING, POWERED);
+		return new BlockStateContainer(this, ROTATION);
 	}
 		
 	@Override
 	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-		return (state.getValue(POWERED)) ? 0 : 15;
+		StreetLightSingleTileEntity streetLightSingleTileEntity;
+		TileEntity te = world.getTileEntity(pos);
+		if (te == null || !(te instanceof StreetLightSingleTileEntity))
+		{
+			return 0;
+		}
+		
+		streetLightSingleTileEntity = (StreetLightSingleTileEntity)te;
+		
+		return streetLightSingleTileEntity.isPowered() ? 0 : 15;
 	}
 	
 	@Override
 	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,
 			float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-		boolean powered = world.isBlockPowered(pos);
-		
-		return getDefaultState().withProperty(FACING, placer.getHorizontalFacing()).withProperty(POWERED, powered);
+		int rotation = CustomAngleCalculator.getRotationForYaw(placer.rotationYaw);
+		return getDefaultState().withProperty(ROTATION, rotation);
 	}
 	
 	@Override
@@ -157,23 +161,14 @@ public class BlockStreetLightSingle extends Block implements ITileEntityProvider
 		if (te instanceof StreetLightSingleTileEntity)
 		{
 			StreetLightSingleTileEntity sls = (StreetLightSingleTileEntity)te;
-			boolean shouldUpdate = false;
-			if (worldIn.isBlockPowered(pos))
+			sls.setPowered(worldIn.isBlockPowered(pos));
+			if (sls.isPowered())
 			{
 				sls.removeLightSources();
-				
-				shouldUpdate = !state.getValue(POWERED);
 			}
 			else
 			{
 				sls.addLightSources();
-				
-				shouldUpdate = state.getValue(POWERED);
-			}
-			
-			if (shouldUpdate)
-			{
-				worldIn.setBlockState(pos, state.withProperty(POWERED, worldIn.isBlockPowered(pos)));
 			}
 		}
 	}
@@ -190,7 +185,7 @@ public class BlockStreetLightSingle extends Block implements ITileEntityProvider
 		
 		workingPos = workingPos.north(2).west(2);
 		IBlockState state = e.getWorld().getBlockState(workingPos);
-		if (state.getBlock() == ModBlocks.street_light_single && state.getValue(FACING) != EnumFacing.EAST && state.getValue(FACING) != EnumFacing.SOUTH)
+		if (state.getBlock() == ModBlocks.street_light_single && !CustomAngleCalculator.isEast(state.getValue(ROTATION)) && !CustomAngleCalculator.isSouth(state.getValue(ROTATION)))
 		{
 			e.getWorld().setBlockState(e.getPos(), ModBlocks.light_source.getDefaultState());
 			e.setCanceled(true);
@@ -198,7 +193,7 @@ public class BlockStreetLightSingle extends Block implements ITileEntityProvider
 		
 		workingPos = workingPos.east(4);
 		state = e.getWorld().getBlockState(workingPos);
-		if (state.getBlock() == ModBlocks.street_light_single && state.getValue(FACING) != EnumFacing.SOUTH && state.getValue(FACING) != EnumFacing.WEST)
+		if (state.getBlock() == ModBlocks.street_light_single && !CustomAngleCalculator.isSouth(state.getValue(ROTATION)) && !CustomAngleCalculator.isWest(state.getValue(ROTATION)))
 		{
 			e.getWorld().setBlockState(e.getPos(), ModBlocks.light_source.getDefaultState());
 			e.setCanceled(true);
@@ -206,7 +201,7 @@ public class BlockStreetLightSingle extends Block implements ITileEntityProvider
 		
 		workingPos = workingPos.south(4);
 		state = e.getWorld().getBlockState(workingPos);
-		if (state.getBlock() == ModBlocks.street_light_single && state.getValue(FACING) != EnumFacing.WEST && state.getValue(FACING) != EnumFacing.NORTH)
+		if (state.getBlock() == ModBlocks.street_light_single && !CustomAngleCalculator.isWest(state.getValue(ROTATION)) && !CustomAngleCalculator.isNorth(state.getValue(ROTATION)))
 		{
 			e.getWorld().setBlockState(e.getPos(), ModBlocks.light_source.getDefaultState());
 			e.setCanceled(true);
@@ -214,7 +209,7 @@ public class BlockStreetLightSingle extends Block implements ITileEntityProvider
 		
 		workingPos = workingPos.west(4);
 		state = e.getWorld().getBlockState(workingPos);
-		if (state.getBlock() == ModBlocks.street_light_single && state.getValue(FACING) != EnumFacing.NORTH && state.getValue(FACING) != EnumFacing.EAST)
+		if (state.getBlock() == ModBlocks.street_light_single && !CustomAngleCalculator.isNorth(state.getValue(ROTATION)) && !CustomAngleCalculator.isEast(state.getValue(ROTATION)))
 		{
 			e.getWorld().setBlockState(e.getPos(), ModBlocks.light_source.getDefaultState());
 			e.setCanceled(true);

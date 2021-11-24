@@ -1,6 +1,7 @@
 package com.clussmanproductions.trafficcontrol.tileentity;
 
 import com.clussmanproductions.trafficcontrol.ModSounds;
+import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateGate;
 import com.clussmanproductions.trafficcontrol.util.ILoopableSoundTileEntity;
 import com.clussmanproductions.trafficcontrol.util.LoopableTileEntitySound;
@@ -11,12 +12,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import scala.Tuple3;
 
 public class CrossingGateGateTileEntity extends SyncableTileEntity implements ITickable, ILoopableSoundTileEntity {
 	private float gateRotation = -60;
@@ -55,51 +54,13 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 	public float getFacingRotation()
 	{
 		IBlockState blockState = world.getBlockState(getPos());
-		EnumFacing facing = null;
 		
-		if (blockState.getBlock() instanceof BlockCrossingGateGate)
+		if (!(blockState.getBlock() instanceof BlockCrossingGateGate))
 		{
-			facing = blockState.getValue(BlockCrossingGateGate.FACING);
+			return 0;
 		}
 		
-		switch(facing)
-		{
-			case NORTH:
-				return 0;
-			case WEST:
-				return -270;
-			case SOUTH:
-				return -180;
-			case EAST:
-				return -90;
-			default:
-				return 0;
-		}
-	}
-	
-	public Tuple3<Double, Double, Double> getTranslation(double x, double y, double z)
-	{
-		IBlockState blockState = world.getBlockState(getPos());
-		EnumFacing facing = null;
-		
-		if (blockState.getBlock() instanceof BlockCrossingGateGate)
-		{
-			facing = blockState.getValue(BlockCrossingGateGate.FACING);
-		}
-		
-		switch(facing)
-		{
-			case NORTH:
-				return new Tuple3<Double, Double, Double>(x + 0.75, y + 0.125, z + 0.5);
-			case EAST:
-				return new Tuple3<Double, Double, Double>(x + 0.5, y + 0.125, z + 0.75);
-			case SOUTH:
-				return new Tuple3<Double, Double, Double>(x + 0.25, y + 0.125, z + 0.5);
-			case WEST:
-				return new Tuple3<Double, Double, Double>(x + 0.5, y + 0.125, z + 0.25);
-			default:
-				return new Tuple3<Double, Double, Double>(x + 0.75, y + 0.125, z + 0.5);
-		}
+		return -blockState.getValue(BlockCrossingGateGate.ROTATION).floatValue() * 22.5F;
 	}
 	
 	public float getGateRotation()
@@ -373,41 +334,7 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 
 	@Override
 	public AxisAlignedBB getRenderBoundingBox() {
-		float width = 1;
-		float height = 1;
-		
-		if (status != EnumStatuses.Open)
-		{
-			width = crossingGateLength;
-		}
-		
-		if (status != EnumStatuses.Closed)
-		{
-			height = crossingGateLength;
-		}
-		
-		AxisAlignedBB base = super.getRenderBoundingBox();
-		IBlockState state = world.getBlockState(getPos());
-		
-		if (state == null || !(state.getBlock() instanceof BlockCrossingGateGate))
-		{
-			return super.getRenderBoundingBox();
-		}
-		
-		EnumFacing facing = state.getValue(BlockCrossingGateGate.FACING);
-		switch(facing)
-		{
-			case SOUTH:
-				return base.expand(width, height, 0);
-			case EAST:
-				return base.expand(0, height, width * -1);
-			case NORTH:
-				return base.expand(width * -1, height, 0);
-			case WEST:
-				return base.expand(0, height, width);
-		}
-		
-		return super.getRenderBoundingBox();
+		return INFINITE_EXTENT_AABB;
 	}
 
 	@Override
@@ -426,5 +353,10 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 		setUpperRotationLimit(compound.getFloat("upperRotation"));
 		setLowerRotationLimit(compound.getFloat("lowerRotation"));
 		setDelay(compound.getFloat("delay"));
+	}
+
+	@Override
+	public double getMaxRenderDistanceSquared() {
+		return ModTrafficControl.MAX_RENDER_DISTANCE;
 	}
 }

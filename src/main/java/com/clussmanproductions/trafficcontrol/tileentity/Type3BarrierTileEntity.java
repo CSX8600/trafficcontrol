@@ -1,5 +1,6 @@
 package com.clussmanproductions.trafficcontrol.tileentity;
 
+import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockType3BarrierBase;
 import com.google.common.collect.Comparators;
 
@@ -343,5 +344,10 @@ public class Type3BarrierTileEntity extends SyncableTileEntity {
 			
 			return maxIndex;
 		}
+	}
+
+	@Override
+	public double getMaxRenderDistanceSquared() {
+		return ModTrafficControl.MAX_RENDER_DISTANCE;
 	}
 }

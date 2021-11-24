@@ -14,6 +14,7 @@ public class Config {
 	public static int borderTimeout = 150;
 	public static int borderTick = 10; 
 	public static int parallelScans = 1;
+	public static int tooltipCharWrapLength = 256;
 	public static String[] sensorClasses = new String[] 
 			{
 				"minecraftransportsimulator.vehicles.main.EntityVehicleD_Moving",
@@ -26,7 +27,8 @@ public class Config {
 				"net.minecraft.entity.passive.EntityDonkey",
 				"net.minecraft.entity.passive.EntityMule",
 				"net.minecraft.entity.passive.EntitySkeletonHorse",
-				"net.minecraft.entity.passive.EntityZombieHorse"
+				"net.minecraft.entity.passive.EntityZombieHorse",
+				"de.maxhenkel.car.entity.car.base.EntityVehicleBase"
 			};
 	public static int sensorScanHeight = 5;
 	
@@ -60,5 +62,6 @@ public class Config {
 		sensorClasses = cfg.getStringList("sensorClasses", CATEGORY_TRAFFIC_LIGHT, sensorClasses, "What entity classes will activate the traffic signal sensors?");
 		sensorScanHeight = cfg.getInt("sensorScanHeight", CATEGORY_TRAFFIC_LIGHT, sensorScanHeight, 0, 10, "How far up (in blocks) should traffic signal sensors scan for entities? [Min = 0, Max = 10, Default = 5]");
 		parallelScans = cfg.getInt("parallelScans", CATEGORY_GENERAL, parallelScans, 1, 20, "How many crossing relay boxes should be scanned per tick?  PERFORMANCE NOTE: Total blocks scanned = borderTick * parallelScans.  The higher this number, the amount of blocks scanned per tick is multiplied.");
+		tooltipCharWrapLength = cfg.getInt("tooltipCharWrapLength", CATEGORY_GENERAL, tooltipCharWrapLength, 64, 5412, "How many letters should be rendered in a tooltip before it wraps down to the next line?");
 	}
 }

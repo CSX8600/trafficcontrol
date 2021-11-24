@@ -2,6 +2,8 @@ package com.clussmanproductions.trafficcontrol.blocks.model;
 
 import java.util.ArrayList;
 
+import javax.vecmath.Vector3f;
+
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;

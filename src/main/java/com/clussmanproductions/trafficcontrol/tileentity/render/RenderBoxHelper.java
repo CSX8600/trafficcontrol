@@ -15,6 +15,7 @@ public class RenderBoxHelper {
 		private double height;
 		private double depth;
 		private TextureInfoCollection textureInfoCollection;
+		private boolean fixedVertexWay;
 		
 		public Box(double x, double y, double z, double width, double height, double depth, TextureInfoCollection textureInfoCollection)
 		{
@@ -27,9 +28,15 @@ public class RenderBoxHelper {
 			this.textureInfoCollection = textureInfoCollection;
 		}
 		
+		public Box(double x, double y, double z, double width, double height, double depth, TextureInfoCollection textureInfoCollection, boolean fixedVertexWay)
+		{
+			this(x, y, z, width, height, depth, textureInfoCollection);
+			this.fixedVertexWay = fixedVertexWay;
+		}
+		
 		public void render(BufferBuilder builder, Consumer<ResourceLocation> bindTexture)
 		{
-			double[][] vertexPoints = getVertexPoints();
+			double[][] vertexPoints = fixedVertexWay ? getFixedVertexPoints() : getVertexPoints();
 			
 			int index = 0;
 			int count = 0;
@@ -131,6 +138,42 @@ public class RenderBoxHelper {
 				{convertedX, convertedY + convertedHeight, convertedZ},
 				{convertedX, convertedY + convertedHeight, convertedZ + convertedDepth},
 				{convertedX, convertedY, convertedZ + convertedDepth} // Left
+			};
+		}
+		
+		private double[][] getFixedVertexPoints()
+		{
+			double convertedX = x / 16;
+			double convertedY = y / 16;
+			double convertedZ = z / 16;
+			double convertedWidth = width / 16;
+			double convertedHeight = height / 16;
+			double convertedDepth = depth / 16;
+			return new double[][] {
+				{convertedX + convertedWidth, convertedY, convertedZ},
+				{convertedX, convertedY, convertedZ}, 
+				{convertedX, convertedY + convertedHeight, convertedZ},
+				{convertedX + convertedWidth, convertedY + convertedHeight, convertedZ}, // Front
+				{convertedX + convertedWidth, convertedY + convertedHeight, convertedZ},
+				{convertedX, convertedY + convertedHeight, convertedZ}, 
+				{convertedX, convertedY + convertedHeight, convertedZ + convertedDepth},
+				{convertedX + convertedWidth, convertedY + convertedHeight, convertedZ + convertedDepth},// Up
+				{convertedX, convertedY, convertedZ + convertedDepth}, 
+				{convertedX + convertedWidth, convertedY, convertedZ + convertedDepth}, 
+				{convertedX + convertedWidth, convertedY + convertedHeight, convertedZ + convertedDepth},
+				{convertedX, convertedY + convertedHeight, convertedZ + convertedDepth}, // Back
+				{convertedX + convertedWidth, convertedY, convertedZ + convertedDepth},
+				{convertedX, convertedY, convertedZ + convertedDepth}, 
+				{convertedX, convertedY, convertedZ},
+				{convertedX + convertedWidth, convertedY, convertedZ}, // Down
+				{convertedX + convertedWidth, convertedY, convertedZ + convertedDepth},
+				{convertedX + convertedWidth, convertedY, convertedZ}, 
+				{convertedX + convertedWidth, convertedY + convertedHeight, convertedZ},
+				{convertedX + convertedWidth, convertedY + convertedHeight, convertedZ + convertedDepth}, // Right
+				{convertedX, convertedY, convertedZ},
+				{convertedX, convertedY, convertedZ + convertedDepth},
+				{convertedX, convertedY + convertedHeight, convertedZ + convertedDepth},
+				{convertedX, convertedY + convertedHeight, convertedZ} // Left
 			};
 		}
 	}

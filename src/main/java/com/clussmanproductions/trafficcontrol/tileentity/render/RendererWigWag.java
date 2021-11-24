@@ -36,12 +36,7 @@ public class RendererWigWag extends TileEntitySpecialRenderer<WigWagTileEntity> 
 		
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x + 0.5, y, z + 0.5);
-		int facingIndex = state.getValue(BlockWigWag.FACING).getHorizontalIndex() + 2;
-		if (facingIndex > 3)
-			facingIndex -= 4;
-		
-		int yRotationAmount = facingIndex * 90 * -1;
-		GlStateManager.rotate(yRotationAmount, 0, 1, 0);
+		GlStateManager.rotate(state.getValue(BlockWigWag.ROTATION) * -22.5F, 0, 1, 0);
 		GlStateManager.translate(-0.5, 0, -0.5);
 		
 		GlStateManager.translate(bcwc(-3.5), bcwc(16.5), bcwc(7.5));
@@ -64,7 +59,7 @@ public class RendererWigWag extends TileEntitySpecialRenderer<WigWagTileEntity> 
         renderBacking(builder);
         tessellator.draw();
 		builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-        renderLamp(builder, state.getValue(BlockWigWag.ACTIVE));
+        renderLamp(builder, te.isActive());
         tessellator.draw();
 
 		GlStateManager.popMatrix();

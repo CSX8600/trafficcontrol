@@ -3,12 +3,13 @@ package com.clussmanproductions.trafficcontrol.blocks;
 import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.tileentity.StreetLightDoubleTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.render.StreetLightDoubleRenderer;
+import com.clussmanproductions.trafficcontrol.util.CustomAngleCalculator;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -20,17 +21,20 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.ChunkCache;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @EventBusSubscriber
 public class BlockStreetLightDouble extends Block implements ITileEntityProvider {
-	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
-	public static final PropertyBool POWERED = PropertyBool.create("powered");
+	public static final PropertyInteger ROTATION = PropertyInteger.create("rotation", 0, 15);
 	
 	public BlockStreetLightDouble()
 	{
@@ -42,40 +46,34 @@ public class BlockStreetLightDouble extends Block implements ITileEntityProvider
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
 	
+	@SideOnly(Side.CLIENT)
 	public void initModel()
 	{
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-	}
-	
-	@Override
-	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, FACING, POWERED);
+		
+		ClientRegistry.bindTileEntitySpecialRenderer(StreetLightDoubleTileEntity.class, new StreetLightDoubleRenderer());
 	}
 	
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		int modifier = (state.getValue(POWERED)) ? 0 : 4;
-		return state.getValue(FACING).getHorizontalIndex() + modifier;
+		return CustomAngleCalculator.rotationToMeta(state.getValue(ROTATION));
 	}
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		boolean powered = false;
-		
-		if (meta > 3)
-		{
-			meta -= 4;
-			powered = true;
-		}
-		
-		return getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta)).withProperty(POWERED, powered);
+		return getDefaultState().withProperty(ROTATION, CustomAngleCalculator.metaToRotation(meta));
+	}
+	
+	@Override
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, ROTATION);
 	}
 	
 	@Override
 	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,
 			float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-		boolean powered = world.isBlockPowered(pos);
-		return getDefaultState().withProperty(FACING, placer.getHorizontalFacing()).withProperty(POWERED, powered);
+		int rotation = CustomAngleCalculator.getRotationForYaw(placer.rotationYaw);
+		return getDefaultState().withProperty(ROTATION, rotation);
 	}
 
 	@Override
@@ -90,7 +88,15 @@ public class BlockStreetLightDouble extends Block implements ITileEntityProvider
 	
 	@Override
 	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-		return (state.getValue(POWERED)) ? 0 : 15;
+		TileEntity te = world.getTileEntity(pos);
+		if (te == null || !(te instanceof StreetLightDoubleTileEntity))
+		{
+			return 0;
+		}
+		
+		StreetLightDoubleTileEntity streetLightDoubleTileEntity = (StreetLightDoubleTileEntity)te;
+		
+		return streetLightDoubleTileEntity.isPowered() ? 0 : 15;
 	}
 	
 	@Override
@@ -144,32 +150,26 @@ public class BlockStreetLightDouble extends Block implements ITileEntityProvider
 
 	@Override
 	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+		if (worldIn.isRemote)
+		{
+			super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
+			return;
+		}
+		
 		TileEntity te = worldIn.getTileEntity(pos);
 		if (te instanceof StreetLightDoubleTileEntity)
 		{
-			StreetLightDoubleTileEntity sld = (StreetLightDoubleTileEntity)te;
-			boolean shouldRefresh = false;
-			
-			if (worldIn.isBlockPowered(pos))
+			StreetLightDoubleTileEntity sls = (StreetLightDoubleTileEntity)te;
+			sls.setPowered(worldIn.isBlockPowered(pos));
+			if (sls.isPowered())
 			{
-				sld.removeLightSources();
-				
-				shouldRefresh = !state.getValue(POWERED);
+				sls.removeLightSources();
 			}
 			else
 			{
-				sld.addLightSources();
-				
-				shouldRefresh = state.getValue(POWERED);
-			}
-			
-			if (shouldRefresh)
-			{
-				worldIn.setBlockState(pos, state.withProperty(POWERED, worldIn.isBlockPowered(pos)));
+				sls.addLightSources();
 			}
 		}
-		
-		super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
 	}
 
 	@SubscribeEvent

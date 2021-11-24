@@ -5,6 +5,25 @@
 	},
 	"variants": {
 		"normal": [{}],
-		"inventory": [{}]
+		"inventory": [{}],
+		"rotation":
+        {
+            "0": { "model": "trafficcontrol:channelizer" },
+	        "1": { "model": "trafficcontrol:channelizer", "transform": { "rotation": { "y": 337 } } },
+	        "2": { "model": "trafficcontrol:channelizer", "transform": { "rotation": { "y": 315  } } },
+	        "3": { "model": "trafficcontrol:channelizer", "transform": { "rotation": { "y": 292 } } },
+	        "4": { "model": "trafficcontrol:channelizer", "transform": { "rotation": { "y": 270 } } },
+	        "5": { "model": "trafficcontrol:channelizer", "transform": { "rotation": { "y": 247 } } },
+	        "6": { "model": "trafficcontrol:channelizer", "transform": { "rotation": { "y": 225 } } },
+	        "7": { "model": "trafficcontrol:channelizer", "transform": { "rotation": { "y": 202 } } },
+	        "8": { "model": "trafficcontrol:channelizer", "transform": { "rotation": { "y": 180 } } },
+	        "9": { "model": "trafficcontrol:channelizer", "transform": { "rotation": { "y": 157 } } },
+	        "10": { "model": "trafficcontrol:channelizer", "transform": { "rotation": { "y": 135 } } },
+	        "11": { "model": "trafficcontrol:channelizer", "transform": { "rotation": { "y": 112 } } },
+	        "12": { "model": "trafficcontrol:channelizer", "transform": { "rotation": { "y": 90 } } },
+	        "13": { "model": "trafficcontrol:channelizer", "transform": { "rotation": { "y": 67 } } },
+	        "14": { "model": "trafficcontrol:channelizer", "transform": { "rotation": { "y": 45 } } },
+	        "15": { "model": "trafficcontrol:channelizer", "transform": { "rotation": { "y": 22 } } }
+        }
 	}
 }

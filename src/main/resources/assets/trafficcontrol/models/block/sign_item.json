@@ -1,0 +1,36 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
+    "textures": {
+        "particle": "trafficcontrol:blocks/generic",
+        "0": "trafficcontrol:blocks/generic",
+        "1": "trafficcontrol:blocks/sign/circle/circle0"
+    },
+    "elements": [
+        {
+            "name": "Pole",
+            "from": [ 7.0, 0.0, 7.0 ], 
+            "to": [ 9.0, 16.0, 9.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 2.0, 0.0, 4.0, 16.0 ] },
+                "east": { "texture": "#0", "uv": [ 3.0, 0.0, 5.0, 16.0 ] },
+                "south": { "texture": "#0", "uv": [ 4.0, 0.0, 6.0, 16.0 ] },
+                "west": { "texture": "#0", "uv": [ 3.0, 0.0, 5.0, 16.0 ] },
+                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 2.0 ] }
+            }
+        },
+        {
+            "name": "Sign Front",
+            "from": [ 0.0, 0.0, 9.100000001490116 ], 
+            "to": [ 16.0, 16.0, 9.100000001490116 ], 
+            "faces": {
+                "north": { "texture": "#1", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 0.0, 16.0 ] },
+                "south": { "texture": "#1", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 0.0, 16.0 ] },
+                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 16.0, 0.0 ] },
+                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 16.0, 0.0 ] }
+            }
+        }
+    ]
+}

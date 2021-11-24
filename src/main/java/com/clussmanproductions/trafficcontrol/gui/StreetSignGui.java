@@ -16,6 +16,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.client.config.GuiButtonExt;
 
 public class StreetSignGui extends GuiScreen {
 	private StreetSignTileEntity te;
@@ -44,15 +45,10 @@ public class StreetSignGui extends GuiScreen {
 			int baseID = 10 * i;
 			int yOffset = (1 + -i) * 80;
 			
-			GuiButtonExtSelectable northSouthButton = new GuiButtonExtSelectable(baseID, horizontalCenter + 128 + 4, verticalCenter + yOffset, 70, 20, "North/South");
-			northSouthButton.setIsSelected(sign.getFacing() == EnumFacing.NORTH || sign.getFacing() == EnumFacing.SOUTH);
-			buttonList.add(northSouthButton);
+			GuiButtonExt directionButton = new GuiButtonExt(baseID, horizontalCenter + 128 + 4, verticalCenter + yOffset, 70, 20, getDirectionText(sign));
+			buttonList.add(directionButton);
 			
-			GuiButtonExtSelectable westEastButton = new GuiButtonExtSelectable(baseID + 1, horizontalCenter + 128 + 4, verticalCenter + yOffset + 24, 70, 20, "West/East");
-			westEastButton.setIsSelected(sign.getFacing() == EnumFacing.WEST || sign.getFacing() == EnumFacing.EAST);
-			buttonList.add(westEastButton);
-			
-			GuiButtonExtSelectableImage greenSignButton = new GuiButtonExtSelectableImage(baseID + 2,
+			GuiButtonExtSelectableImage greenSignButton = new GuiButtonExtSelectableImage(baseID + 1,
 					horizontalCenter + 128 + 4 + 70 + 4,
 					verticalCenter + yOffset, 
 					40,
@@ -65,7 +61,7 @@ public class StreetSignGui extends GuiScreen {
 			greenSignButton.setIsSelected(sign.getColor() == StreetSignColors.Green);
 			buttonList.add(greenSignButton);
 			
-			GuiButtonExtSelectableImage redSignButton = new GuiButtonExtSelectableImage(baseID + 3,
+			GuiButtonExtSelectableImage redSignButton = new GuiButtonExtSelectableImage(baseID + 2,
 					horizontalCenter + 128 + 4 + 70 + 4,
 					verticalCenter + yOffset + 20 + 4, 
 					40,
@@ -78,7 +74,7 @@ public class StreetSignGui extends GuiScreen {
 			redSignButton.setIsSelected(sign.getColor() == StreetSignColors.Red);
 			buttonList.add(redSignButton);
 			
-			GuiButtonExtSelectableImage blueSignButton = new GuiButtonExtSelectableImage(baseID + 4,
+			GuiButtonExtSelectableImage blueSignButton = new GuiButtonExtSelectableImage(baseID + 3,
 					horizontalCenter + 128 + 4 + 70 + 4 + 40 + 4,
 					verticalCenter + yOffset, 
 					40,
@@ -91,7 +87,7 @@ public class StreetSignGui extends GuiScreen {
 			blueSignButton.setIsSelected(sign.getColor() == StreetSignColors.Blue);
 			buttonList.add(blueSignButton);
 			
-			GuiButtonExtSelectableImage yellowSignButton = new GuiButtonExtSelectableImage(baseID + 5,
+			GuiButtonExtSelectableImage yellowSignButton = new GuiButtonExtSelectableImage(baseID + 4,
 					horizontalCenter + 128 + 4 + 70 + 4 + 40 + 4,
 					verticalCenter + yOffset + 20 + 4, 
 					40,
@@ -188,6 +184,54 @@ public class StreetSignGui extends GuiScreen {
 	}
 
 	@Override
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+		if (mouseButton != 1)
+		{
+			super.mouseClicked(mouseX, mouseY, mouseButton);
+			return;			
+		}
+		
+        for (int i = 0; i < this.buttonList.size(); ++i)
+        {
+            GuiButton guibutton = this.buttonList.get(i);
+
+            if (guibutton.mousePressed(this.mc, mouseX, mouseY))
+            {
+                guibutton.playPressSound(this.mc.getSoundHandler());
+                onButtonRightClick(guibutton);
+            }
+        }
+	}
+	
+	private void onButtonRightClick(GuiButton button)
+	{
+		GuiButtonExt extButton = (GuiButtonExt)button;
+		
+		int signIndex = 0;
+		int buttonID = button.id;
+		
+		while(buttonID >= 10)
+		{
+			signIndex++;
+			buttonID -= 10;
+		}
+		
+		if (buttonID != 0)
+		{
+			return;
+		}
+		
+		StreetSign sign = te.getStreetSign(signIndex);
+		if (sign == null)
+		{
+			return;
+		}
+		
+		decrementRotation(sign);
+		extButton.displayString = getDirectionText(sign);
+	}
+	
+	@Override
 	public void onGuiClosed() {
 		for(int i = 0; i < StreetSignTileEntity.MAX_STREET_SIGNS; i++)
 		{
@@ -206,7 +250,13 @@ public class StreetSignGui extends GuiScreen {
 
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
-		GuiButtonExtSelectable sButton = (GuiButtonExtSelectable)button;
+		GuiButtonExt extButton = (GuiButtonExt)button;
+		
+		GuiButtonExtSelectable sButton = null;
+		if (extButton instanceof GuiButtonExtSelectable)
+		{
+			sButton = (GuiButtonExtSelectable)extButton;
+		}
 		
 		int signIndex = 0;
 		int buttonID = button.id;
@@ -226,31 +276,25 @@ public class StreetSignGui extends GuiScreen {
 		switch(buttonID)
 		{
 			case 0:
-				sign.setFacing(EnumFacing.NORTH);
-				sButton.setIsSelected(true);
-				findButtonByID(signIndex * 10 + 1).setIsSelected(false);
+				incrementRotation(sign);
+				extButton.displayString = getDirectionText(sign);
 				break;
 			case 1:
-				sign.setFacing(EnumFacing.WEST);
-				sButton.setIsSelected(true);
-				findButtonByID(signIndex * 10).setIsSelected(false);
-				break;
-			case 2:
 				clearAllColorSelections(signIndex);
 				sButton.setIsSelected(true);
 				sign.setColor(StreetSignColors.Green);
 				break;
-			case 3:
+			case 2:
 				clearAllColorSelections(signIndex);
 				sButton.setIsSelected(true);
 				sign.setColor(StreetSignColors.Red);
 				break;
-			case 4:
+			case 3:
 				clearAllColorSelections(signIndex);
 				sButton.setIsSelected(true);
 				sign.setColor(StreetSignColors.Blue);
 				break;
-			case 5:
+			case 4:
 				clearAllColorSelections(signIndex);
 				sButton.setIsSelected(true);
 				sign.setColor(StreetSignColors.Yellow);
@@ -267,9 +311,65 @@ public class StreetSignGui extends GuiScreen {
 	
 	private void clearAllColorSelections(int signIndex)
 	{
-		for(int i = 2; i <= 5; i++)
+		for(int i = 1; i <= 4; i++)
 		{
 			findButtonByID(signIndex * 10 + i).setIsSelected(false);
 		}
+	}
+	
+	private String getDirectionText(StreetSign sign)
+	{
+		switch(sign.getRotation())
+		{
+		case 0:
+		case 8:
+			return "N/S";
+		case 1:
+		case 9:
+			return "NNE/SSW";
+		case 2:
+		case 10:
+			return "NW/SE";
+		case 3:
+		case 11:
+			return "WNW/ESE";
+		case 4:
+		case 12:
+			return "W/E";
+		case 5:
+		case 13:
+			return "WSW/ENE";
+		case 6:
+		case 14:
+			return "SE/NW";
+		case 7:
+		case 15:
+			return "SSE/NNW";
+		}
+		
+		return "";
+	}
+	
+	
+	private void incrementRotation(StreetSign sign)
+	{
+		int currentRotation = sign.getRotation();
+		if (currentRotation == 15)
+		{
+			currentRotation = -1;
+		}
+		
+		sign.setRotation(++currentRotation);
+	}
+	
+	private void decrementRotation(StreetSign sign)
+	{
+		int currentRotation = sign.getRotation();
+		if (currentRotation == 0)
+		{
+			currentRotation = 16;
+		}
+		
+		sign.setRotation(--currentRotation);
 	}
 }

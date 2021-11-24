@@ -6,14 +6,14 @@ import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.gui.GuiProxy;
 import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity;
-import com.clussmanproductions.trafficcontrol.util.UnlistedPropertyInteger;
+import com.clussmanproductions.trafficcontrol.tileentity.render.SignRenderer;
+import com.clussmanproductions.trafficcontrol.util.CustomAngleCalculator;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -26,19 +26,19 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.ChunkCache;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.common.property.ExtendedBlockState;
-import net.minecraftforge.common.property.IExtendedBlockState;
-import net.minecraftforge.common.property.IUnlistedProperty;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockSign extends Block implements ITileEntityProvider {
 
-	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
-	public static final UnlistedPropertyInteger TYPE = new UnlistedPropertyInteger("type");
-	public static final UnlistedPropertyInteger SELECTION = new UnlistedPropertyInteger("selection");
+	public static final PropertyInteger ROTATION = PropertyInteger.create("rotation", 0, 15);
 	public static final PropertyBool VALIDHORIZONTALBAR = PropertyBool.create("validhorizontalbar");
+	public static final PropertyBool ISHALFHEIGHT = PropertyBool.create("ishalfheight");
 	
 	public BlockSign()
 	{
@@ -49,17 +49,18 @@ public class BlockSign extends Block implements ITileEntityProvider {
 		setHarvestLevel("pickaxe", 1);
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
-	
+
+	@SideOnly(Side.CLIENT)
 	public void initModel()
 	{
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+		
+		ClientRegistry.bindTileEntitySpecialRenderer(SignTileEntity.class, new SignRenderer());
 	}
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		IProperty<?>[] listedProperties = new IProperty[] { FACING, VALIDHORIZONTALBAR };
-		IUnlistedProperty<?>[] unlistedProperties = new IUnlistedProperty[] { TYPE, SELECTION };
-		return new ExtendedBlockState(this, listedProperties, unlistedProperties);
+		return new BlockStateContainer(this, ROTATION, VALIDHORIZONTALBAR, ISHALFHEIGHT);
 	}
 	
 	@Override
@@ -80,20 +81,42 @@ public class BlockSign extends Block implements ITileEntityProvider {
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
 		boolean validHorizontalBar = false;
+		boolean isHalfHeight = false;
 		
-		EnumFacing currentFacing = state.getValue(FACING);
-		if (currentFacing == EnumFacing.NORTH || currentFacing == EnumFacing.SOUTH)
+		int rotation = state.getValue(ROTATION);
+		boolean isCardinal = CustomAngleCalculator.isCardinal(rotation);
+		
+		if (isCardinal && CustomAngleCalculator.isNorthSouth(rotation))
 		{
 			validHorizontalBar = getValidStateForAttachableSubModels(state, worldIn.getBlockState(pos.west()), EnumFacing.NORTH, EnumFacing.SOUTH)
 									|| getValidStateForAttachableSubModels(state, worldIn.getBlockState(pos.east()), EnumFacing.NORTH, EnumFacing.SOUTH);
 		}
-		else
+		else if (isCardinal)
 		{
 			validHorizontalBar = getValidStateForAttachableSubModels(state, worldIn.getBlockState(pos.north()), EnumFacing.WEST, EnumFacing.EAST)
 									|| getValidStateForAttachableSubModels(state, worldIn.getBlockState(pos.south()), EnumFacing.WEST, EnumFacing.EAST);
 		}
 		
-		return state.withProperty(VALIDHORIZONTALBAR, validHorizontalBar);
+		TileEntity te = worldIn.getTileEntity(pos);
+		if (te != null && te instanceof SignTileEntity)
+		{
+			SignTileEntity signTE = (SignTileEntity)te;
+			
+			if (signTE.getType() == 2)
+			{
+				int variant = signTE.getVariant();
+				
+				if ((variant >= 33 && variant <= 40) || 
+					(variant >= 106 && variant <= 107) ||
+					(variant >= 110 && variant <= 111) ||
+					(variant >= 120 && variant <= 124))
+				{
+					isHalfHeight = true;
+				}
+			}
+		}
+		
+		return state.withProperty(VALIDHORIZONTALBAR, validHorizontalBar).withProperty(ISHALFHEIGHT, isHalfHeight);
 	}
 	
 	private boolean getValidStateForAttachableSubModels(IBlockState signState, IBlockState state, EnumFacing... validFacings)
@@ -110,43 +133,32 @@ public class BlockSign extends Block implements ITileEntityProvider {
 			return Arrays.stream(validFacings).noneMatch(vf -> vf.equals(facing));
 		}
 		
-		if (state.getBlock() == ModBlocks.traffic_light)
+		if (state.getBlock() instanceof BlockBaseTrafficLight)
 		{
 			return true;
 		}
 		
 		if (state.getBlock() == ModBlocks.sign)
 		{
-			EnumFacing facing = state.getValue(FACING);
+			int otherRotation = state.getValue(ROTATION);
+			boolean otherIsCardinal = CustomAngleCalculator.isCardinal(otherRotation);
+			boolean isForNorthSouth = Arrays.stream(validFacings).anyMatch(facing -> facing == EnumFacing.NORTH);
+			boolean thisSignNorthSouth = CustomAngleCalculator.isNorthSouth(signState.getValue(ROTATION));
 			
-			return Arrays.stream(validFacings).anyMatch(vf -> vf.equals(facing));
+			return otherIsCardinal && ((isForNorthSouth && thisSignNorthSouth) || (!isForNorthSouth && !thisSignNorthSouth));
 		}
 		
 		return false;
 	}
 	
 	@Override
-	public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos) {
-		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof SignTileEntity)
-		{
-			IExtendedBlockState extendedState = (IExtendedBlockState)state;
-			SignTileEntity signTE = (SignTileEntity)te;
-			extendedState = extendedState.withProperty(TYPE, signTE.getType()).withProperty(SELECTION, signTE.getVariant());
-			return extendedState;
-		}
-		
-		return super.getExtendedState(state, world, pos);
-	}
-
-	@Override
 	public int getMetaFromState(IBlockState state) {
-		return state.getValue(FACING).getHorizontalIndex();
+		return CustomAngleCalculator.rotationToMeta(state.getValue(ROTATION));
 	}
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta));
+		return getDefaultState().withProperty(ROTATION, CustomAngleCalculator.metaToRotation(meta));
 	}
 	
 	@Override
@@ -171,11 +183,11 @@ public class BlockSign extends Block implements ITileEntityProvider {
 		playerIn.openGui(ModTrafficControl.instance, GuiProxy.GUI_IDs.SIGN, worldIn, pos.getX(), pos.getY(), pos.getZ());
 		return true;
 	}
-
+	
 	@Override
 	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,
 			float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-		return getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
+		return getDefaultState().withProperty(ROTATION, CustomAngleCalculator.getRotationForYaw(placer.rotationYaw));
 	}
 
 	@Override
@@ -195,24 +207,56 @@ public class BlockSign extends Block implements ITileEntityProvider {
 			int variant = te.getVariant();
 			
 			if (type == 2 &&
-					((variant >= 33 && variant <= 40) || 
-							(variant >= 106 && variant <= 107) ||
-							(variant >= 110 && variant <= 111)))
+				(variant >= 33 && variant <= 40) || 
+				(variant >= 106 && variant <= 107) ||
+				(variant >= 110 && variant <= 111) ||
+				(variant >= 120 && variant <= 124))
 			{
 				poleHeight = 0.5;
 			}
 		}
 		
-		switch(state.getValue(FACING))
+		int rotation = state.getValue(ROTATION);
+		
+//		if (CustomAngleCalculator.isNorth(rotation))
+//		{
+//			return new AxisAlignedBB(0, 0, 0.43125, 1, poleHeight, 0.5625);
+//		}
+//		else if (CustomAngleCalculator.isSouth(rotation))
+//		{
+//			return new AxisAlignedBB(0, 0, 0.4375, 1, poleHeight, 0.56875);
+//		}
+//		else if (CustomAngleCalculator.isWest(rotation))
+//		{
+//			return new AxisAlignedBB(0.4375, 0, 0, 0.56875, poleHeight, 1);
+//		}
+//		else if (CustomAngleCalculator.isEast(rotation))
+//		{
+//			return new AxisAlignedBB(0.43125, 0, 0, 0.5625, poleHeight, 1);
+//		}
+		
+		switch(rotation)
 		{
-			case NORTH:
+			case 0:
+			case 8:
 				return new AxisAlignedBB(0, 0, 0.43125, 1, poleHeight, 0.5625);
-			case SOUTH:
-				return new AxisAlignedBB(0, 0, 0.4375, 1, poleHeight, 0.56875);
-			case WEST:
+			case 4:
+			case 12:
 				return new AxisAlignedBB(0.4375, 0, 0, 0.56875, poleHeight, 1);
-			case EAST:
-				return new AxisAlignedBB(0.43125, 0, 0, 0.5625, poleHeight, 1);
+			case 1:
+			case 15:
+			case 7:
+			case 9:
+			case 3:
+			case 5:
+			case 11:
+			case 13:
+				return new AxisAlignedBB(0.375, 0, 0.375, 0.75, poleHeight, 0.75);
+			case 2:
+			case 6:
+			case 10:
+			case 14:
+				return new AxisAlignedBB(0.2, 0, 0.2, 0.8, poleHeight, 0.8);
 		}
 		
 		return FULL_BLOCK_AABB;
