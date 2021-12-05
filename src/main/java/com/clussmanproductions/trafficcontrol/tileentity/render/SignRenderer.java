@@ -27,6 +27,10 @@ public class SignRenderer extends TileEntitySpecialRenderer<SignTileEntity> {
 		String resourceLocation = String.format(rlFormat, ModTrafficControl.MODID, typeName, typeName + Integer.toString(te.getVariant()));
 		
 		IBlockState block = te.getWorld().getBlockState(te.getPos());
+		if (!(block.getBlock() instanceof BlockSign))
+		{
+			return;
+		}
 		float rotation = block.getValue(BlockSign.ROTATION) * -22.5F;
 		
 		GlStateManager.pushMatrix();

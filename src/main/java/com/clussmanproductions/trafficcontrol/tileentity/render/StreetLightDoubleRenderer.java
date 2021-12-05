@@ -69,10 +69,15 @@ public class StreetLightDoubleRenderer extends TileEntitySpecialRenderer<StreetL
 		boxes.add(new Box(7, 64.83, 26.2, 2, 0.5, 12, lampBoxCollection, true));
 		boxes.add(new Box(7, 64.83, -22.2, 2, 0.5, 12, lampBoxCollection, true));
 		
+		IBlockState state = te.getWorld().getBlockState(te.getPos());
+		if (!(state.getBlock() instanceof BlockStreetLightDouble))
+		{
+			return;
+		}
+		
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		GlStateManager.translate(0.5, 0.5, 0.5);
-		IBlockState state = te.getWorld().getBlockState(te.getPos());
 		GlStateManager.rotate(state.getValue(BlockStreetLightDouble.ROTATION) * -22.5F, 0, 1, 0);
 		GlStateManager.translate(-0.5, -0.5, -0.5);
 		

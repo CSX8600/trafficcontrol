@@ -59,10 +59,15 @@ public class StreetLightSingleRenderer extends TileEntitySpecialRenderer<StreetL
 		boxes.add(new Box(6, 65.34, 25.2, 4, 0, 14, armBoxCollection, true));
 		boxes.add(new Box(7, 64.83, 26.2, 2, 0.5, 12, lampBoxCollection, true));
 		
+		IBlockState state = te.getWorld().getBlockState(te.getPos());
+		if (!(state.getBlock() instanceof BlockStreetLightSingle))
+		{
+			return;
+		}
+		
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		GlStateManager.translate(0.5, 0.5, 0.5);
-		IBlockState state = te.getWorld().getBlockState(te.getPos());
 		GlStateManager.rotate(state.getValue(BlockStreetLightSingle.ROTATION) * -22.5F, 0, 1, 0);
 		GlStateManager.translate(-0.5, -0.5, -0.5);
 		

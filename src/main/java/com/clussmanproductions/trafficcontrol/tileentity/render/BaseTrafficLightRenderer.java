@@ -24,6 +24,12 @@ public abstract class BaseTrafficLightRenderer extends TileEntitySpecialRenderer
 	@Override
 	public void render(BaseTrafficLightTileEntity te, double x, double y, double z, float partialTicks,
 			int destroyStage, float alpha) {
+		IBlockState state = te.getWorld().getBlockState(te.getPos());
+		if (!(state.getBlock() instanceof BlockBaseTrafficLight))
+		{
+			return;
+		}
+		
 		GlStateManager.pushMatrix();
 		GlStateManager.disableLighting();
 		
@@ -31,7 +37,7 @@ public abstract class BaseTrafficLightRenderer extends TileEntitySpecialRenderer
 		double scale = (double)1/(double)16;
 		GlStateManager.scale(scale, scale, scale);
 		
-		IBlockState state = te.getWorld().getBlockState(te.getPos());
+		
 		GlStateManager.translate(8, 8, 8);
 		GlStateManager.rotate(state.getValue(BlockBaseTrafficLight.ROTATION) * -22.5F, 0, 1, 0);
 		GlStateManager.translate(-8, -8, -8);
