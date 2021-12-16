@@ -15,8 +15,9 @@ public class TrafficLight6Renderer extends BaseTrafficLightRenderer {
 	protected List<BulbRenderer> getBulbRenderers() {
 		return ImmutableList
 				.<BulbRenderer>builder()
-				.add(new BulbRenderer(12, 11, 0))
-				.add(new BulbRenderer(-2, 11, 1))
+				.add(new BulbRenderer(12, 11, 1))
+				.add(new BulbRenderer(-2, 11, 0)) 
+				
 				.add(new BulbRenderer(5, 2.5, 2))
 				.add(new BulbRenderer(5, -4, 3))
 				.build();
