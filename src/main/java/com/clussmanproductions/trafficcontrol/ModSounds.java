@@ -10,6 +10,11 @@ public class ModSounds {
 	public static SoundEvent safetranMechanicalEvent;
 	public static SoundEvent wchEvent;
 	public static SoundEvent pedButton;
+	public static SoundEvent tunerLinkStart;
+	public static SoundEvent tunerLinkStop;
+	public static SoundEvent tunerLinkAdd;
+	public static SoundEvent tunerLinkRemove;
+	public static SoundEvent tunerLinkError;
 	
 	public static void initSounds()
 	{
@@ -22,5 +27,6 @@ public class ModSounds {
 		tunerLinkStop = new SoundEvent(new ResourceLocation(ModTrafficControl.MODID + ":tuner_link_stop")).setRegistryName("trafficcontrol:tuner_link_stop");
 		tunerLinkAdd = new SoundEvent(new ResourceLocation(ModTrafficControl.MODID + ":tuner_link_add")).setRegistryName("trafficcontrol:tuner_link_add");
 		tunerLinkRemove = new SoundEvent(new ResourceLocation(ModTrafficControl.MODID + ":tuner_link_remove")).setRegistryName("trafficcontrol:tuner_link_remove");
+		tunerLinkError = new SoundEvent(new ResourceLocation(ModTrafficControl.MODID + ":tuner_link_error")).setRegistryName("trafficcontrol:tuner_link_error");
 	}
 }
