@@ -39,7 +39,7 @@
     	"category": "player",
     	"sounds": [ "trafficcontrol:tuner_link_start" ]
     },
-	"tuner_link_stop:
+	"tuner_link_stop":
     {
     	"category": "player",
     	"sounds": [ "trafficcontrol:tuner_link_stop" ]
