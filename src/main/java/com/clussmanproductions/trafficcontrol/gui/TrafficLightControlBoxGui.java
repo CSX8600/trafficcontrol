@@ -216,8 +216,11 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 	private void setManualChecked()
 	{
 		greenOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Green, false, true));
+		greenOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.SGreen, false, true));
 		yellowOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Yellow, false, true));
+		yellowOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.SYellow, false, true));
 		redOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Red, false, true));
+		redOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.SRed, false, true));
 		greenArrowLeftOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.GreenArrowLeft, false, true));
 		yellowArrowLeftOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.YellowArrowLeft, false, true));
 		redArrowLeftOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.RedArrowLeft, false, true));
@@ -226,6 +229,9 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		greenOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Green, false, false));
 		yellowOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Yellow, false, false));
 		redOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Red, false, false));
+		greenOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.SGreen, false, false));
+		yellowOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.SYellow, false, false));
+		redOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.SRed, false, false));
 		greenArrowLeftOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.GreenArrowLeft, false, false));
 		yellowArrowLeftOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.YellowArrowLeft, false, false));
 		redArrowLeftOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.RedArrowLeft, false, false));
@@ -245,6 +251,9 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		greenOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Green, true, true));
 		yellowOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Yellow, true, true));
 		redOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Red, true, true));
+		greenOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.SGreen, true, true));
+		yellowOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.SYellow, true, true));
+		redOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.SRed, true, true));
 		greenArrowLeftOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.GreenArrowLeft, true, true));
 		yellowArrowLeftOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.YellowArrowLeft, true, true));
 		redArrowLeftOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.RedArrowLeft, true, true));
@@ -254,6 +263,9 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		greenOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Green, true, false));
 		yellowOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Yellow, true, false));
 		redOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Red, true, false));
+		greenOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.SGreen, true, false));
+		yellowOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.SYellow, true, false));
+		redOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.SRed, true, false));
 		greenArrowLeftOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.GreenArrowLeft, true, false));
 		yellowArrowLeftOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.YellowArrowLeft, true, false));
 		redArrowLeftOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.RedArrowLeft, true, false));
@@ -328,6 +340,9 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("trafficcontrol:blocks/green");
 		drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 45, sprite, 16, 16);
 		
+		
+		drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 45, sprite, 16, 16);
+		
 		sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("trafficcontrol:blocks/red_arrow_left");
 		drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 25, sprite, 16, 16);
 
@@ -398,21 +413,27 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 				break;
 			case ELEMENT_IDS.greenOn:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Green, false, true);
+				handleManualClick(button, EnumTrafficLightBulbTypes.SGreen, false, true);
 				break;
 			case ELEMENT_IDS.greenOnFlash:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Green, true, true);
+				handleManualClick(button, EnumTrafficLightBulbTypes.SGreen, true, true);
 				break;
 			case ELEMENT_IDS.yellowOn:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Yellow, false, true);
+				handleManualClick(button, EnumTrafficLightBulbTypes.SYellow, false, true);
 				break;
 			case ELEMENT_IDS.yellowOnFlash:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Yellow, true, true);
+				handleManualClick(button, EnumTrafficLightBulbTypes.SYellow, true, true);
 				break;
 			case ELEMENT_IDS.redOn:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Red, false, true);
+				handleManualClick(button, EnumTrafficLightBulbTypes.SRed, false, true);
 				break;
 			case ELEMENT_IDS.redOnFlash:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Red, true, true);
+				handleManualClick(button, EnumTrafficLightBulbTypes.SRed, true, true);
 				break;
 			case ELEMENT_IDS.greenArrowLeftOn:
 				handleManualClick(button, EnumTrafficLightBulbTypes.GreenArrowLeft, false, true);
@@ -436,21 +457,27 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 				break;
 			case ELEMENT_IDS.greenOff:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Green, false, false);
+				handleManualClick(button, EnumTrafficLightBulbTypes.SGreen, false, false);
 				break;
 			case ELEMENT_IDS.greenOffFlash:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Green, true, false);
+				handleManualClick(button, EnumTrafficLightBulbTypes.SGreen, true, false);
 				break;
 			case ELEMENT_IDS.yellowOff:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Yellow, false, false);
+				handleManualClick(button, EnumTrafficLightBulbTypes.SYellow, false, false);
 				break;
 			case ELEMENT_IDS.yellowOffFlash:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Yellow, true, false);
+				handleManualClick(button, EnumTrafficLightBulbTypes.SYellow, true, false);
 				break;
 			case ELEMENT_IDS.redOff:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Red, false, false);
+				handleManualClick(button, EnumTrafficLightBulbTypes.SRed, false, false);
 				break;
 			case ELEMENT_IDS.redOffFlash:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Red, true, false);
+				handleManualClick(button, EnumTrafficLightBulbTypes.SRed, true, false);
 				break;
 			case ELEMENT_IDS.greenArrowLeftOff:
 				handleManualClick(button, EnumTrafficLightBulbTypes.GreenArrowLeft, false, false);
@@ -698,6 +725,7 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		public static final int yellowArrowRightOffFlash = 51;
 		public static final int redArrowRightOffFlash = 52;
 		public static final int rightArrowMinimum = 53;
+		
 	}
 
 	private enum Modes
