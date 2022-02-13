@@ -28,7 +28,7 @@ public class ModItems {
 	@ObjectHolder("traffic_light_4_frame")
 	public static ItemTrafficLight4Frame traffic_light_4_frame;
 	@ObjectHolder("traffic_light_6_frame")
-	public static BaseItemTrafficLightFrame traffic_light_6_frame;
+	public static ItemTrafficLight6Frame traffic_light_6_frame;
 	
 
 	public static void initModels(ModelRegistryEvent e)
