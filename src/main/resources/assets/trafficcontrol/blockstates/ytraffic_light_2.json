@@ -1,0 +1,45 @@
+{
+	"forge_marker": 1,
+	"defaults":
+	{
+		"model": "trafficcontrol:ytraffic_light_2"
+	},
+	"variants":
+	{
+		"normal": [{}],
+		"rotation":
+        {
+            "0": { "model": "trafficcontrol:ytraffic_light_2" },
+	        "1": { "model": "trafficcontrol:ytraffic_light_2", "transform": { "rotation": { "y": 337 } } },
+	        "2": { "model": "trafficcontrol:ytraffic_light_2", "transform": { "rotation": { "y": 315  } } },
+	        "3": { "model": "trafficcontrol:ytraffic_light_2", "transform": { "rotation": { "y": 292 } } },
+	        "4": { "model": "trafficcontrol:ytraffic_light_2", "transform": { "rotation": { "y": 270 } } },
+	        "5": { "model": "trafficcontrol:ytraffic_light_2", "transform": { "rotation": { "y": 247 } } },
+	        "6": { "model": "trafficcontrol:ytraffic_light_2", "transform": { "rotation": { "y": 225 } } },
+	        "7": { "model": "trafficcontrol:ytraffic_light_2", "transform": { "rotation": { "y": 202 } } },
+	        "8": { "model": "trafficcontrol:ytraffic_light_2", "transform": { "rotation": { "y": 180 } } },
+	        "9": { "model": "trafficcontrol:ytraffic_light_2", "transform": { "rotation": { "y": 157 } } },
+	        "10": { "model": "trafficcontrol:ytraffic_light_2", "transform": { "rotation": { "y": 135 } } },
+	        "11": { "model": "trafficcontrol:ytraffic_light_2", "transform": { "rotation": { "y": 112 } } },
+	        "12": { "model": "trafficcontrol:ytraffic_light_2", "transform": { "rotation": { "y": 90 } } },
+	        "13": { "model": "trafficcontrol:ytraffic_light_2", "transform": { "rotation": { "y": 67 } } },
+	        "14": { "model": "trafficcontrol:ytraffic_light_2", "transform": { "rotation": { "y": 45 } } },
+	        "15": { "model": "trafficcontrol:ytraffic_light_2", "transform": { "rotation": { "y": 22 } } }
+        },
+        "validbackbar": {
+        	"true": {
+        		"submodel": "trafficcontrol:crossing_gate_pole_ext"
+        	},
+        	"false": { }
+        },
+        "validhorizontalbar": {
+	        "true": {
+	        	"submodel": {
+	        		"leftbar": { "model": "trafficcontrol:crossing_gate_pole_ext", "y": 270 },
+	        		"rightbar": { "model": "trafficcontrol:crossing_gate_pole_ext", "y": 90 }
+	        	}
+	    	},
+	    	"false": { }
+        }
+	}
+}

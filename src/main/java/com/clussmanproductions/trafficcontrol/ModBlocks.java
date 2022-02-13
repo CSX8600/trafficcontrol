@@ -11,6 +11,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ModBlocks {
 	@ObjectHolder("crossing_gate_base")
 	public static BlockCrossingGateBase crossing_gate_base;
+	@ObjectHolder("stand")
+	public static Blockstand stand;
 	@ObjectHolder("crossing_gate_gate")
 	public static BlockCrossingGateGate crossing_gate_gate;
 	@ObjectHolder("crossing_gate_lamps")
@@ -63,6 +65,8 @@ public class ModBlocks {
 	public static BlockStreetLightDouble street_light_double;
 	@ObjectHolder("traffic_light")
 	public static BlockTrafficLight traffic_light;
+	@ObjectHolder("ytraffic_light")
+	public static BlockYTrafficLight ytraffic_light;
 	@ObjectHolder("traffic_light_control_box")
 	public static BlockTrafficLightControlBox traffic_light_control_box;
 	@ObjectHolder("wig_wag")
@@ -93,16 +97,30 @@ public class ModBlocks {
 	public static BlockTrafficLight5 traffic_light_5;
 	@ObjectHolder("traffic_light_5_upper")
 	public static BlockTrafficLight5Upper traffic_light_5_upper;
+	@ObjectHolder("ytraffic_light_5")
+	public static BlockYTrafficLight5 ytraffic_light_5;
+	@ObjectHolder("ytraffic_light_5_upper")
+	public static BlockYTrafficLight5Upper ytraffic_light_5_upper;
 	@ObjectHolder("traffic_light_doghouse")
 	public static BlockTrafficLightDoghouse traffic_light_doghouse;
+	@ObjectHolder("ytraffic_light_doghouse")
+	public static BlockYTrafficLightDoghouse ytraffic_light_doghouse;
 	@ObjectHolder("traffic_light_1")
 	public static BlockTrafficLight1 traffic_light_1;
+	@ObjectHolder("ytraffic_light_1")
+	public static BlockYTrafficLight1 ytraffic_light_1;
 	@ObjectHolder("traffic_light_2")
 	public static BlockTrafficLight2 traffic_light_2;
+	@ObjectHolder("ytraffic_light_2")
+	public static BlockYTrafficLight2 ytraffic_light_2;
 	@ObjectHolder("traffic_light_4")
 	public static BlockTrafficLight4 traffic_light_4;
+	@ObjectHolder("ytraffic_light_4")
+	public static BlockYTrafficLight4 ytraffic_light_4;
 	@ObjectHolder("traffic_light_6")
 	public static BlockTrafficLight6 traffic_light_6;
+	@ObjectHolder("ytraffic_light_6")
+	public static BlockYTrafficLight6 ytraffic_light_6;
 	
 	@ObjectHolder("pedestrian_button")
 	public static BlockPedestrianButton pedestrian_button;
@@ -114,6 +132,7 @@ public class ModBlocks {
 	public static void initModels(ModelRegistryEvent e)
 	{
 		crossing_gate_base.initModel();
+		stand.initModel();
 		crossing_gate_gate.initModel();
 		crossing_gate_lamps.initModel();
 		crossing_gate_pole.initModel();
@@ -131,6 +150,7 @@ public class ModBlocks {
 		street_light_single.initModel();
 		street_light_double.initModel();
 		traffic_light.initModel();
+		ytraffic_light.initModel();
 		traffic_light_control_box.initModel();
 		wig_wag.initModel();
 		shunt_border.initModel();
@@ -145,13 +165,19 @@ public class ModBlocks {
 		traffic_sensor_straight.initModel();
 		street_sign.initModel();
 		traffic_light_5.initModel();
+		ytraffic_light_5.initModel();
 		traffic_light_doghouse.initModel();
+		ytraffic_light_doghouse.initModel();
 		traffic_light_1.initModel();
+		ytraffic_light_1.initModel();
 		traffic_light_2.initModel();
+		ytraffic_light_2.initModel();
 		traffic_light_4.initModel();
+		ytraffic_light_4.initModel();
 		pedestrian_button.initModel();
 		traffic_sensor_right.initModel();
 		traffic_light_6.initModel();
+		ytraffic_light_6.initModel();
 		
 	}
 }

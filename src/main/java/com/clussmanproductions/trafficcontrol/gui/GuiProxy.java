@@ -25,10 +25,22 @@ public class GuiProxy implements IGuiHandler {
 					return new TrafficLightFrameContainer(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
+			case GUI_IDs.YTRAFFIC_LIGHT_FRAME:
+				if (player.getHeldItemMainhand().getItem() == ModItems.ytraffic_light_frame)
+				{
+					return new YTrafficLightFrameContainer(player.inventory, player.getHeldItemMainhand());
+				}
+				break;
 			case GUI_IDs.TRAFFIC_LIGHT_5_FRAME:
 				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_5_frame)
 				{
 					return new TrafficLight5FrameContainer(player.inventory, player.getHeldItemMainhand());
+				}
+				break;
+			case GUI_IDs.YTRAFFIC_LIGHT_5_FRAME:
+				if (player.getHeldItemMainhand().getItem() == ModItems.ytraffic_light_5_frame)
+				{
+					return new YTrafficLight5FrameContainer(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
 			case GUI_IDs.TRAFFIC_LIGHT_DOGHOUSE_FRAME:
@@ -37,10 +49,22 @@ public class GuiProxy implements IGuiHandler {
 					return new TrafficLightDoghouseFrameContainer(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
+			case GUI_IDs.YTRAFFIC_LIGHT_DOGHOUSE_FRAME:
+				if (player.getHeldItemMainhand().getItem() == ModItems.ytraffic_light_doghouse_frame)
+				{
+					return new YTrafficLightDoghouseFrameContainer(player.inventory, player.getHeldItemMainhand());
+				}
+				break;
 			case GUI_IDs.TRAFFIC_LIGHT_1_FRAME:
 				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_1_frame)
 				{
 					return new TrafficLight1FrameContainer(player.inventory, player.getHeldItemMainhand());
+				}
+				break;
+			case GUI_IDs.YTRAFFIC_LIGHT_1_FRAME:
+				if (player.getHeldItemMainhand().getItem() == ModItems.ytraffic_light_1_frame)
+				{
+					return new YTrafficLight1FrameContainer(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
 			case GUI_IDs.TRAFFIC_LIGHT_2_FRAME:
@@ -49,10 +73,22 @@ public class GuiProxy implements IGuiHandler {
 					return new TrafficLight2FrameContainer(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
+			case GUI_IDs.YTRAFFIC_LIGHT_2_FRAME:
+				if (player.getHeldItemMainhand().getItem() == ModItems.ytraffic_light_2_frame)
+				{
+					return new YTrafficLight2FrameContainer(player.inventory, player.getHeldItemMainhand());
+				}
+				break;
 			case GUI_IDs.TRAFFIC_LIGHT_4_FRAME:
 				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_4_frame)
 				{
 					return new TrafficLight4FrameContainer(player.inventory, player.getHeldItemMainhand());
+				}
+				break;
+			case GUI_IDs.YTRAFFIC_LIGHT_4_FRAME:
+				if (player.getHeldItemMainhand().getItem() == ModItems.ytraffic_light_4_frame)
+				{
+					return new YTrafficLight4FrameContainer(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
 				case GUI_IDs.TRAFFIC_LIGHT_6_FRAME:
@@ -61,6 +97,12 @@ public class GuiProxy implements IGuiHandler {
 					return new TrafficLight6FrameContainer(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
+				case GUI_IDs.YTRAFFIC_LIGHT_6_FRAME:
+					if (player.getHeldItemMainhand().getItem() == ModItems.ytraffic_light_6_frame)
+					{
+						return new YTrafficLight6FrameContainer(player.inventory, player.getHeldItemMainhand());
+					}
+					break;
 				
 		}
 
@@ -85,6 +127,12 @@ public class GuiProxy implements IGuiHandler {
 				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_frame)
 				{
 					return new TrafficLightFrameGui(player.inventory, player.getHeldItemMainhand());
+				}
+				break;
+			case GUI_IDs.YTRAFFIC_LIGHT_FRAME:
+				if (player.getHeldItemMainhand().getItem() == ModItems.ytraffic_light_frame)
+				{
+					return new YTrafficLightFrameGui(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
 			case GUI_IDs.TRAFFIC_LIGHT_CONTROL_BOX:
@@ -129,10 +177,22 @@ public class GuiProxy implements IGuiHandler {
 					return new TrafficLight5FrameGui(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
+			case GUI_IDs.YTRAFFIC_LIGHT_5_FRAME:
+				if (player.getHeldItemMainhand().getItem() == ModItems.ytraffic_light_5_frame)
+				{
+					return new YTrafficLight5FrameGui(player.inventory, player.getHeldItemMainhand());
+				}
+				break;
 			case GUI_IDs.TRAFFIC_LIGHT_DOGHOUSE_FRAME:
 				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_doghouse_frame)
 				{
 					return new TrafficLightDoghouseFrameGui(player.inventory, player.getHeldItemMainhand());
+				}
+				break;
+			case GUI_IDs.YTRAFFIC_LIGHT_DOGHOUSE_FRAME:
+				if (player.getHeldItemMainhand().getItem() == ModItems.ytraffic_light_doghouse_frame)
+				{
+					return new YTrafficLightDoghouseFrameGui(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
 			case GUI_IDs.TRAFFIC_LIGHT_1_FRAME:
@@ -141,10 +201,22 @@ public class GuiProxy implements IGuiHandler {
 					return new TrafficLight1FrameGui(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
+			case GUI_IDs.YTRAFFIC_LIGHT_1_FRAME:
+				if (player.getHeldItemMainhand().getItem() == ModItems.ytraffic_light_1_frame)
+				{
+					return new YTrafficLight1FrameGui(player.inventory, player.getHeldItemMainhand());
+				}
+				break;
 			case GUI_IDs.TRAFFIC_LIGHT_2_FRAME:
 				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_2_frame)
 				{
 					return new TrafficLight2FrameGui(player.inventory, player.getHeldItemMainhand());
+				}
+				break;
+			case GUI_IDs.YTRAFFIC_LIGHT_2_FRAME:
+				if (player.getHeldItemMainhand().getItem() == ModItems.ytraffic_light_2_frame)
+				{
+					return new YTrafficLight2FrameGui(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
 			case GUI_IDs.TRAFFIC_LIGHT_4_FRAME:
@@ -153,12 +225,24 @@ public class GuiProxy implements IGuiHandler {
 					return new TrafficLight4FrameGui(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
+			case GUI_IDs.YTRAFFIC_LIGHT_4_FRAME:
+				if (player.getHeldItemMainhand().getItem() == ModItems.ytraffic_light_4_frame)
+				{
+					return new YTrafficLight4FrameGui(player.inventory, player.getHeldItemMainhand());
+				}
+				break;
 				case GUI_IDs.TRAFFIC_LIGHT_6_FRAME:
 				if (player.getHeldItemMainhand().getItem() == ModItems.traffic_light_6_frame)
 				{
 					return new TrafficLight6FrameGui(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
+				case GUI_IDs.YTRAFFIC_LIGHT_6_FRAME:
+					if (player.getHeldItemMainhand().getItem() == ModItems.ytraffic_light_6_frame)
+					{
+						return new YTrafficLight6FrameGui(player.inventory, player.getHeldItemMainhand());
+					}
+					break;
 				
 		}
 
@@ -179,5 +263,12 @@ public class GuiProxy implements IGuiHandler {
 		public static final int TRAFFIC_LIGHT_2_FRAME = 10;
 		public static final int TRAFFIC_LIGHT_4_FRAME = 11;
 		public static final int TRAFFIC_LIGHT_6_FRAME = 12;
+		public static final int YTRAFFIC_LIGHT_FRAME = 13;
+		public static final int YTRAFFIC_LIGHT_1_FRAME = 14;
+		public static final int YTRAFFIC_LIGHT_2_FRAME = 15;
+		public static final int YTRAFFIC_LIGHT_4_FRAME = 16;
+		public static final int YTRAFFIC_LIGHT_5_FRAME = 17;
+		public static final int YTRAFFIC_LIGHT_DOGHOUSE_FRAME = 18;
+		public static final int YTRAFFIC_LIGHT_6_FRAME = 19;
 	}
 }
