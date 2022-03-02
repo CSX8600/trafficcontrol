@@ -2,6 +2,7 @@ package com.clussmanproductions.trafficcontrol.item;
 
 import com.clussmanproductions.trafficcontrol.Config;
 import com.clussmanproductions.trafficcontrol.ModBlocks;
+import com.clussmanproductions.trafficcontrol.ModSounds;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockBaseTrafficLight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase;
@@ -25,6 +26,8 @@ import com.clussmanproductions.trafficcontrol.util.CustomAngleCalculator;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.ISound;
+import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
@@ -38,6 +41,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
@@ -128,10 +132,12 @@ public class ItemCrossingRelayTuner extends Item {
 				if (tlBox.addOrRemoveSensor(pos))
 				{
 					player.sendMessage(new TextComponentString("Paired sensor to Traffic Light Control Box"));
+					world.playSound(null, pos, ModSounds.tunerLinkAdd, SoundCategory.PLAYER, 0.3F, 1F);
 				}
 				else
 				{
 					player.sendMessage(new TextComponentString("Unpaired sensor from Traffic Light Control Box"));
+					world.playSound(null, pos, ModSounds.tunerLinkRemove, SoundCategory.PLAYER, 0.3F, 1F);
 				}
 			}
 		}
@@ -175,6 +181,7 @@ public class ItemCrossingRelayTuner extends Item {
 			}
 
 			player.inventory.getCurrentItem().setTagCompound(nbt);
+			world.playSound(null, pos, ModSounds.tunerLinkStart, SoundCategory.PLAYER, 0.3F, 1F);
 			player.sendMessage(new TextComponentString("Started pairing with " + typeOfPairing + " at "
 					+ relayPos.getX() + ", "
 					+ relayPos.getY() + ", "
@@ -206,6 +213,7 @@ public class ItemCrossingRelayTuner extends Item {
 				}
 
 				nbt.removeTag("pairingpos");
+				world.playSound(null, pos, ModSounds.tunerLinkStop, SoundCategory.PLAYER, 0.3F, 1F);
 				player.sendMessage(new TextComponentString("Stopped pairing with " + typeOfPairing + " at "
 						+ pairingpos[0] + ", "
 						+ pairingpos[1] + ", "
@@ -230,6 +238,7 @@ public class ItemCrossingRelayTuner extends Item {
 
 				pairingpos = nbt.getIntArray("pairingpos");
 
+				world.playSound(null, pos, ModSounds.tunerLinkStart, SoundCategory.PLAYER, 0.3F, 1F);
 				player.sendMessage(new TextComponentString("Started pairing with " + typeOfPairing + " at "
 						+ pairingpos[0] + ", "
 						+ pairingpos[1] + ", "
@@ -245,6 +254,7 @@ public class ItemCrossingRelayTuner extends Item {
 					nbt.removeTag("pairingpos");
 					player.inventory.getCurrentItem().setTagCompound(nbt);
 
+					world.playSound(null, pos, ModSounds.tunerLinkError, SoundCategory.PLAYER, 0.3F, 1F);
 					player.sendMessage(new TextComponentString("Could not find pair at "
 							+ pairingpos[0] + ", "
 							+ pairingpos[1] + ", "
@@ -274,10 +284,12 @@ public class ItemCrossingRelayTuner extends Item {
 			{
 				if (relay.addOrRemoveCrossingGateGate((CrossingGateGateTileEntity)te))
 				{
+					world.playSound(null, pos, ModSounds.tunerLinkAdd, SoundCategory.PLAYER, 0.3F, 1F);
 					player.sendMessage(new TextComponentString("Paired Crossing Gate to Relay Box"));
 				}
 				else
 				{
+					world.playSound(null, pos, ModSounds.tunerLinkRemove, SoundCategory.PLAYER, 0.3F, 1F);
 					player.sendMessage(new TextComponentString("Unpaired Crossing Gate from Relay Box"));
 				}
 			}
@@ -286,10 +298,12 @@ public class ItemCrossingRelayTuner extends Item {
 			{
 				if (relay.addOrRemoveBell((BellBaseTileEntity)te))
 				{
+					world.playSound(null, pos, ModSounds.tunerLinkAdd, SoundCategory.PLAYER, 0.3F, 1F);
 					player.sendMessage(new TextComponentString("Paired Bell to Relay Box"));
 				}
 				else
 				{
+					world.playSound(null, pos, ModSounds.tunerLinkRemove, SoundCategory.PLAYER, 0.3F, 1F);
 					player.sendMessage(new TextComponentString("Unpaired Bell from Relay Box"));
 				}
 			}
@@ -298,10 +312,12 @@ public class ItemCrossingRelayTuner extends Item {
 			{
 				if (relay.addOrRemoveWigWag(te.getPos()))
 				{
+					world.playSound(null, pos, ModSounds.tunerLinkAdd, SoundCategory.PLAYER, 0.3F, 1F);
 					player.sendMessage(new TextComponentString("Paired Wig Wag to Relay Box"));
 				}
 				else
 				{
+					world.playSound(null, pos, ModSounds.tunerLinkRemove, SoundCategory.PLAYER, 0.3F, 1F);
 					player.sendMessage(new TextComponentString("Unpaired Wig Wag from Relay Box"));
 				}
 			}
@@ -314,11 +330,13 @@ public class ItemCrossingRelayTuner extends Item {
 				if (relay.addOrRemoveShuntBorder(shuntBorderTileEntity.getTrackOrigin(), borderFacing))
 				{
 					shuntBorderTileEntity.addPairedRelayBox(relay.getPos());
+					world.playSound(null, pos, ModSounds.tunerLinkAdd, SoundCategory.PLAYER, 0.3F, 1F);
 					player.sendMessage(new TextComponentString("Paired Border Shunt to Relay Box"));
 				}
 				else
 				{
 					shuntBorderTileEntity.removePairedRelayBox(relay.getPos());
+					world.playSound(null, pos, ModSounds.tunerLinkRemove, SoundCategory.PLAYER, 0.3F, 1F);
 					player.sendMessage(new TextComponentString("Unpaired Border Shunt from Relay Box"));
 				}
 			}
@@ -331,11 +349,13 @@ public class ItemCrossingRelayTuner extends Item {
 				if (relay.addOrRemoveShuntIsland(shuntIslandTileEntity.getTrackOrigin(), islandFacing))
 				{
 					shuntIslandTileEntity.addPairedRelayBox(relay.getPos());
+					world.playSound(null, pos, ModSounds.tunerLinkAdd, SoundCategory.PLAYER, 0.3F, 1F);
 					player.sendMessage(new TextComponentString("Paired Island Shunt to Relay Box"));
 				}
 				else
 				{
 					shuntIslandTileEntity.removePairedRelayBox(relay.getPos());
+					world.playSound(null, pos, ModSounds.tunerLinkRemove, SoundCategory.PLAYER, 0.3F, 1F);
 					player.sendMessage(new TextComponentString("Unpaired Island Shunt from Relay Box"));
 				}
 			}
@@ -344,10 +364,12 @@ public class ItemCrossingRelayTuner extends Item {
 			{
 				if (relay.addOrRemoveCrossingGateLamp(te.getPos()))
 				{
+					world.playSound(null, pos, ModSounds.tunerLinkAdd, SoundCategory.PLAYER, 0.3F, 1F);
 					player.sendMessage(new TextComponentString("Paired Crossing Lamps to Relay Box"));
 				}
 				else
 				{
+					world.playSound(null, pos, ModSounds.tunerLinkRemove, SoundCategory.PLAYER, 0.3F, 1F);
 					player.sendMessage(new TextComponentString("Unpaired Crossing Lamps from Relay Box"));
 				}
 			}
@@ -376,10 +398,12 @@ public class ItemCrossingRelayTuner extends Item {
 
 					if (operationResult)
 					{
+						world.playSound(null, pos, ModSounds.tunerLinkAdd, SoundCategory.PLAYER, 0.3F, 1F);
 						player.sendMessage(new TextComponentString("Paired Traffic Light to Traffic Light Control Box"));
 					}
 					else
 					{
+						world.playSound(null, pos, ModSounds.tunerLinkRemove, SoundCategory.PLAYER, 0.3F, 1F);
 						player.sendMessage(new TextComponentString("Unpaired Traffic Light to Traffic Light Control Box"));
 					}
 				}
@@ -407,11 +431,13 @@ public class ItemCrossingRelayTuner extends Item {
 					if (operationResult)
 					{
 						pedTE.addPairedBox(controlBox.getPos());
+						world.playSound(null, pos, ModSounds.tunerLinkAdd, SoundCategory.PLAYER, 0.3F, 1F);
 						player.sendMessage(new TextComponentString("Paired Pedestrian Button to Traffic Light Control Box"));
 					}
 					else
 					{
 						pedTE.removePairedBox(controlBox.getPos());
+						world.playSound(null, pos, ModSounds.tunerLinkRemove, SoundCategory.PLAYER, 0.3F, 1F);
 						player.sendMessage(new TextComponentString("Unpaired Pedestrian Button to Traffic Light Control Box"));
 					}
 				}

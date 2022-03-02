@@ -10,6 +10,11 @@ public class ModSounds {
 	public static SoundEvent safetranMechanicalEvent;
 	public static SoundEvent wchEvent;
 	public static SoundEvent pedButton;
+	public static SoundEvent tunerLinkStart;
+	public static SoundEvent tunerLinkStop;
+	public static SoundEvent tunerLinkAdd;
+	public static SoundEvent tunerLinkRemove;
+	public static SoundEvent tunerLinkError;
 	
 	public static void initSounds()
 	{
@@ -18,5 +23,10 @@ public class ModSounds {
 		safetranMechanicalEvent = new SoundEvent(new ResourceLocation(ModTrafficControl.MODID + ":safetran_mechanical")).setRegistryName("trafficcontrol:safetran_mechanical");
 		wchEvent = new SoundEvent(new ResourceLocation(ModTrafficControl.MODID + ":wch")).setRegistryName("trafficcontrol:wch");
 		pedButton = new SoundEvent(new ResourceLocation(ModTrafficControl.MODID + ":ped_button")).setRegistryName("trafficcontrol:ped_button");
+		tunerLinkStart = new SoundEvent(new ResourceLocation(ModTrafficControl.MODID + ":tuner_link_start")).setRegistryName("trafficcontrol:tuner_link_start");
+		tunerLinkStop = new SoundEvent(new ResourceLocation(ModTrafficControl.MODID + ":tuner_link_stop")).setRegistryName("trafficcontrol:tuner_link_stop");
+		tunerLinkAdd = new SoundEvent(new ResourceLocation(ModTrafficControl.MODID + ":tuner_link_add")).setRegistryName("trafficcontrol:tuner_link_add");
+		tunerLinkRemove = new SoundEvent(new ResourceLocation(ModTrafficControl.MODID + ":tuner_link_remove")).setRegistryName("trafficcontrol:tuner_link_remove");
+		tunerLinkError = new SoundEvent(new ResourceLocation(ModTrafficControl.MODID + ":tuner_link_error")).setRegistryName("trafficcontrol:tuner_link_error");
 	}
 }
