@@ -16,7 +16,9 @@ public enum EnumTrafficLightBulbTypes {
 	NoLeftTurn(12),
 	SRed(13),
 	SYellow(14),
-	SGreen(15);
+	SGreen(15),
+	TunnelRed(16),
+	TunnelGreen(17);
 	
 	private int index = -1;
 	private EnumTrafficLightBulbTypes(int index)

@@ -27,8 +27,10 @@ public class ItemTrafficLightBulb extends Item {
 	public void initModel()
 	{
 		ModelLoader.setCustomModelResourceLocation(this, EnumTrafficLightBulbTypes.Red.getIndex(), new ModelResourceLocation(ModTrafficControl.MODID + ":traffic_light_bulb_red"));
+		ModelLoader.setCustomModelResourceLocation(this, EnumTrafficLightBulbTypes.TunnelRed.getIndex(), new ModelResourceLocation(ModTrafficControl.MODID + ":traffic_light_bulb_tunnelred"));
 		ModelLoader.setCustomModelResourceLocation(this, EnumTrafficLightBulbTypes.Yellow.getIndex(), new ModelResourceLocation(ModTrafficControl.MODID + ":traffic_light_bulb_yellow"));
 		ModelLoader.setCustomModelResourceLocation(this, EnumTrafficLightBulbTypes.Green.getIndex(), new ModelResourceLocation(ModTrafficControl.MODID + ":traffic_light_bulb_green"));
+		ModelLoader.setCustomModelResourceLocation(this, EnumTrafficLightBulbTypes.TunnelGreen.getIndex(), new ModelResourceLocation(ModTrafficControl.MODID + ":traffic_light_bulb_tunnelgreen"));
 		
 		ModelLoader.setCustomModelResourceLocation(this, EnumTrafficLightBulbTypes.SRed.getIndex(), new ModelResourceLocation(ModTrafficControl.MODID + ":traffic_light_bulb_sred"));
 		ModelLoader.setCustomModelResourceLocation(this, EnumTrafficLightBulbTypes.SYellow.getIndex(), new ModelResourceLocation(ModTrafficControl.MODID + ":traffic_light_bulb_syellow"));
@@ -51,8 +53,10 @@ public class ItemTrafficLightBulb extends Item {
 		if (tab != ModTrafficControl.CREATIVE_TAB) return;
 		
 		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.Red.getIndex()));
+		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.TunnelRed.getIndex()));
 		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.Yellow.getIndex()));
 		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.Green.getIndex()));
+		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.TunnelGreen.getIndex()));
 		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.SRed.getIndex()));
 		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.SYellow.getIndex()));
 		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.SGreen.getIndex()));
@@ -77,6 +81,10 @@ public class ItemTrafficLightBulb extends Item {
 		{
 			unlocalizedName += "red";
 		}
+		else if (meta == EnumTrafficLightBulbTypes.TunnelRed.getIndex())
+		{
+			unlocalizedName += "tunnelred";
+		}
 		else if (meta == EnumTrafficLightBulbTypes.Yellow.getIndex())
 		{
 			unlocalizedName += "yellow";
@@ -84,6 +92,10 @@ public class ItemTrafficLightBulb extends Item {
 		else if (meta == EnumTrafficLightBulbTypes.Green.getIndex())
 		{
 			unlocalizedName += "green";
+		}
+		else if (meta == EnumTrafficLightBulbTypes.TunnelGreen.getIndex())
+		{
+			unlocalizedName += "tunnelgreen";
 		}else if (meta == EnumTrafficLightBulbTypes.SRed.getIndex())
 		{
 			unlocalizedName += "sred";

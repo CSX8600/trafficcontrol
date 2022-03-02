@@ -51,10 +51,12 @@ item.trafficcontrol.traffic_light_6_frame.name=Traffic Light T Frame (Four Bulbs
 item.trafficcontrol.ytraffic_light_6_frame.name=Traffic Light T Frame (Four Bulbs Yellow)
 
 trafficcontrol.traffic_light_bulb.green.name=Bulb (Green)
+trafficcontrol.traffic_light_bulb.tunnelgreen.name=Tunnel Bulb (Green)
 trafficcontrol.traffic_light_bulb.sgreen.name=Straight Arrow Bulb (Green)
 trafficcontrol.traffic_light_bulb.yellow.name=Bulb (Yellow)
 trafficcontrol.traffic_light_bulb.syellow.name=Straight Arrow Bulb (Yellow)
 trafficcontrol.traffic_light_bulb.red.name=Bulb (Red)
+trafficcontrol.traffic_light_bulb.tunnelred.name=Tunnel Bulb (Red)
 trafficcontrol.traffic_light_bulb.sred.name=Straight Arrow Bulb (Red)
 trafficcontrol.traffic_light_bulb.greenArrowLeft.name=Left Arrow Bulb (Green)
 trafficcontrol.traffic_light_bulb.yellowArrowLeft.name=Left Arrow Bulb (Yellow)
