@@ -1,0 +1,21 @@
+{ 
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+   	"FC"
+	],
+  "key": {
+    "F":
+      {
+          "item": "trafficcontrol:traffic_light_doghouse_frame"
+      },
+      "C":
+      {
+          "item": "minecraft:dye",
+          "data": 14
+      }
+  },
+  "result": {
+    "item": "trafficcontrol:ytraffic_light_doghouse_frame",
+    "count": 1
+  }
+}

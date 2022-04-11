@@ -67,6 +67,8 @@ public class ModBlocks {
 	public static BlockTrafficLight traffic_light;
 	@ObjectHolder("ytraffic_light")
 	public static BlockYTrafficLight ytraffic_light;
+	@ObjectHolder("otraffic_light")
+	public static BlockOTrafficLight otraffic_light;
 	@ObjectHolder("traffic_light_control_box")
 	public static BlockTrafficLightControlBox traffic_light_control_box;
 	@ObjectHolder("wig_wag")
@@ -101,26 +103,40 @@ public class ModBlocks {
 	public static BlockYTrafficLight5 ytraffic_light_5;
 	@ObjectHolder("ytraffic_light_5_upper")
 	public static BlockYTrafficLight5Upper ytraffic_light_5_upper;
+	@ObjectHolder("otraffic_light_5")
+	public static BlockOTrafficLight5 otraffic_light_5;
+	@ObjectHolder("otraffic_light_5_upper")
+	public static BlockOTrafficLight5Upper otraffic_light_5_upper;
 	@ObjectHolder("traffic_light_doghouse")
 	public static BlockTrafficLightDoghouse traffic_light_doghouse;
 	@ObjectHolder("ytraffic_light_doghouse")
 	public static BlockYTrafficLightDoghouse ytraffic_light_doghouse;
+	@ObjectHolder("otraffic_light_doghouse")
+	public static BlockOTrafficLightDoghouse otraffic_light_doghouse;
 	@ObjectHolder("traffic_light_1")
 	public static BlockTrafficLight1 traffic_light_1;
 	@ObjectHolder("ytraffic_light_1")
 	public static BlockYTrafficLight1 ytraffic_light_1;
+	@ObjectHolder("otraffic_light_1")
+	public static BlockOTrafficLight1 otraffic_light_1;
 	@ObjectHolder("traffic_light_2")
 	public static BlockTrafficLight2 traffic_light_2;
 	@ObjectHolder("ytraffic_light_2")
 	public static BlockYTrafficLight2 ytraffic_light_2;
+	@ObjectHolder("otraffic_light_2")
+	public static BlockOTrafficLight2 otraffic_light_2;
 	@ObjectHolder("traffic_light_4")
 	public static BlockTrafficLight4 traffic_light_4;
 	@ObjectHolder("ytraffic_light_4")
 	public static BlockYTrafficLight4 ytraffic_light_4;
+	@ObjectHolder("otraffic_light_4")
+	public static BlockOTrafficLight4 otraffic_light_4;
 	@ObjectHolder("traffic_light_6")
 	public static BlockTrafficLight6 traffic_light_6;
 	@ObjectHolder("ytraffic_light_6")
 	public static BlockYTrafficLight6 ytraffic_light_6;
+	@ObjectHolder("otraffic_light_6")
+	public static BlockOTrafficLight6 otraffic_light_6;
 	
 	@ObjectHolder("pedestrian_button")
 	public static BlockPedestrianButton pedestrian_button;
@@ -151,6 +167,7 @@ public class ModBlocks {
 		street_light_double.initModel();
 		traffic_light.initModel();
 		ytraffic_light.initModel();
+		otraffic_light.initModel();
 		traffic_light_control_box.initModel();
 		wig_wag.initModel();
 		shunt_border.initModel();
@@ -166,18 +183,24 @@ public class ModBlocks {
 		street_sign.initModel();
 		traffic_light_5.initModel();
 		ytraffic_light_5.initModel();
+		otraffic_light_5.initModel();
 		traffic_light_doghouse.initModel();
 		ytraffic_light_doghouse.initModel();
+		otraffic_light_doghouse.initModel();
 		traffic_light_1.initModel();
 		ytraffic_light_1.initModel();
+		otraffic_light_1.initModel();
 		traffic_light_2.initModel();
 		ytraffic_light_2.initModel();
+		otraffic_light_2.initModel();
 		traffic_light_4.initModel();
 		ytraffic_light_4.initModel();
+		otraffic_light_4.initModel();
 		pedestrian_button.initModel();
 		traffic_sensor_right.initModel();
 		traffic_light_6.initModel();
 		ytraffic_light_6.initModel();
+		otraffic_light_6.initModel();
 		
 	}
 }
