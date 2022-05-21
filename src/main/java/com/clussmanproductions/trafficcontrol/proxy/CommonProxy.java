@@ -257,6 +257,11 @@ public class CommonProxy {
 		e.getRegistry().register(ModSounds.safetranMechanicalEvent);
 		e.getRegistry().register(ModSounds.wchEvent);
 		e.getRegistry().register(ModSounds.pedButton);
+		e.getRegistry().register(ModSounds.tunerLinkStart);
+		e.getRegistry().register(ModSounds.tunerLinkStop);
+		e.getRegistry().register(ModSounds.tunerLinkAdd);
+		e.getRegistry().register(ModSounds.tunerLinkRemove);
+		e.getRegistry().register(ModSounds.tunerLinkError);
 	}
 
 	public void preInit(FMLPreInitializationEvent e)
