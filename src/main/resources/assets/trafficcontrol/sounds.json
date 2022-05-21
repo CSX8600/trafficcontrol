@@ -23,5 +23,30 @@
     {
     	"category": "block",
     	"sounds": [ "trafficcontrol:ped_button" ]
+    },
+	"tuner_link_add":
+    {
+    	"category": "player",
+    	"sounds": [ "trafficcontrol:tuner_link_add" ]
+    },
+	"tuner_link_remove":
+    {
+    	"category": "player",
+    	"sounds": [ "trafficcontrol:tuner_link_remove" ]
+    },
+	"tuner_link_start":
+    {
+    	"category": "player",
+    	"sounds": [ "trafficcontrol:tuner_link_start" ]
+    },
+	"tuner_link_stop":
+    {
+    	"category": "player",
+    	"sounds": [ "trafficcontrol:tuner_link_stop" ]
+    },
+	"tuner_link_error":
+    {
+    	"category": "player",
+    	"sounds": [ "trafficcontrol:tuner_link_error" ]
     }
 }
