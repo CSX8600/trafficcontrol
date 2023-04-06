@@ -7,13 +7,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.lwjgl.opengl.GL11;
 
-import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity;
-import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity.Sign;
-import com.clussmanproductions.trafficcontrol.util.Tuple;
+import com.clussmanproductions.trafficcontrol.ModTrafficControl;
+import com.clussmanproductions.trafficcontrol.signs.Sign;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -67,7 +67,7 @@ public class GuiImageList {
 		}
 		
 		imagesByName = new HashMap<>();
-		for(Sign sign : SignTileEntity.SIGNS_BY_TYPE_VARIANT.values())
+		for(Sign sign : ModTrafficControl.instance.signRepo.getAllSigns())
 		{
 			imagesByName.put(sign.getName() + " (" + sign.getVariant() + ")", sign);
 		}
@@ -176,7 +176,7 @@ public class GuiImageList {
 					continue;
 				}
 				
-				Minecraft.getMinecraft().renderEngine.bindTexture(image.getImageResourceLocation());
+				Minecraft.getMinecraft().renderEngine.bindTexture(image.getFrontImageResourceLocation());
 				
 				int imageX = x + (col * 16);
 				int imageY = y + (row * 16);
@@ -195,7 +195,7 @@ public class GuiImageList {
 		if (hoveringImage != null)
 		{
 			ArrayList<String> hoverText = new ArrayList<>();
-			hoverText.add("\u00a7e" + hoveringImage.getName() + " (" + hoveringImage.getVariant() + ")");
+			hoverText.add("\u00a7e" + hoveringImage.getName() + " (" + ModTrafficControl.instance.signRepo.getFriendlyTypeName(hoveringImage.getType()) + ")");
 			
 			if (hoveringImage.getToolTip() != null && hoveringImage.getToolTip() != "")
 			{
@@ -324,7 +324,53 @@ public class GuiImageList {
 			return;
 		}
 		
-		Map<String, Sign> imagesToRender = imagesByName.entrySet().stream().filter(entry -> (filter != null && filter.length() != 0) ? entry.getKey().toLowerCase().contains(filter.toLowerCase()) : true).collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue()));
+		Predicate<? super Entry<String, Sign>> filterPredicate = entry ->
+		{
+			if (filter == null || entry.getKey().isEmpty())
+			{
+				return true;
+			}
+			
+			String typeFilter = "";
+			String typeStringToExcludeFromFilter = "";
+			if (filter.contains("@"))
+			{
+				int typeFilterStart = filter.indexOf("@");
+				String filterText = filter.substring(typeFilterStart + 1);
+				if (filterText.length() > 0)
+				{
+					if (filterText.charAt(0) == '\"' && filterText.length() > 1 && filterText.substring(1).contains("\""))
+					{
+						filterText = filterText.substring(1);
+						typeFilter = filterText.substring(0, filterText.indexOf("\""));
+						typeStringToExcludeFromFilter = "@\"" + typeFilter + "\"";
+					}
+					else
+					{
+						String[] remainingParts = filterText.split("\\s+");
+						typeFilter = remainingParts[0];
+						typeStringToExcludeFromFilter = "@" + typeFilter;
+						
+						if (remainingParts.length > 1)
+						{
+							typeStringToExcludeFromFilter += " ";
+						}
+					}
+				}
+			}
+			
+			String nameFilter = filter.replace(typeStringToExcludeFromFilter, "").trim();
+			boolean showSign = entry.getKey().toLowerCase().contains(nameFilter.toLowerCase());
+			if (!typeFilter.isEmpty())
+			{
+				showSign &= entry.getValue().getType().toLowerCase().contains(typeFilter) || 
+								ModTrafficControl.instance.signRepo.getFriendlyTypeName(entry.getValue().getType()).toLowerCase().contains(typeFilter.toLowerCase());
+			}
+			
+			return showSign;
+		};
+		
+		Map<String, Sign> imagesToRender = imagesByName.entrySet().stream().filter(filterPredicate).collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue()));
 		
 		int rows = ((imagesToRender.values().size() + 1) / slotWidth) + 1;
 		
@@ -333,16 +379,14 @@ public class GuiImageList {
 		int currentRow = 0;
 		int currentCol = 0;
 		
-		for (Tuple<Integer, Integer> signEntry : SignTileEntity.SIGNS_BY_TYPE_VARIANT.keySet().stream().sorted(new SignTileEntity.Sign.TestComparator()).collect(Collectors.toList()))
-		{
-			Sign image = SignTileEntity.SIGNS_BY_TYPE_VARIANT.get(signEntry);
-			
-			if (!imagesToRender.containsValue(image))
+		for (Sign sign : ModTrafficControl.instance.signRepo.getAllSigns())
+		{			
+			if (!imagesToRender.containsValue(sign))
 			{
 				continue;
 			}
 			
-			slots[currentCol][currentRow] = image;
+			slots[currentCol][currentRow] = sign;
 			
 			currentCol++;
 			if (currentCol >= slotWidth)

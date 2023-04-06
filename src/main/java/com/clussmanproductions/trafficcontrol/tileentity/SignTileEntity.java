@@ -1,106 +1,159 @@
 package com.clussmanproductions.trafficcontrol.tileentity;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map.Entry;
+import java.util.ArrayList;
+import java.util.UUID;
 
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
-import com.clussmanproductions.trafficcontrol.util.Tuple;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.clussmanproductions.trafficcontrol.signs.Sign;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class SignTileEntity extends TileEntity {
-
-	private int type = 0;
-	private int variant = 0;
 	
-	private final int MAXTYPE = 5;
-	public static ImmutableMap<Tuple<Integer, Integer>, Sign> SIGNS_BY_TYPE_VARIANT;
-	public static ImmutableMap<Integer, Integer> MAX_VARIANTS_BY_TYPE;
+	private int typeLegacy = -1;
+	private int variantLegacy = -1;
+	
+	private UUID id = null;
+	private ArrayList<String> textLines = null;
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		
-		type = compound.getInteger("type");
-		variant = compound.getInteger("variant");
+		typeLegacy = compound.getInteger("type");
+		variantLegacy = compound.getInteger("variant");
+		if (compound.hasKey("signid"))
+		{
+			id = NBTUtil.getUUIDFromTag(compound.getCompoundTag("signid"));
+		}
+		
+		if (textLines != null)
+		{
+			textLines.clear();
+		}
+		
+		if (compound.hasKey("text0"))
+		{
+			textLines = new ArrayList<>();
+			int i = 0;
+			while(compound.hasKey("text" + i))
+			{
+				textLines.add(compound.getString("text" + i));
+				i++;
+			}
+		}
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {		
-		compound.setInteger("type", type);
-		compound.setInteger("variant", variant);
+		compound.setInteger("type", typeLegacy);
+		compound.setInteger("variant", variantLegacy);
+		
+		if (id != null)
+		{
+			compound.setTag("signid", NBTUtil.createUUIDTag(id));
+		}
+		
+		if (textLines != null)
+		{
+			for(int i = 0; i < textLines.size(); i++)
+			{
+				compound.setString("text" + i, textLines.get(i));
+			}
+		}
 		
 		return super.writeToNBT(compound);
 	}
 	
-	public void setType(int type)
+	public void setTypeLegacy(int type)
 	{
-		this.type = type;
+		this.typeLegacy = type;
 	}
 	
-	public int getType()
+	public int getTypeLegacy()
 	{
-		return type;
+		return typeLegacy;
 	}
 	
-	public void setVariant(int variant)
-	{		
-		if (variant > MAX_VARIANTS_BY_TYPE.get(getType()))
+	public void setVariantLegacy(int variant)
+	{
+		this.variantLegacy = variant;
+	}
+	
+	public int getVariantLegacy()
+	{
+		return variantLegacy;
+	}
+	
+	public void setID(UUID id)
+	{
+		this.id = id;
+	}
+	
+	public UUID getID()
+	{
+		return id;
+	}
+	
+	public String getTextLine(int index)
+	{
+		if (textLines == null || index >= textLines.size())
 		{
-			switch(getType()) // Use new error textures because it's fun
+			return null;
+		}
+		
+		return textLines.get(index);
+	}
+	
+	public void setTextLine(int index, String text)
+	{
+		if (textLines == null)
+		{
+			textLines = new ArrayList<String>();
+		}
+		
+		if (textLines.size() <= index)
+		{
+			for(int i = textLines.size(); i <= index; i++)
 			{
-				case 0:
-					variant = 114;
-					break;
-				case 1:
-					variant = 162;
-					break;
-				case 2:
-					variant = 119;
-					break;
-				case 3:
-					variant = 91;
-					break;
-				case 4:
-					variant = 168;
-					break;
-				case 5:
-					variant = 96;
-					break;
+				textLines.add(null);
 			}
 		}
-		this.variant = variant;
+		
+		textLines.set(index, text);
 	}
 	
-	public int getVariant()
+	public void clearTextLines()
 	{
-		return variant;
+		if (textLines != null)
+		{
+			textLines.clear();
+		}
 	}
 	
-	public ResourceLocation getTexture()
+	public Sign getSign()
 	{
-		String signName = getSignTypeName(type);
-		String resourceName = ModTrafficControl.MODID + ":textures/blocks/sign/" + signName + "/" + signName + variant + ".png";
-		return new ResourceLocation(resourceName);
+		Sign sign = null;
+		if (typeLegacy != -1)
+		{
+			sign = ModTrafficControl.instance.signRepo.getSignByTypeVariant(getSignTypeName(typeLegacy), variantLegacy);
+		}
+		else if (id != null)
+		{
+			sign = ModTrafficControl.instance.signRepo.getSignByID(id);
+		}
+		
+		if (sign == null)
+		{
+			return ModTrafficControl.instance.signRepo.getSignByID(Sign.DEFAULT_ERROR_SIGN);
+		}
+		
+		return sign;
 	}
 	
 	public static String getSignTypeName(int type)
@@ -124,66 +177,9 @@ public class SignTileEntity extends TileEntity {
 		return null;
 	}
 	
-	public static String getBackSignName(int type, int variant)
+	public static int getSignTypeNumber(String name)
 	{
-		if (type != 2)
-		{
-			return getSignTypeName(type) + "0";
-		}
-		
-		if (variant == 0)
-		{
-			return "misc0b";
-		}
-		else if ((variant >= 1 && variant <= 4) || 
-				(variant >= 100 && variant <= 101) ||
-				variant == 113 ||
-				variant == 119)
-		{
-			return "misc1b";
-		}
-		else if ((variant >= 5 && variant <= 8) ||
-				(variant >= 117 && variant <= 118))
-		{
-			return "misc2b";
-		}
-		else if ((variant >= 9 && variant <= 32) || 
-				(variant >= 76 && variant <= 99) ||
-				(variant >= 102 && variant <= 105) ||
-				(variant >= 108 && variant <= 109) ||
-				variant == 112 ||
-				(variant >= 114 && variant <= 116))
-		{
-			return "misc3b";
-		}
-		else if ((variant >= 33 && variant <= 40) || 
-				(variant >= 106 && variant <= 107) ||
-				(variant >= 110 && variant <= 111) ||
-				(variant >= 120 && variant <= 124))
-		{
-			return "misc4b";
-		}
-		else if (variant >= 41 && variant <= 45)
-		{
-			return "misc5b";
-		}
-		else if (variant >= 46 && variant <= 47)
-		{
-			return "misc6b";
-		}
-		else if (variant >= 48 && variant <= 50)
-		{
-			return "misc7b";
-		}
-		else
-		{
-			return "misc8b";
-		}
-	}
-
-	public static int getSignTypeByName(String type)
-	{
-		switch(type)
+		switch(name)
 		{
 			case "circle":
 				return 0;
@@ -199,49 +195,57 @@ public class SignTileEntity extends TileEntity {
 				return 5;
 		}
 		
-		return 0;
+		return -1;
 	}
 	
 	public String getFriendlySignName()
 	{
-		switch(type)
+		if (typeLegacy != -1)
 		{
-			case 0:
-				return "Circle";
-			case 1:
-				return "Diamond";
-			case 2:
-				return "Miscellaneous";
-			case 3:
-				return "Rectangle";
-			case 4:
-				return "Square";
-			case 5:
-				return "Triangle";
+			switch(typeLegacy)
+			{
+				case 0:
+					return "Circle";
+				case 1:
+					return "Diamond";
+				case 2:
+					return "Miscellaneous";
+				case 3:
+					return "Rectangle";
+				case 4:
+					return "Square";
+				case 5:
+					return "Triangle";
+			}
 		}
-		
+		else if (id != null)
+		{
+			Sign sign = ModTrafficControl.instance.signRepo.getSignByID(id);
+			if (sign != null)
+			{
+				return ModTrafficControl.instance.signRepo.getFriendlyTypeName(sign.getType());
+			}
+		}
 		return "Unknown";
-	}
-	
-	public void nextType()
-	{
-		if (type == MAXTYPE)
-		{
-			type = 0;
-		}
-		else
-		{
-			type++;
-		}
-		
-		variant = 0;
 	}
 	
 	@Override
 	public NBTTagCompound getUpdateTag() {
 		NBTTagCompound compound = super.getUpdateTag();
-		compound.setInteger("type", type);
-		compound.setInteger("variant", variant);
+		compound.setInteger("type", typeLegacy);
+		compound.setInteger("variant", variantLegacy);
+		if (id != null)
+		{
+			compound.setTag("signid", NBTUtil.createUUIDTag(id));
+		}
+		
+		if (textLines != null)
+		{
+			for(int i = 0; i < textLines.size(); i++)
+			{
+				compound.setString("text" + i, textLines.get(i));
+			}
+		}
 		
 		return compound;
 	}
@@ -250,8 +254,29 @@ public class SignTileEntity extends TileEntity {
 	public void handleUpdateTag(NBTTagCompound tag) {
 		super.handleUpdateTag(tag);
 		
-		this.type = tag.getInteger("type");
-		this.variant = tag.getInteger("variant");
+		this.typeLegacy = tag.getInteger("type");
+		this.variantLegacy = tag.getInteger("variant");
+		if (tag.hasKey("signid"))
+		{
+			this.id = NBTUtil.getUUIDFromTag(tag.getCompoundTag("signid"));
+		}
+		
+		if (textLines != null)
+		{
+			textLines.clear();
+		}
+		
+		if (tag.hasKey("text0"))
+		{
+			textLines = new ArrayList<>();
+			int i = 0;
+			while(tag.hasKey("text" + i))
+			{
+				textLines.add(tag.getString("text" + i));
+				i++;
+			}
+		}
+		
 		IBlockState state = world.getBlockState(getPos());
 			
 		world.notifyBlockUpdate(getPos(), state, state, 3);
@@ -268,171 +293,6 @@ public class SignTileEntity extends TileEntity {
 		
 		NBTTagCompound nbt = pkt.getNbtCompound();
 		handleUpdateTag(nbt);
-	}
-
-	private static boolean signsInitialized = false;
-	@SideOnly(Side.CLIENT)
-	public static void initializeSigns()
-	{
-		if (signsInitialized)
-		{
-			return;
-		}
-		
-		try
-		{
-			ResourceLocation signJsonRL = new ResourceLocation("trafficcontrol:misc/signs.json");
-			InputStream jsonStream = Minecraft.getMinecraft().getResourceManager().getResource(signJsonRL).getInputStream();
-			InputStreamReader streamReader= new InputStreamReader(jsonStream);
-			
-			JsonArray jsonArray = new JsonParser().parse(streamReader).getAsJsonArray();
-			Iterator<JsonElement> arrayIterator = jsonArray.iterator();
-			
-			HashMap<Tuple<Integer, Integer>, Sign> signsbyTypeVariant = new HashMap<>();
-			HashMap<Integer, Integer> maxVariantsByType = new HashMap<>();
-			
-			while(arrayIterator.hasNext())
-			{
-				JsonElement element = arrayIterator.next();
-				if (!element.isJsonObject())
-				{
-					continue;
-				}
-				
-				JsonObject obj = element.getAsJsonObject();
-				String name = obj.get("name").getAsString();
-				String type = obj.get("type").getAsString();
-				int typeID = SignTileEntity.getSignTypeByName(type);
-				int variant = obj.get("variant").getAsInt();
-				
-				int currentMaxVariant = maxVariantsByType.getOrDefault(typeID, 0);
-				if (variant > currentMaxVariant)
-				{
-					maxVariantsByType.put(typeID, variant);
-				}
-				
-				String tooltip = null;
-				String note = null;
-				
-				if (obj.has("tooltip"))
-				{
-					tooltip = obj.get("tooltip").getAsString();
-				}
-				
-				if (obj.has("note"))
-				{
-					note = obj.get("note").getAsString();
-				}
-				
-				if ((note == null || note.equals("")) && tooltip != null && !tooltip.equals(""))
-				{
-					note = tooltip;
-				}
-				
-				Sign newImage = new Sign(
-						new ResourceLocation("trafficcontrol:textures/blocks/sign/" + type + "/" + type + variant + ".png"),
-						name,
-						typeID,
-						variant,
-						tooltip,
-						note);
-				
-				signsbyTypeVariant.put(new Tuple<Integer, Integer>(typeID, variant), newImage);				
-			}
-			
-			SIGNS_BY_TYPE_VARIANT = ImmutableMap.copyOf(signsbyTypeVariant);
-			MAX_VARIANTS_BY_TYPE = ImmutableMap.copyOf(maxVariantsByType);
-			
-			signsInitialized = true;
-		}
-		catch(Exception ex)
-		{
-			FMLCommonHandler.instance().raiseException(ex, "Failed to load signs", true);
-		}
-	}
-	
-	public static class Sign
-	{
-		private ResourceLocation imageResourceLocation;
-		private String name;
-		private int type;
-		private int variant;
-		private String tooltip;
-		private String note;
-		
-		public Sign(ResourceLocation imageRL, String name, int type, int variant, String toolTip, String note)
-		{
-			imageResourceLocation = imageRL;
-			this.name = name;
-			this.type = type;
-			this.variant = variant;
-			this.tooltip = toolTip;
-			this.note = note;
-		}
-		
-		public String getName() { return name; }
-		
-		public int getType() { return type; }
-		
-		public int getVariant() { return variant; }
-		
-		public ResourceLocation getImageResourceLocation() { return imageResourceLocation; }
-		
-		public String getToolTip() { return tooltip; }
-		
-		public String getNote() { return note; }
-		
-		public static class TestComparator implements Comparator<Tuple<Integer, Integer>>
-		{
-			@Override
-			public int compare(Tuple<Integer, Integer> arg0, Tuple<Integer, Integer> arg1) {
-				if (arg0 == null && arg1 == null)
-				{
-					return 0;
-				}
-				
-				if (arg0 == null && arg1 != null)
-				{
-					return -1;
-				}
-				
-				if (arg1 == null && arg0 != null)
-				{
-					return 1;
-				}
-				
-				if (arg0.getFirst() != arg1.getFirst())
-				{
-					if (arg0.getFirst() > arg1.getFirst())
-					{
-						return 1;
-					}
-					else
-					{
-						return -1;
-					}
-				}
-				else
-				{
-					if (arg0.getSecond() == arg1.getSecond())
-					{
-						return 0;
-					}
-					else
-					{
-						if (arg0.getSecond() > arg1.getSecond())
-						{
-							return 1;
-						}
-						else
-						{
-							return -1;
-						}
-					}
-				}
-			}
-			
-		}
 	}
 
 	@Override
