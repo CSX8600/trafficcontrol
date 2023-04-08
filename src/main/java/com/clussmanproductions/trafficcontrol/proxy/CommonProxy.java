@@ -64,6 +64,7 @@ import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight2Frame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight4Frame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight5Frame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightBulb;
+import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightCard;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightDoghouseFrame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightFrame;
 import com.clussmanproductions.trafficcontrol.network.PacketHandler;
@@ -198,6 +199,7 @@ public class CommonProxy {
 		e.getRegistry().register(new ItemTrafficLight1Frame());
 		e.getRegistry().register(new ItemTrafficLight2Frame());
 		e.getRegistry().register(new ItemTrafficLight4Frame());
+		e.getRegistry().register(new ItemTrafficLightCard(4));
 
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_base).setRegistryName(ModBlocks.crossing_gate_base.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_gate).setRegistryName(ModBlocks.crossing_gate_gate.getRegistryName()));

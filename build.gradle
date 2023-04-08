@@ -67,7 +67,8 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
 	compile fileTree(dir:'deps',include:'*.jar')
-	compile 'li.cil.oc:opencomputers-1.12.2-forge:1.7.7'
+	compile 'li.cil.oc:opencomputers-1.12.2-forge:1.7.7:api'
+	runtime 'li.cil.oc:opencomputers-1.12.2-forge:1.7.7'
 }
 
 processResources {
