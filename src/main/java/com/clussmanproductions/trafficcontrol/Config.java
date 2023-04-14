@@ -34,7 +34,7 @@ public class Config {
 	public static int trafficLightCardT1Capacity = 16;
 	public static int trafficLightCardT2Capacity = 144;
 	public static int trafficLightCardT3Capacity = 384;
-	public static float trafficLightCardDrawPerBlock = 0.001F;
+	public static float trafficLightCardDrawPerBlock = 0.01F;
 	
 	public static void readConfig()
 	{
