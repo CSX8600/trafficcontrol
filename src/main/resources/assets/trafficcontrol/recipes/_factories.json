@@ -1,0 +1,5 @@
+{
+	"recipes": {
+		"traffic_light_cards": "com.clussmanproductions.trafficcontrol.recipe.RecipeFactory"
+	}
+}

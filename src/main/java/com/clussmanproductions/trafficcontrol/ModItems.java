@@ -42,6 +42,10 @@ public class ModItems {
 		traffic_light_1_frame.initModel();
 		traffic_light_2_frame.initModel();
 		traffic_light_4_frame.initModel();
-		traffic_light_card.initModel();
+		
+		if (ModTrafficControl.OC_INSTALLED)
+		{
+			traffic_light_card.initModel();
+		}
 	}
 }

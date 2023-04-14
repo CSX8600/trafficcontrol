@@ -31,6 +31,10 @@ public class Config {
 				"de.maxhenkel.car.entity.car.base.EntityVehicleBase"
 			};
 	public static int sensorScanHeight = 5;
+	public static int trafficLightCardT1Capacity = 16;
+	public static int trafficLightCardT2Capacity = 144;
+	public static int trafficLightCardT3Capacity = 384;
+	public static float trafficLightCardDrawPerBlock = 0.001F;
 	
 	public static void readConfig()
 	{
@@ -63,5 +67,9 @@ public class Config {
 		sensorScanHeight = cfg.getInt("sensorScanHeight", CATEGORY_TRAFFIC_LIGHT, sensorScanHeight, 0, 10, "How far up (in blocks) should traffic signal sensors scan for entities? [Min = 0, Max = 10, Default = 5]");
 		parallelScans = cfg.getInt("parallelScans", CATEGORY_GENERAL, parallelScans, 1, 20, "How many crossing relay boxes should be scanned per tick?  PERFORMANCE NOTE: Total blocks scanned = borderTick * parallelScans.  The higher this number, the amount of blocks scanned per tick is multiplied.");
 		tooltipCharWrapLength = cfg.getInt("tooltipCharWrapLength", CATEGORY_GENERAL, tooltipCharWrapLength, 64, 5412, "How many letters should be rendered in a tooltip before it wraps down to the next line?");
+		trafficLightCardT1Capacity = cfg.getInt("trafficLightCardT1Capacity", CATEGORY_TRAFFIC_LIGHT, trafficLightCardT1Capacity, 1, Integer.MAX_VALUE, "How many traffic lights should be allowed to be paired with a Tier 1 Traffic Light Card?");
+		trafficLightCardT2Capacity = cfg.getInt("trafficLightCardT2Capacity", CATEGORY_TRAFFIC_LIGHT, trafficLightCardT2Capacity, 1, Integer.MAX_VALUE, "How many traffic lights should be allowed to be paired with a Tier 2 Traffic Light Card?");
+		trafficLightCardT3Capacity = cfg.getInt("trafficLightCardT3Capacity", CATEGORY_TRAFFIC_LIGHT, trafficLightCardT3Capacity, 1, Integer.MAX_VALUE, "How many traffic lights should be allowed to be paired with a Tier 3 Traffic Light Card?");
+		trafficLightCardDrawPerBlock = cfg.getFloat("trafficLightCardDrawPerBlock", CATEGORY_TRAFFIC_LIGHT, trafficLightCardDrawPerBlock, 0, Float.MAX_VALUE, "How much energy should the traffic control card consume times number of blocks away the traffic light is?");
 	}
 }

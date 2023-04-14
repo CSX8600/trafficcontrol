@@ -67,6 +67,10 @@ trafficcontrol.concrete_barrier.brown.name=Brown Concrete Barrier
 trafficcontrol.concrete_barrier.green.name=Green Concrete Barrier
 trafficcontrol.concrete_barrier.red.name=Red Concrete Barrier
 trafficcontrol.concrete_barrier.black.name=Black Concrete Barrier
+item.trafficcontrol.traffic_light_card.tier1.name=Traffic Light Card (Tier 1)
+item.trafficcontrol.traffic_light_card.tier2.name=Traffic Light Card (Tier 2)
+item.trafficcontrol.traffic_light_card.tier3.name=Traffic Light Card (Tier 3)
+item.trafficcontrol.traffic_light_card.creative.name=Traffic Light Card (Creative)
 
 #Tab
 itemGroup.Traffic Control=Traffic Control
