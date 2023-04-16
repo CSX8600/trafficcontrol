@@ -1,6 +1,8 @@
 package com.clussmanproductions.trafficcontrol.proxy;
 
 import java.io.File;
+import java.util.function.Consumer;
+import java.util.function.IntConsumer;
 
 import com.clussmanproductions.trafficcontrol.Config;
 import com.clussmanproductions.trafficcontrol.ModBlocks;
@@ -67,6 +69,7 @@ import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightBulb;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightDoghouseFrame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightFrame;
 import com.clussmanproductions.trafficcontrol.network.PacketHandler;
+import com.clussmanproductions.trafficcontrol.signs.SignRepository;
 import com.clussmanproductions.trafficcontrol.tileentity.ConcreteBarrierTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingLampsTileEntity;
@@ -98,13 +101,18 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.ProgressManager;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.ProgressManager.ProgressBar;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @EventBusSubscriber
 public class CommonProxy {
@@ -272,7 +280,90 @@ public class CommonProxy {
 	public void init(FMLInitializationEvent e)
 	{
 		NetworkRegistry.INSTANCE.registerGuiHandler(ModTrafficControl.instance, new GuiProxy());
+		
+		Consumer<String> signRepoSplashUpdate;
+		IntConsumer signRepoSplashStepsUpdate;
+		
+		if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
+		{
+			signRepoSplashUpdate = getClientSplashUpdate();
+			signRepoSplashStepsUpdate = getClientStepsUpdate();
+		}
+		else
+		{
+			signRepoSplashUpdate = getServerSplashUpdate();
+			signRepoSplashStepsUpdate = getServerStepsUpdate();
+		}
+		
+		ModTrafficControl.instance.signRepo = new SignRepository();
+		ModTrafficControl.instance.signRepo.init(signRepoSplashUpdate, signRepoSplashStepsUpdate);
+		
+		if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
+		{
+			endSignInit();
+		}
 	}
+	
+	@SideOnly(Side.CLIENT)
+	ProgressBar signLoadProgress;
+	
+	@SideOnly(Side.CLIENT)
+	private Consumer<String> getClientSplashUpdate()
+	{
+		return splash ->
+		{
+			if (signLoadProgress == null)
+			{
+				return;
+			}
+			
+			if (signLoadProgress.getStep() >= signLoadProgress.getSteps())
+			{
+				return;
+			}
+			
+			signLoadProgress.step(splash);
+		};
+	}
+	
+	@SideOnly(Side.SERVER)
+	private Consumer<String> getServerSplashUpdate()
+	{
+		return splash ->
+		{
+			ModTrafficControl.logger.info(splash);
+		};
+	}
+	
+	@SideOnly(Side.CLIENT)
+	private IntConsumer getClientStepsUpdate()
+	{
+		return steps ->
+		{
+			if (signLoadProgress != null)
+			{
+				ProgressManager.pop(signLoadProgress);
+			}
+			
+			signLoadProgress = ProgressManager.push("Loading Signs", steps);
+		};
+	}
+	
+	@SideOnly(Side.SERVER)
+	private IntConsumer getServerStepsUpdate()
+	{
+		return steps -> {};
+	}
+	
+	@SideOnly(Side.CLIENT)
+	private void endSignInit()
+	{
+		if (signLoadProgress != null)
+		{
+			ProgressManager.pop(signLoadProgress);
+		}
+	}
+	
 
 	public void postInit(FMLPostInitializationEvent e)
 	{

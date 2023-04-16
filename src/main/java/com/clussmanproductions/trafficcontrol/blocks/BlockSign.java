@@ -5,6 +5,7 @@ import java.util.Arrays;
 import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.gui.GuiProxy;
+import com.clussmanproductions.trafficcontrol.signs.Sign;
 import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.render.SignRenderer;
 import com.clussmanproductions.trafficcontrol.util.CustomAngleCalculator;
@@ -20,6 +21,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -101,18 +103,9 @@ public class BlockSign extends Block implements ITileEntityProvider {
 		if (te != null && te instanceof SignTileEntity)
 		{
 			SignTileEntity signTE = (SignTileEntity)te;
-			
-			if (signTE.getType() == 2)
+			if (signTE.getSign() != null)
 			{
-				int variant = signTE.getVariant();
-				
-				if ((variant >= 33 && variant <= 40) || 
-					(variant >= 106 && variant <= 107) ||
-					(variant >= 110 && variant <= 111) ||
-					(variant >= 120 && variant <= 124))
-				{
-					isHalfHeight = true;
-				}
+				isHalfHeight = signTE.getSign().getHalfHeight();
 			}
 		}
 		
@@ -189,6 +182,17 @@ public class BlockSign extends Block implements ITileEntityProvider {
 			float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
 		return getDefaultState().withProperty(ROTATION, CustomAngleCalculator.getRotationForYaw(placer.rotationYaw));
 	}
+	
+	@Override
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
+			ItemStack stack) {
+		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+		SignTileEntity signTE = (SignTileEntity)worldIn.getTileEntity(pos);
+		if (signTE.getID() == null && signTE.getVariantLegacy() == -1 && signTE.getTypeLegacy() == -1)
+		{
+			signTE.setID(Sign.DEFAULT_BLANK_SIGN);
+		}
+	}
 
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
@@ -201,19 +205,9 @@ public class BlockSign extends Block implements ITileEntityProvider {
 		}
 		
 		SignTileEntity te = (SignTileEntity)worldTE;
-		if (te != null)
+		if (te != null && te.getSign() != null)
 		{
-			int type = te.getType();
-			int variant = te.getVariant();
-			
-			if (type == 2 &&
-				(variant >= 33 && variant <= 40) || 
-				(variant >= 106 && variant <= 107) ||
-				(variant >= 110 && variant <= 111) ||
-				(variant >= 120 && variant <= 124))
-			{
-				poleHeight = 0.5;
-			}
+			poleHeight = te.getSign().getHalfHeight() ? 0.5 : 1;
 		}
 		
 		int rotation = state.getValue(ROTATION);
