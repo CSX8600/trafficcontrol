@@ -93,7 +93,16 @@ public class SignGui extends GuiScreen {
 					textWidth = leftPanelWidth;
 				}
 	
-				fontRenderer.drawSplitString(note, leftPanelHorizontalCenter - (textWidth / 2), height - 35, textWidth, 0xFFFFFF);
+				int x = leftPanelHorizontalCenter - (textWidth / 2);
+				int y = height - 35;
+				fontRenderer.drawSplitString(note, x, y, textWidth, 0xFFFFFF);
+				
+				if (fontRenderer.listFormattedStringToWidth(note, textWidth).size() > 3 && mouseX > x && mouseX < x + textWidth && mouseY > y && mouseY < height)
+				{
+					drawHoveringText(note, mouseX, mouseY);
+					GlStateManager.color(255, 255, 255);
+					GlStateManager.disableLighting();
+				}
 			}
 			
 			mc.renderEngine.bindTexture(currentSign.getFrontImageResourceLocation());
@@ -230,7 +239,12 @@ public class SignGui extends GuiScreen {
 			}
 		}
 		
-		list.draw(mouseX, mouseY, fontRenderer, text -> x -> y -> drawHoveringText(text, x, y));
+		list.draw(mouseX, mouseY, fontRenderer, text -> x -> y -> 
+		{
+			drawHoveringText(text, x, y);
+			GlStateManager.color(255, 255, 255);
+			GlStateManager.disableLighting();
+		});
 	}
 
 	@Override
