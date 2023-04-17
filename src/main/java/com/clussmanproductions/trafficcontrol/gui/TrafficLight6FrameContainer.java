@@ -32,13 +32,13 @@ public class TrafficLight6FrameContainer extends BaseTrafficLightFrameContainer 
 
 	@Override
 	protected int getYSize() {
-		// TODO Auto-generated method stub
+		
 		return 210;
 	}
 
 	@Override
 	protected BaseItemTrafficLightFrame getValidFrameItem() {
-		// TODO Auto-generated method stub
+		
 		return ModItems.traffic_light_6_frame;
 	}
 
