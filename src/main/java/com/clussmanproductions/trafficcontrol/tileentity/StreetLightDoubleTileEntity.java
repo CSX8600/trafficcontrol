@@ -84,12 +84,12 @@ public class StreetLightDoubleTileEntity extends TileEntity  {
 	{
 		IBlockState proposedBlockState = world.getBlockState(pos);
 		
-		if (proposedBlockState.getBlock() != Blocks.AIR)
+		if (proposedBlockState.getBlock() != ModBlocks.light_source && proposedBlockState.getBlock() != Blocks.AIR)
 		{
 			pos = pos.up();
 			proposedBlockState = world.getBlockState(pos);
 			
-			if (proposedBlockState.getBlock() != Blocks.AIR)
+			if (proposedBlockState.getBlock() != ModBlocks.light_source && proposedBlockState.getBlock() != Blocks.AIR)
 			{
 				proposedBlockState = null;
 			}

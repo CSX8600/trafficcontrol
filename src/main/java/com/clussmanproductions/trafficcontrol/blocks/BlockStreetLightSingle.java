@@ -138,7 +138,8 @@ public class BlockStreetLightSingle extends Block implements ITileEntityProvider
 		
 		if (te instanceof StreetLightSingleTileEntity)
 		{
-			StreetLightSingleTileEntity watchable = (StreetLightSingleTileEntity)te;
+			StreetLightSingleTileEntity sls = (StreetLightSingleTileEntity)te;
+			sls.removeLightSources();
 		}
 		
 		super.breakBlock(worldIn, pos, state);
@@ -170,6 +171,8 @@ public class BlockStreetLightSingle extends Block implements ITileEntityProvider
 			{
 				sls.addLightSources();
 			}
+			
+			worldIn.notifyBlockUpdate(fromPos, state, state, 3);
 		}
 	}
 
