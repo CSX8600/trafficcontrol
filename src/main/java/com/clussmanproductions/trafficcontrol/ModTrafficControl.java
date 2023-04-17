@@ -3,6 +3,7 @@ package com.clussmanproductions.trafficcontrol;
 import org.apache.logging.log4j.Logger;
 
 import com.clussmanproductions.trafficcontrol.proxy.CommonProxy;
+import com.clussmanproductions.trafficcontrol.signs.SignRepository;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -36,6 +37,8 @@ public class ModTrafficControl {
 	public static ModTrafficControl instance;
 
 	public static Logger logger;
+	
+	public SignRepository signRepo;
 
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)
