@@ -161,8 +161,8 @@ public abstract class BaseTrafficLightRenderer extends TileEntitySpecialRenderer
 				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/sgreen.png");
 			case GreenArrowLeft:
 				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/green_arrow_left.png");
-			case GreenArrowuturn:
-				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/green_arrow_uturn.png");
+			case GreenArrowUTurn:
+				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/green_arrow_UTurn.png");
 			case Red:
 				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/red.png");
 			case TunnelRed:
@@ -171,16 +171,16 @@ public abstract class BaseTrafficLightRenderer extends TileEntitySpecialRenderer
 				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/sred.png");
 			case RedArrowLeft:
 				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/red_arrow_left.png");
-			case RedArrowuturn:
-				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/red_arrow_uturn.png");
+			case RedArrowUTurn:
+				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/red_arrow_UTurn.png");
 			case Yellow:
 				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/yellow_solid.png");
 			case SYellow:
 				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/syellow.png");
 			case YellowArrowLeft:
 				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/yellow_arrow_left.png");
-			case YellowArrowuturn:
-				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/yellow_arrow_uturn.png");
+			case YellowArrowUTurn:
+				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/yellow_arrow_UTurn.png");
 			case Cross:
 				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/cross.png");
 			case DontCross:

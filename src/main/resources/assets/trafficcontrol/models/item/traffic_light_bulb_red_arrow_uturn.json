@@ -2,6 +2,6 @@
 	"parent": "trafficcontrol:item/traffic_light_bulb",
 	"textures":
 	{
-		"lampTex": "trafficcontrol:blocks/red_arrow_uturn"
+		"lampTex": "trafficcontrol:blocks/red_arrow_UTurn"
 	}
 }
