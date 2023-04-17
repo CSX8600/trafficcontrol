@@ -194,15 +194,10 @@ public class ModBlocks {
     traffic_sensor_straight.initModel();
     street_sign.initModel();
     traffic_light_5.initModel();
-
     traffic_light_doghouse.initModel();
-
     traffic_light_1.initModel();
-
     traffic_light_2.initModel();
-
     traffic_light_4.initModel();
-
     pedestrian_button.initModel();
     traffic_sensor_right.initModel();
     traffic_light_6.initModel();
