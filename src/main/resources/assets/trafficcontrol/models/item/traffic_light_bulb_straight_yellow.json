@@ -2,6 +2,6 @@
 	"parent": "trafficcontrol:item/traffic_light_bulb",
 	"textures":
 	{
-		"lampTex": "trafficcontrol:blocks/syellow"
+		"lampTex": "trafficcontrol:blocks/straight_yellow"
 	}
 }

@@ -164,7 +164,6 @@ public class CommonProxy {
 		e.getRegistry().register(new BlockTrafficLight2());
 		e.getRegistry().register(new BlockTrafficLight4());
 		e.getRegistry().register(new BlockTrafficLight6());
-		
 		e.getRegistry().register(new BlockPedestrianButton());
 		e.getRegistry().register(new BlockTrafficSensorRight());
 
@@ -191,7 +190,6 @@ public class CommonProxy {
 		GameRegistry.registerTileEntity(TrafficLight2TileEntity.class, ModTrafficControl.MODID + "_trafficlight2");
 		GameRegistry.registerTileEntity(TrafficLight4TileEntity.class, ModTrafficControl.MODID + "_trafficlight4");
 		GameRegistry.registerTileEntity(TrafficLight6TileEntity.class, ModTrafficControl.MODID + "_trafficlight6");
-		
 		GameRegistry.registerTileEntity(PedestrianButtonTileEntity.class, ModTrafficControl.MODID + "_pedestrianbutton");
 	}
 
@@ -208,8 +206,6 @@ public class CommonProxy {
 		e.getRegistry().register(new ItemTrafficLight2Frame());
 		e.getRegistry().register(new ItemTrafficLight4Frame());
 		e.getRegistry().register(new ItemTrafficLight6Frame());
-		
-
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_base).setRegistryName(ModBlocks.crossing_gate_base.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_gate).setRegistryName(ModBlocks.crossing_gate_gate.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_lamps).setRegistryName(ModBlocks.crossing_gate_lamps.getRegistryName()));

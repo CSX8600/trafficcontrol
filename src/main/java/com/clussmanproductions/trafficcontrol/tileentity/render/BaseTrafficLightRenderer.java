@@ -155,20 +155,20 @@ public abstract class BaseTrafficLightRenderer extends TileEntitySpecialRenderer
 		{
 			case Green:
 				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/green.png");
-			case SGreen:
-				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/sgreen.png");
+			case StraightGreen:
+				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/straight_green.png");
 			case GreenArrowLeft:
 				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/green_arrow_left.png");
 			case Red:
 				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/red.png");
-			case SRed:
-				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/sred.png");
+			case StraightRed:
+				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/straight_red.png");
 			case RedArrowLeft:
 				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/red_arrow_left.png");
 			case Yellow:
 				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/yellow_solid.png");
-			case SYellow:
-				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/syellow.png");
+			case StraightYellow:
+				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/straight_yellow.png");
 			case YellowArrowLeft:
 				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/yellow_arrow_left.png");
 			case Cross:
@@ -179,9 +179,9 @@ public abstract class BaseTrafficLightRenderer extends TileEntitySpecialRenderer
 				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/green_arrow_right.png");
 			case RedArrowRight:
 				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/red_arrow_right.png");
-				case NoRightTurn:
+			case NoRightTurn:
 				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/no_right_turn.png");
-				case NoLeftTurn:
+			case NoLeftTurn:
 				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/no_left_turn.png");
 			case YellowArrowRight:
 				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/yellow_arrow_right.png");
