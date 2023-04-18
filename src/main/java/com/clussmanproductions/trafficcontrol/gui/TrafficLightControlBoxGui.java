@@ -323,9 +323,6 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("trafficcontrol:blocks/green");
 		drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 45, sprite, 16, 16);
 		
-		
-		drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 45, sprite, 16, 16);
-		
 		sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("trafficcontrol:blocks/red_arrow_left");
 		drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 25, sprite, 16, 16);
 
