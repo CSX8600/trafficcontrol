@@ -17,7 +17,7 @@ public class Config {
 	public static int tooltipCharWrapLength = 256;
 	public static String[] sensorClasses = new String[] 
 			{
-				"minecraftransportsimulator.vehicles.main.EntityVehicleD_Moving",
+				"minecrafttransportsimulator.vehicles.main.EntityVehicleD_Moving",
 				"com.mrcrayfish.vehicle.entity.EntityVehicle",
 				"com.flansmod.common.driveables.EntityDriveable",
 				"net.fexcraft.mod.fvtm.sys.legacy.LandVehicle",
