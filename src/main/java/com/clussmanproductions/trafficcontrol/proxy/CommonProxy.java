@@ -342,6 +342,11 @@ public class CommonProxy {
 		{
 			if (signLoadProgress != null)
 			{
+				while(signLoadProgress.getStep() < signLoadProgress.getSteps()) // Finish out progress bar
+				{
+					signLoadProgress.step("");
+				}
+				
 				ProgressManager.pop(signLoadProgress);
 			}
 			
