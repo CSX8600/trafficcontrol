@@ -22,8 +22,8 @@
 		},
 		{
 			"name": "Gearbox",
-			"from": [9, 4, 5],
-			"to": [15, 12, 11],
+			"from": [9, 6, 5],
+			"to": [15, 14, 11],
 			"rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
 			"faces": {
 				"north": {"uv": [0, 0, 6, 8], "texture": "#0"},
