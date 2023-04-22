@@ -1,0 +1,24 @@
+{ 
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "LR ",
+    "   ",
+    "   "  ],
+  "key": {
+  "R":
+	  {
+	  	"type": "forge:ore_dict",
+	  	"ore": "dyeRed"
+	  },
+	"L":
+	  {
+	    "item": "trafficcontrol:traffic_light_bulb",
+	    "data": 3
+	  }
+  },
+  "result": {
+    "item": "trafficcontrol:traffic_light_bulb",
+    "count": 1,
+    "data": 12
+  }
+}
