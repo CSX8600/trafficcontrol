@@ -20,6 +20,7 @@ public class ModTrafficControl {
 	public static final String MODID = "trafficcontrol";
 	public static final String VERSION = "0.4.2";
 	public static boolean IR_INSTALLED = false;
+	public static boolean OC_INSTALLED = false;
 	public static CreativeTabs CREATIVE_TAB = new CreativeTabs("Traffic Control") {
 
 		@Override
@@ -43,6 +44,7 @@ public class ModTrafficControl {
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)
 	{
+		OC_INSTALLED = Loader.isModLoaded("opencomputers");
 		logger = e.getModLog();
 		proxy.preInit(e);
 	}

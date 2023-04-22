@@ -68,9 +68,11 @@ import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight2Frame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight4Frame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight5Frame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightBulb;
+import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightCard;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightDoghouseFrame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightFrame;
 import com.clussmanproductions.trafficcontrol.network.PacketHandler;
+import com.clussmanproductions.trafficcontrol.oc.TrafficLightCardDriver;
 import com.clussmanproductions.trafficcontrol.signs.SignRepository;
 import com.clussmanproductions.trafficcontrol.tileentity.ConcreteBarrierTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
@@ -99,6 +101,7 @@ import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight6Frame;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLight6TileEntity;
 
 
+import li.cil.oc.api.Driver;
 import net.minecraft.block.Block;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
@@ -214,6 +217,11 @@ public class CommonProxy {
 		e.getRegistry().register(new ItemTrafficLight2Frame());
 		e.getRegistry().register(new ItemTrafficLight4Frame());
 		e.getRegistry().register(new ItemTrafficLight6Frame());
+		if(ModTrafficControl.OC_INSTALLED)
+		{
+			e.getRegistry().register(new ItemTrafficLightCard());
+		}
+
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_base).setRegistryName(ModBlocks.crossing_gate_base.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_gate).setRegistryName(ModBlocks.crossing_gate_gate.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_lamps).setRegistryName(ModBlocks.crossing_gate_lamps.getRegistryName()));
@@ -287,10 +295,10 @@ public class CommonProxy {
 	public void init(FMLInitializationEvent e)
 	{
 		NetworkRegistry.INSTANCE.registerGuiHandler(ModTrafficControl.instance, new GuiProxy());
-		
+
 		Consumer<String> signRepoSplashUpdate;
 		IntConsumer signRepoSplashStepsUpdate;
-		
+
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
 		{
 			signRepoSplashUpdate = getClientSplashUpdate();
@@ -301,19 +309,29 @@ public class CommonProxy {
 			signRepoSplashUpdate = getServerSplashUpdate();
 			signRepoSplashStepsUpdate = getServerStepsUpdate();
 		}
-		
+
 		ModTrafficControl.instance.signRepo = new SignRepository();
 		ModTrafficControl.instance.signRepo.init(signRepoSplashUpdate, signRepoSplashStepsUpdate);
-		
+
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
 		{
 			endSignInit();
 		}
+
+		if (ModTrafficControl.OC_INSTALLED)
+		{
+			addOCDriver();
+		}
 	}
-	
+
+	private void addOCDriver()
+	{
+		Driver.add(new TrafficLightCardDriver()	);
+	}
+
 	@SideOnly(Side.CLIENT)
 	ProgressBar signLoadProgress;
-	
+
 	@SideOnly(Side.CLIENT)
 	private Consumer<String> getClientSplashUpdate()
 	{
@@ -323,16 +341,16 @@ public class CommonProxy {
 			{
 				return;
 			}
-			
+
 			if (signLoadProgress.getStep() >= signLoadProgress.getSteps())
 			{
 				return;
 			}
-			
+
 			signLoadProgress.step(splash);
 		};
 	}
-	
+
 	@SideOnly(Side.SERVER)
 	private Consumer<String> getServerSplashUpdate()
 	{
@@ -341,7 +359,7 @@ public class CommonProxy {
 			ModTrafficControl.logger.info(splash);
 		};
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	private IntConsumer getClientStepsUpdate()
 	{
@@ -351,17 +369,17 @@ public class CommonProxy {
 			{
 				ProgressManager.pop(signLoadProgress);
 			}
-			
+
 			signLoadProgress = ProgressManager.push("Loading Signs", steps);
 		};
 	}
-	
+
 	@SideOnly(Side.SERVER)
 	private IntConsumer getServerStepsUpdate()
 	{
 		return steps -> {};
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	private void endSignInit()
 	{
@@ -370,7 +388,7 @@ public class CommonProxy {
 			ProgressManager.pop(signLoadProgress);
 		}
 	}
-	
+
 
 	public void postInit(FMLPostInitializationEvent e)
 	{

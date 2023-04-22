@@ -4,7 +4,6 @@ import org.lwjgl.input.Keyboard;
 
 import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModItems;
-import com.clussmanproductions.trafficcontrol.signs.SignRepository;
 
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.event.ModelRegistryEvent;
