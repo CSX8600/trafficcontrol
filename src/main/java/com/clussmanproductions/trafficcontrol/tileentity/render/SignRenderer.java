@@ -135,12 +135,13 @@ public class SignRenderer extends TileEntitySpecialRenderer<SignTileEntity> {
 			
 			// Reverse scale to sign
 			GlStateManager.scale(16F, 16F, 1);
-			GlStateManager.translate(0, 7, -0.0001);
+			GlStateManager.translate(0, 9, -0.0001);
 			GlStateManager.scale(fontRenderer.FONT_HEIGHT, -fontRenderer.FONT_HEIGHT, 1);
 		}
 		
 		// Draw back
 		GlStateManager.translate(0, 0, -0.01);
+		GlStateManager.color(1, 1, 1);
 		texManager.bindTexture(sign.getBackImageResourceLocation());
 		
 		builder = tess.getBuffer();

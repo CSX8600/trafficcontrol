@@ -2,7 +2,6 @@ package com.clussmanproductions.trafficcontrol.gui;
 
 import java.io.IOException;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 import org.lwjgl.input.Keyboard;
 
@@ -630,7 +629,8 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		
 		if (Keyboard.KEY_BACK == keyCode ||
 				Keyboard.KEY_DELETE == keyCode ||
-				Character.isDigit(typedChar))
+				Character.isDigit(typedChar) ||
+				typedChar == '.')
 		{
 			textBox.textboxKeyTyped(typedChar, keyCode);
 			
@@ -642,8 +642,12 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 				}
 				else
 				{
-					double value = Double.parseDouble(textBox.getText());
-					onTypeSuccess.accept(value);
+					try
+					{
+						double value = Double.parseDouble(textBox.getText());
+						onTypeSuccess.accept(value);
+					}
+					catch(NumberFormatException | NullPointerException ex) {}
 				}
 			}
 		}

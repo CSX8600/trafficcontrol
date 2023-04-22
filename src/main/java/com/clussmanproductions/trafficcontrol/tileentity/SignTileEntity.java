@@ -139,7 +139,7 @@ public class SignTileEntity extends TileEntity {
 	public Sign getSign()
 	{
 		Sign sign = null;
-		if (typeLegacy != -1)
+		if (variantLegacy != -1)
 		{
 			sign = ModTrafficControl.instance.signRepo.getSignByTypeVariant(getSignTypeName(typeLegacy), variantLegacy);
 		}
