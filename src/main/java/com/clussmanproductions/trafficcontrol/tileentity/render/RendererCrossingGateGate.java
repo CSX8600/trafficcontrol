@@ -6,6 +6,7 @@ import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase.EnumState;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity.GateLightCount;
 import com.clussmanproductions.trafficcontrol.tileentity.render.TESRHelper.Box;
 import com.clussmanproductions.trafficcontrol.tileentity.render.TESRHelper.TextureInfo;
 import com.clussmanproductions.trafficcontrol.tileentity.render.TESRHelper.TextureInfoCollection;
@@ -47,9 +48,9 @@ public class RendererCrossingGateGate extends TileEntitySpecialRenderer<Crossing
 		renderGateVerticies(builder, te.getCrossingGateLength());
 		tes.draw();
 		
-		if (te.getCrossingGateLength() - te.getLightStartOffset() >= 2)
+		if (te.getGateLightCount() == GateLightCount.OneLight || te.getCrossingGateLength() - te.getLightStartOffset() >= 2)
 		{
-			renderGateLights(builder, te.getCrossingGateLength(), te.getFlashState(), te.getLightStartOffset());
+			renderGateLights(builder, te.getCrossingGateLength(), te.getFlashState(), te.getLightStartOffset(), te.getGateLightCount());
 		}
 		
 		
@@ -131,7 +132,7 @@ public class RendererCrossingGateGate extends TileEntitySpecialRenderer<Crossing
 	
 	private final ModelResourceLocation lightOffLocation = new ModelResourceLocation(ModTrafficControl.MODID + ":crossing_gate_light", "normal");
 	private final ModelResourceLocation lightOnLocation = new ModelResourceLocation(ModTrafficControl.MODID + ":crossing_gate_light", "on=true");
-	private void renderGateLights(BufferBuilder builder, float crossingGateLength, BlockLampBase.EnumState flashState, float lightStartOffset)
+	private void renderGateLights(BufferBuilder builder, float crossingGateLength, BlockLampBase.EnumState flashState, float lightStartOffset, CrossingGateGateTileEntity.GateLightCount gateLightCount)
 	{
 		IBakedModel modelOff = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelManager().getModel(lightOffLocation);
 		IBakedModel modelOn = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelManager().getModel(lightOnLocation);
@@ -140,22 +141,29 @@ public class RendererCrossingGateGate extends TileEntitySpecialRenderer<Crossing
 		// First
 		GlStateManager.disableLighting();
 		GlStateManager.translate(-20.5 - (lightStartOffset * 16), -7.5, -8);
-		GlStateManager.scale(1 / .0625, 1 / .0625, 1 / .0625);
-		IBakedModel model = flashState == EnumState.Flash2 ? modelOn : modelOff;
-		Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModelBrightnessColor(model, 1, 1, 1, 1);
-		GlStateManager.scale(0.0625, 0.0625, 0.0625);
+		
+		if (gateLightCount == GateLightCount.ThreeLights)
+		{
+			GlStateManager.scale(1 / .0625, 1 / .0625, 1 / .0625);
+			IBakedModel model = flashState == EnumState.Flash2 ? modelOn : modelOff;
+			Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModelBrightnessColor(model, 1, 1, 1, 1);
+			GlStateManager.scale(0.0625, 0.0625, 0.0625);			
+		}
 		
 		// Middle
 		GlStateManager.translate(-(crossingGateLength - lightStartOffset) * 16 / 2 + 1, 0, 0);
-		GlStateManager.scale(1 / .0625, 1 / .0625, 1 / .0625);
-		model = flashState == EnumState.Flash1 ? modelOn : modelOff;
-		Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModelBrightnessColor(model, 1, 1, 1, 1);
-		GlStateManager.scale(0.0625, 0.0625, 0.0625);
+		if (gateLightCount == GateLightCount.ThreeLights)
+		{
+			GlStateManager.scale(1 / .0625, 1 / .0625, 1 / .0625);
+			IBakedModel model = flashState == EnumState.Flash1 ? modelOn : modelOff;
+			Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModelBrightnessColor(model, 1, 1, 1, 1);
+			GlStateManager.scale(0.0625, 0.0625, 0.0625);
+		}
 		
 		// End
 		GlStateManager.translate(-(crossingGateLength - lightStartOffset) * 16 / 2 + 1, 0, 0);
 		GlStateManager.scale(1 / .0625, 1 / .0625, 1 / .0625);
-		model = flashState == EnumState.Off ? modelOff : modelOn;
+		IBakedModel model = flashState == EnumState.Off ? modelOff : modelOn;
 		Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModelBrightnessColor(model, 1, 1, 1, 1);
 		GlStateManager.scale(0.0625, 0.0625, 0.0625);
 

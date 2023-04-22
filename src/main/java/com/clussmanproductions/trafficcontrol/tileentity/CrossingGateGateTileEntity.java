@@ -30,6 +30,7 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 	private float lowerRotationLimit = 0;
 	private float delay = 4;
 	private float lightStartOffset = 1;
+	private GateLightCount gateLightCount = GateLightCount.ThreeLights;
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
@@ -42,6 +43,7 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 		compound.setFloat("lowerRotation", lowerRotationLimit);
 		compound.setFloat("delay", delay);
 		compound.setFloat("lightStartOffset", lightStartOffset);
+		compound.setInteger("gateLightCount", gateLightCount.getID());
 		return super.writeToNBT(compound);
 	}
 	
@@ -57,6 +59,7 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 		lowerRotationLimit = NBTUtils.getFloatOrDefault(compound, "lowerRotation", 0);
 		delay = NBTUtils.getFloatOrDefault(compound, "delay", 4);
 		lightStartOffset = NBTUtils.getFloatOrDefault(compound, "lightStartOffset", 1);
+		gateLightCount = GateLightCount.getByID(NBTUtils.getIntOrDefault(compound, "gateLightCount", GateLightCount.ThreeLights.getID()));
 	}
 		
 	public float getFacingRotation()
@@ -116,6 +119,36 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 		Closing,
 		Closed,
 		Opening
+	}
+	
+	public enum GateLightCount
+	{
+		ThreeLights(0),
+		OneLight(1);
+		
+		private int id;
+		public int getID()
+		{
+			return id;
+		}
+		
+		private GateLightCount(int id)
+		{
+			this.id = id;
+		}
+		
+		public static GateLightCount getByID(int id)
+		{
+			for(GateLightCount count : GateLightCount.values())
+			{
+				if (count.getID() == id)
+				{
+					return count;
+				}
+			}
+			
+			return null;
+		}
 	}
 
 	@Override
@@ -214,6 +247,7 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 		nbt.setFloat("lowerRotation", lowerRotationLimit);
 		nbt.setFloat("delay", delay);
 		nbt.setFloat("lightStartOffset", lightStartOffset);
+		nbt.setInteger("gateLightCount", gateLightCount.getID());
 		
 		return nbt;
 	}
@@ -229,6 +263,7 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 		lowerRotationLimit = tag.getFloat("lowerRotation");
 		delay = tag.getFloat("delay");
 		lightStartOffset = tag.getFloat("lightStartOffset");
+		gateLightCount = GateLightCount.getByID(tag.getInteger("gateLightCount"));
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -371,6 +406,22 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 		}
 	}
 	
+	public GateLightCount getGateLightCount()
+	{
+		return gateLightCount;
+	}
+	
+	public void setGateLightCount(GateLightCount count)
+	{
+		boolean shouldMarkDirty = gateLightCount != count;
+		gateLightCount = count;
+		
+		if (shouldMarkDirty)
+		{
+			sendUpdates(true);
+		}
+	}
+	
 	@Override
 	public void onChunkUnload() {
 		soundPlaying = false;
@@ -389,6 +440,7 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 		tag.setFloat("lowerRotation", lowerRotationLimit);
 		tag.setFloat("delay", delay);
 		tag.setFloat("lightStartOffset", lightStartOffset);
+		tag.setInteger("gateLightCount", gateLightCount.getID());
 		return tag;
 	}
 
@@ -399,6 +451,7 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 		setLowerRotationLimit(compound.getFloat("lowerRotation"));
 		setDelay(compound.getFloat("delay"));
 		setLightStartOffset(compound.getFloat("lightStartOffset"));
+		setGateLightCount(GateLightCount.getByID(compound.getInteger("gateLightCount")));
 	}
 
 	@Override
