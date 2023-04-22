@@ -3,18 +3,25 @@ package com.clussmanproductions.trafficcontrol.tileentity.render;
 import org.lwjgl.opengl.GL11;
 
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
+import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase;
+import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase.EnumState;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity.GateLightCount;
 import com.clussmanproductions.trafficcontrol.tileentity.render.TESRHelper.Box;
 import com.clussmanproductions.trafficcontrol.tileentity.render.TESRHelper.TextureInfo;
 import com.clussmanproductions.trafficcontrol.tileentity.render.TESRHelper.TextureInfoCollection;
 
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
-import scala.Tuple3;
 
 public class RendererCrossingGateGate extends TileEntitySpecialRenderer<CrossingGateGateTileEntity> {
 	@Override
@@ -28,7 +35,7 @@ public class RendererCrossingGateGate extends TileEntitySpecialRenderer<Crossing
 		
 		GlStateManager.scale(.0625, .0625, .0625);
 		
-		GlStateManager.translate(3, 0, 0);
+		GlStateManager.translate(3, 2, 0);
 		
 		GlStateManager.rotate(te.getGateRotation(), 0, 0, 1);
 		
@@ -39,8 +46,13 @@ public class RendererCrossingGateGate extends TileEntitySpecialRenderer<Crossing
 		tes.draw();
 		builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
 		renderGateVerticies(builder, te.getCrossingGateLength());
-		
 		tes.draw();
+		
+		if (te.getGateLightCount() == GateLightCount.OneLight || te.getCrossingGateLength() - te.getLightStartOffset() >= 2)
+		{
+			renderGateLights(builder, te.getCrossingGateLength(), te.getFlashState(), te.getLightStartOffset(), te.getGateLightCount());
+		}
+		
 		
 		GlStateManager.popMatrix();
 	}
@@ -56,7 +68,7 @@ public class RendererCrossingGateGate extends TileEntitySpecialRenderer<Crossing
 				new TextureInfo(generic, 0, 0, 8, 1),
 				new TextureInfo(generic, 0, 0, 8, 1),
 				new TextureInfo(generic, 0, 0, 8, 1));
-		Box box = new Box(-5.5, -7.5, 4, 1, 2, -8, collection);
+		Box box = new Box(-7.5, -9.5, 4, 1, 2, -8, collection);
 		box.render(builder, (tex) -> bindTexture(tex));
 		
 		// Rotator Arm Support
@@ -67,10 +79,10 @@ public class RendererCrossingGateGate extends TileEntitySpecialRenderer<Crossing
 				new TextureInfo(generic, 4, 4, 5, 5),
 				new TextureInfo(generic, 4, 4, 5, 9),
 				new TextureInfo(generic, 4, 4, 5, 9));
-		box = new Box(-4.5, -7, 4, 5, 1, -1, collection);
+		box = new Box(-6.5, -9.5, 4, 7, 2, -1, collection);
 		box.render(builder, (tex) -> bindTexture(tex));	
 
-		box = new Box(-4.5, -7, -3, 5, 1, -1, collection);
+		box = new Box(-6.5, -9.5, -3, 7, 2, -1, collection);
 		box.render(builder, (tex) -> bindTexture(tex));	
 		
 		// Rotator Connector
@@ -82,10 +94,10 @@ public class RendererCrossingGateGate extends TileEntitySpecialRenderer<Crossing
 				new TextureInfo(generic, 5, 6, 6, 9),
 				new TextureInfo(generic, 2, 3, 3, 6));
 
-		box = new Box(-2.5, -6, 4, 3, 7, -1, collection);
+		box = new Box(-2.5, -7.5, 4, 3, 8.5, -1, collection);
 		box.render(builder, (tex) -> bindTexture(tex));	
 
-		box = new Box(-2.5, -6, -3, 3, 7, -1, collection);
+		box = new Box(-2.5, -7.5, -3, 3, 8.5, -1, collection);
 		box.render(builder, (tex) -> bindTexture(tex));
 		
 		// Weight connector
@@ -113,7 +125,48 @@ public class RendererCrossingGateGate extends TileEntitySpecialRenderer<Crossing
 				new TextureInfo(gate, 0, 1, 16, 1.7),
 				new TextureInfo(gate, 0, 2, 3, 4),
 				new TextureInfo(gate, 0, 2, 3, 4));
-		Box gateBox = new Box(-(crossingGateLength * 16) - 11, -7.5, 0.5, (crossingGateLength * 16) + 5.5, 2, -1, collection);
+		Box gateBox = new Box( -(crossingGateLength * 16) - 13,  -9.5, 0.5, 
+							   (crossingGateLength * 16) + 5.5,     2,  -1, collection);
 		gateBox.render(builder, (tex) -> bindTexture(tex));
+	}
+	
+	private final ModelResourceLocation lightOffLocation = new ModelResourceLocation(ModTrafficControl.MODID + ":crossing_gate_light", "normal");
+	private final ModelResourceLocation lightOnLocation = new ModelResourceLocation(ModTrafficControl.MODID + ":crossing_gate_light", "on=true");
+	private void renderGateLights(BufferBuilder builder, float crossingGateLength, BlockLampBase.EnumState flashState, float lightStartOffset, CrossingGateGateTileEntity.GateLightCount gateLightCount)
+	{
+		IBakedModel modelOff = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelManager().getModel(lightOffLocation);
+		IBakedModel modelOn = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelManager().getModel(lightOnLocation);
+		bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+		
+		// First
+		GlStateManager.disableLighting();
+		GlStateManager.translate(-20.5 - (lightStartOffset * 16), -7.5, -8);
+		
+		if (gateLightCount == GateLightCount.ThreeLights)
+		{
+			GlStateManager.scale(1 / .0625, 1 / .0625, 1 / .0625);
+			IBakedModel model = flashState == EnumState.Flash2 ? modelOn : modelOff;
+			Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModelBrightnessColor(model, 1, 1, 1, 1);
+			GlStateManager.scale(0.0625, 0.0625, 0.0625);			
+		}
+		
+		// Middle
+		GlStateManager.translate(-(crossingGateLength - lightStartOffset) * 16 / 2 + 1, 0, 0);
+		if (gateLightCount == GateLightCount.ThreeLights)
+		{
+			GlStateManager.scale(1 / .0625, 1 / .0625, 1 / .0625);
+			IBakedModel model = flashState == EnumState.Flash1 ? modelOn : modelOff;
+			Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModelBrightnessColor(model, 1, 1, 1, 1);
+			GlStateManager.scale(0.0625, 0.0625, 0.0625);
+		}
+		
+		// End
+		GlStateManager.translate(-(crossingGateLength - lightStartOffset) * 16 / 2 + 1, 0, 0);
+		GlStateManager.scale(1 / .0625, 1 / .0625, 1 / .0625);
+		IBakedModel model = flashState == EnumState.Off ? modelOff : modelOn;
+		Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModelBrightnessColor(model, 1, 1, 1, 1);
+		GlStateManager.scale(0.0625, 0.0625, 0.0625);
+
+		GlStateManager.enableLighting();
 	}
 }

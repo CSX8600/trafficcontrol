@@ -3,6 +3,8 @@ package com.clussmanproductions.trafficcontrol.tileentity;
 import com.clussmanproductions.trafficcontrol.ModSounds;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateGate;
+import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase;
+import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase.EnumState;
 import com.clussmanproductions.trafficcontrol.util.ILoopableSoundTileEntity;
 import com.clussmanproductions.trafficcontrol.util.LoopableTileEntitySound;
 import com.clussmanproductions.trafficcontrol.util.NBTUtils;
@@ -21,21 +23,27 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 	private float gateRotation = -60;
 	private float gateDelay = 0;
 	private EnumStatuses status = EnumStatuses.Open;
+	private BlockLampBase.EnumState flashState = EnumState.Off;
 	private boolean soundPlaying = false;
 	private float crossingGateLength = 4;
 	private float upperRotationLimit = 60;
 	private float lowerRotationLimit = 0;
 	private float delay = 4;
+	private float lightStartOffset = 1;
+	private GateLightCount gateLightCount = GateLightCount.ThreeLights;
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setFloat("gateRotation", gateRotation);
 		compound.setFloat("gateDelay", gateDelay);
 		compound.setInteger("status", getCodeFromEnum(status));
+		compound.setInteger("flashState", flashState.getID());
 		compound.setFloat("length", crossingGateLength);
 		compound.setFloat("upperRotation", upperRotationLimit);
 		compound.setFloat("lowerRotation", lowerRotationLimit);
 		compound.setFloat("delay", delay);
+		compound.setFloat("lightStartOffset", lightStartOffset);
+		compound.setInteger("gateLightCount", gateLightCount.getID());
 		return super.writeToNBT(compound);
 	}
 	
@@ -45,10 +53,13 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 		gateRotation = compound.getFloat("gateRotation");
 		gateDelay = compound.getFloat("gateDelay");
 		status = getStatusFromCode(compound.getInteger("status"));
+		flashState = BlockLampBase.EnumState.getStateByID(compound.getInteger("flashState"));
 		crossingGateLength = NBTUtils.getFloatOrDefault(compound, "length", 4);
 		upperRotationLimit = NBTUtils.getFloatOrDefault(compound, "upperRotation", 60);
 		lowerRotationLimit = NBTUtils.getFloatOrDefault(compound, "lowerRotation", 0);
 		delay = NBTUtils.getFloatOrDefault(compound, "delay", 4);
+		lightStartOffset = NBTUtils.getFloatOrDefault(compound, "lightStartOffset", 1);
+		gateLightCount = GateLightCount.getByID(NBTUtils.getIntOrDefault(compound, "gateLightCount", GateLightCount.ThreeLights.getID()));
 	}
 		
 	public float getFacingRotation()
@@ -108,6 +119,36 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 		Closing,
 		Closed,
 		Opening
+	}
+	
+	public enum GateLightCount
+	{
+		ThreeLights(0),
+		OneLight(1);
+		
+		private int id;
+		public int getID()
+		{
+			return id;
+		}
+		
+		private GateLightCount(int id)
+		{
+			this.id = id;
+		}
+		
+		public static GateLightCount getByID(int id)
+		{
+			for(GateLightCount count : GateLightCount.values())
+			{
+				if (count.getID() == id)
+				{
+					return count;
+				}
+			}
+			
+			return null;
+		}
 	}
 
 	@Override
@@ -200,10 +241,13 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 		nbt.setFloat("gateRotation", gateRotation);
 		nbt.setFloat("gateDelay", gateDelay);
 		nbt.setInteger("status", getCodeFromEnum(status));
+		nbt.setInteger("flashState", flashState.getID());
 		nbt.setFloat("length", crossingGateLength);
 		nbt.setFloat("upperRotation", upperRotationLimit);
 		nbt.setFloat("lowerRotation", lowerRotationLimit);
 		nbt.setFloat("delay", delay);
+		nbt.setFloat("lightStartOffset", lightStartOffset);
+		nbt.setInteger("gateLightCount", gateLightCount.getID());
 		
 		return nbt;
 	}
@@ -213,10 +257,13 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 		gateRotation = tag.getFloat("gateRotation");
 		gateDelay = tag.getFloat("gateDelay");
 		status = getStatusFromCode(tag.getInteger("status"));
+		flashState = BlockLampBase.EnumState.getStateByID(tag.getInteger("flashState"));
 		crossingGateLength = tag.getFloat("length");
 		upperRotationLimit = tag.getFloat("upperRotation");
 		lowerRotationLimit = tag.getFloat("lowerRotation");
 		delay = tag.getFloat("delay");
+		lightStartOffset = tag.getFloat("lightStartOffset");
+		gateLightCount = GateLightCount.getByID(tag.getInteger("gateLightCount"));
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -327,6 +374,54 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 		}
 	}
 	
+	public BlockLampBase.EnumState getFlashState()
+	{
+		return flashState;
+	}
+	
+	public void setFlashState(BlockLampBase.EnumState state)
+	{
+		boolean shouldMarkDirty = state != flashState;
+		flashState = state;
+		
+		if (shouldMarkDirty)
+		{
+			sendUpdates(true);
+		}
+	}
+	
+	public float getLightStartOffset()
+	{
+		return lightStartOffset;
+	}
+	
+	public void setLightStartOffset(float lightStartOffset)
+	{
+		boolean shouldMarkDirty = lightStartOffset != this.lightStartOffset;
+		this.lightStartOffset = lightStartOffset;
+		
+		if (shouldMarkDirty)
+		{
+			sendUpdates(true);
+		}
+	}
+	
+	public GateLightCount getGateLightCount()
+	{
+		return gateLightCount;
+	}
+	
+	public void setGateLightCount(GateLightCount count)
+	{
+		boolean shouldMarkDirty = gateLightCount != count;
+		gateLightCount = count;
+		
+		if (shouldMarkDirty)
+		{
+			sendUpdates(true);
+		}
+	}
+	
 	@Override
 	public void onChunkUnload() {
 		soundPlaying = false;
@@ -344,6 +439,8 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 		tag.setFloat("upperRotation", upperRotationLimit);
 		tag.setFloat("lowerRotation", lowerRotationLimit);
 		tag.setFloat("delay", delay);
+		tag.setFloat("lightStartOffset", lightStartOffset);
+		tag.setInteger("gateLightCount", gateLightCount.getID());
 		return tag;
 	}
 
@@ -353,6 +450,8 @@ public class CrossingGateGateTileEntity extends SyncableTileEntity implements IT
 		setUpperRotationLimit(compound.getFloat("upperRotation"));
 		setLowerRotationLimit(compound.getFloat("lowerRotation"));
 		setDelay(compound.getFloat("delay"));
+		setLightStartOffset(compound.getFloat("lightStartOffset"));
+		setGateLightCount(GateLightCount.getByID(compound.getInteger("gateLightCount")));
 	}
 
 	@Override
