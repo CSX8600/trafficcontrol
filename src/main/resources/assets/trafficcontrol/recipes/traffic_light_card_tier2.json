@@ -1,0 +1,24 @@
+{ 
+  "type": "trafficcontrol:traffic_light_cards",
+  "pattern": [
+    " M ",
+    " C ",
+    "   "  ],
+  "key": {
+  "M":
+	  {
+	  	"item": "opencomputers:component",
+	  	"data": 6
+	  },
+	"C":
+	  {
+	    "item": "trafficcontrol:traffic_light_card",
+	    "data": 0
+	  }
+  },
+  "result": {
+    "item": "trafficcontrol:traffic_light_card",
+    "data": 1,
+    "count": 1
+  }
+}

@@ -57,14 +57,14 @@ public class ClientProxy extends CommonProxy {
 		entityClassRendererKey = new KeyBinding("key.entityclassrenderer.toggle", Keyboard.KEY_RBRACKET, "key.trafficcontrol.category");
 		ClientRegistry.registerKeyBinding(entityClassRendererKey);
 	}
-	
+
 	@SubscribeEvent
 	public static void bakeModels(ModelBakeEvent e)
 	{
 		bakeModel(e, new ModelResourceLocation(ModTrafficControl.MODID + ":crossing_gate_light", "normal"));
 		bakeModel(e, new ModelResourceLocation(ModTrafficControl.MODID + ":crossing_gate_light", "on=true"));
 	}
-	
+
 	private static void bakeModel(ModelBakeEvent e, ModelResourceLocation location)
 	{
 		try {

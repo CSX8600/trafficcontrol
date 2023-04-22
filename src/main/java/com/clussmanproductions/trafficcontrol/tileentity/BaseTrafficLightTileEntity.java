@@ -34,6 +34,8 @@ public class BaseTrafficLightTileEntity extends TileEntity implements ITickable 
 		BULB_COUNT = bulbCount;
 	}
 	
+	public int getBulbCount() { return BULB_COUNT; }
+	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		int[] bulbTypes = new int[BULB_COUNT];
