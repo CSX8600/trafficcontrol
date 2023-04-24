@@ -49,7 +49,6 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight5Upper;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight6;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightControlBox;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightDoghouse;
-
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficRail;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorLeft;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorRight;
@@ -67,12 +66,12 @@ import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight1Frame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight2Frame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight4Frame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight5Frame;
+import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight6Frame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightBulb;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightCard;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightDoghouseFrame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightFrame;
 import com.clussmanproductions.trafficcontrol.network.PacketHandler;
-import com.clussmanproductions.trafficcontrol.oc.TrafficLightCardDriver;
 import com.clussmanproductions.trafficcontrol.signs.SignRepository;
 import com.clussmanproductions.trafficcontrol.tileentity.ConcreteBarrierTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
@@ -91,17 +90,15 @@ import com.clussmanproductions.trafficcontrol.tileentity.TrafficLight1TileEntity
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLight2TileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLight4TileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLight5TileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.TrafficLight6TileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightControlBoxTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightDoghouseTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.Type3BarrierTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.WCHBellTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.WigWagTileEntity;
-import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight6Frame;
-import com.clussmanproductions.trafficcontrol.tileentity.TrafficLight6TileEntity;
+import com.clussmanproductions.trafficcontrol.util.OpenComputersHelper;
 
-
-import li.cil.oc.api.Driver;
 import net.minecraft.block.Block;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
@@ -110,8 +107,8 @@ import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.ProgressManager;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.ProgressManager;
 import net.minecraftforge.fml.common.ProgressManager.ProgressBar;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -320,13 +317,8 @@ public class CommonProxy {
 
 		if (ModTrafficControl.OC_INSTALLED)
 		{
-			addOCDriver();
+			OpenComputersHelper.addOCDriver();
 		}
-	}
-
-	private void addOCDriver()
-	{
-		Driver.add(new TrafficLightCardDriver()	);
 	}
 
 	@SideOnly(Side.CLIENT)
