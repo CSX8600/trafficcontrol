@@ -110,6 +110,20 @@ public class SignRepository {
 		}
 		
 		File signpackDir = new File(Loader.instance().getConfigDir(), "..\\tc_signpacks");
+		if (!signpackDir.exists())
+		{
+			try
+			{
+				signpackDir.mkdir();
+			}
+			catch(Exception ex)
+			{
+				ModTrafficControl.logger.error("Could not create signpack folder." , ex);
+				signsInitialized = true;
+				return;
+			}
+		}
+		
 		if (!signpackDir.isDirectory())
 		{
 			signsInitialized = true;
