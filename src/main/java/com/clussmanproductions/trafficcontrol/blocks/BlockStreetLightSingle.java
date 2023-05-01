@@ -115,18 +115,17 @@ public class BlockStreetLightSingle extends Block implements ITileEntityProvider
 		
 		super.onBlockAdded(worldIn, pos, state);
 	}
-	
 	@Override
-	public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player) {
+	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
 		if (worldIn.isRemote)
 		{
-			super.onBlockHarvested(worldIn, pos, state, player);
+			super.breakBlock(worldIn, pos, state);
 			return;
 		}
 		
-		removeLightSources(pos, worldIn);
+		removeLightSources(pos, worldIn, state);
 		
-		super.onBlockHarvested(worldIn, pos, state, player);
+		super.breakBlock(worldIn, pos, state);
 	}
 	
 	@Override
@@ -255,15 +254,19 @@ public class BlockStreetLightSingle extends Block implements ITileEntityProvider
 			world.setBlockState(pos, ModBlocks.light_source.getDefaultState());
 		}
 	}
-	
+
 	private void removeLightSources(BlockPos pos, World world)
 	{
-		IBlockState lampState = world.getBlockState(pos);
+		removeLightSources(pos, world, world.getBlockState(pos));
+	}
+	
+	private void removeLightSources(BlockPos pos, World world, IBlockState lampState)
+	{
 		int rotation = lampState.getValue(BlockStreetLightSingle.ROTATION);
 		
-		BlockPos angle = pos.up();
-		tryRemoveLightSource(world, angle);
+		tryRemoveLightSource(world, pos.up());
 		
+		BlockPos angle;
 		if (CustomAngleCalculator.isNorth(rotation))
 		{
 			angle = pos.south(2).west(2);

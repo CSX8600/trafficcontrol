@@ -17,20 +17,16 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ChunkCache;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -112,16 +108,16 @@ public class BlockStreetLightDouble extends Block implements ITileEntityProvider
 	}
 	
 	@Override
-	public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player) {
+	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
 		if (worldIn.isRemote)
 		{
-			super.onBlockHarvested(worldIn, pos, state, player);
+			super.breakBlock(worldIn, pos, state);
 			return;
 		}
 		
 		removeLightSources(worldIn, pos);
 		
-		super.onBlockHarvested(worldIn, pos, state, player);
+		super.breakBlock(worldIn, pos, state);
 	}
 	
 	@Override
