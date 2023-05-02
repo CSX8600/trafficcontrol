@@ -98,7 +98,7 @@ public class CrossingGateGateGui extends GuiScreen {
 			lightStartOffset.textboxKeyTyped(typedChar, keyCode);
 		}
 		
-		if (keyCode == Keyboard.KEY_MINUS)
+		if (typedChar == '-')
 		{
 			upperRotation.textboxKeyTyped(typedChar, keyCode);
 			lowerRotation.textboxKeyTyped(typedChar, keyCode);
@@ -135,13 +135,25 @@ public class CrossingGateGateGui extends GuiScreen {
 	
 	@Override
 	public void onGuiClosed() {
-		te.setCrossingGateLength(Float.parseFloat(length.getText()));
-		te.setUpperRotationLimit(Float.parseFloat(upperRotation.getText()));
-		te.setLowerRotationLimit(Float.parseFloat(lowerRotation.getText()));
-		te.setDelay(Float.parseFloat(delay.getText()));
-		te.setLightStartOffset(Float.parseFloat(lightStartOffset.getText()));
+		te.setCrossingGateLength(parseFloatOrDefault(length.getText()));
+		te.setUpperRotationLimit(parseFloatOrDefault(upperRotation.getText()));
+		te.setLowerRotationLimit(parseFloatOrDefault(lowerRotation.getText()));
+		te.setDelay(parseFloatOrDefault(delay.getText()));
+		te.setLightStartOffset(parseFloatOrDefault(lightStartOffset.getText()));
 		te.setGateLightCount(threeLights.isChecked() ? GateLightCount.ThreeLights : GateLightCount.OneLight);
 		te.performClientToServerSync();
+	}
+	
+	private float parseFloatOrDefault(String text)
+	{
+		try
+		{
+			return Float.parseFloat(text);
+		}
+		catch (Exception ex)
+		{
+			return 0F;
+		}
 	}
 	
 	@Override

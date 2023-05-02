@@ -235,7 +235,7 @@ public class RendererType3Barrier extends TileEntitySpecialRenderer<Type3Barrier
 			
 			// Reverse scale to sign
 			GlStateManager.scale(16F, 16F, 1);
-			GlStateManager.translate(0, 7, -0.0001);
+			GlStateManager.translate(0, 9, -0.0001);
 			GlStateManager.scale(fontRenderer.FONT_HEIGHT, -fontRenderer.FONT_HEIGHT, 1);
 			GlStateManager.scale(1 / 0.75, 1 / 0.75, 1);
 		}
