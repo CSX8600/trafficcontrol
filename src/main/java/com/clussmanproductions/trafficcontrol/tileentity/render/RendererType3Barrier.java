@@ -27,6 +27,7 @@ public class RendererType3Barrier extends TileEntitySpecialRenderer<Type3Barrier
 	@Override
 	public void render(Type3BarrierTileEntity te, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
+		GlStateManager.enableCull();
 		IBlockState currentState = getWorld().getBlockState(te.getPos()).getActualState(getWorld(), te.getPos());
 		if (!(currentState.getBlock() instanceof BlockType3BarrierBase))
 		{
