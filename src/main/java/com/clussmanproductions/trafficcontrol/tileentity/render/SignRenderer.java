@@ -62,7 +62,7 @@ public class SignRenderer extends TileEntitySpecialRenderer<SignTileEntity> {
 			// Scale to sign
 			FontRenderer fontRenderer = getFontRenderer();
 			GlStateManager.scale(1F / fontRenderer.FONT_HEIGHT, -1F / fontRenderer.FONT_HEIGHT, 1);
-			GlStateManager.translate(0, -9, 0.0001);
+			GlStateManager.translate(0, -9, 0.01);
 			GlStateManager.scale(1 / 16F, 1 / 16F, 1);
 			
 			for(int i = 0; i < sign.getTextLines().size(); i++)
