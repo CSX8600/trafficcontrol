@@ -28,6 +28,7 @@ public class RendererType3Barrier extends TileEntitySpecialRenderer<Type3Barrier
 	public void render(Type3BarrierTileEntity te, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
 		GlStateManager.enableCull();
+		GlStateManager.color(1F, 1F, 1F);
 		IBlockState currentState = getWorld().getBlockState(te.getPos()).getActualState(getWorld(), te.getPos());
 		if (!(currentState.getBlock() instanceof BlockType3BarrierBase))
 		{
@@ -240,6 +241,7 @@ public class RendererType3Barrier extends TileEntitySpecialRenderer<Type3Barrier
 		}
 		
 		// Draw back		
+		GlStateManager.color(1F, 1F, 1F);
 		bindTexture(sign.getBackImageResourceLocation());
 		builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
 		builder.pos(0.75, 0.75, 0).tex(0, 0).endVertex();
