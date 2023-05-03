@@ -29,6 +29,11 @@ public class ItemTrafficLightBulb extends Item {
 		ModelLoader.setCustomModelResourceLocation(this, EnumTrafficLightBulbTypes.Red.getIndex(), new ModelResourceLocation(ModTrafficControl.MODID + ":traffic_light_bulb_red"));
 		ModelLoader.setCustomModelResourceLocation(this, EnumTrafficLightBulbTypes.Yellow.getIndex(), new ModelResourceLocation(ModTrafficControl.MODID + ":traffic_light_bulb_yellow"));
 		ModelLoader.setCustomModelResourceLocation(this, EnumTrafficLightBulbTypes.Green.getIndex(), new ModelResourceLocation(ModTrafficControl.MODID + ":traffic_light_bulb_green"));
+		
+		ModelLoader.setCustomModelResourceLocation(this, EnumTrafficLightBulbTypes.StraightRed.getIndex(), new ModelResourceLocation(ModTrafficControl.MODID + ":traffic_light_bulb_straight_red"));
+		ModelLoader.setCustomModelResourceLocation(this, EnumTrafficLightBulbTypes.StraightYellow.getIndex(), new ModelResourceLocation(ModTrafficControl.MODID + ":traffic_light_bulb_straight_yellow"));
+		ModelLoader.setCustomModelResourceLocation(this, EnumTrafficLightBulbTypes.StraightGreen.getIndex(), new ModelResourceLocation(ModTrafficControl.MODID + ":traffic_light_bulb_straight_green"));
+		
 		ModelLoader.setCustomModelResourceLocation(this, EnumTrafficLightBulbTypes.RedArrowLeft.getIndex(), new ModelResourceLocation(ModTrafficControl.MODID + ":traffic_light_bulb_red_arrow_left"));
 		ModelLoader.setCustomModelResourceLocation(this, EnumTrafficLightBulbTypes.YellowArrowLeft.getIndex(), new ModelResourceLocation(ModTrafficControl.MODID + ":traffic_light_bulb_yellow_arrow_left"));
 		ModelLoader.setCustomModelResourceLocation(this, EnumTrafficLightBulbTypes.GreenArrowLeft.getIndex(), new ModelResourceLocation(ModTrafficControl.MODID + ":traffic_light_bulb_green_arrow_left"));
@@ -37,6 +42,8 @@ public class ItemTrafficLightBulb extends Item {
 		ModelLoader.setCustomModelResourceLocation(this, EnumTrafficLightBulbTypes.RedArrowRight.getIndex(), new ModelResourceLocation(ModTrafficControl.MODID + ":traffic_light_bulb_red_arrow_right"));
 		ModelLoader.setCustomModelResourceLocation(this, EnumTrafficLightBulbTypes.YellowArrowRight.getIndex(), new ModelResourceLocation(ModTrafficControl.MODID + ":traffic_light_bulb_yellow_arrow_right"));
 		ModelLoader.setCustomModelResourceLocation(this, EnumTrafficLightBulbTypes.GreenArrowRight.getIndex(), new ModelResourceLocation(ModTrafficControl.MODID + ":traffic_light_bulb_green_arrow_right"));
+		ModelLoader.setCustomModelResourceLocation(this, EnumTrafficLightBulbTypes.NoRightTurn.getIndex(), new ModelResourceLocation(ModTrafficControl.MODID + ":traffic_light_bulb_no_right_turn"));
+		ModelLoader.setCustomModelResourceLocation(this, EnumTrafficLightBulbTypes.NoLeftTurn.getIndex(), new ModelResourceLocation(ModTrafficControl.MODID + ":traffic_light_bulb_no_left_turn"));
 	}
 	
 	@Override
@@ -46,6 +53,9 @@ public class ItemTrafficLightBulb extends Item {
 		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.Red.getIndex()));
 		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.Yellow.getIndex()));
 		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.Green.getIndex()));
+		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.StraightRed.getIndex()));
+		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.StraightYellow.getIndex()));
+		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.StraightGreen.getIndex()));
 		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.RedArrowLeft.getIndex()));
 		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.YellowArrowLeft.getIndex()));
 		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.GreenArrowLeft.getIndex()));
@@ -54,6 +64,8 @@ public class ItemTrafficLightBulb extends Item {
 		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.RedArrowRight.getIndex()));
 		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.YellowArrowRight.getIndex()));
 		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.GreenArrowRight.getIndex()));
+		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.NoRightTurn.getIndex()));
+		items.add(new ItemStack(this, 1, EnumTrafficLightBulbTypes.NoLeftTurn.getIndex()));
 	}
 	
 	@Override
@@ -72,7 +84,19 @@ public class ItemTrafficLightBulb extends Item {
 		else if (meta == EnumTrafficLightBulbTypes.Green.getIndex())
 		{
 			unlocalizedName += "green";
+		}else if (meta == EnumTrafficLightBulbTypes.StraightRed.getIndex())
+		{
+			unlocalizedName += "straightRed";
 		}
+		else if (meta == EnumTrafficLightBulbTypes.StraightYellow.getIndex())
+		{
+			unlocalizedName += "straightYellow";
+		}
+		else if (meta == EnumTrafficLightBulbTypes.StraightGreen.getIndex())
+		{
+			unlocalizedName += "straightGreen";
+		}
+		
 		else if (meta == EnumTrafficLightBulbTypes.RedArrowLeft.getIndex())
 		{
 			unlocalizedName += "redArrowLeft";
@@ -104,6 +128,14 @@ public class ItemTrafficLightBulb extends Item {
 		else if (meta == EnumTrafficLightBulbTypes.GreenArrowRight.getIndex())
 		{
 			unlocalizedName += "greenArrowRight";
+		}
+		else if (meta == EnumTrafficLightBulbTypes.NoRightTurn.getIndex())
+		{
+			unlocalizedName += "noRightTurn";
+		}
+		else if (meta == EnumTrafficLightBulbTypes.NoLeftTurn.getIndex())
+		{
+			unlocalizedName += "noLeftTurn";
 		}
 		else
 		{

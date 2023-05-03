@@ -1,12 +1,16 @@
 package com.clussmanproductions.trafficcontrol.tileentity;
 
+import java.util.ArrayList;
+import java.util.UUID;
+
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockType3BarrierBase;
-import com.google.common.collect.Comparators;
+import com.clussmanproductions.trafficcontrol.signs.Sign;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -18,8 +22,10 @@ public class Type3BarrierTileEntity extends SyncableTileEntity {
 	private boolean renderSign;
 	private SignType signType = SignType.RoadClosed;
 	private boolean renderThisSign;
-	private int thisSignType;
-	private int thisSignVariant;
+	private int thisSignTypeLegacy = -1;
+	private int thisSignVariantLegacy = -1;
+	private UUID thisSignID;
+	private ArrayList<String> thisSignTextLines;
 	
 	public boolean getRenderSign() {
 		return renderSign;
@@ -37,12 +43,17 @@ public class Type3BarrierTileEntity extends SyncableTileEntity {
 	
 	public int getThisSignType()
 	{
-		return thisSignType;
+		return thisSignTypeLegacy;
 	}
 	
 	public int getThisSignVariant()
 	{
-		return thisSignVariant;
+		return thisSignVariantLegacy;
+	}
+	
+	public UUID getThisSignID()
+	{
+		return thisSignID;
 	}
 	
 	public void setRenderSign(boolean renderSign) {
@@ -95,11 +106,11 @@ public class Type3BarrierTileEntity extends SyncableTileEntity {
 		}
 	}
 	
-	public void setThisSignType(int thisSignType)
+	public void setThisSignTypeLegacy(int thisSignType)
 	{
-		boolean shouldMarkDirty = thisSignType != this.thisSignType;
+		boolean shouldMarkDirty = thisSignType != this.thisSignTypeLegacy;
 		
-		this.thisSignType = thisSignType;
+		this.thisSignTypeLegacy = thisSignType;
 		
 		if (shouldMarkDirty)
 		{
@@ -112,36 +123,11 @@ public class Type3BarrierTileEntity extends SyncableTileEntity {
 		}
 	}
 	
-	public void setThisSignVariant(int thisSignVariant)
-	{
-		if (thisSignVariant > SignTileEntity.MAX_VARIANTS_BY_TYPE.get(getThisSignType()))
-		{
-			switch(getThisSignType()) // Use new error textures because it's fun
-			{
-				case 0:
-					thisSignVariant = 114;
-					break;
-				case 1:
-					thisSignVariant = 162;
-					break;
-				case 2:
-					thisSignVariant = 119;
-					break;
-				case 3:
-					thisSignVariant = 91;
-					break;
-				case 4:
-					thisSignVariant = 168;
-					break;
-				case 5:
-					thisSignVariant = 96;
-					break;
-			}
-		}
+	public void setThisSignVariantLegacy(int thisSignVariant)
+	{		
+		boolean shouldMarkDirty = thisSignVariant != this.thisSignVariantLegacy;
 		
-		boolean shouldMarkDirty = thisSignVariant != this.thisSignVariant;
-		
-		this.thisSignVariant = thisSignVariant;
+		this.thisSignVariantLegacy = thisSignVariant;
 		
 		if (shouldMarkDirty)
 		{
@@ -151,6 +137,81 @@ public class Type3BarrierTileEntity extends SyncableTileEntity {
 			{
 				world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 			}
+		}
+	}
+	
+	public void setThisSignID(UUID thisSignID)
+	{
+		boolean shouldMarkDirty = (thisSignID == null && this.thisSignID != null) || 
+								  (thisSignID != null && this.thisSignID == null) ||
+								  !thisSignID.equals(this.thisSignID);
+		
+		this.thisSignID = thisSignID;
+		
+		if (shouldMarkDirty)
+		{
+			markDirty();
+			
+			if (world != null)
+			{
+				world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+			}
+		}
+	}
+	
+	public Sign getThisSign()
+	{
+		Sign sign = null;
+		if (thisSignTypeLegacy >= 0)
+		{
+			sign = ModTrafficControl.instance.signRepo.getSignByTypeVariant(SignTileEntity.getSignTypeName(thisSignTypeLegacy), thisSignVariantLegacy);
+		}
+		else if (thisSignID != null)
+		{
+			sign = ModTrafficControl.instance.signRepo.getSignByID(thisSignID);
+		}
+		
+		if (sign == null)
+		{
+			return ModTrafficControl.instance.signRepo.getSignByID(Sign.DEFAULT_ERROR_SIGN);
+		}
+		
+		return sign;
+	}
+	
+	public String getThisSignTextLine(int index)
+	{
+		if (thisSignTextLines == null || index >= thisSignTextLines.size())
+		{
+			return null;
+		}
+		
+		return thisSignTextLines.get(index);
+	}
+	
+	public void setThisSignTextLine(int index, String text)
+	{
+		if (thisSignTextLines == null)
+		{
+			thisSignTextLines = new ArrayList<String>();
+		}
+		
+		if (thisSignTextLines.size() <= index)
+		{
+			for(int i = thisSignTextLines.size(); i <= index; i++)
+			{
+				thisSignTextLines.add(null);
+			}
+		}
+		
+		thisSignTextLines.set(index, text);
+	}
+	
+	public void clearThisSignTextLines()
+	{
+		if (thisSignTextLines != null)
+		{
+			thisSignTextLines.clear();
 		}
 	}
 	
@@ -160,8 +221,29 @@ public class Type3BarrierTileEntity extends SyncableTileEntity {
 		setRenderSign(compound.getBoolean("renderSign"));
 		setSignType(SignType.getByIndex(compound.getInteger("signType")));
 		setRenderThisSign(compound.getBoolean("renderThisSign"));
-		setThisSignType(compound.getInteger("thisSignType"));
-		setThisSignVariant(compound.getInteger("thisSignVariant"));
+		setThisSignTypeLegacy(compound.getInteger("thisSignType"));
+		setThisSignVariantLegacy(compound.getInteger("thisSignVariant"));
+		
+		if (compound.hasKey("thisSignID"))
+		{
+			setThisSignID(NBTUtil.getUUIDFromTag(compound.getCompoundTag("thisSignID")));
+		}
+		
+		if (thisSignTextLines != null)
+		{
+			thisSignTextLines.clear();
+		}
+		
+		if (compound.hasKey("text0"))
+		{
+			thisSignTextLines = new ArrayList<>();
+			int i = 0;
+			while(compound.hasKey("text" + i))
+			{
+				thisSignTextLines.add(compound.getString("text" + i));
+				i++;
+			}
+		}
 	}
 	
 	@Override
@@ -171,6 +253,18 @@ public class Type3BarrierTileEntity extends SyncableTileEntity {
 		compound.setBoolean("renderThisSign", getRenderThisSign());
 		compound.setInteger("thisSignType", getThisSignType());
 		compound.setInteger("thisSignVariant", getThisSignVariant());
+		if (getThisSignID() != null)
+		{
+			compound.setTag("thisSignID", NBTUtil.createUUIDTag(getThisSignID()));
+		}
+		
+		if (thisSignTextLines != null)
+		{
+			for(int i = 0; i < thisSignTextLines.size(); i++)
+			{
+				compound.setString("text" + i, thisSignTextLines.get(i));
+			}
+		}
 		
 		return super.writeToNBT(compound);
 	}
@@ -183,6 +277,18 @@ public class Type3BarrierTileEntity extends SyncableTileEntity {
 		nbt.setBoolean("renderThisSign", getRenderThisSign());
 		nbt.setInteger("thisSignType", getThisSignType());
 		nbt.setInteger("thisSignVariant", getThisSignVariant());
+		if (getThisSignID() != null)
+		{
+			nbt.setTag("thisSignID", NBTUtil.createUUIDTag(getThisSignID()));
+		}
+		
+		if (thisSignTextLines != null)
+		{
+			for(int i = 0; i < thisSignTextLines.size(); i++)
+			{
+				nbt.setString("text" + i, thisSignTextLines.get(i));
+			}
+		}
 		return nbt;
 	}
 	
@@ -192,8 +298,29 @@ public class Type3BarrierTileEntity extends SyncableTileEntity {
 		setRenderSign(tag.getBoolean("renderSign"));
 		setSignType(SignType.getByIndex(tag.getInteger("signType")));
 		setRenderThisSign(tag.getBoolean("renderThisSign"));
-		setThisSignType(tag.getInteger("thisSignType"));
-		setThisSignVariant(tag.getInteger("thisSignVariant"));
+		setThisSignTypeLegacy(tag.getInteger("thisSignType"));
+		setThisSignVariantLegacy(tag.getInteger("thisSignVariant"));
+		if (tag.hasKey("thisSignID"))
+		{
+			setThisSignID(NBTUtil.getUUIDFromTag(tag.getCompoundTag("thisSignID")));
+		}
+		
+		if (thisSignTextLines != null)
+		{
+			thisSignTextLines.clear();
+		}
+		
+		if (tag.hasKey("text0"))
+		{
+			thisSignTextLines = new ArrayList<>();
+			int i = 0;
+			while(tag.hasKey("text" + i))
+			{
+				thisSignTextLines.add(tag.getString("text" + i));
+				i++;
+			}
+		}
+		
 	}
 	
 	@Override

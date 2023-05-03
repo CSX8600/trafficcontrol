@@ -3,6 +3,7 @@ package com.clussmanproductions.trafficcontrol;
 import org.apache.logging.log4j.Logger;
 
 import com.clussmanproductions.trafficcontrol.proxy.CommonProxy;
+import com.clussmanproductions.trafficcontrol.signs.SignRepository;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -17,8 +18,9 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 @Mod(modid = ModTrafficControl.MODID, version = ModTrafficControl.VERSION, name = "Traffic Control", useMetadata = true)
 public class ModTrafficControl {
 	public static final String MODID = "trafficcontrol";
-	public static final String VERSION = "0.4.2";
+	public static final String VERSION = "1.0.0";
 	public static boolean IR_INSTALLED = false;
+	public static boolean OC_INSTALLED = false;
 	public static CreativeTabs CREATIVE_TAB = new CreativeTabs("Traffic Control") {
 
 		@Override
@@ -36,10 +38,13 @@ public class ModTrafficControl {
 	public static ModTrafficControl instance;
 
 	public static Logger logger;
+	
+	public SignRepository signRepo;
 
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)
 	{
+		OC_INSTALLED = Loader.isModLoaded("opencomputers");
 		logger = e.getModLog();
 		proxy.preInit(e);
 	}

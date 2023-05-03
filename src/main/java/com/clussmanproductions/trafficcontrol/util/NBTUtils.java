@@ -14,4 +14,14 @@ public class NBTUtils {
 		
 		return defaultValue;
 	}
+	
+	public static int getIntOrDefault(NBTTagCompound tag, String key, int defaultValue)
+	{
+		if (tag.hasKey(key))
+		{
+			return tag.getInteger(key);
+		}
+		
+		return defaultValue;
+	}
 }

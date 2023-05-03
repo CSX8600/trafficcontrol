@@ -15,7 +15,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -78,20 +80,6 @@ public class BlockStreetLightSingle extends Block implements ITileEntityProvider
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, ROTATION);
 	}
-		
-	@Override
-	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-		StreetLightSingleTileEntity streetLightSingleTileEntity;
-		TileEntity te = world.getTileEntity(pos);
-		if (te == null || !(te instanceof StreetLightSingleTileEntity))
-		{
-			return 0;
-		}
-		
-		streetLightSingleTileEntity = (StreetLightSingleTileEntity)te;
-		
-		return streetLightSingleTileEntity.isPowered() ? 0 : 15;
-	}
 	
 	@Override
 	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,
@@ -116,30 +104,26 @@ public class BlockStreetLightSingle extends Block implements ITileEntityProvider
 	}
 	
 	@Override
-	public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player) {
+	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
 		if (worldIn.isRemote)
 		{
+			super.onBlockAdded(worldIn, pos, state);
 			return;
 		}
 		
-		TileEntity te = worldIn.getTileEntity(pos);
-		if (te instanceof StreetLightSingleTileEntity)
-		{
-			StreetLightSingleTileEntity sls = (StreetLightSingleTileEntity)te;
-			sls.removeLightSources();
-		}
+		addLightSources(pos, worldIn);
 		
-		super.onBlockHarvested(worldIn, pos, state, player);
+		super.onBlockAdded(worldIn, pos, state);
 	}
-	
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		TileEntity te = worldIn.getTileEntity(pos);
-		
-		if (te instanceof StreetLightSingleTileEntity)
+		if (worldIn.isRemote)
 		{
-			StreetLightSingleTileEntity watchable = (StreetLightSingleTileEntity)te;
+			super.breakBlock(worldIn, pos, state);
+			return;
 		}
+		
+		removeLightSources(pos, worldIn, state);
 		
 		super.breakBlock(worldIn, pos, state);
 	}
@@ -157,20 +141,16 @@ public class BlockStreetLightSingle extends Block implements ITileEntityProvider
 			return;
 		}
 		
-		TileEntity te = worldIn.getTileEntity(pos);
-		if (te instanceof StreetLightSingleTileEntity)
+		if (worldIn.isBlockPowered(pos))
 		{
-			StreetLightSingleTileEntity sls = (StreetLightSingleTileEntity)te;
-			sls.setPowered(worldIn.isBlockPowered(pos));
-			if (sls.isPowered())
-			{
-				sls.removeLightSources();
-			}
-			else
-			{
-				sls.addLightSources();
-			}
+			removeLightSources(pos, worldIn);
 		}
+		else
+		{
+			addLightSources(pos, worldIn);
+		}
+		
+		super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
 	}
 
 	@SubscribeEvent
@@ -213,6 +193,124 @@ public class BlockStreetLightSingle extends Block implements ITileEntityProvider
 		{
 			e.getWorld().setBlockState(e.getPos(), ModBlocks.light_source.getDefaultState());
 			e.setCanceled(true);
+		}
+	}
+	
+	private void addLightSources(BlockPos pos, World world)
+	{
+		IBlockState lampState = world.getBlockState(pos);
+		int rotation = lampState.getValue(BlockStreetLightSingle.ROTATION);
+		
+		BlockPos angle = pos.up();
+		tryPlaceLightSource(world, angle);
+		
+		if (CustomAngleCalculator.isNorth(rotation))
+		{
+			angle = pos.south(2).west(2);
+			tryPlaceLightSource(world, angle);
+			angle = angle.east(4);
+			tryPlaceLightSource(world, angle);
+		}
+		else if (CustomAngleCalculator.isWest(rotation))
+		{
+			angle = pos.east(2).north(2);
+			tryPlaceLightSource(world, angle);
+			angle = angle.south(4);
+			tryPlaceLightSource(world, angle);
+		}
+		else if (CustomAngleCalculator.isSouth(rotation))
+		{
+			angle = pos.north(2).west(2);
+			tryPlaceLightSource(world, angle);
+			angle = angle.east(4);
+			tryPlaceLightSource(world, angle);
+		}
+		else if (CustomAngleCalculator.isEast(rotation))
+		{
+			angle = pos.west(2).north(2);
+			tryPlaceLightSource(world, angle);
+			angle = angle.south(4);
+			tryPlaceLightSource(world, angle);
+		}
+	}
+	
+	private void tryPlaceLightSource(World world, BlockPos pos)
+	{
+		IBlockState proposedBlockState = world.getBlockState(pos);
+		
+		if (proposedBlockState.getBlock() != ModBlocks.light_source && proposedBlockState.getBlock() != Blocks.AIR)
+		{
+			pos = pos.up();
+			proposedBlockState = world.getBlockState(pos);
+			
+			if (proposedBlockState.getBlock() != ModBlocks.light_source && proposedBlockState.getBlock() != Blocks.AIR)
+			{
+				proposedBlockState = null;
+			}
+		}
+		
+		if (proposedBlockState != null)
+		{
+			world.setBlockState(pos, ModBlocks.light_source.getDefaultState());
+		}
+	}
+
+	private void removeLightSources(BlockPos pos, World world)
+	{
+		removeLightSources(pos, world, world.getBlockState(pos));
+	}
+	
+	private void removeLightSources(BlockPos pos, World world, IBlockState lampState)
+	{
+		int rotation = lampState.getValue(BlockStreetLightSingle.ROTATION);
+		
+		tryRemoveLightSource(world, pos.up());
+		
+		BlockPos angle;
+		if (CustomAngleCalculator.isNorth(rotation))
+		{
+			angle = pos.south(2).west(2);
+			tryRemoveLightSource(world, angle);
+			angle = angle.east(4);
+			tryRemoveLightSource(world, angle);
+		}
+		else if (CustomAngleCalculator.isWest(rotation))
+		{
+			angle = pos.east(2).north(2);
+			tryRemoveLightSource(world, angle);
+			angle = angle.south(4);
+			tryRemoveLightSource(world, angle);
+		}
+		else if (CustomAngleCalculator.isSouth(rotation))
+		{
+			angle = pos.north(2).west(2);
+			tryRemoveLightSource(world, angle);
+			angle = angle.east(4);
+			tryRemoveLightSource(world, angle);
+		}
+		else if (CustomAngleCalculator.isEast(rotation))
+		{
+			angle = pos.west(2).north(2);
+			tryRemoveLightSource(world, angle);
+			angle = angle.south(4);
+			tryRemoveLightSource(world, angle);
+		}
+	}
+	
+	private void tryRemoveLightSource(World world, BlockPos pos)
+	{
+		IBlockState proposedBlockState = world.getBlockState(pos);
+		
+		if (proposedBlockState.getBlock() == ModBlocks.light_source)
+		{
+			world.setBlockToAir(pos);
+		}
+		
+		pos = pos.up();
+		proposedBlockState = world.getBlockState(pos);
+		if (proposedBlockState.getBlock() == ModBlocks.light_source)
+		{
+			world.setBlockToAir(pos);
 		}
 	}
 }
