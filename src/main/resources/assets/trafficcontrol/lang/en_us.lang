@@ -78,6 +78,9 @@ item.trafficcontrol.traffic_light_card.tier1.name=Traffic Light Card (Tier 1)
 item.trafficcontrol.traffic_light_card.tier2.name=Traffic Light Card (Tier 2)
 item.trafficcontrol.traffic_light_card.tier3.name=Traffic Light Card (Tier 3)
 item.trafficcontrol.traffic_light_card.creative.name=Traffic Light Card (Creative)
+trafficcontrol.traffic_light_bulb.redArrowUTurn.name=U-Turn Arrow Bulb (Red)
+trafficcontrol.traffic_light_bulb.yellowArrowUTurn.name=U-Turn Arrow Bulb (Yellow)
+trafficcontrol.traffic_light_bulb.greenArrowUTurn.name=U-Turn Arrow Bulb (Green)
 
 #Tab
 itemGroup.Traffic Control=Traffic Control
