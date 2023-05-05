@@ -118,6 +118,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import com.clussmanproductions.trafficcontrol.blocks.BlockStand;
 
 @EventBusSubscriber
 public class CommonProxy {
@@ -126,6 +127,7 @@ public class CommonProxy {
 	public static void registerBlocks(RegistryEvent.Register<Block> e)
 	{
 		e.getRegistry().register(new BlockCrossingGateBase());
+		e.getRegistry().register(new BlockStand());
 		e.getRegistry().register(new BlockCrossingGateGate());
 		e.getRegistry().register(new BlockCrossingGateLamps());
 		e.getRegistry().register(new BlockCrossingGatePole());
@@ -220,6 +222,7 @@ public class CommonProxy {
 		}
 
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_base).setRegistryName(ModBlocks.crossing_gate_base.getRegistryName()));
+		e.getRegistry().register(new ItemBlock(ModBlocks.stand).setRegistryName(ModBlocks.stand.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_gate).setRegistryName(ModBlocks.crossing_gate_gate.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_lamps).setRegistryName(ModBlocks.crossing_gate_lamps.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_pole).setRegistryName(ModBlocks.crossing_gate_pole.getRegistryName()));

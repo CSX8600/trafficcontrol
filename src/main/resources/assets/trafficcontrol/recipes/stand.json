@@ -1,0 +1,18 @@
+{ 
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " P ",
+    " P ",
+    "P P"
+	],
+  "key": {
+    "P":
+	{
+	    "item": "trafficcontrol:crossing_gate_pole"
+	}
+  },
+  "result": {
+    "item": "trafficcontrol:stand",
+    "count": 1
+  }
+}
