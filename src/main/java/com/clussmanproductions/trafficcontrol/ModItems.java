@@ -29,6 +29,8 @@ public class ModItems {
 	public static ItemTrafficLight4Frame traffic_light_4_frame;
 	@ObjectHolder("traffic_light_6_frame")
 	public static BaseItemTrafficLightFrame traffic_light_6_frame;
+	@ObjectHolder("traffic_light_7_frame")
+	public static BaseItemTrafficLightFrame traffic_light_7_frame;
 	@ObjectHolder("traffic_light_card")
 	public static ItemTrafficLightCard traffic_light_card;
 
@@ -45,6 +47,7 @@ public class ModItems {
 		traffic_light_2_frame.initModel();
 		traffic_light_4_frame.initModel();
 		traffic_light_6_frame.initModel();
+		traffic_light_7_frame.initModel();
 		if (ModTrafficControl.OC_INSTALLED)
 		{
 			traffic_light_card.initModel();

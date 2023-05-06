@@ -1,0 +1,18 @@
+{ 
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "F F",
+      " F ",
+      "   "
+      ],
+    "key": {
+      "F":
+      {
+          "item": "trafficcontrol:traffic_light_1_frame"
+      }
+    },
+    "result": {
+      "item": "trafficcontrol:traffic_light_7_frame",
+      "count": 1
+    }
+  }

@@ -41,6 +41,7 @@ item.trafficcontrol.traffic_light_1_frame.name=Traffic Light Frame (One Bulb)
 item.trafficcontrol.traffic_light_2_frame.name=Traffic Light Frame (Two Bulbs)
 item.trafficcontrol.traffic_light_4_frame.name=Traffic Light Frame (Four Bulbs)
 item.trafficcontrol.traffic_light_6_frame.name=Traffic Light T Frame (Four Bulbs)
+item.trafficcontrol.traffic_light_7_frame.name=Traffic Light Hawk Beacon Frame (Three Bulbs)
 
 trafficcontrol.traffic_light_bulb.green.name=Bulb (Green)
 trafficcontrol.traffic_light_bulb.straightGreen.name=Straight Arrow Bulb (Green)

@@ -103,6 +103,8 @@ public class ModBlocks {
 	public static BlockTrafficLight4 traffic_light_4;
 	@ObjectHolder("traffic_light_6")
 	public static BlockTrafficLight6 traffic_light_6;
+	@ObjectHolder("traffic_light_7")
+	public static BlockTrafficLight7 traffic_light_7;
 	
 	@ObjectHolder("pedestrian_button")
 	public static BlockPedestrianButton pedestrian_button;
@@ -152,6 +154,7 @@ public class ModBlocks {
 		pedestrian_button.initModel();
 		traffic_sensor_right.initModel();
 		traffic_light_6.initModel();
+		traffic_light_7.initModel();
 		
 	}
 }
