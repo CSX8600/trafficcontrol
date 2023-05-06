@@ -158,14 +158,14 @@
         },
         {
             "name": "Pole",
-            "from": [ 7, 1, 7 ], 
+            "from": [ 7, 0, 7 ], 
             "to": [ 9, 16, 9 ], 
             "rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 0.0 },
             "faces": {
-                "north": { "texture": "#2", "uv": [ 0, 0, 2, 15 ] },
-                "east": { "texture": "#2", "uv": [ 2, 0, 4, 15 ] },
-                "south": { "texture": "#2", "uv": [ 4, 0, 6, 15 ] },
-                "west": { "texture": "#2", "uv": [ 6, 0, 8, 15 ] },
+                "north": { "texture": "#2", "uv": [ 0, 0, 2, 16 ] },
+                "east": { "texture": "#2", "uv": [ 2, 0, 4, 16 ] },
+                "south": { "texture": "#2", "uv": [ 4, 0, 6, 16 ] },
+                "west": { "texture": "#2", "uv": [ 6, 0, 8, 16 ] },
                 "up": { "texture": "#2", "uv": [ 0, 0, 2, 2 ] },
                 "down": { "texture": "#2", "uv": [ 0, 0, 2, 2 ] }
             }
