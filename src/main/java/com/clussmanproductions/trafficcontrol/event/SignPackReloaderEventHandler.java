@@ -2,7 +2,6 @@ package com.clussmanproductions.trafficcontrol.event;
 
 import com.clussmanproductions.trafficcontrol.proxy.ClientProxy;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.input.Keyboard;
 
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
@@ -25,7 +24,7 @@ public class SignPackReloaderEventHandler {
 			try
 			{
 				ModTrafficControl.instance.signRepo.reload();
-				Minecraft.getMinecraft().player.sendMessage(new TextComponentString("Signpacks reloaded!"));
+				Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.AQUA + "[" + ModTrafficControl.MODNAME + "] Sign Packs Reloaded!"));
 			}
 			catch(Exception exception)
 			{
