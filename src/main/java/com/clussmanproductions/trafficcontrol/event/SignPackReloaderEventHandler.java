@@ -1,6 +1,8 @@
 package com.clussmanproductions.trafficcontrol.event;
 
 import com.clussmanproductions.trafficcontrol.proxy.ClientProxy;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.input.Keyboard;
 
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
@@ -20,8 +22,16 @@ public class SignPackReloaderEventHandler {
 	{
 		if (e.phase == Phase.END && Keyboard.isKeyDown(Keyboard.KEY_F3) && Keyboard.isKeyDown(ClientProxy.hotReloadSignPacksKey.getKeyCode()))
 		{
-			ModTrafficControl.instance.signRepo.reload();
-			Minecraft.getMinecraft().player.sendMessage(new TextComponentString("Signpacks reloaded!"));
+			try
+			{
+				ModTrafficControl.instance.signRepo.reload();
+				Minecraft.getMinecraft().player.sendMessage(new TextComponentString("Signpacks reloaded!"));
+			}
+			catch(Exception exception)
+			{
+				Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.RED + "Something went wrong! Check the console for details."));
+				ModTrafficControl.logger.error(exception);
+			}
 		}
 	}
 }
