@@ -1,6 +1,7 @@
 package com.clussmanproductions.trafficcontrol.event;
 
 import com.clussmanproductions.trafficcontrol.proxy.ClientProxy;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.util.text.TextFormatting;
 import org.lwjgl.input.Keyboard;
 
@@ -24,10 +25,12 @@ public class SignPackReloaderEventHandler {
 			try
 			{
 				ModTrafficControl.instance.signRepo.reload();
-				Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.AQUA + "[" + ModTrafficControl.MODNAME + "] Sign Packs Reloaded!"));
+				Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.YELLOW + "[" + ModTrafficControl.MODNAME + "] Sign Packs Reloaded!"));
+				Minecraft.getMinecraft().player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
 			}
 			catch(Exception exception)
 			{
+				Minecraft.getMinecraft().player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.4F);
 				Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.RED + "Something went wrong! Check the console for details."));
 				ModTrafficControl.logger.error(exception);
 			}
