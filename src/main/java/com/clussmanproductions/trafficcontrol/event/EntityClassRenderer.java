@@ -2,12 +2,15 @@ package com.clussmanproductions.trafficcontrol.event;
 
 import java.util.ArrayList;
 
+import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.proxy.ClientProxy;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -54,6 +57,14 @@ public class EntityClassRenderer {
 		if (ClientProxy.entityClassRendererKey.isPressed())
 		{
 			performEntityClassRender = !performEntityClassRender;
+			if(performEntityClassRender)
+			{
+				Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.YELLOW + "[" + ModTrafficControl.MODNAME + "] Entity Class Viewer Enabled"));
+			}
+			else
+			{
+				Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.YELLOW + "[" + ModTrafficControl.MODNAME + "] Entity Class Viewer Disabled"));
+			}
 		}
 	}
 }
