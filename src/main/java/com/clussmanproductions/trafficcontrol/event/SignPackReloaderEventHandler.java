@@ -1,5 +1,6 @@
 package com.clussmanproductions.trafficcontrol.event;
 
+import com.clussmanproductions.trafficcontrol.proxy.ClientProxy;
 import org.lwjgl.input.Keyboard;
 
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
@@ -17,7 +18,7 @@ public class SignPackReloaderEventHandler {
 	@SubscribeEvent
 	public static void onKeyPress(RenderTickEvent e)
 	{
-		if (e.phase == Phase.END && Keyboard.isKeyDown(Keyboard.KEY_F3) && Keyboard.isKeyDown(Keyboard.KEY_RBRACKET))
+		if (e.phase == Phase.END && Keyboard.isKeyDown(Keyboard.KEY_F3) && Keyboard.isKeyDown(ClientProxy.hotReloadSignPacksKey.getKeyCode()))
 		{
 			ModTrafficControl.instance.signRepo.reload();
 			Minecraft.getMinecraft().player.sendMessage(new TextComponentString("Signpacks reloaded!"));
