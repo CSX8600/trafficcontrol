@@ -39,19 +39,19 @@ public class ItemTrafficLight6Frame extends BaseItemTrafficLightFrame
 		ItemStack subStack = handler.getStackInSlot(0);
 		if (subStack != ItemStack.EMPTY)
 		{
-			tooltip.add("Top: " + subStack.getItem().getItemStackDisplayName(subStack));
+			tooltip.add("Top Left: " + subStack.getItem().getItemStackDisplayName(subStack));
 		}
 		
 		subStack = handler.getStackInSlot(1);
 		if (subStack != ItemStack.EMPTY)
 		{
-			tooltip.add("Upper Middle: " + subStack.getItem().getItemStackDisplayName(subStack));
+			tooltip.add("Top Right: " + subStack.getItem().getItemStackDisplayName(subStack));
 		}
 		
 		subStack = handler.getStackInSlot(2);
 		if (subStack != ItemStack.EMPTY)
 		{
-			tooltip.add("Lower Middle: " + subStack.getItem().getItemStackDisplayName(subStack));
+			tooltip.add("Middle: " + subStack.getItem().getItemStackDisplayName(subStack));
 		}
 		
 		subStack = handler.getStackInSlot(3);

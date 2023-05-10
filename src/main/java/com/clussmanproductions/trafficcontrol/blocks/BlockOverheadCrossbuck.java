@@ -64,4 +64,9 @@ public class BlockOverheadCrossbuck extends Block {
 	public boolean causesSuffocation(IBlockState state) {
 		return false;
 	}
+	
+	@Override
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
+	}
 }

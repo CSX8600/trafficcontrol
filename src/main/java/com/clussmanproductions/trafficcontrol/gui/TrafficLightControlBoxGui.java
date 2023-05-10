@@ -1,9 +1,8 @@
 package com.clussmanproductions.trafficcontrol.gui;
 
 import java.io.IOException;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 
+import java.util.function.Consumer;
 import org.lwjgl.input.Keyboard;
 
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
@@ -79,6 +78,9 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 	private GuiTextField redTime;
 	private GuiTextField crossTime;
 	private GuiTextField crossWarningTime;
+	
+	
+	
 	
 	private TrafficLightControlBoxTileEntity _te;
 	public TrafficLightControlBoxGui(TrafficLightControlBoxTileEntity te)
@@ -216,80 +218,42 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 	private void setManualChecked()
 	{
 		greenOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Green, false, true));
-		greenOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.TunnelGreen, false, true));
-		greenOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.SGreen, false, true));
 		yellowOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Yellow, false, true));
-		yellowOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.SYellow, false, true));
 		redOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Red, false, true));
-		redOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.TunnelRed, false, true));
-		redOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.SRed, false, true));
 		greenArrowLeftOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.GreenArrowLeft, false, true));
 		yellowArrowLeftOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.YellowArrowLeft, false, true));
 		redArrowLeftOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.RedArrowLeft, false, true));
-		greenArrowLeftOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.GreenArrowuturn, false, true));
-		yellowArrowLeftOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.YellowArrowuturn, false, true));
-		redArrowLeftOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.RedArrowuturn, false, true));
 		crossOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Cross, false, true));
 		dontCrossOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.DontCross, false, true));
 		greenOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Green, false, false));
-		greenOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.TunnelGreen, false, false));
 		yellowOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Yellow, false, false));
 		redOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Red, false, false));
-		redOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.TunnelRed, false, false));
-		greenOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.SGreen, false, false));
-		yellowOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.SYellow, false, false));
-		redOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.SRed, false, false));
 		greenArrowLeftOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.GreenArrowLeft, false, false));
 		yellowArrowLeftOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.YellowArrowLeft, false, false));
 		redArrowLeftOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.RedArrowLeft, false, false));
-		greenArrowLeftOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.GreenArrowuturn, false, false));
-		yellowArrowLeftOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.YellowArrowuturn, false, false));
-		redArrowLeftOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.RedArrowuturn, false, false));
-		redArrowLeftOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.NoLeftTurn, false, false));
 		crossOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Cross, false, false));
 		dontCrossOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.DontCross, false, false));
 		greenArrowRightOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.GreenArrowRight, false, true));
 		yellowArrowRightOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.YellowArrowRight, false, true));
 		redArrowRightOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.RedArrowRight, false, true));
-		 redArrowRightOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.NoRightTurn, false, true));
-		 redArrowLeftOn.setIsChecked(getChecked(EnumTrafficLightBulbTypes.NoLeftTurn, false, true));
 		greenArrowRightOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.GreenArrowRight, false, false));
 		yellowArrowRightOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.YellowArrowRight, false, false));
 		redArrowRightOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.RedArrowRight, false, false));
-		redArrowRightOff.setIsChecked(getChecked(EnumTrafficLightBulbTypes.NoRightTurn, false, false));
 		// Flashing Bulbs
 		greenOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Green, true, true));
-		greenOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.TunnelGreen, true, true));
 		yellowOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Yellow, true, true));
 		redOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Red, true, true));
-		redOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.TunnelRed, true, true));
-		greenOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.SGreen, true, true));
-		yellowOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.SYellow, true, true));
-		redOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.SRed, true, true));
 		greenArrowLeftOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.GreenArrowLeft, true, true));
 		yellowArrowLeftOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.YellowArrowLeft, true, true));
 		redArrowLeftOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.RedArrowLeft, true, true));
-		greenArrowLeftOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.GreenArrowuturn, true, true));
-		yellowArrowLeftOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.YellowArrowuturn, true, true));
-		redArrowLeftOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.RedArrowuturn, true, true));
-		redArrowLeftOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.NoLeftTurn, true, true));
 		crossOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Cross, true, true));
 		dontCrossOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.DontCross, true, true));
 		greenOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Green, true, false));
-		greenOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.TunnelGreen, true, false));
 		yellowOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Yellow, true, false));
 		redOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Red, true, false));
-		redOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.TunnelRed, true, false));
-		greenOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.SGreen, true, false));
-		yellowOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.SYellow, true, false));
-		redOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.SRed, true, false));
 		greenArrowLeftOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.GreenArrowLeft, true, false));
 		yellowArrowLeftOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.YellowArrowLeft, true, false));
 		redArrowLeftOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.RedArrowLeft, true, false));
-		greenArrowLeftOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.GreenArrowuturn, true, false));
-		yellowArrowLeftOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.YellowArrowuturn, true, false));
-		redArrowLeftOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.RedArrowuturn, true, false));
-		redArrowLeftOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.NoLeftTurn, true, false));
 		crossOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.Cross, true, false));
 		dontCrossOffFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.DontCross, true, false));
 		greenArrowRightOnFlash.setIsChecked(getChecked(EnumTrafficLightBulbTypes.GreenArrowRight, true, true));
@@ -325,18 +289,271 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		if (_currentMode == Modes.ManualNorthSouth || _currentMode == Modes.ManualWestEast)
 		{
 			drawManualMode(horizontalCenter, verticalCenter);
+			 
+			
+			
+			
 		}
 		
 		if (_currentMode == Modes.Automatic)
 		{
 			drawAutomaticMode(horizontalCenter, verticalCenter);
 		}
+		
+		
+		
 				
 		super.drawScreen(mouseX, mouseY, partialTicks);
+		int hoverX = horizontalCenter - 54; // X coordinate of the designated point
+	    int hoverY = verticalCenter + 75; // Y coordinate of the designated point
+	    int hoverWidth = 18; // Width of the hovering text area
+	    int hoverHeight = 16; // Height of the hovering text area
+	    if (_currentMode == Modes.ManualNorthSouth || _currentMode == Modes.ManualWestEast)
+		{
+	    	
+		if (mouseX >= hoverX && mouseX <= hoverX + hoverWidth && mouseY >= hoverY && mouseY <= hoverY + hoverHeight) {
+			drawHoveredText(mouseX, mouseY, "right");
+	    }
+		hoverX = horizontalCenter - 54; // X coordinate of the designated point
+	    hoverY = verticalCenter - 25; // Y coordinate of the designated point
+	    
+		
+	    if (mouseX >= hoverX && mouseX <= hoverX + hoverWidth && mouseY >= hoverY && mouseY <= hoverY + hoverHeight) {
+			drawHoveredText(mouseX, mouseY, "leftred");
+	    }
+		hoverX = horizontalCenter - 54; // X coordinate of the designated point
+	    hoverY = verticalCenter - 5; // Y coordinate of the designated point
+	    if (mouseX >= hoverX && mouseX <= hoverX + hoverWidth && mouseY >= hoverY && mouseY <= hoverY + hoverHeight) {
+			drawHoveredText(mouseX, mouseY, "leftyellow");
+	    }
+	    hoverX = horizontalCenter - 54; // X coordinate of the designated point
+	    hoverY = verticalCenter - 85; // Y coordinate of the designated point
+	    if (mouseX >= hoverX && mouseX <= hoverX + hoverWidth && mouseY >= hoverY && mouseY <= hoverY + hoverHeight) {
+			drawHoveredText(mouseX, mouseY, "red");
+	    }
+	    hoverX = horizontalCenter - 54; // X coordinate of the designated point
+	    hoverY = verticalCenter - 65; // Y coordinate of the designated point
+	    if (mouseX >= hoverX && mouseX <= hoverX + hoverWidth && mouseY >= hoverY && mouseY <= hoverY + hoverHeight) {
+			drawHoveredText(mouseX, mouseY, "yellow");
+	    }
+	    hoverX = horizontalCenter - 54; // X coordinate of the designated point
+	    hoverY = verticalCenter - 45; // Y coordinate of the designated point
+	    if (mouseX >= hoverX && mouseX <= hoverX + hoverWidth && mouseY >= hoverY && mouseY <= hoverY + hoverHeight) {
+			drawHoveredText(mouseX, mouseY, "green");
+	    }
+	    hoverX = horizontalCenter - 54; // X coordinate of the designated point
+	    hoverY = verticalCenter + 15; // Y coordinate of the designated point
+	    if (mouseX >= hoverX && mouseX <= hoverX + hoverWidth && mouseY >= hoverY && mouseY <= hoverY + hoverHeight) {
+			drawHoveredText(mouseX, mouseY, "leftgreen");
+	    }
+		}
 	}
+	
+	private void drawHoveredText(int mouseX, int mouseY, String type) {
+		String text = "";
+		
+		switch(type) {
+		case "right":
+			text = "Right Arrow Red And No Right Turn";
+				drawHoveringText(text, mouseX, mouseY);
+			break;
+		case "leftred": 
+			text = "Left Arrow Red, No Left Turn, And U-Turn Arrow Red";
+			drawHoveringText(text, mouseX, mouseY);
+			break;
+		case "leftyellow":
+			text = "Left Arrow Yellow and U-Turn Arrow Yellow";
+			drawHoveringText(text, mouseX, mouseY);
+			break;
+		case "leftgreen":
+			text = "Left Arrow Green and U-Turn Arrow Green";
+			drawHoveringText(text, mouseX, mouseY);
+			break;
+		case "red":
+			text = "Solid Red and Striaght Arrow Red";
+			drawHoveringText(text, mouseX, mouseY);
+			break;
+		case "yellow":
+			text = "Solid Yellow and Striaght Arrow Yellow";
+			drawHoveringText(text, mouseX, mouseY);
+			break;
+		case "green":
+			text = "Solid Green and Striaght Arrow Green";
+			drawHoveringText(text, mouseX, mouseY);
+			break;
+				
+}			
+	}
+//	These are var's for what lets the code know what texture to should for special bulbs 
+	// Must be anywhere above the next //comment() 
+	private int tickCounter = 0;
+	private Boolean isRightRed = true;
+	private Boolean isLeftYellow = true;
+	private String LeftTurn = "Red";
+	private Boolean isLeftGreen = true;
+	private Boolean isRed = true;
+	private Boolean isYellow = true;
+	private Boolean isGreen = true;
+	private ResourceLocation textureRight = null;
+	private ResourceLocation textureLeftRed = null;
+	private ResourceLocation textureLeftYellow = null;
+	private ResourceLocation textureLeftGreen = null;
+	private ResourceLocation textureRed = null;
+	private ResourceLocation textureYellow = null;
+	private ResourceLocation textureGreen = null;
+	
+	// the above must stay above this comment if will break otherwise
+	private void drawGreenBulb(int horizontalCenter, int verticalCenter) {
+		Minecraft mc = Minecraft.getMinecraft();
+		TextureMap textureMap = mc.getTextureMapBlocks();
+		 TextureAtlasSprite sprite;
+		 
+		 if(isGreen) {
+			 textureGreen = new ResourceLocation("trafficcontrol:blocks/green");
+		 } else {
+			 textureGreen = new ResourceLocation("trafficcontrol:blocks/straight_green");
+		 }
+		 
+		 sprite = textureMap.getAtlasSprite(textureGreen.toString());
+			drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 45, sprite, 16, 16);
+	}
+	
+	private void drawYellowBulb(int horizontalCenter, int verticalCenter) {
+		Minecraft mc = Minecraft.getMinecraft();
+		TextureMap textureMap = mc.getTextureMapBlocks();
+		 TextureAtlasSprite sprite;
+		 
+		 if(isYellow) {
+			 textureYellow = new ResourceLocation("trafficcontrol:blocks/yellow_solid");
+		 } else {
+			 textureYellow = new ResourceLocation("trafficcontrol:blocks/straight_yellow");
+		 }
+		 
+		 sprite = textureMap.getAtlasSprite(textureYellow.toString());
+			drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 65, sprite, 16, 16);
+	}
+	
+	private void drawRedBulb(int horizontalCenter, int verticalCenter) {
+		Minecraft mc = Minecraft.getMinecraft();
+		TextureMap textureMap = mc.getTextureMapBlocks();
+		 TextureAtlasSprite sprite;
+		 
+		 if(isRed) {
+			 textureRed = new ResourceLocation("trafficcontrol:blocks/red");
+		 } else {
+			 textureRed = new ResourceLocation("trafficcontrol:blocks/straight_red");
+		 }
+		 
+		 sprite = textureMap.getAtlasSprite(textureRed.toString());
+			drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 85, sprite, 16, 16);
+	}
+	
+	private void drawLeftGreenBulb(int horizontalCenter, int verticalCenter) {
+		Minecraft mc = Minecraft.getMinecraft();
+		TextureMap textureMap = mc.getTextureMapBlocks();
+		 TextureAtlasSprite sprite;
+		 
+		 if(isLeftGreen) {
+			 textureLeftGreen = new ResourceLocation("trafficcontrol:blocks/green_arrow_left");
+		 } else {
+			 textureLeftGreen = new ResourceLocation("trafficcontrol:blocks/green_arrow_uturn");
+		 }
+		 
+		 sprite = textureMap.getAtlasSprite(textureLeftGreen.toString());
+			drawTexturedModalRect(horizontalCenter - 54, verticalCenter + 15, sprite, 16, 16);
+	}
+	
+	private void drawLeftYellowBulb(int horizontalCenter, int verticalCenter) {
+		Minecraft mc = Minecraft.getMinecraft();
+		TextureMap textureMap = mc.getTextureMapBlocks();
+		 TextureAtlasSprite sprite;
+		 
+		 if(isLeftYellow) {
+			 textureLeftYellow = new ResourceLocation("trafficcontrol:blocks/yellow_arrow_left");
+		 } else {
+			 textureLeftYellow = new ResourceLocation("trafficcontrol:blocks/yellow_arrow_uturn");
+		 }
+		 
+		 sprite = textureMap.getAtlasSprite(textureLeftYellow.toString());
+			drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 5, sprite, 16, 16);
+	}
+	
+	private void drawLeftRedBulb(int horizontalCenter, int verticalCenter) {
+		Minecraft mc = Minecraft.getMinecraft();
+		TextureMap textureMap = mc.getTextureMapBlocks();
+		 TextureAtlasSprite sprite;
+		
+		 if (LeftTurn == "Red") {
+		        textureLeftRed = new ResourceLocation("trafficcontrol:blocks/red_arrow_left");
+		    } else if(LeftTurn == "No") {
+		        textureLeftRed = new ResourceLocation("trafficcontrol:blocks/no_left_turn");
+		    } else if(LeftTurn == "UTurn"){
+		    	textureLeftRed = new ResourceLocation("trafficcontrol:blocks/red_arrow_uturn");
+		    }
+		    sprite = textureMap.getAtlasSprite(textureLeftRed.toString());
+			drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 25, sprite, 16, 16);
+	}
+		
+		   
+	
+	
+	
+	private void drawRightRedBulb(int horizontalCenter, int verticalCenter) {
+		Minecraft mc = Minecraft.getMinecraft();
+		TextureMap textureMap = mc.getTextureMapBlocks();
+		 TextureAtlasSprite sprite;
+		 
+		 if (isRightRed) {
+		        textureRight = new ResourceLocation("trafficcontrol:blocks/red_arrow_right");
+		    } else {
+		        textureRight = new ResourceLocation("trafficcontrol:blocks/no_right_turn");
+		    }
+	    
+	    sprite = textureMap.getAtlasSprite(textureRight.toString());
+	    drawTexturedModalRect(horizontalCenter - 54, verticalCenter + 75, sprite, 16, 16);
+	}
+
+	
+	private void switchSpecialBulbs(int horizontalCenter, int verticalCenter) {
+	    
+	    
+	   
+	    
+	    tickCounter++;
+	    if (tickCounter >= 80) { // 5 seconds (assuming 20 ticks per second)
+	        tickCounter = 0;
+	        isRightRed = !isRightRed;
+	        isLeftYellow = !isLeftYellow;
+	        isLeftGreen = !isLeftGreen;
+	        isRed = !isRed;
+	        isYellow = !isYellow;
+	        isGreen = !isGreen;
+	        if (LeftTurn == "Red") {
+		        LeftTurn = "No";
+		    } else if(LeftTurn == "No") {
+		    	LeftTurn = "UTurn";
+		    } else if(LeftTurn == "UTurn"){
+		    	LeftTurn = "Red";
+		    }
+	       
+	       
+	    }
+	    drawRightRedBulb(horizontalCenter, verticalCenter);
+	    drawLeftRedBulb(horizontalCenter, verticalCenter);
+        drawLeftYellowBulb(horizontalCenter, verticalCenter);
+        drawLeftGreenBulb(horizontalCenter, verticalCenter);
+        drawRedBulb(horizontalCenter, verticalCenter);
+        drawYellowBulb(horizontalCenter, verticalCenter);
+        drawGreenBulb(horizontalCenter, verticalCenter);
+	}
+	    
+	    
+	
+    
 	
 	private void drawManualMode(int horizontalCenter, int verticalCenter)
 	{
+	   
 		drawString(fontRenderer, "Manual Mode", horizontalCenter - 54, verticalCenter - 110, 0xFFFF00);
 		drawString(fontRenderer, "Direction", horizontalCenter - 115, verticalCenter - 110, 0xFFFFFF);
 		
@@ -344,45 +561,19 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		drawString(fontRenderer, "F", horizontalCenter - 11, verticalCenter - 100, 0xFFFFFF);
 		drawString(fontRenderer, "F", horizontalCenter + 26, verticalCenter - 100, 0xFFFFFF);
 		
+		
 		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/redstone_torch_on");
 		drawTexturedModalRect(horizontalCenter - 30, verticalCenter - 106, sprite, 16, 16);
 		
 		sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/redstone_torch_off");
 		drawTexturedModalRect(horizontalCenter + 7, verticalCenter - 106, sprite, 16, 16);
-		
-		sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("trafficcontrol:blocks/red");
-		drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 85, sprite, 16, 16);
-		
-		
-		sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("trafficcontrol:blocks/yellow_solid");
-		drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 65, sprite, 16, 16);
-		
-		sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("trafficcontrol:blocks/green");
-		drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 45, sprite, 16, 16);
-		
-		
-		drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 45, sprite, 16, 16);
-		
-		sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("trafficcontrol:blocks/red_arrow_left");
-		drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 25, sprite, 16, 16);
-
-		sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("trafficcontrol:blocks/yellow_arrow_left");
-		drawTexturedModalRect(horizontalCenter - 54, verticalCenter - 5, sprite, 16, 16);
-		
-		sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("trafficcontrol:blocks/green_arrow_left");
-		drawTexturedModalRect(horizontalCenter - 54, verticalCenter + 15, sprite, 16, 16);
-		
 		sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("trafficcontrol:blocks/cross");
 		drawTexturedModalRect(horizontalCenter - 54, verticalCenter + 35, sprite, 16, 16);
 		
 		sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("trafficcontrol:blocks/dontcross");
 		drawTexturedModalRect(horizontalCenter - 54, verticalCenter + 55, sprite, 16, 16);
-		
-		sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("trafficcontrol:blocks/red_arrow_right");
-		drawTexturedModalRect(horizontalCenter - 54, verticalCenter + 75, sprite, 16, 16);
-
-		
+		switchSpecialBulbs(horizontalCenter, verticalCenter);
 		sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("trafficcontrol:blocks/yellow_arrow_right");
 		drawTexturedModalRect(horizontalCenter - 54, verticalCenter + 95, sprite, 16, 16);
 		
@@ -390,7 +581,8 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		drawTexturedModalRect(horizontalCenter - 54, verticalCenter + 115, sprite, 16, 16);
 		
 	}
-
+	
+	
 	private void drawAutomaticMode(int horizontalCenter, int verticalCenter)
 	{
 		int leftMargin = horizontalCenter - 54;
@@ -401,13 +593,13 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		yellowTime.drawTextBox();
 		drawString(fontRenderer, "Red Time", leftMargin, verticalCenter - 30, 0xFFFFFF);
 		redTime.drawTextBox();
-		drawString(fontRenderer, "Left Arrow Minimum", leftMargin, verticalCenter + 5, 0xFFFFFF);
+		drawString(fontRenderer, "Left Arrow", leftMargin, verticalCenter + 5, 0xFFFFFF);
 		arrowMinimum.drawTextBox();
 		drawString(fontRenderer, "Cross Time", leftMargin, verticalCenter + 40, 0xFFFFFF);
 		crossTime.drawTextBox();
 		drawString(fontRenderer, "Cross Warning Time", leftMargin, verticalCenter + 75, 0xFFFFFF);
 		crossWarningTime.drawTextBox();
-		drawString(fontRenderer, "Right Arrow Minimum", leftMargin, verticalCenter + 110, 0xFFFFFF);
+		drawString(fontRenderer, "Right Arrow", leftMargin, verticalCenter + 110, 0xFFFFFF);
 		rightArrowMinimum.drawTextBox();
 	}
 	
@@ -429,110 +621,102 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 				break;
 			case ELEMENT_IDS.greenOn:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Green, false, true);
-				handleManualClick(button, EnumTrafficLightBulbTypes.TunnelGreen, false, true);
-				handleManualClick(button, EnumTrafficLightBulbTypes.SGreen, false, true);
+				handleManualClick(button, EnumTrafficLightBulbTypes.StraightGreen, false, true);
 				break;
 			case ELEMENT_IDS.greenOnFlash:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Green, true, true);
-				handleManualClick(button, EnumTrafficLightBulbTypes.TunnelGreen, true, true);
-				handleManualClick(button, EnumTrafficLightBulbTypes.SGreen, true, true);
+				handleManualClick(button, EnumTrafficLightBulbTypes.StraightGreen, true, true);
 				break;
 			case ELEMENT_IDS.yellowOn:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Yellow, false, true);
-				handleManualClick(button, EnumTrafficLightBulbTypes.SYellow, false, true);
+				handleManualClick(button, EnumTrafficLightBulbTypes.StraightYellow, false, true);
 				break;
 			case ELEMENT_IDS.yellowOnFlash:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Yellow, true, true);
-				handleManualClick(button, EnumTrafficLightBulbTypes.SYellow, true, true);
+				handleManualClick(button, EnumTrafficLightBulbTypes.StraightYellow, true, true);
 				break;
 			case ELEMENT_IDS.redOn:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Red, false, true);
-				handleManualClick(button, EnumTrafficLightBulbTypes.TunnelRed, false, true);
-				handleManualClick(button, EnumTrafficLightBulbTypes.SRed, false, true);
+				handleManualClick(button, EnumTrafficLightBulbTypes.StraightRed, false, true);
 				break;
 			case ELEMENT_IDS.redOnFlash:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Red, true, true);
-				handleManualClick(button, EnumTrafficLightBulbTypes.TunnelRed, true, true);
-				handleManualClick(button, EnumTrafficLightBulbTypes.SRed, true, true);
+				handleManualClick(button, EnumTrafficLightBulbTypes.StraightRed, true, true);
 				break;
 			case ELEMENT_IDS.greenArrowLeftOn:
 				handleManualClick(button, EnumTrafficLightBulbTypes.GreenArrowLeft, false, true);
-				handleManualClick(button, EnumTrafficLightBulbTypes.GreenArrowuturn, false, true);
+				handleManualClick(button, EnumTrafficLightBulbTypes.GreenArrowUTurn, false, true);
 				break;
 			case ELEMENT_IDS.yellowArrowLeftOn:
 				handleManualClick(button, EnumTrafficLightBulbTypes.YellowArrowLeft, false, true);
-				handleManualClick(button, EnumTrafficLightBulbTypes.YellowArrowuturn, false, true);
+				handleManualClick(button, EnumTrafficLightBulbTypes.YellowArrowUTurn, false, true);
 				break;
 			case ELEMENT_IDS.redArrowLeftOn:
 				handleManualClick(button, EnumTrafficLightBulbTypes.RedArrowLeft, false, true);
-				handleManualClick(button, EnumTrafficLightBulbTypes.RedArrowuturn, false, true);
 				handleManualClick(button, EnumTrafficLightBulbTypes.NoLeftTurn, false, true);
+				handleManualClick(button, EnumTrafficLightBulbTypes.RedArrowUTurn, false, true);
 				break;
 			case ELEMENT_IDS.greenArrowLeftOnFlash:
 				handleManualClick(button, EnumTrafficLightBulbTypes.GreenArrowLeft, true, true);
-				handleManualClick(button, EnumTrafficLightBulbTypes.GreenArrowuturn, true, true);
+				handleManualClick(button, EnumTrafficLightBulbTypes.GreenArrowUTurn, true, true);
 				break;
 			case ELEMENT_IDS.yellowArrowLeftOnFlash:
 				handleManualClick(button, EnumTrafficLightBulbTypes.YellowArrowLeft, true, true);
-				handleManualClick(button, EnumTrafficLightBulbTypes.YellowArrowuturn, true, true);
+				handleManualClick(button, EnumTrafficLightBulbTypes.YellowArrowUTurn, true, true);
 				break;
 			case ELEMENT_IDS.redArrowLeftOnFlash:
 				handleManualClick(button, EnumTrafficLightBulbTypes.RedArrowLeft, true, true);
-				handleManualClick(button, EnumTrafficLightBulbTypes.RedArrowuturn, true, true);
 				handleManualClick(button, EnumTrafficLightBulbTypes.NoLeftTurn, true, true);
+				handleManualClick(button, EnumTrafficLightBulbTypes.RedArrowUTurn, true, true);
 				break;
 			case ELEMENT_IDS.greenOff:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Green, false, false);
-				handleManualClick(button, EnumTrafficLightBulbTypes.TunnelGreen, false, false);
-				handleManualClick(button, EnumTrafficLightBulbTypes.SGreen, false, false);
+				handleManualClick(button, EnumTrafficLightBulbTypes.StraightGreen, false, false);
 				break;
 			case ELEMENT_IDS.greenOffFlash:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Green, true, false);
-				handleManualClick(button, EnumTrafficLightBulbTypes.TunnelGreen, true, false);
-				handleManualClick(button, EnumTrafficLightBulbTypes.SGreen, true, false);
+				handleManualClick(button, EnumTrafficLightBulbTypes.StraightGreen, true, false);
 				break;
 			case ELEMENT_IDS.yellowOff:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Yellow, false, false);
-				handleManualClick(button, EnumTrafficLightBulbTypes.SYellow, false, false);
+				handleManualClick(button, EnumTrafficLightBulbTypes.StraightYellow, false, false);
 				break;
 			case ELEMENT_IDS.yellowOffFlash:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Yellow, true, false);
-				handleManualClick(button, EnumTrafficLightBulbTypes.SYellow, true, false);
+				handleManualClick(button, EnumTrafficLightBulbTypes.StraightYellow, true, false);
 				break;
 			case ELEMENT_IDS.redOff:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Red, false, false);
-				handleManualClick(button, EnumTrafficLightBulbTypes.TunnelRed, false, false);
-				handleManualClick(button, EnumTrafficLightBulbTypes.SRed, false, false);
+				handleManualClick(button, EnumTrafficLightBulbTypes.StraightRed, false, false);
 				break;
 			case ELEMENT_IDS.redOffFlash:
 				handleManualClick(button, EnumTrafficLightBulbTypes.Red, true, false);
-				handleManualClick(button, EnumTrafficLightBulbTypes.TunnelRed, true, false);
-				handleManualClick(button, EnumTrafficLightBulbTypes.SRed, true, false);
+				handleManualClick(button, EnumTrafficLightBulbTypes.StraightRed, true, false);
 				break;
 			case ELEMENT_IDS.greenArrowLeftOff:
 				handleManualClick(button, EnumTrafficLightBulbTypes.GreenArrowLeft, false, false);
-				handleManualClick(button, EnumTrafficLightBulbTypes.GreenArrowuturn, false, false);
+				handleManualClick(button, EnumTrafficLightBulbTypes.GreenArrowUTurn, false, false);
 				break;
 			case ELEMENT_IDS.yellowArrowLeftOff:
 				handleManualClick(button, EnumTrafficLightBulbTypes.YellowArrowLeft, false, false);
-				handleManualClick(button, EnumTrafficLightBulbTypes.YellowArrowuturn, false, false);
+				handleManualClick(button, EnumTrafficLightBulbTypes.YellowArrowUTurn, false, false);
 				break;
 			case ELEMENT_IDS.redArrowLeftOff:
 				handleManualClick(button, EnumTrafficLightBulbTypes.RedArrowLeft, false, false);
-				handleManualClick(button, EnumTrafficLightBulbTypes.RedArrowuturn, false, false);
+				handleManualClick(button, EnumTrafficLightBulbTypes.RedArrowUTurn, false, false);
 				handleManualClick(button, EnumTrafficLightBulbTypes.NoLeftTurn, false, false);
 				break;
 			case ELEMENT_IDS.greenArrowLeftOffFlash:
 				handleManualClick(button, EnumTrafficLightBulbTypes.GreenArrowLeft, true, false);
-				handleManualClick(button, EnumTrafficLightBulbTypes.GreenArrowuturn, true, false);
+				handleManualClick(button, EnumTrafficLightBulbTypes.GreenArrowUTurn, true, false);
 				break;
 			case ELEMENT_IDS.yellowArrowLeftOffFlash:
 				handleManualClick(button, EnumTrafficLightBulbTypes.YellowArrowLeft, true, false);
-				handleManualClick(button, EnumTrafficLightBulbTypes.YellowArrowuturn, true, false);
+				handleManualClick(button, EnumTrafficLightBulbTypes.YellowArrowUTurn, true, false);
 				break;
 			case ELEMENT_IDS.redArrowLeftOffFlash:
 				handleManualClick(button, EnumTrafficLightBulbTypes.RedArrowLeft, true, false);
-				handleManualClick(button, EnumTrafficLightBulbTypes.RedArrowuturn, true, false);
+				handleManualClick(button, EnumTrafficLightBulbTypes.RedArrowUTurn, true, false);
 				handleManualClick(button, EnumTrafficLightBulbTypes.NoLeftTurn, true, false);
 				break;
 			case ELEMENT_IDS.crossOn:
@@ -687,7 +871,8 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 		
 		if (Keyboard.KEY_BACK == keyCode ||
 				Keyboard.KEY_DELETE == keyCode ||
-				Character.isDigit(typedChar))
+				Character.isDigit(typedChar) ||
+				typedChar == '.')
 		{
 			textBox.textboxKeyTyped(typedChar, keyCode);
 			
@@ -699,8 +884,12 @@ public class TrafficLightControlBoxGui extends GuiScreen {
 				}
 				else
 				{
-					double value = Double.parseDouble(textBox.getText());
-					onTypeSuccess.accept(value);
+					try
+					{
+						double value = Double.parseDouble(textBox.getText());
+						onTypeSuccess.accept(value);
+					}
+					catch(NumberFormatException | NullPointerException ex) {}
 				}
 			}
 		}

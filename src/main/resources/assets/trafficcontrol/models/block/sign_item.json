@@ -3,7 +3,7 @@
     "textures": {
         "particle": "trafficcontrol:blocks/generic",
         "0": "trafficcontrol:blocks/generic",
-        "1": "trafficcontrol:blocks/sign/circle/circle0"
+        "1": "trafficcontrol:blocks/signs/df35999e-5ec7-4829-af99-e3bfd6c51c42/circle/circle0"
     },
     "elements": [
         {

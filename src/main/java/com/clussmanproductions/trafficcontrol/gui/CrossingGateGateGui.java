@@ -5,9 +5,12 @@ import java.io.IOException;
 import org.lwjgl.input.Keyboard;
 
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity.GateLightCount;
 
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
+import net.minecraftforge.fml.client.config.GuiCheckBox;
 
 public class CrossingGateGateGui extends GuiScreen {
 	
@@ -15,6 +18,9 @@ public class CrossingGateGateGui extends GuiScreen {
 	private GuiTextField upperRotation;
 	private GuiTextField lowerRotation;
 	private GuiTextField delay;
+	private GuiTextField lightStartOffset;
+	private GuiCheckBox threeLights;
+	private GuiCheckBox oneLight;
 
 	private CrossingGateGateTileEntity te;
 	public CrossingGateGateGui(CrossingGateGateTileEntity te)
@@ -40,6 +46,15 @@ public class CrossingGateGateGui extends GuiScreen {
 		
 		delay = new GuiTextField(COMP_IDS.DELAY, fontRenderer, horizontalCenter - 50, verticalCenter + 20, 100, 20);
 		delay.setText(String.valueOf(te.getDelay()));
+		
+		lightStartOffset = new GuiTextField(COMP_IDS.LIGHT_START_OFFSET, fontRenderer, horizontalCenter - 50, verticalCenter + 50, 100, 20);
+		lightStartOffset.setText(String.valueOf(te.getLightStartOffset()));
+		
+		threeLights = new GuiCheckBox(COMP_IDS.THREE_LIGHT, horizontalCenter - 50, verticalCenter + 80, "Three Gate Lights", te.getGateLightCount() == GateLightCount.ThreeLights);
+		oneLight = new GuiCheckBox(COMP_IDS.ONE_LIGHT, horizontalCenter - 50 + threeLights.width + 4, verticalCenter + 80, "One Gate Light", te.getGateLightCount() == GateLightCount.OneLight);
+		
+		buttonList.add(threeLights);
+		buttonList.add(oneLight);
 	}
 	
 	@Override
@@ -59,6 +74,9 @@ public class CrossingGateGateGui extends GuiScreen {
 		
 		fontRenderer.drawString("Activation Delay:", delay.x - fontRenderer.getStringWidth("Activation Delay:") - 10, delay.y + (delay.height / 4), 0xFFFFFF);
 		delay.drawTextBox();
+		
+		fontRenderer.drawString("Light Start Offset:", lightStartOffset.x - fontRenderer.getStringWidth("Light Start Offset:") - 10, lightStartOffset.y + (lightStartOffset.height / 4), 0xFFFFFF);
+		lightStartOffset.drawTextBox();
 	}
 	
 	@Override
@@ -77,9 +95,10 @@ public class CrossingGateGateGui extends GuiScreen {
 			upperRotation.textboxKeyTyped(typedChar, keyCode);
 			lowerRotation.textboxKeyTyped(typedChar, keyCode);
 			delay.textboxKeyTyped(typedChar, keyCode);
+			lightStartOffset.textboxKeyTyped(typedChar, keyCode);
 		}
 		
-		if (keyCode == Keyboard.KEY_MINUS)
+		if (typedChar == '-')
 		{
 			upperRotation.textboxKeyTyped(typedChar, keyCode);
 			lowerRotation.textboxKeyTyped(typedChar, keyCode);
@@ -92,6 +111,7 @@ public class CrossingGateGateGui extends GuiScreen {
 			keyTypedDecimal(upperRotation, typedChar, keyCode);
 			keyTypedDecimal(lowerRotation, typedChar, keyCode);
 			keyTypedDecimal(delay, typedChar, keyCode);
+			keyTypedDecimal(lightStartOffset, typedChar, keyCode);
 		}
 	}
 	
@@ -110,15 +130,45 @@ public class CrossingGateGateGui extends GuiScreen {
 		upperRotation.mouseClicked(mouseX, mouseY, mouseButton);
 		lowerRotation.mouseClicked(mouseX, mouseY, mouseButton);
 		delay.mouseClicked(mouseX, mouseY, mouseButton);
+		lightStartOffset.mouseClicked(mouseX, mouseY, mouseButton);
 	}
 	
 	@Override
 	public void onGuiClosed() {
-		te.setCrossingGateLength(Float.parseFloat(length.getText()));
-		te.setUpperRotationLimit(Float.parseFloat(upperRotation.getText()));
-		te.setLowerRotationLimit(Float.parseFloat(lowerRotation.getText()));
-		te.setDelay(Float.parseFloat(delay.getText()));
+		te.setCrossingGateLength(parseFloatOrDefault(length.getText()));
+		te.setUpperRotationLimit(parseFloatOrDefault(upperRotation.getText()));
+		te.setLowerRotationLimit(parseFloatOrDefault(lowerRotation.getText()));
+		te.setDelay(parseFloatOrDefault(delay.getText()));
+		te.setLightStartOffset(parseFloatOrDefault(lightStartOffset.getText()));
+		te.setGateLightCount(threeLights.isChecked() ? GateLightCount.ThreeLights : GateLightCount.OneLight);
 		te.performClientToServerSync();
+	}
+	
+	private float parseFloatOrDefault(String text)
+	{
+		try
+		{
+			return Float.parseFloat(text);
+		}
+		catch (Exception ex)
+		{
+			return 0F;
+		}
+	}
+	
+	@Override
+	protected void actionPerformed(GuiButton button) throws IOException {
+		super.actionPerformed(button);
+		
+		if (button == threeLights)
+		{
+			oneLight.setIsChecked(!threeLights.isChecked());
+		}
+		
+		if (button == oneLight)
+		{
+			threeLights.setIsChecked(!oneLight.isChecked());
+		}
 	}
 	
 	public static class COMP_IDS
@@ -127,5 +177,8 @@ public class CrossingGateGateGui extends GuiScreen {
 		public static final int UPPER_ROTATION = 2;
 		public static final int LOWER_ROTATION = 3;
 		public static final int DELAY = 4;
+		public static final int LIGHT_START_OFFSET = 5;
+		public static final int THREE_LIGHT = 6;
+		public static final int ONE_LIGHT = 7;
 	}
 }

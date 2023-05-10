@@ -1,6 +1,8 @@
 package com.clussmanproductions.trafficcontrol.proxy;
 
 import java.io.File;
+import java.util.function.Consumer;
+import java.util.function.IntConsumer;
 
 import com.clussmanproductions.trafficcontrol.Config;
 import com.clussmanproductions.trafficcontrol.ModBlocks;
@@ -25,14 +27,6 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingRelayTopSW;
 import com.clussmanproductions.trafficcontrol.blocks.BlockDrum;
 import com.clussmanproductions.trafficcontrol.blocks.BlockHorizontalPole;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLightSource;
-import com.clussmanproductions.trafficcontrol.blocks.BlockOTrafficLight;
-import com.clussmanproductions.trafficcontrol.blocks.BlockOTrafficLight1;
-import com.clussmanproductions.trafficcontrol.blocks.BlockOTrafficLight2;
-import com.clussmanproductions.trafficcontrol.blocks.BlockOTrafficLight4;
-import com.clussmanproductions.trafficcontrol.blocks.BlockOTrafficLight5;
-import com.clussmanproductions.trafficcontrol.blocks.BlockOTrafficLight5Upper;
-import com.clussmanproductions.trafficcontrol.blocks.BlockOTrafficLight6;
-import com.clussmanproductions.trafficcontrol.blocks.BlockOTrafficLightDoghouse;
 import com.clussmanproductions.trafficcontrol.blocks.BlockOverhead;
 import com.clussmanproductions.trafficcontrol.blocks.BlockOverheadCrossbuck;
 import com.clussmanproductions.trafficcontrol.blocks.BlockOverheadLamps;
@@ -53,9 +47,9 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight4;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight5;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight5Upper;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight6;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight7;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightControlBox;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightDoghouse;
-
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficRail;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorLeft;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorRight;
@@ -64,52 +58,26 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockType3Barrier;
 import com.clussmanproductions.trafficcontrol.blocks.BlockType3BarrierRight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockWCHBell;
 import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
-import com.clussmanproductions.trafficcontrol.blocks.BlockYTrafficLight;
-import com.clussmanproductions.trafficcontrol.blocks.BlockYTrafficLight1;
-import com.clussmanproductions.trafficcontrol.blocks.BlockYTrafficLight2;
-import com.clussmanproductions.trafficcontrol.blocks.BlockYTrafficLight4;
-import com.clussmanproductions.trafficcontrol.blocks.BlockYTrafficLight5;
-import com.clussmanproductions.trafficcontrol.blocks.BlockYTrafficLight5Upper;
-import com.clussmanproductions.trafficcontrol.blocks.BlockYTrafficLight6;
-import com.clussmanproductions.trafficcontrol.blocks.BlockYTrafficLightDoghouse;
-import com.clussmanproductions.trafficcontrol.blocks.Blockstand;
 import com.clussmanproductions.trafficcontrol.gui.GuiProxy;
 import com.clussmanproductions.trafficcontrol.item.ItemCone;
 import com.clussmanproductions.trafficcontrol.item.ItemCrossingRelayBox;
 import com.clussmanproductions.trafficcontrol.item.ItemCrossingRelayTuner;
-import com.clussmanproductions.trafficcontrol.item.ItemOTrafficLight1Frame;
-import com.clussmanproductions.trafficcontrol.item.ItemOTrafficLight2Frame;
-import com.clussmanproductions.trafficcontrol.item.ItemOTrafficLight4Frame;
-import com.clussmanproductions.trafficcontrol.item.ItemOTrafficLight5Frame;
-import com.clussmanproductions.trafficcontrol.item.ItemOTrafficLight6Frame;
-import com.clussmanproductions.trafficcontrol.item.ItemOTrafficLightDoghouseFrame;
-import com.clussmanproductions.trafficcontrol.item.ItemOTrafficLightFrame;
 import com.clussmanproductions.trafficcontrol.item.ItemStreetSign;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight1Frame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight2Frame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight4Frame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight5Frame;
+import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight6Frame;
+import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight7Frame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightBulb;
+import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightCard;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightDoghouseFrame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLightFrame;
-import com.clussmanproductions.trafficcontrol.item.ItemYTrafficLight1Frame;
-import com.clussmanproductions.trafficcontrol.item.ItemYTrafficLight2Frame;
-import com.clussmanproductions.trafficcontrol.item.ItemYTrafficLight4Frame;
-import com.clussmanproductions.trafficcontrol.item.ItemYTrafficLight5Frame;
-import com.clussmanproductions.trafficcontrol.item.ItemYTrafficLight6Frame;
-import com.clussmanproductions.trafficcontrol.item.ItemYTrafficLightDoghouseFrame;
-import com.clussmanproductions.trafficcontrol.item.ItemYTrafficLightFrame;
 import com.clussmanproductions.trafficcontrol.network.PacketHandler;
+import com.clussmanproductions.trafficcontrol.signs.SignRepository;
 import com.clussmanproductions.trafficcontrol.tileentity.ConcreteBarrierTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingLampsTileEntity;
-import com.clussmanproductions.trafficcontrol.tileentity.OTrafficLight1TileEntity;
-import com.clussmanproductions.trafficcontrol.tileentity.OTrafficLight2TileEntity;
-import com.clussmanproductions.trafficcontrol.tileentity.OTrafficLight4TileEntity;
-import com.clussmanproductions.trafficcontrol.tileentity.OTrafficLight5TileEntity;
-import com.clussmanproductions.trafficcontrol.tileentity.OTrafficLight6TileEntity;
-import com.clussmanproductions.trafficcontrol.tileentity.OTrafficLightDoghouseTileEntity;
-import com.clussmanproductions.trafficcontrol.tileentity.OTrafficLightTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.PedestrianButtonTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.RelayTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.SafetranMechanicalTileEntity;
@@ -124,22 +92,15 @@ import com.clussmanproductions.trafficcontrol.tileentity.TrafficLight1TileEntity
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLight2TileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLight4TileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLight5TileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.TrafficLight6TileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.TrafficLight7TileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightControlBoxTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightDoghouseTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.Type3BarrierTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.WCHBellTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.WigWagTileEntity;
-import com.clussmanproductions.trafficcontrol.tileentity.YTrafficLight1TileEntity;
-import com.clussmanproductions.trafficcontrol.tileentity.YTrafficLight2TileEntity;
-import com.clussmanproductions.trafficcontrol.tileentity.YTrafficLight4TileEntity;
-import com.clussmanproductions.trafficcontrol.tileentity.YTrafficLight5TileEntity;
-import com.clussmanproductions.trafficcontrol.tileentity.YTrafficLight6TileEntity;
-import com.clussmanproductions.trafficcontrol.tileentity.YTrafficLightDoghouseTileEntity;
-import com.clussmanproductions.trafficcontrol.tileentity.YTrafficLightTileEntity;
-import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight6Frame;
-import com.clussmanproductions.trafficcontrol.tileentity.TrafficLight6TileEntity;
-
+import com.clussmanproductions.trafficcontrol.util.OpenComputersHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.EnumDyeColor;
@@ -148,13 +109,18 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.ProgressManager;
+import net.minecraftforge.fml.common.ProgressManager.ProgressBar;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @EventBusSubscriber
 public class CommonProxy {
@@ -163,7 +129,6 @@ public class CommonProxy {
 	public static void registerBlocks(RegistryEvent.Register<Block> e)
 	{
 		e.getRegistry().register(new BlockCrossingGateBase());
-		e.getRegistry().register(new Blockstand());
 		e.getRegistry().register(new BlockCrossingGateGate());
 		e.getRegistry().register(new BlockCrossingGateLamps());
 		e.getRegistry().register(new BlockCrossingGatePole());
@@ -190,8 +155,6 @@ public class CommonProxy {
 		e.getRegistry().register(new BlockLightSource());
 		e.getRegistry().register(new BlockStreetLightDouble());
 		e.getRegistry().register(new BlockTrafficLight());
-		e.getRegistry().register(new BlockYTrafficLight());
-		e.getRegistry().register(new BlockOTrafficLight());
 		e.getRegistry().register(new BlockTrafficLightControlBox());
 		e.getRegistry().register(new BlockWigWag());
 		e.getRegistry().register(new BlockShuntBorder());
@@ -207,26 +170,12 @@ public class CommonProxy {
 		e.getRegistry().register(new BlockStreetSign());
 		e.getRegistry().register(new BlockTrafficLight5());
 		e.getRegistry().register(new BlockTrafficLight5Upper());
-		e.getRegistry().register(new BlockYTrafficLight5());
-		e.getRegistry().register(new BlockYTrafficLight5Upper());
-		e.getRegistry().register(new BlockOTrafficLight5());
-		e.getRegistry().register(new BlockOTrafficLight5Upper());
 		e.getRegistry().register(new BlockTrafficLightDoghouse());
-		e.getRegistry().register(new BlockYTrafficLightDoghouse());
-		e.getRegistry().register(new BlockOTrafficLightDoghouse());
 		e.getRegistry().register(new BlockTrafficLight1());
-		e.getRegistry().register(new BlockYTrafficLight1());
-		e.getRegistry().register(new BlockOTrafficLight1());
 		e.getRegistry().register(new BlockTrafficLight2());
-		e.getRegistry().register(new BlockYTrafficLight2());
-		e.getRegistry().register(new BlockOTrafficLight2());
 		e.getRegistry().register(new BlockTrafficLight4());
-		e.getRegistry().register(new BlockYTrafficLight4());
-		e.getRegistry().register(new BlockOTrafficLight4());
 		e.getRegistry().register(new BlockTrafficLight6());
-		e.getRegistry().register(new BlockYTrafficLight6());
-		e.getRegistry().register(new BlockOTrafficLight6());
-		
+		e.getRegistry().register(new BlockTrafficLight7());
 		e.getRegistry().register(new BlockPedestrianButton());
 		e.getRegistry().register(new BlockTrafficSensorRight());
 
@@ -238,8 +187,6 @@ public class CommonProxy {
 		GameRegistry.registerTileEntity(StreetLightSingleTileEntity.class, ModTrafficControl.MODID + "_streetsignsingle");
 		GameRegistry.registerTileEntity(StreetLightDoubleTileEntity.class, ModTrafficControl.MODID + "_streetlightdouble");
 		GameRegistry.registerTileEntity(TrafficLightTileEntity.class, ModTrafficControl.MODID + "_trafficlight");
-		GameRegistry.registerTileEntity(YTrafficLightTileEntity.class, ModTrafficControl.MODID + "_ytrafficlight");
-		GameRegistry.registerTileEntity(OTrafficLightTileEntity.class, ModTrafficControl.MODID + "_otrafficlight");
 		GameRegistry.registerTileEntity(TrafficLightControlBoxTileEntity.class, ModTrafficControl.MODID + "_trafficlightcontrolbox");
 		GameRegistry.registerTileEntity(WigWagTileEntity.class, ModTrafficControl.MODID + "_wigwag");
 		GameRegistry.registerTileEntity(ShuntBorderTileEntity.class, ModTrafficControl.MODID + "_shuntborder");
@@ -249,25 +196,13 @@ public class CommonProxy {
 		GameRegistry.registerTileEntity(WCHBellTileEntity.class, ModTrafficControl.MODID + "_wchbell");
 		GameRegistry.registerTileEntity(StreetSignTileEntity.class, ModTrafficControl.MODID + "_streetsign");
 		GameRegistry.registerTileEntity(TrafficLight5TileEntity.class, ModTrafficControl.MODID + "_trafficlight5");
-		GameRegistry.registerTileEntity(YTrafficLight5TileEntity.class, ModTrafficControl.MODID + "_ytrafficlight5");
-		GameRegistry.registerTileEntity(OTrafficLight5TileEntity.class, ModTrafficControl.MODID + "_otrafficlight5");
 		GameRegistry.registerTileEntity(TrafficLightDoghouseTileEntity.class, ModTrafficControl.MODID + "_trafficlightdoghouse");
-		GameRegistry.registerTileEntity(YTrafficLightDoghouseTileEntity.class, ModTrafficControl.MODID + "_ytrafficlightdoghouse");
-		GameRegistry.registerTileEntity(OTrafficLightDoghouseTileEntity.class, ModTrafficControl.MODID + "_otrafficlightdoghouse");
 		GameRegistry.registerTileEntity(CrossingLampsTileEntity.class, ModTrafficControl.MODID + "_crossinglamps");
 		GameRegistry.registerTileEntity(TrafficLight1TileEntity.class, ModTrafficControl.MODID + "_trafficlight1");
-		GameRegistry.registerTileEntity(YTrafficLight1TileEntity.class, ModTrafficControl.MODID + "_ytrafficlight1");
-		GameRegistry.registerTileEntity(OTrafficLight1TileEntity.class, ModTrafficControl.MODID + "_otrafficlight1");
 		GameRegistry.registerTileEntity(TrafficLight2TileEntity.class, ModTrafficControl.MODID + "_trafficlight2");
-		GameRegistry.registerTileEntity(YTrafficLight2TileEntity.class, ModTrafficControl.MODID + "_ytrafficlight2");
-		GameRegistry.registerTileEntity(OTrafficLight2TileEntity.class, ModTrafficControl.MODID + "_otrafficlight2");
 		GameRegistry.registerTileEntity(TrafficLight4TileEntity.class, ModTrafficControl.MODID + "_trafficlight4");
-		GameRegistry.registerTileEntity(YTrafficLight4TileEntity.class, ModTrafficControl.MODID + "_ytrafficlight4");
-		GameRegistry.registerTileEntity(OTrafficLight4TileEntity.class, ModTrafficControl.MODID + "_otrafficlight4");
 		GameRegistry.registerTileEntity(TrafficLight6TileEntity.class, ModTrafficControl.MODID + "_trafficlight6");
-		GameRegistry.registerTileEntity(YTrafficLight6TileEntity.class, ModTrafficControl.MODID + "_ytrafficlight6");
-		GameRegistry.registerTileEntity(OTrafficLight6TileEntity.class, ModTrafficControl.MODID + "_otrafficlight6");
-		
+		GameRegistry.registerTileEntity(TrafficLight7TileEntity.class, ModTrafficControl.MODID + "_trafficlight7");
 		GameRegistry.registerTileEntity(PedestrianButtonTileEntity.class, ModTrafficControl.MODID + "_pedestrianbutton");
 	}
 
@@ -278,30 +213,19 @@ public class CommonProxy {
 		e.getRegistry().register(new ItemCrossingRelayTuner());
 		e.getRegistry().register(new ItemTrafficLightBulb());
 		e.getRegistry().register(new ItemTrafficLightFrame());
-		e.getRegistry().register(new ItemYTrafficLightFrame());
-		e.getRegistry().register(new ItemOTrafficLightFrame());
 		e.getRegistry().register(new ItemTrafficLight5Frame());
-		e.getRegistry().register(new ItemYTrafficLight5Frame());
-		e.getRegistry().register(new ItemOTrafficLight5Frame());
 		e.getRegistry().register(new ItemTrafficLightDoghouseFrame());
-		e.getRegistry().register(new ItemYTrafficLightDoghouseFrame());
-		e.getRegistry().register(new ItemOTrafficLightDoghouseFrame());
 		e.getRegistry().register(new ItemTrafficLight1Frame());
-		e.getRegistry().register(new ItemYTrafficLight1Frame());
-		e.getRegistry().register(new ItemOTrafficLight1Frame());
 		e.getRegistry().register(new ItemTrafficLight2Frame());
-		e.getRegistry().register(new ItemYTrafficLight2Frame());
-		e.getRegistry().register(new ItemOTrafficLight2Frame());
 		e.getRegistry().register(new ItemTrafficLight4Frame());
-		e.getRegistry().register(new ItemYTrafficLight4Frame());
-		e.getRegistry().register(new ItemOTrafficLight4Frame());
 		e.getRegistry().register(new ItemTrafficLight6Frame());
-		e.getRegistry().register(new ItemOTrafficLight6Frame());
-		e.getRegistry().register(new ItemYTrafficLight6Frame());
-		
+		e.getRegistry().register(new ItemTrafficLight7Frame());
+		if(ModTrafficControl.OC_INSTALLED)
+		{
+			e.getRegistry().register(new ItemTrafficLightCard());
+		}
 
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_base).setRegistryName(ModBlocks.crossing_gate_base.getRegistryName()));
-		e.getRegistry().register(new ItemBlock(ModBlocks.stand).setRegistryName(ModBlocks.stand.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_gate).setRegistryName(ModBlocks.crossing_gate_gate.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_lamps).setRegistryName(ModBlocks.crossing_gate_lamps.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.crossing_gate_pole).setRegistryName(ModBlocks.crossing_gate_pole.getRegistryName()));
@@ -374,7 +298,100 @@ public class CommonProxy {
 	public void init(FMLInitializationEvent e)
 	{
 		NetworkRegistry.INSTANCE.registerGuiHandler(ModTrafficControl.instance, new GuiProxy());
+
+		Consumer<String> signRepoSplashUpdate;
+		IntConsumer signRepoSplashStepsUpdate;
+
+		if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
+		{
+			signRepoSplashUpdate = getClientSplashUpdate();
+			signRepoSplashStepsUpdate = getClientStepsUpdate();
+		}
+		else
+		{
+			signRepoSplashUpdate = getServerSplashUpdate();
+			signRepoSplashStepsUpdate = getServerStepsUpdate();
+		}
+
+		ModTrafficControl.instance.signRepo = new SignRepository();
+		ModTrafficControl.instance.signRepo.init(signRepoSplashUpdate, signRepoSplashStepsUpdate);
+
+		if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
+		{
+			endSignInit();
+		}
+
+		if (ModTrafficControl.OC_INSTALLED)
+		{
+			OpenComputersHelper.addOCDriver();
+		}
 	}
+
+	@SideOnly(Side.CLIENT)
+	ProgressBar signLoadProgress;
+
+	@SideOnly(Side.CLIENT)
+	private Consumer<String> getClientSplashUpdate()
+	{
+		return splash ->
+		{
+			if (signLoadProgress == null)
+			{
+				return;
+			}
+
+			if (signLoadProgress.getStep() >= signLoadProgress.getSteps())
+			{
+				return;
+			}
+
+			signLoadProgress.step(splash);
+		};
+	}
+
+	@SideOnly(Side.SERVER)
+	private Consumer<String> getServerSplashUpdate()
+	{
+		return splash ->
+		{
+			ModTrafficControl.logger.info(splash);
+		};
+	}
+
+	@SideOnly(Side.CLIENT)
+	private IntConsumer getClientStepsUpdate()
+	{
+		return steps ->
+		{
+			if (signLoadProgress != null)
+			{
+				while(signLoadProgress.getStep() < signLoadProgress.getSteps()) // Finish out progress bar
+				{
+					signLoadProgress.step("");
+				}
+				
+				ProgressManager.pop(signLoadProgress);
+			}
+
+			signLoadProgress = ProgressManager.push("Loading Signs", steps);
+		};
+	}
+
+	@SideOnly(Side.SERVER)
+	private IntConsumer getServerStepsUpdate()
+	{
+		return steps -> {};
+	}
+
+	@SideOnly(Side.CLIENT)
+	private void endSignInit()
+	{
+		if (signLoadProgress != null)
+		{
+			ProgressManager.pop(signLoadProgress);
+		}
+	}
+
 
 	public void postInit(FMLPostInitializationEvent e)
 	{

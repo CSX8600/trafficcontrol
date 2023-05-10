@@ -336,10 +336,7 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 		for(BlockPos lampLocation : crossingLampLocations)
 		{
 			try
-			{
-//				IBlockState lampState = world.getBlockState(lampLocation);
-//				world.setBlockState(lampLocation, lampState.withProperty(BlockLampBase.STATE, state));
-				
+			{				
 				CrossingLampsTileEntity te = (CrossingLampsTileEntity)world.getTileEntity(lampLocation);
 				te.setState(state);
 				
@@ -348,6 +345,21 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 			catch (Exception ex)
 			{
 				positionsToRemove.add(lampLocation);
+			}
+		}
+		
+		for(BlockPos gateLocation : crossingGateLocations)
+		{
+			try
+			{
+				CrossingGateGateTileEntity te = (CrossingGateGateTileEntity)world.getTileEntity(gateLocation);
+				te.setFlashState(state);
+				
+				world.notifyBlockUpdate(gateLocation, world.getBlockState(gateLocation), world.getBlockState(gateLocation), 3);
+			}
+			catch(Exception ex)
+			{
+				// Do nothing - there's a separate process to unpair gates
 			}
 		}
 		
