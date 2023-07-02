@@ -732,6 +732,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 			{
 				te.powerOff();
 				te.setActive(EnumTrafficLightBulbTypes.Red, true, false);
+				te.setActive(EnumTrafficLightBulbTypes.StraightRed, true, false);
 				te.setActive(EnumTrafficLightBulbTypes.RedArrowLeft, true, false);
 				te.setActive(EnumTrafficLightBulbTypes.RedArrowUTurn, true, false);
 				te.setActive(EnumTrafficLightBulbTypes.NoLeftTurn, true, false);
@@ -754,6 +755,7 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 			{
 				te.powerOff();
 				te.setActive(EnumTrafficLightBulbTypes.Red, true, false);
+				te.setActive(EnumTrafficLightBulbTypes.StraightRed, true, false);
 				te.setActive(EnumTrafficLightBulbTypes.RedArrowLeft, true, false);
 				te.setActive(EnumTrafficLightBulbTypes.RedArrowUTurn, true, false);
 				te.setActive(EnumTrafficLightBulbTypes.NoLeftTurn, true, false);
