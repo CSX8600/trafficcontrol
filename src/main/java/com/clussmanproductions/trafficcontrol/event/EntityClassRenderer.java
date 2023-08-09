@@ -57,14 +57,7 @@ public class EntityClassRenderer {
 		if (ClientProxy.entityClassRendererKey.isPressed())
 		{
 			performEntityClassRender = !performEntityClassRender;
-			if(performEntityClassRender)
-			{
-				Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.YELLOW + "[" + ModTrafficControl.MODNAME + "] Entity Class Viewer Enabled"));
-			}
-			else
-			{
-				Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.YELLOW + "[" + ModTrafficControl.MODNAME + "] Entity Class Viewer Disabled"));
-			}
+			Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.YELLOW + "[TC] Entity Class Viewer " + (performEntityClassRender ? "Enabled" : "Disabled")));
 		}
 	}
 }
