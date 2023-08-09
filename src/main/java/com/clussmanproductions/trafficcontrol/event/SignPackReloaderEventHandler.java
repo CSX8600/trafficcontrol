@@ -1,5 +1,8 @@
 package com.clussmanproductions.trafficcontrol.event;
 
+import com.clussmanproductions.trafficcontrol.proxy.ClientProxy;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.util.text.TextFormatting;
 import org.lwjgl.input.Keyboard;
 
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
@@ -17,10 +20,20 @@ public class SignPackReloaderEventHandler {
 	@SubscribeEvent
 	public static void onKeyPress(RenderTickEvent e)
 	{
-		if (e.phase == Phase.END && Keyboard.isKeyDown(Keyboard.KEY_F3) && Keyboard.isKeyDown(Keyboard.KEY_RBRACKET))
+		if (e.phase == Phase.END && Keyboard.isKeyDown(Keyboard.KEY_F3) && Keyboard.isKeyDown(ClientProxy.hotReloadSignPacksKey.getKeyCode()))
 		{
-			ModTrafficControl.instance.signRepo.reload();
-			Minecraft.getMinecraft().player.sendMessage(new TextComponentString("Signpacks reloaded!"));
+			try
+			{
+				ModTrafficControl.instance.signRepo.reload();
+				Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.YELLOW + "[" + ModTrafficControl.MODNAME + "] Sign Packs Reloaded!"));
+				Minecraft.getMinecraft().player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
+			}
+			catch(Exception exception)
+			{
+				Minecraft.getMinecraft().player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.4F);
+				Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.RED + "Something went wrong! Check the console for details."));
+				ModTrafficControl.logger.error(exception);
+			}
 		}
 	}
 }

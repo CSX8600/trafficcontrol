@@ -26,6 +26,7 @@ import net.minecraftforge.fml.relauncher.Side;
 public class ClientProxy extends CommonProxy {
 
 	public static KeyBinding entityClassRendererKey;
+	public static KeyBinding hotReloadSignPacksKey;
 	@SubscribeEvent
 	public void preInit(FMLPreInitializationEvent e)
 	{
@@ -55,7 +56,9 @@ public class ClientProxy extends CommonProxy {
 //		ProgressManager.pop(progressBar);
 
 		entityClassRendererKey = new KeyBinding("key.entityclassrenderer.toggle", Keyboard.KEY_RBRACKET, "key.trafficcontrol.category");
+		hotReloadSignPacksKey = new KeyBinding("key.hotreload.toggle", Keyboard.KEY_RBRACKET, "key.trafficcontrol.category");
 		ClientRegistry.registerKeyBinding(entityClassRendererKey);
+		ClientRegistry.registerKeyBinding(hotReloadSignPacksKey);
 	}
 
 	@SubscribeEvent
