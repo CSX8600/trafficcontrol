@@ -22,8 +22,9 @@ import net.minecraft.util.ResourceLocation;
 public class RendererWigWag extends TileEntitySpecialRenderer<WigWagTileEntity> {
 
 	ResourceLocation genericTexture = new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/generic.png");
-	ResourceLocation blackTexture = new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/black.png");
+	ResourceLocation blackTexture = new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/wigwag.png");
 	ResourceLocation redTexture = new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/red.png");
+	ResourceLocation offBulbTexture = new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/lamp_off.png");
 	@Override
 	public void render(WigWagTileEntity te, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {		
@@ -81,25 +82,25 @@ public class RendererWigWag extends TileEntitySpecialRenderer<WigWagTileEntity> 
 	private void renderBacking(BufferBuilder builder)
 	{
 		GlStateManager.translate(bcwc(-2.5), bcwc(-6), 0);
-		Box box = new Box(0, 0, 1, 6, 6, -1, new TextureInfoCollection(new TextureInfo(blackTexture, 0, 0, 6, 6),
-																			new TextureInfo(blackTexture, 0, 0, 6, 1), 
-																			new TextureInfo(blackTexture, 0, 0, 6, 6), 
-																			new TextureInfo(blackTexture, 0, 0, 6, 1), 
-																			new TextureInfo(blackTexture, 0, 0, 1, 6), 
-																			new TextureInfo(blackTexture, 0, 0, 1, 6)));
+		Box box = new Box(0, 0, 1, 6, 6, -1, new TextureInfoCollection(new TextureInfo(blackTexture, 0, 0, 16, 16), // Back
+																			new TextureInfo(blackTexture, 0, 0, 0, 0), 
+																			new TextureInfo(blackTexture, 0, 0, 16, 16), 
+																			new TextureInfo(blackTexture, 0, 0, 0, 0), 
+																			new TextureInfo(blackTexture, 0, 0, 0, 16), 
+																			new TextureInfo(blackTexture, 0, 0, 0, 0)));
 		
 		box.render(builder, (rl) -> bindTexture(rl));
 	}
 	
 	private void renderLamp(BufferBuilder builder, boolean active)
 	{
-		GlStateManager.translate(bcwc(1.5), bcwc(1.5), bcwc(1));
-		Box box = new Box(0, 0, 1, 3, 3, -1, new TextureInfoCollection(new TextureInfo(active ? redTexture : blackTexture, 0, 0, 6, 6),
-																			new TextureInfo(active ? redTexture : blackTexture, 0, 0, 6, 1), 
-																			new TextureInfo(active ? redTexture : blackTexture, 0, 0, 6, 6), 
-																			new TextureInfo(active ? redTexture : blackTexture, 0, 0, 6, 1), 
-																			new TextureInfo(active ? redTexture : blackTexture, 0, 0, 1, 6), 
-																			new TextureInfo(active ? redTexture : blackTexture, 0, 0, 1, 6)));
+		GlStateManager.translate(bcwc(1.7), bcwc(1.7), bcwc(0.7));
+		Box box = new Box(0, 0, 1, 2.5, 2.5, -2.5, new TextureInfoCollection(new TextureInfo(active ? redTexture : offBulbTexture, 0, 0, 6, 6),
+																			new TextureInfo(active ? redTexture : offBulbTexture, 0, 0, 6, 1), 
+																			new TextureInfo(active ? redTexture : offBulbTexture, 0, 0, 6, 6), 
+																			new TextureInfo(active ? redTexture : offBulbTexture, 0, 0, 6, 1), 
+																			new TextureInfo(active ? redTexture : offBulbTexture, 0, 0, 1, 6), 
+																			new TextureInfo(active ? redTexture : offBulbTexture, 0, 0, 1, 6)));
 		
 		box.render(builder, (rl) -> bindTexture(rl));
 	}
