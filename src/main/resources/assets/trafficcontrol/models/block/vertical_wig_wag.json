@@ -1,0 +1,67 @@
+{
+	"credit": "Made by RavenholmZombie using Blockbench",
+	"textures": {
+		"0": "trafficcontrol:blocks/generic",
+		"1": "trafficcontrol:blocks/bell",
+		"particle": "trafficcontrol:blocks/generic"
+	},
+	"elements": [
+		{
+			"from": [4.115, 0, 6.026],
+			"to": [11.885, 11.844, 9.974],
+			"rotation": {"angle": 0, "axis": "y", "origin": [3.065, 0, 6.026]},
+			"faces": {
+				"north": {"uv": [0, 0, 11, 16], "texture": "#0"},
+				"east": {"uv": [0, 0, 2, 6], "texture": "#0"},
+				"south": {"uv": [0, 0, 11, 16], "texture": "#0"},
+				"west": {"uv": [0, 0, 2, 6], "texture": "#0"},
+				"up": {"uv": [0, 0, 2, 6], "texture": "#0"},
+				"down": {"uv": [0, 0, 6.5, 2], "texture": "#0"}
+			}
+		},
+		{
+			"from": [6.513, 4.435, 4.5455],
+			"to": [9.487, 7.409, 7.013],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7.013, 0, 7.013]},
+			"faces": {
+				"north": {"uv": [0, 0, 8, 8], "texture": "#1"},
+				"east": {"uv": [10, 7, 12, 12], "texture": "#1"},
+				"south": {"uv": [0, 0, 1, 1], "texture": "#missing"},
+				"west": {"uv": [10, 7, 12, 12], "texture": "#1"},
+				"up": {"uv": [10, 7, 12, 12], "texture": "#1"},
+				"down": {"uv": [10, 7, 12, 12], "texture": "#1"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"fixed": {
+			"scale": [0.5, 0.5, 0.5]
+		}
+	}
+}

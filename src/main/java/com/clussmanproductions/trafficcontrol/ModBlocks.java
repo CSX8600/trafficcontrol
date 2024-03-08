@@ -67,6 +67,8 @@ public class ModBlocks {
 	public static BlockTrafficLightControlBox traffic_light_control_box;
 	@ObjectHolder("wig_wag")
 	public static BlockWigWag wig_wag;
+	@ObjectHolder("vertical_wig_wag")
+	public static BlockVerticalWigWag vertical_wig_wag;
 	@ObjectHolder("shunt_border")
 	public static BlockShuntBorder shunt_border;
 	@ObjectHolder("shunt_island")
@@ -152,6 +154,7 @@ public class ModBlocks {
 		pedestrian_button.initModel();
 		traffic_sensor_right.initModel();
 		traffic_light_6.initModel();
+		vertical_wig_wag.initModel();
 		
 	}
 }
