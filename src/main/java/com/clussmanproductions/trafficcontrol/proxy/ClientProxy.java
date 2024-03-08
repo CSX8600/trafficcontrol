@@ -5,6 +5,7 @@ import org.lwjgl.input.Keyboard;
 import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModItems;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
+import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase.EnumState;
 
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -63,6 +64,23 @@ public class ClientProxy extends CommonProxy {
 	{
 		bakeModel(e, new ModelResourceLocation(ModTrafficControl.MODID + ":crossing_gate_light", "normal"));
 		bakeModel(e, new ModelResourceLocation(ModTrafficControl.MODID + ":crossing_gate_light", "on=true"));
+		
+		for(String direction : new String[] { "ne", "nw", "se", "sw" })
+		{
+			for(EnumState flashState : EnumState.values())
+			{
+				for(int i = 0; i <= 16; i++)
+				{
+					bakeModel(e, new ModelResourceLocation(ModTrafficControl.MODID + ":crossing_gate_lamps_" + direction + "_lamp", "rotation=" + i + ",state=" + flashState.getName()));
+				}
+			}
+		}
+		
+//		bakeModel(e, new ModelResourceLocation(ModTrafficControl.MODID + ":crossing_gate_lamps_sw_support", "normal"));
+//		for(EnumState flashState : EnumState.values())
+//		{
+//			bakeModel(e, new ModelResourceLocation(ModTrafficControl.MODID + ":crossing_gate_lamps_sw_lamp", "state=" + flashState.getName()));
+//		}
 	}
 
 	private static void bakeModel(ModelBakeEvent e, ModelResourceLocation location)

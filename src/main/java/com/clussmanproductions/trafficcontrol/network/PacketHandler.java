@@ -28,5 +28,6 @@ public class PacketHandler {
 		INSTANCE.registerMessage(PacketSyncableTileEntity.Handler.class, PacketSyncableTileEntity.class, nextID(), Side.SERVER);
 		INSTANCE.registerMessage(PacketTrafficLightFrameGuiUpdate.Handler.class, PacketTrafficLightFrameGuiUpdate.class, nextID(), Side.SERVER);
 		INSTANCE.registerMessage(PacketSignPackCheck.Handler.class, PacketSignPackCheck.class, nextID(), Side.CLIENT);
+		INSTANCE.registerMessage(PacketCrossingLampPoleBasedSync.Handler.class, PacketCrossingLampPoleBasedSync.class, nextID(), Side.SERVER);
 	}
 }

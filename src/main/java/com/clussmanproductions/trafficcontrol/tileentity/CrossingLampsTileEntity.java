@@ -12,6 +12,7 @@ public class CrossingLampsTileEntity extends TileEntity {
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
+		super.readFromNBT(compound);
 		state = EnumState.getStateByID(compound.getInteger("state"));
 	}
 	
@@ -37,6 +38,7 @@ public class CrossingLampsTileEntity extends TileEntity {
 	
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+		readFromNBT(pkt.getNbtCompound());
 		handleUpdateTag(pkt.getNbtCompound());
 		super.onDataPacket(net, pkt);
 		world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
