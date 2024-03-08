@@ -23,5 +23,10 @@
     {
     	"category": "block",
     	"sounds": [ "trafficcontrol:ped_button" ]
+    },
+    "wigwag":
+    { 
+    	"category": "block",
+    	"sounds": [ "trafficcontrol:wig_wag" ]
     }
 }

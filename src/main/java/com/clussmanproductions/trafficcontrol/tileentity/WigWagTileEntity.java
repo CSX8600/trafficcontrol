@@ -1,6 +1,7 @@
 package com.clussmanproductions.trafficcontrol.tileentity;
 
 import com.clussmanproductions.trafficcontrol.ModBlocks;
+import com.clussmanproductions.trafficcontrol.ModSounds;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
 
@@ -10,6 +11,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -72,6 +74,11 @@ public class WigWagTileEntity extends TileEntity implements ITickable {
 		
 		if (isActive())
 		{
+			if ((rotation == 16 && mode == AnimationMode.SwingPositive) || (rotation == -16 && mode == AnimationMode.SwingNegative))
+			{
+				world.playSound(getPos().getX(), getPos().getY(), getPos().getZ(), ModSounds.wigWag, SoundCategory.BLOCKS, 1.0F, 1.0F, true);
+			}
+			
 			if (rotation > 30)
 			{
 				mode = AnimationMode.SwingNegative;

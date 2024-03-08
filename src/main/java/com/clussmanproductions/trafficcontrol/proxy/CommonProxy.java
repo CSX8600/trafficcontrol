@@ -279,6 +279,7 @@ public class CommonProxy {
 		e.getRegistry().register(ModSounds.safetranMechanicalEvent);
 		e.getRegistry().register(ModSounds.wchEvent);
 		e.getRegistry().register(ModSounds.pedButton);
+		e.getRegistry().register(ModSounds.wigWag);
 	}
 
 	public void preInit(FMLPreInitializationEvent e)
