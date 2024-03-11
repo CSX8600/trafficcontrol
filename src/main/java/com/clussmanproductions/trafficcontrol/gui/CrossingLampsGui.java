@@ -8,7 +8,8 @@ import java.util.function.Supplier;
 import org.lwjgl.opengl.GL11;
 
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateLamps;
-import com.clussmanproductions.trafficcontrol.tileentity.CrossingLampsPoleBasedTileEntity;
+import com.clussmanproductions.trafficcontrol.blocks.BlockOverheadLamps;
+import com.clussmanproductions.trafficcontrol.tileentity.CrossingLampsTileEntity;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.gui.GuiButton;
@@ -27,16 +28,28 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 import net.minecraftforge.fml.client.config.GuiCheckBox;
 
-public class CrossingGateLampsGui extends GuiScreen {
+public class CrossingLampsGui extends GuiScreen {
 
 	private final ArrayList<EnumFacing> facings;
 	private final int rotation;
-	private final CrossingLampsPoleBasedTileEntity te;
-	public CrossingGateLampsGui(CrossingLampsPoleBasedTileEntity te)
+	private final CrossingLampsTileEntity te;
+	private final String modelPrefix;
+	private final String baseModelVariant;
+	public CrossingLampsGui(CrossingLampsTileEntity te, String modelPrefix)
 	{
 		this.te = te;
+		this.modelPrefix = modelPrefix;
 		IBlockState state = te.getWorld().getBlockState(te.getPos());
-		rotation = state.getValue(BlockCrossingGateLamps.ROTATION);
+		if (state.getBlock() instanceof BlockCrossingGateLamps)
+		{
+			rotation = state.getValue(BlockCrossingGateLamps.ROTATION);
+			baseModelVariant = "rotation=0,state=off";
+		}
+		else
+		{
+			rotation = ((int)state.getValue(BlockOverheadLamps.FACING).getHorizontalIndex() * 4);
+			baseModelVariant = "facing=north,state=off";
+		}
 		facings = new ArrayList<>();
 		facings.add(null);
 		for(EnumFacing facing : EnumFacing.values())
@@ -122,25 +135,25 @@ public class CrossingGateLampsGui extends GuiScreen {
 		builder.begin(GL11.GL_QUADS, DefaultVertexFormats.ITEM);
 		
 		ModelManager manager = mc.getBlockRendererDispatcher().getBlockModelShapes().getModelManager();
-		addModelToBuffer(facings, manager, builder, "trafficcontrol:crossing_gate_lamps", "rotation=0,state=off");
+		addModelToBuffer(facings, manager, builder, "trafficcontrol:" + modelPrefix, baseModelVariant);
 		if (te.getNwBulbRotation() >= 0)
 		{
-			addModelToBuffer(facings, manager, builder, "trafficcontrol:crossing_gate_lamps_nw_lamp", "rotation=" + te.getNwBulbRotation() + ",state=off");
+			addModelToBuffer(facings, manager, builder, "trafficcontrol:" + modelPrefix + "_nw_lamp", "rotation=" + te.getNwBulbRotation() + ",state=off");
 		}
 
 		if (te.getNeBulbRotation() >= 0)
 		{
-			addModelToBuffer(facings, manager, builder, "trafficcontrol:crossing_gate_lamps_ne_lamp", "rotation=" + te.getNeBulbRotation() + ",state=off");
+			addModelToBuffer(facings, manager, builder, "trafficcontrol:" + modelPrefix + "_ne_lamp", "rotation=" + te.getNeBulbRotation() + ",state=off");
 		}
 
 		if (te.getSwBulbRotation() >= 0)
 		{
-			addModelToBuffer(facings, manager, builder, "trafficcontrol:crossing_gate_lamps_sw_lamp", "rotation=" + te.getSwBulbRotation() + ",state=off");
+			addModelToBuffer(facings, manager, builder, "trafficcontrol:" + modelPrefix + "_sw_lamp", "rotation=" + te.getSwBulbRotation() + ",state=off");
 		}
 
 		if (te.getSeBulbRotation() >= 0)
 		{
-			addModelToBuffer(facings, manager, builder, "trafficcontrol:crossing_gate_lamps_se_lamp", "rotation=" + te.getSeBulbRotation() + ",state=off");
+			addModelToBuffer(facings, manager, builder, "trafficcontrol:" + modelPrefix + "_se_lamp", "rotation=" + te.getSeBulbRotation() + ",state=off");
 		}
 		
 		tess.draw();		
@@ -265,7 +278,7 @@ public class CrossingGateLampsGui extends GuiScreen {
 				break;
 		}
 		
-		te.syncClientToServer();
+		te.performClientToServerSync();
 	}
 
 	

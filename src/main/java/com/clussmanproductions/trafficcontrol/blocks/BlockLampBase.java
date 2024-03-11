@@ -1,7 +1,10 @@
 package com.clussmanproductions.trafficcontrol.blocks;
 
+import com.clussmanproductions.trafficcontrol.ModItems;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
+import com.clussmanproductions.trafficcontrol.gui.GuiProxy.GUI_IDs;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingLampsTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.render.CrossingLampsRenderer;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -11,6 +14,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
@@ -18,10 +22,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ChunkCache;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public abstract class BlockLampBase extends Block {
 	public static final PropertyEnum<EnumState> STATE = PropertyEnum.create("state", EnumState.class);
@@ -36,7 +40,7 @@ public abstract class BlockLampBase extends Block {
 		setCreativeTab(ModTrafficControl.CREATIVE_TAB);
 	}
 	
-	protected abstract String getLampRegistryName();
+	public abstract String getLampRegistryName();
 
 	@Override
 	public abstract IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,
@@ -53,6 +57,8 @@ public abstract class BlockLampBase extends Block {
 	public void initModel()
 	{
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+		
+		ClientRegistry.bindTileEntitySpecialRenderer(CrossingLampsTileEntity.class, new CrossingLampsRenderer());
 	}
 	
 	@Override
@@ -174,5 +180,17 @@ public abstract class BlockLampBase extends Block {
 	@Override
 	public BlockRenderLayer getBlockLayer() {
 		return BlockRenderLayer.CUTOUT;
+	}
+	
+	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
+			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (playerIn.getHeldItem(hand).getItem() == ModItems.crossing_relay_tuner)
+		{
+			return false;
+		}
+		
+		playerIn.openGui(ModTrafficControl.instance, GUI_IDs.CROSSING_GATE_LAMPS, worldIn, pos.getX(), pos.getY(), pos.getZ());
+		return true;
 	}
 }

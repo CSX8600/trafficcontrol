@@ -1,9 +1,9 @@
 package com.clussmanproductions.trafficcontrol.gui;
 
 import com.clussmanproductions.trafficcontrol.ModItems;
-import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateLamps;
+import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
-import com.clussmanproductions.trafficcontrol.tileentity.CrossingLampsPoleBasedTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.CrossingLampsTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.StreetSignTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightControlBoxTileEntity;
@@ -163,9 +163,9 @@ public class GuiProxy implements IGuiHandler {
 				break;
 			case GUI_IDs.CROSSING_GATE_LAMPS:
 				BlockPos lampPos = new BlockPos(x, y, z);
-				if (world.getBlockState(lampPos).getBlock() instanceof BlockCrossingGateLamps && world.getTileEntity(lampPos) instanceof CrossingLampsPoleBasedTileEntity)
+				if (world.getBlockState(lampPos).getBlock() instanceof BlockLampBase && world.getTileEntity(lampPos) instanceof CrossingLampsTileEntity)
 				{
-					return new CrossingGateLampsGui((CrossingLampsPoleBasedTileEntity)world.getTileEntity(lampPos));
+					return new CrossingLampsGui((CrossingLampsTileEntity)world.getTileEntity(lampPos), ((BlockLampBase)world.getBlockState(lampPos).getBlock()).getLampRegistryName());
 				}
 				break;
 		}

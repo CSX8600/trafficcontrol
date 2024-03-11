@@ -14,7 +14,7 @@ public class BlockOverheadLamps extends BlockLampBase {
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 
 	@Override
-	protected String getLampRegistryName() {
+	public String getLampRegistryName() {
 		return "overhead_lamps";
 	}	
 	

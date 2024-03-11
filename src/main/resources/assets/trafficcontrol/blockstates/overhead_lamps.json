@@ -10,13 +10,13 @@
     },
     "variants": {
         "normal": [{}],
-        "inventory": [{}],
+        "inventory": [{ "model": "trafficcontrol:overhead_lamps_master" }],
         "facing":
         {
             "north": {},
             "west": { "y": 90 },
-            "south": {},
-            "east": { "y": 90 }
+            "south": { "y": 180 },
+            "east": { "y": 270 }
         },
         "state":
         {

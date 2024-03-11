@@ -5,15 +5,14 @@ import java.util.ArrayList;
 import org.lwjgl.opengl.GL11;
 
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateLamps;
-import com.clussmanproductions.trafficcontrol.tileentity.CrossingLampsPoleBasedTileEntity;
-import com.clussmanproductions.trafficcontrol.util.CustomAngleCalculator;
+import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase;
+import com.clussmanproductions.trafficcontrol.blocks.BlockOverheadLamps;
+import com.clussmanproductions.trafficcontrol.tileentity.CrossingLampsTileEntity;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -23,16 +22,15 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
 
-public class CrossingGateLampsRenderer extends TileEntitySpecialRenderer<CrossingLampsPoleBasedTileEntity> {
+public class CrossingLampsRenderer extends TileEntitySpecialRenderer<CrossingLampsTileEntity> {
 
 	@Override
-	public void render(CrossingLampsPoleBasedTileEntity te, double x, double y, double z, float partialTicks,
+	public void render(CrossingLampsTileEntity te, double x, double y, double z, float partialTicks,
 			int destroyStage, float alpha) {
 		super.render(te, x, y, z, partialTicks, destroyStage, alpha);
 		
-		if (te == null || !(getWorld().getBlockState(te.getPos()).getBlock() instanceof BlockCrossingGateLamps))
+		if (te == null || !(getWorld().getBlockState(te.getPos()).getBlock() instanceof BlockLampBase))
 		{
 			return;
 		}
@@ -56,7 +54,15 @@ public class CrossingGateLampsRenderer extends TileEntitySpecialRenderer<Crossin
 		
 		// === ROTATE
 		GlStateManager.translate(0.5, 0.5, 0.5);
-		GlStateManager.rotate(blockState.getValue(BlockCrossingGateLamps.ROTATION) * -22.5F + 180F, 0, 1, 0);
+		if (blockState.getBlock() instanceof BlockCrossingGateLamps)
+		{
+			GlStateManager.rotate(blockState.getValue(BlockCrossingGateLamps.ROTATION) * -22.5F + 180F, 0, 1, 0);
+		}
+		else
+		{
+			GlStateManager.rotate((4 - blockState.getValue(BlockOverheadLamps.FACING).getHorizontalIndex()) * 90 + 180, 0, 1, 0);
+//			GlStateManager.rotate(180, 0, 1, 0);
+		}
 		GlStateManager.translate(-0.5, -0.5, -0.5);
 		// ===
 		
@@ -64,21 +70,22 @@ public class CrossingGateLampsRenderer extends TileEntitySpecialRenderer<Crossin
 		BufferBuilder builder = tess.getBuffer();
 		builder.begin(GL11.GL_QUADS, DefaultVertexFormats.ITEM);
 		
+		final String modelPrefix = ((BlockLampBase)blockState.getBlock()).getLampRegistryName();
 		if (te.getNeBulbRotation() >= 0)
 		{
-			addModelToBuffer(facings, manager, builder, "trafficcontrol:crossing_gate_lamps_ne_lamp", "rotation=" + te.getNeBulbRotation() + ",state=" + te.getState().getName());
+			addModelToBuffer(facings, manager, builder, "trafficcontrol:" + modelPrefix + "_ne_lamp", "rotation=" + te.getNeBulbRotation() + ",state=" + te.getState().getName());
 		}
 		if (te.getNwBulbRotation() >= 0)
 		{
-			addModelToBuffer(facings, manager, builder, "trafficcontrol:crossing_gate_lamps_nw_lamp", "rotation=" + te.getNwBulbRotation() + ",state=" + te.getState().getName());
+			addModelToBuffer(facings, manager, builder, "trafficcontrol:" + modelPrefix + "_nw_lamp", "rotation=" + te.getNwBulbRotation() + ",state=" + te.getState().getName());
 		}
 		if (te.getSeBulbRotation() >= 0)
 		{
-			addModelToBuffer(facings, manager, builder, "trafficcontrol:crossing_gate_lamps_se_lamp", "rotation=" + te.getSeBulbRotation() + ",state=" + te.getState().getName());
+			addModelToBuffer(facings, manager, builder, "trafficcontrol:" + modelPrefix + "_se_lamp", "rotation=" + te.getSeBulbRotation() + ",state=" + te.getState().getName());
 		}
 		if (te.getSwBulbRotation() >= 0)
 		{
-			addModelToBuffer(facings, manager, builder, "trafficcontrol:crossing_gate_lamps_sw_lamp", "rotation=" + te.getSwBulbRotation() + ",state=" + te.getState().getName());
+			addModelToBuffer(facings, manager, builder, "trafficcontrol:" + modelPrefix + "_sw_lamp", "rotation=" + te.getSwBulbRotation() + ",state=" + te.getState().getName());
 		}
 		
 		tess.draw();
