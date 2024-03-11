@@ -57,6 +57,7 @@ import com.clussmanproductions.trafficcontrol.blocks.BlockType3Barrier;
 import com.clussmanproductions.trafficcontrol.blocks.BlockType3BarrierRight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockVerticalWigWag;
 import com.clussmanproductions.trafficcontrol.blocks.BlockWCHBell;
+import com.clussmanproductions.trafficcontrol.blocks.BlockWCHMechanicalBell;
 import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
 import com.clussmanproductions.trafficcontrol.gui.GuiProxy;
 import com.clussmanproductions.trafficcontrol.item.ItemCone;
@@ -98,6 +99,7 @@ import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.Type3BarrierTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.VerticalWigWagTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.WCHBellTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.WCHMechanicalBellTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.WigWagTileEntity;
 import com.clussmanproductions.trafficcontrol.util.OpenComputersHelper;
 
@@ -177,6 +179,7 @@ public class CommonProxy {
 		e.getRegistry().register(new BlockPedestrianButton());
 		e.getRegistry().register(new BlockTrafficSensorRight());
 		e.getRegistry().register(new BlockVerticalWigWag());
+		e.getRegistry().register(new BlockWCHMechanicalBell());
 
 		GameRegistry.registerTileEntity(CrossingGateGateTileEntity.class, ModTrafficControl.MODID + "_crossinggategate");
 		GameRegistry.registerTileEntity(SafetranType3TileEntity.class, ModTrafficControl.MODID + "_safetrantyp3");
@@ -193,6 +196,7 @@ public class CommonProxy {
 		GameRegistry.registerTileEntity(Type3BarrierTileEntity.class, ModTrafficControl.MODID + "_type3barrier");
 		GameRegistry.registerTileEntity(ConcreteBarrierTileEntity.class, ModTrafficControl.MODID + "_concretebarrier");
 		GameRegistry.registerTileEntity(WCHBellTileEntity.class, ModTrafficControl.MODID + "_wchbell");
+		GameRegistry.registerTileEntity(WCHMechanicalBellTileEntity.class, ModTrafficControl.MODID + "_wchmechanicalbell");
 		GameRegistry.registerTileEntity(StreetSignTileEntity.class, ModTrafficControl.MODID + "_streetsign");
 		GameRegistry.registerTileEntity(TrafficLight5TileEntity.class, ModTrafficControl.MODID + "_trafficlight5");
 		GameRegistry.registerTileEntity(TrafficLightDoghouseTileEntity.class, ModTrafficControl.MODID + "_trafficlightdoghouse");
@@ -248,6 +252,7 @@ public class CommonProxy {
 		e.getRegistry().register(new ItemBlock(ModBlocks.type_3_barrier_right).setRegistryName(ModBlocks.type_3_barrier_right.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.traffic_rail).setRegistryName(ModBlocks.traffic_rail.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.vertical_wig_wag).setRegistryName(ModBlocks.vertical_wig_wag.getRegistryName()));
+		e.getRegistry().register(new ItemBlock(ModBlocks.wch_mechanical_bell).setRegistryName(ModBlocks.wch_mechanical_bell.getRegistryName()));
 		e.getRegistry().register(new ItemBlock(ModBlocks.concrete_barrier)
 		{
 			public boolean getHasSubtypes() { return true; }
@@ -282,6 +287,7 @@ public class CommonProxy {
 		e.getRegistry().register(ModSounds.safetranMechanicalEvent);
 		e.getRegistry().register(ModSounds.wchEvent);
 		e.getRegistry().register(ModSounds.pedButton);
+		e.getRegistry().register(ModSounds.wch_mechanical_bell);
 	}
 
 	public void preInit(FMLPreInitializationEvent e)

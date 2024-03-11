@@ -85,6 +85,8 @@ public class ModBlocks {
 	public static BlockHorizontalPole horizontal_pole;
 	@ObjectHolder("wch_bell")
 	public static BlockWCHBell wch_bell;
+	@ObjectHolder("wch_mechanical_bell")
+	public static BlockWCHMechanicalBell wch_mechanical_bell;
 	@ObjectHolder("traffic_sensor_left")
 	public static BlockTrafficSensorLeft traffic_sensor_left;
 	@ObjectHolder("traffic_sensor_straight")
@@ -143,6 +145,7 @@ public class ModBlocks {
 		concrete_barrier.initModel();
 		horizontal_pole.initModel();
 		wch_bell.initModel();
+		wch_mechanical_bell.initModel();
 		traffic_sensor_left.initModel();
 		traffic_sensor_straight.initModel();
 		street_sign.initModel();
