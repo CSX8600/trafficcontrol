@@ -76,7 +76,7 @@ public class WigWagTileEntity extends TileEntity implements ITickable {
 		{
 			if ((rotation == 16 && mode == AnimationMode.SwingPositive) || (rotation == -16 && mode == AnimationMode.SwingNegative))
 			{
-				world.playSound(getPos().getX(), getPos().getY(), getPos().getZ(), ModSounds.wigWag, SoundCategory.BLOCKS, 1.0F, 1.0F, true);
+				world.playSound(getPos().getX(), getPos().getY(), getPos().getZ(), ModSounds.wigWag, SoundCategory.BLOCKS, 4.0F, 1.0F, false);
 			}
 			
 			if (rotation > 30)

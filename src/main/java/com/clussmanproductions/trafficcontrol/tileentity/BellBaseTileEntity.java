@@ -66,7 +66,7 @@ public abstract class BellBaseTileEntity extends TileEntity implements ILoopable
 	{
 		if (!soundPlaying)
 		{
-			LoopableTileEntitySound sound = new LoopableTileEntitySound(getSoundEvent(), this, pos, 1F, 1);
+			LoopableTileEntitySound sound = new LoopableTileEntitySound(getSoundEvent(), this, pos, 4F, 1);
 			
 			Minecraft.getMinecraft().getSoundHandler().playSound(sound);
 			
