@@ -28,7 +28,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ChunkCache;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
@@ -36,7 +35,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockSign extends Block implements ITileEntityProvider {
+public class BlockSign extends Block implements ITileEntityProvider, IHorizontalPoleConnectable {
 
 	public static final PropertyInteger ROTATION = PropertyInteger.create("rotation", 0, 15);
 	public static final PropertyBool VALIDHORIZONTALBAR = PropertyBool.create("validhorizontalbar");
@@ -86,17 +85,24 @@ public class BlockSign extends Block implements ITileEntityProvider {
 		boolean isHalfHeight = false;
 		
 		int rotation = state.getValue(ROTATION);
-		boolean isCardinal = CustomAngleCalculator.isCardinal(rotation);
 		
-		if (isCardinal && CustomAngleCalculator.isNorthSouth(rotation))
+		if (CustomAngleCalculator.isCardinal(rotation))
 		{
-			validHorizontalBar = getValidStateForAttachableSubModels(state, worldIn.getBlockState(pos.west()), EnumFacing.NORTH, EnumFacing.SOUTH)
-									|| getValidStateForAttachableSubModels(state, worldIn.getBlockState(pos.east()), EnumFacing.NORTH, EnumFacing.SOUTH);
-		}
-		else if (isCardinal)
-		{
-			validHorizontalBar = getValidStateForAttachableSubModels(state, worldIn.getBlockState(pos.north()), EnumFacing.WEST, EnumFacing.EAST)
-									|| getValidStateForAttachableSubModels(state, worldIn.getBlockState(pos.south()), EnumFacing.WEST, EnumFacing.EAST);
+			EnumFacing myFacing = CustomAngleCalculator.getFacingFromRotation(rotation);
+			IBlockState otherState = worldIn.getBlockState(pos.offset(myFacing.rotateY()));
+			if (otherState.getBlock() instanceof IHorizontalPoleConnectable)
+			{
+				validHorizontalBar = ((IHorizontalPoleConnectable)otherState.getBlock()).canConnectHorizontalPole(otherState, myFacing.rotateYCCW());
+			}
+			
+			if (!validHorizontalBar)
+			{
+				otherState = worldIn.getBlockState(pos.offset(myFacing.rotateYCCW()));
+				if (otherState.getBlock() instanceof IHorizontalPoleConnectable)
+				{
+					validHorizontalBar = ((IHorizontalPoleConnectable)otherState.getBlock()).canConnectHorizontalPole(otherState, myFacing.rotateY());
+				}
+			}
 		}
 		
 		TileEntity te = worldIn.getTileEntity(pos);
@@ -110,38 +116,6 @@ public class BlockSign extends Block implements ITileEntityProvider {
 		}
 		
 		return state.withProperty(VALIDHORIZONTALBAR, validHorizontalBar).withProperty(ISHALFHEIGHT, isHalfHeight);
-	}
-	
-	private boolean getValidStateForAttachableSubModels(IBlockState signState, IBlockState state, EnumFacing... validFacings)
-	{
-		if (state.getBlock() == ModBlocks.crossing_gate_pole)
-		{
-			return true;
-		}
-		
-		if (state.getBlock() == ModBlocks.horizontal_pole)
-		{
-			EnumFacing facing = state.getValue(BlockHorizontalPole.FACING);
-			
-			return Arrays.stream(validFacings).noneMatch(vf -> vf.equals(facing));
-		}
-		
-		if (state.getBlock() instanceof BlockBaseTrafficLight)
-		{
-			return true;
-		}
-		
-		if (state.getBlock() == ModBlocks.sign)
-		{
-			int otherRotation = state.getValue(ROTATION);
-			boolean otherIsCardinal = CustomAngleCalculator.isCardinal(otherRotation);
-			boolean isForNorthSouth = Arrays.stream(validFacings).anyMatch(facing -> facing == EnumFacing.NORTH);
-			boolean thisSignNorthSouth = CustomAngleCalculator.isNorthSouth(signState.getValue(ROTATION));
-			
-			return otherIsCardinal && ((isForNorthSouth && thisSignNorthSouth) || (!isForNorthSouth && !thisSignNorthSouth));
-		}
-		
-		return false;
 	}
 	
 	@Override
@@ -212,23 +186,6 @@ public class BlockSign extends Block implements ITileEntityProvider {
 		
 		int rotation = state.getValue(ROTATION);
 		
-//		if (CustomAngleCalculator.isNorth(rotation))
-//		{
-//			return new AxisAlignedBB(0, 0, 0.43125, 1, poleHeight, 0.5625);
-//		}
-//		else if (CustomAngleCalculator.isSouth(rotation))
-//		{
-//			return new AxisAlignedBB(0, 0, 0.4375, 1, poleHeight, 0.56875);
-//		}
-//		else if (CustomAngleCalculator.isWest(rotation))
-//		{
-//			return new AxisAlignedBB(0.4375, 0, 0, 0.56875, poleHeight, 1);
-//		}
-//		else if (CustomAngleCalculator.isEast(rotation))
-//		{
-//			return new AxisAlignedBB(0.43125, 0, 0, 0.5625, poleHeight, 1);
-//		}
-		
 		switch(rotation)
 		{
 			case 0:
@@ -259,6 +216,18 @@ public class BlockSign extends Block implements ITileEntityProvider {
 	@Override
 	public boolean causesSuffocation(IBlockState state) {
 		return false;
+	}
+
+	@Override
+	public boolean canConnectHorizontalPole(IBlockState state, EnumFacing fromFacing) {
+		int myRotation = state.getValue(ROTATION);
+		if (!CustomAngleCalculator.isCardinal(myRotation))
+		{
+			return false;
+		}
+		
+		EnumFacing myFacing = CustomAngleCalculator.getFacingFromRotation(myRotation);
+		return fromFacing.equals(myFacing.rotateY()) || fromFacing.equals(myFacing.rotateYCCW());
 	}
 
 }

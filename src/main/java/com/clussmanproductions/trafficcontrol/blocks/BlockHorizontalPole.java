@@ -20,7 +20,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockHorizontalPole extends Block {
+public class BlockHorizontalPole extends Block implements IHorizontalPoleConnectable {
 	public static PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL); 
 	public BlockHorizontalPole()
 	{
@@ -91,5 +91,11 @@ public class BlockHorizontalPole extends Block {
 	@Override
 	public float getAmbientOcclusionLightValue(IBlockState state) {
 		return 1;
+	}
+
+	@Override
+	public boolean canConnectHorizontalPole(IBlockState state, EnumFacing fromFacing) {
+		EnumFacing myFacing = state.getValue(FACING);
+		return myFacing.equals(fromFacing) || myFacing.getOpposite().equals(fromFacing);
 	}
 }
