@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase.EnumState;
+import com.clussmanproductions.trafficcontrol.blocks.BlockRelayBase;
 import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
 import com.clussmanproductions.trafficcontrol.scanner.IScannerSubscriber;
 import com.clussmanproductions.trafficcontrol.scanner.ScanCompleteData;
@@ -621,9 +622,40 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 		alreadyNotifiedWigWags = false;
 		
 		markDirty();
+		updateComparator();
+	}
+	
+	private void setAutomatedPowered(boolean automatedPowerOverride)
+	{
+		this.automatedPowerOverride = automatedPowerOverride;
+		
+		updateComparator();
+	}
+	
+	private void updateComparator()
+	{
+		EnumFacing myFacing = world.getBlockState(pos).getValue(BlockRelayBase.FACING);
+		
+		EnumFacing workingFacing = myFacing.rotateY();
+		BlockPos workingPos = pos;
+		for(int i = 0; i < 4; i++)
+		{
+			world.notifyNeighborsOfStateChange(workingPos, world.getBlockState(workingPos).getBlock(), true);
+			workingFacing = workingFacing.rotateYCCW();
+			workingPos = workingPos.offset(workingFacing);
+		}
+		
+		workingFacing = myFacing.rotateY();
+		workingPos = pos.offset(EnumFacing.UP);
+		for(int i = 0; i < 4; i++)
+		{
+			world.notifyNeighborsOfStateChange(workingPos, world.getBlockState(workingPos).getBlock(), true);
+			workingFacing = workingFacing.rotateYCCW();
+			workingPos = workingPos.offset(workingFacing);
+		}
 	}
 
-	private boolean getPowered()
+	public boolean getPowered()
 	{
 		return isPowered || automatedPowerOverride;
 	}
@@ -668,7 +700,7 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 					alreadyNotifiedBells = false;
 					alreadyNotifiedGates = false;
 					alreadyNotifiedWigWags = false;
-					automatedPowerOverride = true;
+					setAutomatedPowered(true);
 				}
 				
 				scanCompleteData.cancelScanningForTileEntity();
@@ -694,7 +726,7 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 					alreadyNotifiedBells = false;
 					alreadyNotifiedGates = false;
 					alreadyNotifiedWigWags = false;
-					automatedPowerOverride = true;
+					setAutomatedPowered(true);
 				}
 				
 				if (automatedPowerOverride && !scanCompleteData.getTrainMovingTowardsDestination() && world.getTotalWorldTime() - lastMovementWorldTime > 200)
@@ -717,7 +749,7 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 			alreadyNotifiedBells = false;
 			alreadyNotifiedGates = false;
 			alreadyNotifiedWigWags = false;
-			automatedPowerOverride = false;
+			setAutomatedPowered(false);
 			
 			return;
 		}

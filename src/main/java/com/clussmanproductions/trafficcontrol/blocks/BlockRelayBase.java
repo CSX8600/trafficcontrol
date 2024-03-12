@@ -173,7 +173,7 @@ public abstract class BlockRelayBase extends Block implements ITileEntityProvide
 			return;
 		}
 		
-		if (worldIn.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock() instanceof BlockRelayBase)
+		if (worldIn.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock() instanceof BlockRelayBase || worldIn.getBlockState(fromPos).getBlock() instanceof BlockRelayBase)
 		{
 			return;
 		}
@@ -190,5 +190,28 @@ public abstract class BlockRelayBase extends Block implements ITileEntityProvide
 	@Override
 	public boolean causesSuffocation(IBlockState state) {
 		return false;
+	}
+	
+	@Override
+	public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos) {
+		TileEntity te = worldIn.getTileEntity(pos);
+		if (te == null || !(te instanceof RelayTileEntity))
+		{
+			return 0;
+		}
+		
+		RelayTileEntity relay = (RelayTileEntity)te;
+		relay = relay.getMaster(worldIn);
+		if (relay == null)
+		{
+			return 0;
+		}
+		
+		return relay.getPowered() ? 15 : 0;
+	}
+	
+	@Override
+	public boolean hasComparatorInputOverride(IBlockState state) {
+		return true;
 	}
 }
