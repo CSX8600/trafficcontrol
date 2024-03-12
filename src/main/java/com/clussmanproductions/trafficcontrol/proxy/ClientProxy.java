@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.IModel;
@@ -76,6 +77,12 @@ public class ClientProxy extends CommonProxy {
 				}
 			}
 		}
+		
+		for(EnumFacing facing : EnumFacing.HORIZONTALS)
+		{
+			bakeModel(e, new ModelResourceLocation(ModTrafficControl.MODID + ":crossing_gate_pole_ext", "rotation=" + facing.getName()));
+		}
+		bakeModel(e, new ModelResourceLocation(ModTrafficControl.MODID + ":crossing_gate_pole_ext", "rotation=down"));
 		
 //		bakeModel(e, new ModelResourceLocation(ModTrafficControl.MODID + ":crossing_gate_lamps_sw_support", "normal"));
 //		for(EnumState flashState : EnumState.values())

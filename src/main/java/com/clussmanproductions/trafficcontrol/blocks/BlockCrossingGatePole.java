@@ -51,11 +51,12 @@ public class BlockCrossingGatePole extends Block implements IHorizontalPoleConne
 	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
 		int rotation = state.getValue(ROTATION);
 		boolean isCardinal = CustomAngleCalculator.isCardinal(rotation);
+		EnumFacing myFacing = CustomAngleCalculator.getFacingFromRotation(rotation);
 
-		boolean north = isCardinal && getStateIsValidForSubModel(pos, worldIn, EnumFacing.NORTH);
-		boolean west = isCardinal && getStateIsValidForSubModel(pos, worldIn, EnumFacing.WEST);
-		boolean south = isCardinal && getStateIsValidForSubModel(pos, worldIn, EnumFacing.SOUTH);
-		boolean east = isCardinal && getStateIsValidForSubModel(pos, worldIn, EnumFacing.EAST);
+		boolean north = isCardinal && getStateIsValidForSubModel(pos, worldIn, myFacing);
+		boolean west = isCardinal && getStateIsValidForSubModel(pos, worldIn, myFacing.rotateYCCW());
+		boolean south = isCardinal && getStateIsValidForSubModel(pos, worldIn, myFacing.getOpposite());
+		boolean east = isCardinal && getStateIsValidForSubModel(pos, worldIn, myFacing.rotateY());
 
 		return state
 				.withProperty(NORTH, north)
@@ -67,7 +68,7 @@ public class BlockCrossingGatePole extends Block implements IHorizontalPoleConne
 	private boolean getStateIsValidForSubModel(BlockPos pos, IBlockAccess world, EnumFacing direction)
 	{
 		IBlockState otherState = world.getBlockState(pos.offset(direction));
-		if (otherState instanceof IHorizontalPoleConnectable)
+		if (otherState.getBlock() instanceof IHorizontalPoleConnectable)
 		{
 			return ((IHorizontalPoleConnectable)otherState.getBlock()).canConnectHorizontalPole(otherState, direction.getOpposite());
 		}

@@ -2,7 +2,10 @@ package com.clussmanproductions.trafficcontrol.tileentity.render;
 
 import java.util.ArrayList;
 
+import javax.vecmath.Vector4f;
+
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Vector3f;
 
 import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateLamps;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase;
@@ -21,7 +24,13 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.client.model.pipeline.IVertexConsumer;
+import net.minecraftforge.client.model.pipeline.UnpackedBakedQuad;
+import net.minecraftforge.client.model.pipeline.VertexTransformer;
+import net.minecraftforge.common.model.TRSRTransformation;
+import net.minecraftforge.common.property.IExtendedBlockState;
 
 public class CrossingLampsRenderer extends TileEntitySpecialRenderer<CrossingLampsTileEntity> {
 
@@ -52,11 +61,28 @@ public class CrossingLampsRenderer extends TileEntitySpecialRenderer<CrossingLam
 		GlStateManager.translate(x, y, z);
         // ===
 		
-		// === ROTATE
+		// === ROTATE (& fetch values from crossing gate lamps)
 		GlStateManager.translate(0.5, 0.5, 0.5);
+		boolean isCrossingGateLamps = false;
+		boolean north = false;
+		boolean west = false;
+		boolean south = false;
+		boolean east = false;
+		boolean down = false;
+		
 		if (blockState.getBlock() instanceof BlockCrossingGateLamps)
 		{
 			GlStateManager.rotate(blockState.getValue(BlockCrossingGateLamps.ROTATION) * -22.5F + 180F, 0, 1, 0);
+			isCrossingGateLamps = true;
+			IExtendedBlockState exState = (IExtendedBlockState)blockState.getBlock().getExtendedState(blockState, te.getWorld(), te.getPos());
+			if (exState != null)
+			{
+				north = exState.getValue(BlockCrossingGateLamps.NORTH);
+				west = exState.getValue(BlockCrossingGateLamps.WEST);
+				south = exState.getValue(BlockCrossingGateLamps.SOUTH);
+				east = exState.getValue(BlockCrossingGateLamps.EAST);
+				down = exState.getValue(BlockCrossingGateLamps.DOWN);				
+			}
 		}
 		else
 		{
@@ -87,11 +113,41 @@ public class CrossingLampsRenderer extends TileEntitySpecialRenderer<CrossingLam
 		{
 			addModelToBuffer(facings, manager, builder, "trafficcontrol:" + modelPrefix + "_sw_lamp", "rotation=" + te.getSwBulbRotation() + ",state=" + te.getState().getName());
 		}
+		if (isCrossingGateLamps && down)
+		{
+			addModelToBuffer(facings, manager, builder, "trafficcontrol:crossing_gate_pole_ext", "rotation=down");
+		}
 		
 		tess.draw();
+		GlStateManager.popMatrix();
+		
+		if (isCrossingGateLamps)
+		{
+			GlStateManager.pushMatrix();
+			GlStateManager.translate(x, y, z);
+			builder.begin(GL11.GL_QUADS, DefaultVertexFormats.ITEM);
+			if (north)
+			{
+				addModelToBuffer(facings, manager, builder, "trafficcontrol:crossing_gate_pole_ext", "rotation=north");
+			}
+			if (west)
+			{
+				addModelToBuffer(facings, manager, builder, "trafficcontrol:crossing_gate_pole_ext", "rotation=west");
+			}
+			if (south)
+			{
+				addModelToBuffer(facings, manager, builder, "trafficcontrol:crossing_gate_pole_ext", "rotation=south");
+			}
+			if (east)
+			{
+				addModelToBuffer(facings, manager, builder, "trafficcontrol:crossing_gate_pole_ext", "rotation=east");
+			}
+			tess.draw();
+			GlStateManager.popMatrix();
+		}
+		
 		
 		// === POST RENDER
-		GlStateManager.popMatrix();
 		// ===
 	}
 
@@ -106,6 +162,4 @@ public class CrossingLampsRenderer extends TileEntitySpecialRenderer<CrossingLam
 			}
 		}
 	}
-	
-	
 }
