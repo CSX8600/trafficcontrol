@@ -1,9 +1,10 @@
-package com.clussmanproductions.trafficcontrol.blocks;
+package com.clussmanproductions.trafficcontrol.tileentity.render;
 
 import org.lwjgl.opengl.GL11;
 
 import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
+import com.clussmanproductions.trafficcontrol.blocks.BlockVerticalWigWag;
 import com.clussmanproductions.trafficcontrol.tileentity.VerticalWigWagTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.render.RenderBoxHelper.Box;
 import com.clussmanproductions.trafficcontrol.tileentity.render.RenderBoxHelper.TextureInfo;

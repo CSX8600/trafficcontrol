@@ -22,7 +22,7 @@ import net.minecraft.util.ResourceLocation;
 public class RendererWigWag extends TileEntitySpecialRenderer<WigWagTileEntity> {
 
 	ResourceLocation genericTexture = new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/generic.png");
-	ResourceLocation blackTexture = new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/wigwag.png");
+	ResourceLocation wigWagTexture = new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/wigwag.png");
 	ResourceLocation redTexture = new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/red.png");
 	ResourceLocation offBulbTexture = new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/lamp_off.png");
 	@Override
@@ -82,12 +82,12 @@ public class RendererWigWag extends TileEntitySpecialRenderer<WigWagTileEntity> 
 	private void renderBacking(BufferBuilder builder)
 	{
 		GlStateManager.translate(bcwc(-2.5), bcwc(-6), 0);
-		Box box = new Box(0, 0, 1, 6, 6, -1, new TextureInfoCollection(new TextureInfo(blackTexture, 0, 0, 16, 16), // Back
-																			new TextureInfo(blackTexture, 0, 0, 0, 0), 
-																			new TextureInfo(blackTexture, 0, 0, 16, 16), 
-																			new TextureInfo(blackTexture, 0, 0, 0, 0), 
-																			new TextureInfo(blackTexture, 0, 0, 0, 16), 
-																			new TextureInfo(blackTexture, 0, 0, 0, 0)));
+		Box box = new Box(0, 0, 1, 6, 6, -1, new TextureInfoCollection(new TextureInfo(wigWagTexture, 0, 0, 16, 16), // Back
+																			new TextureInfo(wigWagTexture, 0, 0, 0, 0), 
+																			new TextureInfo(wigWagTexture, 0, 0, 16, 16), 
+																			new TextureInfo(wigWagTexture, 0, 0, 0, 0), 
+																			new TextureInfo(wigWagTexture, 0, 0, 0, 16), 
+																			new TextureInfo(wigWagTexture, 0, 0, 0, 0)));
 		
 		box.render(builder, (rl) -> bindTexture(rl));
 	}
