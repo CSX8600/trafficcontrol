@@ -185,12 +185,6 @@ public abstract class BaseTrafficLightRenderer extends TileEntitySpecialRenderer
 				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/no_left_turn.png");
 			case YellowArrowRight:
 				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/yellow_arrow_right.png");
-			case GreenArrowUTurn:
-				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/green_arrow_uturn.png");
-			case YellowArrowUTurn:
-				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/yellow_arrow_uturn.png");
-			case RedArrowUTurn:
-				return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/red_arrow_uturn.png");
 		}
 		return new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/black.png");
 	}
