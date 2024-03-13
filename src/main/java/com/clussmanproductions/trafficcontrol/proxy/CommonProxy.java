@@ -63,6 +63,7 @@ import com.clussmanproductions.trafficcontrol.gui.GuiProxy;
 import com.clussmanproductions.trafficcontrol.item.ItemCone;
 import com.clussmanproductions.trafficcontrol.item.ItemCrossingRelayBox;
 import com.clussmanproductions.trafficcontrol.item.ItemCrossingRelayTuner;
+import com.clussmanproductions.trafficcontrol.item.ItemScrewdriver;
 import com.clussmanproductions.trafficcontrol.item.ItemStreetSign;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight1Frame;
 import com.clussmanproductions.trafficcontrol.item.ItemTrafficLight2Frame;
@@ -224,6 +225,7 @@ public class CommonProxy {
 		e.getRegistry().register(new ItemTrafficLight2Frame());
 		e.getRegistry().register(new ItemTrafficLight4Frame());
 		e.getRegistry().register(new ItemTrafficLight6Frame());
+		e.getRegistry().register(new ItemScrewdriver());
 		if(ModTrafficControl.OC_INSTALLED)
 		{
 			e.getRegistry().register(new ItemTrafficLightCard());

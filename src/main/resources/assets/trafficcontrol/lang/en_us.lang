@@ -81,6 +81,7 @@ item.trafficcontrol.traffic_light_card.tier1.name=Traffic Light Card (Tier 1)
 item.trafficcontrol.traffic_light_card.tier2.name=Traffic Light Card (Tier 2)
 item.trafficcontrol.traffic_light_card.tier3.name=Traffic Light Card (Tier 3)
 item.trafficcontrol.traffic_light_card.creative.name=Traffic Light Card (Creative)
+item.trafficcontrol.screwdriver.name=Screwdriver
 
 #Tab
 itemGroup.Traffic Control=Traffic Control
@@ -94,4 +95,5 @@ trafficcontrol.tooltip.tuner=Use to link components to Crossing Gate Relays or T
 trafficcontrol.tooltip.crossingrelay=Uses Shunts or Redstone to control crossing components.
 trafficcontrol.tooltip.trafficbox=Uses Redstone or Traffic Sensors to control traffic signal components.
 trafficcontrol.tooltip.cone=Can be worn as a hat.
+trafficcontrol.tooltip.screwdriver=Can be used to rotate Traffic Control blocks. Use while sneaking to rotate in the opposite direction.
 trafficcontrol.tooltip.help=[Press SHIFT for more info]
