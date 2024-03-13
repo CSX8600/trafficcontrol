@@ -4,8 +4,8 @@ import org.lwjgl.opengl.GL11;
 
 import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
-import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
-import com.clussmanproductions.trafficcontrol.tileentity.WigWagTileEntity;
+import com.clussmanproductions.trafficcontrol.blocks.BlockVerticalWigWag;
+import com.clussmanproductions.trafficcontrol.tileentity.VerticalWigWagTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.render.RenderBoxHelper.Box;
 import com.clussmanproductions.trafficcontrol.tileentity.render.RenderBoxHelper.TextureInfo;
 import com.clussmanproductions.trafficcontrol.tileentity.render.RenderBoxHelper.TextureInfoCollection;
@@ -19,25 +19,25 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 
-public class RendererWigWag extends TileEntitySpecialRenderer<WigWagTileEntity> {
-
+public class VerticalWigWagRenderer extends TileEntitySpecialRenderer<VerticalWigWagTileEntity>
+{
 	ResourceLocation genericTexture = new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/generic.png");
 	ResourceLocation wigWagTexture = new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/wigwag.png");
 	ResourceLocation redTexture = new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/red.png");
 	ResourceLocation offBulbTexture = new ResourceLocation(ModTrafficControl.MODID + ":textures/blocks/lamp_off.png");
 	@Override
-	public void render(WigWagTileEntity te, double x, double y, double z, float partialTicks, int destroyStage,
+	public void render(VerticalWigWagTileEntity te, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {		
 		IBlockState state = te.getWorld().getBlockState(te.getPos());
 		
-		if (state.getBlock() != ModBlocks.wig_wag)
+		if (state.getBlock() != ModBlocks.vertical_wig_wag)
 		{
 			return;
 		}
 		
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x + 0.5, y, z + 0.5);
-		GlStateManager.rotate(state.getValue(BlockWigWag.ROTATION) * -22.5F, 0, 1, 0);
+		GlStateManager.rotate(state.getValue(BlockVerticalWigWag.ROTATION) * -22.5F, 0, 1, 0);
 		GlStateManager.translate(-0.5, 0, -0.5);
 		
 		GlStateManager.translate(bcwc(-3.5), bcwc(16.5), bcwc(7.5));
@@ -68,7 +68,7 @@ public class RendererWigWag extends TileEntitySpecialRenderer<WigWagTileEntity> 
 	
 	private void renderSuspendedPole(BufferBuilder builder)
 	{
-		GlStateManager.translate(bcwc(-3.5), bcwc(10.5), bcwc(7.5));
+		GlStateManager.translate(bcwc(7.5), bcwc(6.9), bcwc(4.6));
 		Box box = new Box(0, 0, 1, 1, 6.5, -1, new TextureInfoCollection(new TextureInfo(genericTexture, 0, 0, 1, 6),
 																			new TextureInfo(genericTexture, 0, 0, 1, 1), 
 																			new TextureInfo(genericTexture, 0, 0, 1, 6), 
@@ -81,7 +81,7 @@ public class RendererWigWag extends TileEntitySpecialRenderer<WigWagTileEntity> 
 	
 	private void renderBacking(BufferBuilder builder)
 	{
-		GlStateManager.translate(bcwc(-2.5), bcwc(-6), 0);
+		GlStateManager.translate(bcwc(-2.5), bcwc(6.5), 0);
 		Box box = new Box(0, 0, 1, 6, 6, -1, new TextureInfoCollection(new TextureInfo(wigWagTexture, 0, 0, 16, 16), // Back
 																			new TextureInfo(wigWagTexture, 0, 0, 0, 0), 
 																			new TextureInfo(wigWagTexture, 0, 0, 16, 16), 

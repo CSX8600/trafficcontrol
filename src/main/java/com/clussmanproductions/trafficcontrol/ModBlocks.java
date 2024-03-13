@@ -69,6 +69,8 @@ public class ModBlocks {
 	public static BlockTrafficLightControlBox traffic_light_control_box;
 	@ObjectHolder("wig_wag")
 	public static BlockWigWag wig_wag;
+	@ObjectHolder("vertical_wig_wag")
+	public static BlockVerticalWigWag vertical_wig_wag;
 	@ObjectHolder("shunt_border")
 	public static BlockShuntBorder shunt_border;
 	@ObjectHolder("shunt_island")
@@ -85,6 +87,8 @@ public class ModBlocks {
 	public static BlockHorizontalPole horizontal_pole;
 	@ObjectHolder("wch_bell")
 	public static BlockWCHBell wch_bell;
+	@ObjectHolder("wch_mechanical_bell")
+	public static BlockWCHMechanicalBell wch_mechanical_bell;
 	@ObjectHolder("traffic_sensor_left")
 	public static BlockTrafficSensorLeft traffic_sensor_left;
 	@ObjectHolder("traffic_sensor_straight")
@@ -144,6 +148,7 @@ public class ModBlocks {
 		concrete_barrier.initModel();
 		horizontal_pole.initModel();
 		wch_bell.initModel();
+		wch_mechanical_bell.initModel();
 		traffic_sensor_left.initModel();
 		traffic_sensor_straight.initModel();
 		street_sign.initModel();
@@ -155,6 +160,7 @@ public class ModBlocks {
 		pedestrian_button.initModel();
 		traffic_sensor_right.initModel();
 		traffic_light_6.initModel();
+		vertical_wig_wag.initModel();
 		
 	}
 }
