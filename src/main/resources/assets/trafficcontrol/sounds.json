@@ -19,6 +19,11 @@
     	"category": "block",
     	"sounds": [ "trafficcontrol:wch" ]
     },
+    "wch_mechanical_bell":
+    {
+    	"category": "block",
+    	"sounds": [ "trafficcontrol:wch_mechanical_bell" ]
+    },
 	"ped_button":
     {
     	"category": "block",

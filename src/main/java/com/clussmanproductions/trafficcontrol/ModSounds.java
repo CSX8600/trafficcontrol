@@ -11,6 +11,7 @@ public class ModSounds {
 	public static SoundEvent wchEvent;
 	public static SoundEvent pedButton;
 	public static SoundEvent wigWag;
+	public static SoundEvent wch_mechanical_bell;
 	
 	public static void initSounds()
 	{
@@ -20,5 +21,6 @@ public class ModSounds {
 		wchEvent = new SoundEvent(new ResourceLocation(ModTrafficControl.MODID + ":wch")).setRegistryName("trafficcontrol:wch");
 		pedButton = new SoundEvent(new ResourceLocation(ModTrafficControl.MODID + ":ped_button")).setRegistryName("trafficcontrol:ped_button");
 		wigWag = new SoundEvent(new ResourceLocation(ModTrafficControl.MODID + ":wigwag")).setRegistryName("trafficcontrol:wigwag");
+		wch_mechanical_bell = new SoundEvent(new ResourceLocation(ModTrafficControl.MODID + ":wch_mechanical_bell")).setRegistryName("trafficcontrol:wch_mechanical_bell");
 	}
 }

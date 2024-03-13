@@ -47,10 +47,14 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 	// Wig Wag information
 	private boolean alreadyNotifiedWigWags;
 	
+	// Vertical Wig Wag information
+	private boolean alreadyNotifiedVerticalWigWags;
+	
 	private ArrayList<BlockPos> crossingLampLocations = new ArrayList<BlockPos>();
 	private ArrayList<BlockPos> crossingGateLocations = new ArrayList<BlockPos>();
 	private ArrayList<BlockPos> bellLocations = new ArrayList<BlockPos>();
 	private ArrayList<BlockPos> wigWagLocations = new ArrayList<BlockPos>();
+	private ArrayList<BlockPos> verticalWigWagLocations = new ArrayList<BlockPos>();
 	private ArrayList<Tuple<BlockPos, EnumFacing>> shuntBorderOriginsAndFacing = new ArrayList<Tuple<BlockPos, EnumFacing>>();
 	private ArrayList<Tuple<BlockPos, EnumFacing>> shuntIslandOriginsAndFacing = new ArrayList<Tuple<BlockPos, EnumFacing>>();
 	private HashMap<BlockPos, Integer> invalidCrossingGates = new HashMap<>();
@@ -85,6 +89,7 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 		fillArrayListFromNBT("gate", crossingGateLocations, compound);
 		fillArrayListFromNBT("bell", bellLocations, compound);
 		fillArrayListFromNBT("wigwags", wigWagLocations, compound);
+		fillArrayListFromNBT("verticalwigwags", verticalWigWagLocations, compound);
 		
 		int i = 0;
 		while(compound.hasKey("island_pos_" + i))
@@ -145,6 +150,7 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 		
 		// Wig Wag information
 		nbt.setBoolean("alreadynotifiedwigwags", alreadyNotifiedWigWags);
+		nbt.setBoolean("alreadynotifiedverticalwigwags", alreadyNotifiedVerticalWigWags);
 
 		for (int i = 0; i < crossingLampLocations.size(); i++) {
 			BlockPos lamps = crossingLampLocations.get(i);
@@ -172,6 +178,13 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 
 			int[] wigWagPos = new int[] { wigWag.getX(), wigWag.getY(), wigWag.getZ() };
 			nbt.setIntArray("wigwags" + i, wigWagPos);
+		}
+		
+		for (int i = 0; i < verticalWigWagLocations.size(); i++) {
+			BlockPos wigWag = verticalWigWagLocations.get(i);
+
+			int[] wigWagPos = new int[] { wigWag.getX(), wigWag.getY(), wigWag.getZ() };
+			nbt.setIntArray("verticalwigwags" + i, wigWagPos);
 		}
 
 		for(int i = 0; i < shuntIslandOriginsAndFacing.size(); i++)
@@ -222,6 +235,7 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 		updateLamps();
 		markDirty = markDirty | updateBells();
 		markDirty = markDirty | notifyWigWags();
+		markDirty = markDirty | notifyVerticalWigWags();
 		markDirty = markDirty | checkRemoveInvalidItems();
 		
 		if (markDirty)
@@ -442,6 +456,39 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 		return false;
 	}
 	
+	private boolean notifyVerticalWigWags()
+	{
+		if (!alreadyNotifiedVerticalWigWags)
+		{
+			ArrayList<BlockPos> positionsToRemove = new ArrayList<BlockPos>();
+			for(BlockPos pos : verticalWigWagLocations)
+			{
+				try
+				{
+					VerticalWigWagTileEntity te = (VerticalWigWagTileEntity)world.getTileEntity(pos);
+					te.setActive(getPowered());
+					world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+				}
+				catch (Exception ex)
+				{
+					positionsToRemove.add(pos);
+				}
+			}
+			
+			for(BlockPos pos : positionsToRemove)
+			{
+				verticalWigWagLocations.remove(pos);
+				
+				ModTrafficControl.logger.error("Vertical Wig Wag at " + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + " has been unpaired due to an error");
+			}
+			
+			alreadyNotifiedVerticalWigWags = true;
+			return true;
+		}
+		
+		return false;
+	}
+	
 	private boolean checkRemoveInvalidItems()
 	{
 		boolean didRemove = false;
@@ -586,6 +633,20 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 		}
 	}
 	
+	public boolean addOrRemoveVerticalWigWag(BlockPos wigWagPos)
+	{
+		if (verticalWigWagLocations.contains(wigWagPos))
+		{
+			verticalWigWagLocations.remove(wigWagPos);
+			return false;
+		}
+		else
+		{
+			verticalWigWagLocations.add(wigWagPos);
+			return true;
+		}
+	}
+	
 	public boolean addOrRemoveShuntBorder(BlockPos trackOrigin, EnumFacing shuntFacing)
 	{
 		Tuple<BlockPos, EnumFacing> value = new Tuple<BlockPos, EnumFacing>(trackOrigin, shuntFacing);
@@ -620,6 +681,7 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 		alreadyNotifiedGates = false;
 		alreadyNotifiedBells = false;
 		alreadyNotifiedWigWags = false;
+		alreadyNotifiedVerticalWigWags = false;
 		
 		markDirty();
 		updateComparator();
@@ -700,6 +762,7 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 					alreadyNotifiedBells = false;
 					alreadyNotifiedGates = false;
 					alreadyNotifiedWigWags = false;
+					alreadyNotifiedVerticalWigWags = false;
 					setAutomatedPowered(true);
 				}
 				
@@ -726,6 +789,7 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 					alreadyNotifiedBells = false;
 					alreadyNotifiedGates = false;
 					alreadyNotifiedWigWags = false;
+					alreadyNotifiedVerticalWigWags = false;
 					setAutomatedPowered(true);
 				}
 				
@@ -749,6 +813,7 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 			alreadyNotifiedBells = false;
 			alreadyNotifiedGates = false;
 			alreadyNotifiedWigWags = false;
+			alreadyNotifiedVerticalWigWags = false;
 			setAutomatedPowered(false);
 			
 			return;
