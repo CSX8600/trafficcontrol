@@ -4,6 +4,7 @@
 		"0": "trafficcontrol:blocks/wch_base",
 		"1": "trafficcontrol:blocks/wch_bell",
 		"2": "trafficcontrol:blocks/wch_top",
+		"3": "trafficcontrol:blocks/wch_plate",
 		"particle": "trafficcontrol:blocks/wch_base"
 	},
 	"elements": [
@@ -396,6 +397,20 @@
 				"up": {"uv": [0, 0, 0.75, 0.75], "rotation": 180, "texture": "#0"},
 				"down": {"uv": [0, 0, 0.75, 0.75], "rotation": 180, "texture": "#0"}
 			}
+		},
+		{
+			"name": "plate",
+			"from": [7.125, 4.95, 6.325],
+			"to": [8.875, 6.7, 6.625],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-1.125, 0, 0]},
+			"faces": {
+				"north": {"uv": [4, 3.5, 12.25, 11], "texture": "#3"},
+				"east": {"uv": [0, 0, 0.3, 2], "texture": "#3"},
+				"south": {"uv": [0, 0, 2, 2], "texture": "#missing"},
+				"west": {"uv": [0, 0, 0.3, 2], "texture": "#3"},
+				"up": {"uv": [0, 0, 0.3, 2], "texture": "#3"},
+				"down": {"uv": [0, 0, 0.3, 2], "texture": "#3"}
+			}
 		}
 	],
 	"display": {
@@ -452,7 +467,7 @@
 			"name": "hatch",
 			"origin": [8, 8, 8],
 			"color": 0,
-			"children": [18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]
+			"children": [18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
 		}
 	]
 }
