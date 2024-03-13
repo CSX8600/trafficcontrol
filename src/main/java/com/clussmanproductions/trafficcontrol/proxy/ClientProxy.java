@@ -84,6 +84,10 @@ public class ClientProxy extends CommonProxy {
 		}
 		bakeModel(e, new ModelResourceLocation(ModTrafficControl.MODID + ":crossing_gate_pole_ext", "rotation=down"));
 		
+		bakeModel(e, new ModelResourceLocation(ModTrafficControl.MODID + ":vertical_wig_wag_arm", "normal"));
+		bakeModel(e, new ModelResourceLocation(ModTrafficControl.MODID + ":vertical_wig_wag_arm", "lamp=off"));
+		bakeModel(e, new ModelResourceLocation(ModTrafficControl.MODID + ":vertical_wig_wag_arm", "lamp=on"));
+		
 //		bakeModel(e, new ModelResourceLocation(ModTrafficControl.MODID + ":crossing_gate_lamps_sw_support", "normal"));
 //		for(EnumState flashState : EnumState.values())
 //		{

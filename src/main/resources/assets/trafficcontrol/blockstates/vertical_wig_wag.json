@@ -30,7 +30,7 @@
         },
         "inventory": 
         {
-        	"model": "trafficcontrol:vertical_wig_wag"
+        	"model": "trafficcontrol:vertical_wig_wag_master"
         },
         "normal": [{}]
     }

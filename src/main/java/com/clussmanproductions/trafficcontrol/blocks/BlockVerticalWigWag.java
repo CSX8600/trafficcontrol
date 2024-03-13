@@ -105,35 +105,7 @@ public class BlockVerticalWigWag extends Block implements ITileEntityProvider
 			return FULL_BLOCK_AABB;
 		}
 		
-		int rotation = state.getValue(ROTATION);
-		
-		switch(rotation)
-		{
-			case 0:
-				return new AxisAlignedBB(-0.375,0,0.625,0.5625,1,0.375);
-			case 8:
-				return new AxisAlignedBB(0.4375,0,0.625,1.375,1,0.375);
-			case 4:
-				return new AxisAlignedBB(0.375,0,0.5625,0.625,1,-0.375);
-			case 12:
-				return new AxisAlignedBB(0.375,0,0.375,0.625,1,1.3125);
-			case 1:
-			case 15:
-			case 7:
-			case 9:
-			case 3:
-			case 5:
-			case 11:
-			case 13:
-				return new AxisAlignedBB(0.375, 0, 0.375, 0.75, 1, 0.75);
-			case 2:
-			case 6:
-			case 10:
-			case 14:
-				return new AxisAlignedBB(0.2, 0, 0.2, 0.8, 1, 0.8);
-		}
-		
-		return FULL_BLOCK_AABB;
+		return new AxisAlignedBB(0.125, 0, 0.1875, 0.875, 0.625, 0.8125);
 	}
 	
 	@Override
