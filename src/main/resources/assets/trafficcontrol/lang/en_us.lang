@@ -1,4 +1,5 @@
 #blocks
+tile.trafficcontrol.stand.name=Stand
 tile.trafficcontrol.crossing_gate_base.name=Pole Base
 tile.trafficcontrol.crossing_gate_gate.name=Crossing Gate
 tile.trafficcontrol.crossing_gate_lamps.name=Crossing Lamps
