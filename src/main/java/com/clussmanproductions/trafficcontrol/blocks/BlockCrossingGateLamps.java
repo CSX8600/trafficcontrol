@@ -27,6 +27,8 @@ public class BlockCrossingGateLamps extends BlockLampBase {
 		return getDefaultState().withProperty(ROTATION, i);
 	}
 
+	
+	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
 		return getDefaultState().withProperty(ROTATION, meta);

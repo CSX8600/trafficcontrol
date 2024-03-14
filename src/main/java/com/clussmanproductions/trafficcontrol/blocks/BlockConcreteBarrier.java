@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -45,6 +46,16 @@ public class BlockConcreteBarrier extends Block {
 			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), color.getMetadata(), new ModelResourceLocation(getRegistryName(), "dye=" + color.getMetadata() + ",inventory"));
 		}
 	}
+	
+	@Override
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) 
+	{
+        if (face == EnumFacing.UP)
+        {
+            return BlockFaceShape.UNDEFINED;
+        }
+        return super.getBlockFaceShape(worldIn, state, pos, face);
+    }
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
