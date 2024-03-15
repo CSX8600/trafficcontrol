@@ -4,8 +4,8 @@
         "model": "trafficcontrol:overhead_lamps",
         "textures":
         {
-            "leftlamp": "trafficcontrol:blocks/black",
-            "rightlamp": "trafficcontrol:blocks/black"
+            "leftlamp": "trafficcontrol:blocks/lamp_off",
+            "rightlamp": "trafficcontrol:blocks/lamp_off"
         }
     },
     "variants": {
