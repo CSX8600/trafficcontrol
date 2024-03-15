@@ -7,6 +7,8 @@ import javax.annotation.Nullable;
 import com.clussmanproductions.trafficcontrol.Config;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.*;
+import com.clussmanproductions.trafficcontrol.network.PacketHandler;
+import com.clussmanproductions.trafficcontrol.network.ServerSideSoundPacket;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -27,6 +29,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -51,6 +54,13 @@ public class ItemScrewdriver extends Item
     {
     	if(!world.isRemote)
     	{
+    		ServerSideSoundPacket packet = new ServerSideSoundPacket();
+    		packet.modID = ModTrafficControl.MODID;
+    		packet.soundName = "screwdriver";
+    		packet.pos = pos;
+    		packet.volume = 0.25F;
+    		PacketHandler.INSTANCE.sendToAllAround(packet, new NetworkRegistry.TargetPoint(player.dimension, player.posX, player.posY, player.posZ, 25));
+    		
             IBlockState state = world.getBlockState(pos);
             Block block = state.getBlock();
             

@@ -5,11 +5,19 @@ import org.lwjgl.input.Keyboard;
 import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModItems;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
+import com.clussmanproductions.trafficcontrol.network.ServerSideSoundPacket;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.IModel;
@@ -20,7 +28,10 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.registries.IForgeRegistry;
 
 @EventBusSubscriber(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
@@ -74,5 +85,24 @@ public class ClientProxy extends CommonProxy {
 		} catch (Exception e1) {
 			ModTrafficControl.logger.error("An error occurred while baking a custom model", e1);
 		}
+	}
+	
+	public static void playSoundHandler(ServerSideSoundPacket message, MessageContext ctx)
+	{
+		EntityPlayer player = Minecraft.getMinecraft().player;
+		WorldClient world = Minecraft.getMinecraft().world;
+		
+		ResourceLocation soundLocation = new ResourceLocation(message.modID, message.soundName);
+		IForgeRegistry<SoundEvent> soundRegistry = GameRegistry.findRegistry(SoundEvent.class);
+		SoundEvent sound = soundRegistry.getValue(soundLocation);
+		
+		if (sound == null)
+		{
+			ModTrafficControl.logger.warn(String.format("Tried to play sound %s but it does not exist!", message.modID + ":" + message.soundName));
+			return;
+		}
+		
+		PositionedSoundRecord record = new PositionedSoundRecord(sound, SoundCategory.BLOCKS, message.volume, message.pitch, message.pos);
+		Minecraft.getMinecraft().getSoundHandler().playSound(record);
 	}
 }

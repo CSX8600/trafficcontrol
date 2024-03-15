@@ -4,6 +4,11 @@
         "category": "block",
         "sounds": [ "trafficcontrol:gate" ]
     },
+    "screwdriver": 
+    {
+        "category": "block",
+        "sounds": [ "trafficcontrol:screwdriver" ]
+    },
     "safetran_type_3":
     {
         "category": "block",
