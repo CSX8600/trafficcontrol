@@ -6,6 +6,7 @@ import com.clussmanproductions.trafficcontrol.util.UnlistedPropertyBoolean;
 
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -89,7 +90,7 @@ public class BlockCrossingGateLamps extends BlockLampBase implements IHorizontal
 			return ((IHorizontalPoleConnectable)otherState.getBlock()).canConnectHorizontalPole(otherState, facing.getOpposite());
 		}
 		
-		return otherState.isSideSolid(world, pos.offset(facing), facing);
+		return otherState.getBlockFaceShape(world, pos, facing) != BlockFaceShape.UNDEFINED;
 	}
 	
 	@Override
