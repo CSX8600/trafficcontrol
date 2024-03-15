@@ -101,14 +101,4 @@ public class BlockSafetranType3 extends Block implements ITileEntityProvider {
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return new AxisAlignedBB(0.375, 0, 0.375, 0.625, 0.8125, 0.625);
 	}
-	
-	@Override
-	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
-		if (face == EnumFacing.UP)
-		{
-			return BlockFaceShape.UNDEFINED;
-		}
-		
-		return super.getBlockFaceShape(worldIn, state, pos, face);
-	}
 }
