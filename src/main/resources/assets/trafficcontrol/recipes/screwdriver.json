@@ -1,0 +1,28 @@
+{ 
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "I",
+    "O",
+    "W"  
+  ],
+  "key": {
+  	"O":
+	{
+		"item": "minecraft:dye",
+		"data": 14
+	},
+  	"W":
+	{
+		"item": "minecraft:dye",
+		"data": 15
+	},
+    "I":
+	  {
+		"item": "minecraft:iron_ingot"
+	  }
+  },
+  "result": {
+    "item": "trafficcontrol:screwdriver",
+    "count": 1
+  }
+}

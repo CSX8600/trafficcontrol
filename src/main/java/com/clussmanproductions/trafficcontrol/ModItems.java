@@ -31,6 +31,8 @@ public class ModItems {
 	public static BaseItemTrafficLightFrame traffic_light_6_frame;
 	@ObjectHolder("traffic_light_card")
 	public static ItemTrafficLightCard traffic_light_card;
+	@ObjectHolder("screwdriver")
+	public static ItemScrewdriver screwdriver;
 
 	public static void initModels(ModelRegistryEvent e)
 	{
@@ -45,6 +47,7 @@ public class ModItems {
 		traffic_light_2_frame.initModel();
 		traffic_light_4_frame.initModel();
 		traffic_light_6_frame.initModel();
+		screwdriver.initModel();
 		if (ModTrafficControl.OC_INSTALLED)
 		{
 			traffic_light_card.initModel();
