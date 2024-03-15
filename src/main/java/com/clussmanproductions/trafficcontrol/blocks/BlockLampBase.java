@@ -27,6 +27,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class BlockLampBase extends Block {
 	public static final PropertyEnum<EnumState> STATE = PropertyEnum.create("state", EnumState.class);
@@ -55,6 +57,7 @@ public abstract class BlockLampBase extends Block {
 
 	public abstract IProperty<?> getRotationalProperty();
 	
+	@SideOnly(Side.CLIENT)
 	public void initModel()
 	{
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
