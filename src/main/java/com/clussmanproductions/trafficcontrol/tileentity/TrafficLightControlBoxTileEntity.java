@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.clussmanproductions.trafficcontrol.Config;
+import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.blocks.BlockBaseTrafficLight;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorLeft;
 import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficSensorRight;
@@ -578,6 +579,11 @@ public class TrafficLightControlBoxTileEntity extends SyncableTileEntity impleme
 			
 			((PedestrianButtonTileEntity)prelimPed).removePairedBox(getPos());
 		}
+	}
+	
+	@Override
+	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+		return newSate.getBlock() != ModBlocks.traffic_light_control_box;
 	}
 	
 	public Automator getAutomator()

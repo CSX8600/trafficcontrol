@@ -3,6 +3,7 @@ package com.clussmanproductions.trafficcontrol.blocks;
 import java.util.Arrays;
 
 import com.clussmanproductions.trafficcontrol.ModBlocks;
+import com.clussmanproductions.trafficcontrol.ModItems;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.gui.GuiProxy;
 import com.clussmanproductions.trafficcontrol.signs.Sign;
@@ -138,11 +139,11 @@ public class BlockSign extends Block implements ITileEntityProvider, IHorizontal
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!worldIn.isRemote)
 		{
-			return true;
+			return false;
 		}
 		
 		TileEntity te = worldIn.getTileEntity(pos);
-		if (!(te instanceof SignTileEntity))
+		if (!(te instanceof SignTileEntity) || playerIn.getHeldItemMainhand().getItem() == ModItems.screwdriver)
 		{
 			return false;
 		}

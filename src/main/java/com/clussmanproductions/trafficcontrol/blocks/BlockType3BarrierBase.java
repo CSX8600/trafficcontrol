@@ -1,5 +1,6 @@
 package com.clussmanproductions.trafficcontrol.blocks;
 
+import com.clussmanproductions.trafficcontrol.ModItems;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.gui.GuiProxy;
 import com.clussmanproductions.trafficcontrol.tileentity.Type3BarrierTileEntity;
@@ -134,7 +135,7 @@ public abstract class BlockType3BarrierBase extends Block {
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		TileEntity teInPos = worldIn.getTileEntity(pos);
-		if (!(teInPos instanceof Type3BarrierTileEntity))
+		if (!(teInPos instanceof Type3BarrierTileEntity) || playerIn.getHeldItemMainhand().getItem() == ModItems.screwdriver)
 		{
 			return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 		}

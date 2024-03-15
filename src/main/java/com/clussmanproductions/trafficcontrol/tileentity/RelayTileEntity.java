@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase.EnumState;
 import com.clussmanproductions.trafficcontrol.blocks.BlockRelayBase;
@@ -25,7 +26,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class RelayTileEntity extends TileEntity implements ITickable, IScannerSubscriber {
+public class RelayTileEntity extends TileEntity implements ITickable, IScannerSubscriber, IHasRotationProperty { // implements IHasRotationProperty to *prevent* rotation
 	
 	private boolean isMaster;
 	private boolean isPowered;
@@ -818,6 +819,11 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 			
 			return;
 		}
+	}
+	
+	@Override
+	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+		return !(newSate.getBlock() instanceof BlockRelayBase);
 	}
 
 }

@@ -10,6 +10,7 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
@@ -131,5 +132,13 @@ public class BlockTrafficLight5Upper extends Block {
 		}
 		
 		return ModBlocks.traffic_light_5.getPickBlock(stateBelow, target, world, pos.down(), player);
+	}
+	
+	@Override
+	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+		if (fromPos.equals(pos.offset(EnumFacing.DOWN)) && worldIn.getBlockState(fromPos).getBlock() == ModBlocks.traffic_light_5)
+		{
+			worldIn.setBlockState(pos, state.withProperty(ROTATION, worldIn.getBlockState(fromPos).getValue(BlockTrafficLight5.ROTATION)));
+		}
 	}
 }

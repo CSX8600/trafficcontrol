@@ -6,9 +6,39 @@ import javax.annotation.Nullable;
 
 import com.clussmanproductions.trafficcontrol.Config;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
-import com.clussmanproductions.trafficcontrol.blocks.*;
+import com.clussmanproductions.trafficcontrol.blocks.BlockChannelizer;
+import com.clussmanproductions.trafficcontrol.blocks.BlockCone;
+import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateBase;
+import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateCrossbuck;
+import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateGate;
+import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGateLamps;
+import com.clussmanproductions.trafficcontrol.blocks.BlockCrossingGatePole;
+import com.clussmanproductions.trafficcontrol.blocks.BlockDrum;
+import com.clussmanproductions.trafficcontrol.blocks.BlockPedestrianButton;
+import com.clussmanproductions.trafficcontrol.blocks.BlockSafetranMechanical;
+import com.clussmanproductions.trafficcontrol.blocks.BlockSafetranType3;
+import com.clussmanproductions.trafficcontrol.blocks.BlockSign;
+import com.clussmanproductions.trafficcontrol.blocks.BlockStand;
+import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightDouble;
+import com.clussmanproductions.trafficcontrol.blocks.BlockStreetLightSingle;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight1;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight2;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight4;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight5;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight5Upper;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLight6;
+import com.clussmanproductions.trafficcontrol.blocks.BlockTrafficLightDoghouse;
+import com.clussmanproductions.trafficcontrol.blocks.BlockVerticalWigWag;
+import com.clussmanproductions.trafficcontrol.blocks.BlockWCHBell;
+import com.clussmanproductions.trafficcontrol.blocks.BlockWCHMechanicalBell;
+import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
+import com.clussmanproductions.trafficcontrol.tileentity.IHasRotationProperty;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -18,12 +48,10 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
@@ -53,827 +81,77 @@ public class ItemScrewdriver extends Item
     	{
             IBlockState state = world.getBlockState(pos);
             Block block = state.getBlock();
-            
-            if(!player.isSneaking())
+            if (block.getRegistryName().getResourceDomain().equalsIgnoreCase(ModTrafficControl.MODID))
             {
-                if(block instanceof BlockCone)
-                {
-                	int rotation = state.getValue(BlockCone.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockCone.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockSign)
-                {
-                	int rotation = state.getValue(BlockSign.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockSign.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockChannelizer)
-                {
-                	int rotation = state.getValue(BlockChannelizer.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockChannelizer.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockDrum)
-                {
-                	int rotation = state.getValue(BlockDrum.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockDrum.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockCrossingGateBase)
-                {
-                	int rotation = state.getValue(BlockCrossingGateBase.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockCrossingGateBase.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockCrossingGateCrossbuck)
-                {
-                	int rotation = state.getValue(BlockCrossingGateCrossbuck.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockCrossingGateCrossbuck.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockCrossingGateGate)
-                {
-                	int rotation = state.getValue(BlockCrossingGateGate.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockCrossingGateGate.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockCrossingGateLamps)
-                {
-                	int rotation = state.getValue(BlockCrossingGateLamps.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockCrossingGateLamps.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockCrossingGatePole)
-                {
-                	int rotation = state.getValue(BlockCrossingGatePole.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockCrossingGatePole.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-               
-                if(block instanceof BlockPedestrianButton)
-                {
-                	int rotation = state.getValue(BlockPedestrianButton.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockPedestrianButton.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockSafetranMechanical)
-                {
-                	int rotation = state.getValue(BlockSafetranMechanical.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockSafetranMechanical.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockSafetranType3)
-                {
-                	int rotation = state.getValue(BlockSafetranType3.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockSafetranType3.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockSafetranType3)
-                {
-                	int rotation = state.getValue(BlockSafetranType3.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockSafetranType3.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockStand)
-                {
-                	int rotation = state.getValue(BlockStand.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockStand.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockStreetLightSingle)
-                {
-                	int rotation = state.getValue(BlockStreetLightSingle.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockStreetLightSingle.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockStreetLightDouble)
-                {
-                	int rotation = state.getValue(BlockStreetLightDouble.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockStreetLightDouble.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockTrafficLight)
-                {
-                	int rotation = state.getValue(BlockTrafficLight.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockTrafficLight.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockTrafficLight1)
-                {
-                	int rotation = state.getValue(BlockTrafficLight1.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockTrafficLight1.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockTrafficLight2)
-                {
-                	int rotation = state.getValue(BlockTrafficLight2.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockTrafficLight2.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockTrafficLight4)
-                {
-                	int rotation = state.getValue(BlockTrafficLight4.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockTrafficLight4.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockTrafficLight5)
-                {
-                	int rotation = state.getValue(BlockTrafficLight5.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockTrafficLight5.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockTrafficLight5Upper)
-                {
-                	int rotation = state.getValue(BlockTrafficLight5Upper.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockTrafficLight5Upper.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockTrafficLight6)
-                {
-                	int rotation = state.getValue(BlockTrafficLight6.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockTrafficLight6.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockTrafficLightDoghouse)
-                {
-                	int rotation = state.getValue(BlockTrafficLightDoghouse.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockTrafficLightDoghouse.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockVerticalWigWag)
-                {
-                	int rotation = state.getValue(BlockVerticalWigWag.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockVerticalWigWag.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockWCHBell)
-                {
-                	int rotation = state.getValue(BlockWCHBell.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockWCHBell.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockWCHMechanicalBell)
-                {
-                	int rotation = state.getValue(BlockWCHMechanicalBell.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockWCHMechanicalBell.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockWigWag)
-                {
-                	int rotation = state.getValue(BlockWigWag.ROTATION);
-                    int newRotation = (rotation + 1) % 16;
-                    IBlockState newState = state.withProperty(BlockWigWag.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
+	            if (block.hasTileEntity(state) && world.getTileEntity(pos) instanceof IHasRotationProperty)
+	            {
+            		IHasRotationProperty hasRotationProperty = (IHasRotationProperty)world.getTileEntity(pos);
+            		if (hasRotationProperty.getRotationFacing() != null)
+            		{
+            			hasRotationProperty.setRotationFacing(player.isSneaking() ? hasRotationProperty.getRotationFacing().rotateYCCW() : hasRotationProperty.getRotationFacing().rotateY());
+            			return EnumActionResult.SUCCESS;
+            		}
+            		else if (hasRotationProperty.getRotationInt() != -1)
+            		{
+            			int currentRotation = hasRotationProperty.getRotationInt();
+            			int newRotation = player.isSneaking() ? currentRotation - 1 : currentRotation + 1;
+            			if (newRotation < 0)
+            			{
+            				newRotation = 15;
+            			}
+            			
+            			if (newRotation >= 16)
+            			{
+            				newRotation = 0;
+            			}
+            			
+            			hasRotationProperty.setRotationInt(newRotation);
+            			return EnumActionResult.SUCCESS;
+            		}
+	            }
+	            else if (state.getPropertyKeys().stream().anyMatch(p -> p.getName().equalsIgnoreCase("rotation") || p.getName().equalsIgnoreCase("facing")))
+	        	{
+	        		IBlockState newState = state;
+	        		IProperty<?> property = state.getPropertyKeys().stream().filter(p -> p.getName().equalsIgnoreCase("rotation") || p.getName().equalsIgnoreCase("facing")).findFirst().get();
+	        		if (property.getValueClass() == EnumFacing.class)
+	        		{
+	        			PropertyDirection facingProp = (PropertyDirection)property;
+	        			
+	        			EnumFacing currentFacing = state.getValue(facingProp);
+	        			EnumFacing newFacing = player.isSneaking() ? currentFacing.rotateYCCW() : currentFacing.rotateY();
+	        			
+	        			newState = state.withProperty(facingProp, newFacing);
+	        		}
+	        		else if (property.getValueClass() == Integer.class)
+	        		{
+	        			PropertyInteger intProp = (PropertyInteger)property;
+	        			
+	        			int currentRotation = state.getValue(intProp);
+	        			int newRotation = player.isSneaking() ? currentRotation - 1 : currentRotation + 1;
+	        			if (newRotation < 0)
+	        			{
+	        				newRotation = 15;
+	        			}
+	        			
+	        			if (newRotation >= 16)
+	        			{
+	        				newRotation = 0;
+	        			}
+	        			
+	        			newState = state.withProperty(intProp, newRotation);
+	        		}
+	        		
+	        		world.setBlockState(pos, newState);
+	                world.notifyBlockUpdate(pos, state, newState, 3);
+	                
+	                if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
+	                
+	                return EnumActionResult.SUCCESS;
+	        	}
             }
-            else
-            {	
-                if(block instanceof BlockCone)
-                {
-                	int rotation = state.getValue(BlockCone.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                	if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockCone.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockSign)
-                {
-                	int rotation = state.getValue(BlockSign.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockSign.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockChannelizer)
-                {
-                	int rotation = state.getValue(BlockChannelizer.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockChannelizer.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockDrum)
-                {
-                	int rotation = state.getValue(BlockDrum.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockDrum.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockCrossingGateBase)
-                {
-                	int rotation = state.getValue(BlockCrossingGateBase.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockCrossingGateBase.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockCrossingGateCrossbuck)
-                {
-                	int rotation = state.getValue(BlockCrossingGateCrossbuck.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockCrossingGateCrossbuck.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockCrossingGateGate)
-                {
-                	int rotation = state.getValue(BlockCrossingGateGate.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockCrossingGateGate.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockCrossingGateLamps)
-                {
-                	int rotation = state.getValue(BlockCrossingGateLamps.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockCrossingGateLamps.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockCrossingGatePole)
-                {
-                	int rotation = state.getValue(BlockCrossingGatePole.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockCrossingGatePole.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-               
-                if(block instanceof BlockPedestrianButton)
-                {
-                	int rotation = state.getValue(BlockPedestrianButton.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockPedestrianButton.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockSafetranMechanical)
-                {
-                	int rotation = state.getValue(BlockSafetranMechanical.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockSafetranMechanical.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockSafetranType3)
-                {
-                	int rotation = state.getValue(BlockSafetranType3.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockSafetranType3.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockSafetranType3)
-                {
-                	int rotation = state.getValue(BlockSafetranType3.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockSafetranType3.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockStand)
-                {
-                	int rotation = state.getValue(BlockStand.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockStand.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockStreetLightSingle)
-                {
-                	int rotation = state.getValue(BlockStreetLightSingle.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockStreetLightSingle.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockStreetLightDouble)
-                {
-                	int rotation = state.getValue(BlockStreetLightDouble.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockStreetLightDouble.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockTrafficLight)
-                {
-                	int rotation = state.getValue(BlockTrafficLight.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockTrafficLight.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockTrafficLight1)
-                {
-                	int rotation = state.getValue(BlockTrafficLight1.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockTrafficLight1.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockTrafficLight2)
-                {
-                	int rotation = state.getValue(BlockTrafficLight2.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockTrafficLight2.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockTrafficLight4)
-                {
-                	int rotation = state.getValue(BlockTrafficLight4.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockTrafficLight4.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockTrafficLight5)
-                {
-                	int rotation = state.getValue(BlockTrafficLight5.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockTrafficLight5.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockTrafficLight5Upper)
-                {
-                	int rotation = state.getValue(BlockTrafficLight5Upper.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockTrafficLight5Upper.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockTrafficLight6)
-                {
-                	int rotation = state.getValue(BlockTrafficLight6.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockTrafficLight6.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockTrafficLightDoghouse)
-                {
-                	int rotation = state.getValue(BlockTrafficLightDoghouse.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockTrafficLightDoghouse.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockVerticalWigWag)
-                {
-                	int rotation = state.getValue(BlockVerticalWigWag.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockVerticalWigWag.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockWCHBell)
-                {
-                	int rotation = state.getValue(BlockWCHBell.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockWCHBell.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockWCHMechanicalBell)
-                {
-                	int rotation = state.getValue(BlockWCHMechanicalBell.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockWCHMechanicalBell.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-                
-                if(block instanceof BlockWigWag)
-                {
-                	int rotation = state.getValue(BlockWigWag.ROTATION);
-                    int newRotation = (rotation - 1) % 16;
-                    if (newRotation < 0) { newRotation = 15; }
-                    IBlockState newState = state.withProperty(BlockWigWag.ROTATION, newRotation);
-
-                    world.setBlockState(pos, newState);
-                    world.notifyBlockUpdate(pos, state, newState, newRotation);
-                    
-                    if(!player.isCreative()) {player.getHeldItem(hand).damageItem(1, player);}
-                    
-                    return EnumActionResult.SUCCESS;
-                }
-            }
-           
     	}
     	player.swingArm(hand);
-    	return EnumActionResult.FAIL;
+    	return EnumActionResult.PASS;
     }
     
     @Override

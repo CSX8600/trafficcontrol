@@ -111,6 +111,11 @@ public class BlockPedestrianButton extends Block {
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		
+		if (playerIn.getHeldItemMainhand().getItem() == ModItems.screwdriver)
+		{
+			return false;
+		}
+		
 		if (playerIn.getHeldItem(hand).getItem() != ModItems.crossing_relay_tuner)
 		{
 			worldIn.playSound(null, pos, ModSounds.pedButton, SoundCategory.BLOCKS, 0.3F, 1F);

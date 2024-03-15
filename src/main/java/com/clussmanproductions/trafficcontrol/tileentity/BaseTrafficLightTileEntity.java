@@ -15,6 +15,8 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class BaseTrafficLightTileEntity extends TileEntity implements ITickable {
 
@@ -306,5 +308,10 @@ public class BaseTrafficLightTileEntity extends TileEntity implements ITickable 
 	@Override
 	public double getMaxRenderDistanceSquared() {
 		return ModTrafficControl.MAX_RENDER_DISTANCE;
+	}
+
+	@Override
+	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+		return !(newSate.getBlock() instanceof BlockBaseTrafficLight);
 	}
 }

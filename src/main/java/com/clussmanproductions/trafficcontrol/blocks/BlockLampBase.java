@@ -185,7 +185,8 @@ public abstract class BlockLampBase extends Block {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (playerIn.getHeldItem(hand).getItem() == ModItems.crossing_relay_tuner)
+		if (playerIn.getHeldItemMainhand().getItem() == ModItems.crossing_relay_tuner ||
+				playerIn.getHeldItemMainhand().getItem() == ModItems.screwdriver)
 		{
 			return false;
 		}

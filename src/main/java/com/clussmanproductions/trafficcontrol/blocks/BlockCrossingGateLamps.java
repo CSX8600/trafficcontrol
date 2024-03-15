@@ -1,5 +1,6 @@
 package com.clussmanproductions.trafficcontrol.blocks;
 
+import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.util.CustomAngleCalculator;
 import com.clussmanproductions.trafficcontrol.util.UnlistedPropertyBoolean;
 
@@ -76,6 +77,11 @@ public class BlockCrossingGateLamps extends BlockLampBase implements IHorizontal
 	private boolean checkDirection(IBlockAccess world, BlockPos pos, EnumFacing facing)
 	{
 		IBlockState otherState = world.getBlockState(pos.offset(facing));
+		if (facing == EnumFacing.DOWN && otherState.getBlock().getRegistryName().getResourceDomain().equalsIgnoreCase(ModTrafficControl.MODID))
+		{
+			return true;
+		}
+		
 		if (otherState.getBlock() instanceof IHorizontalPoleConnectable)
 		{
 			return ((IHorizontalPoleConnectable)otherState.getBlock()).canConnectHorizontalPole(otherState, facing.getOpposite());

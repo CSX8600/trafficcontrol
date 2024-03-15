@@ -1,5 +1,6 @@
 package com.clussmanproductions.trafficcontrol.blocks;
 
+import com.clussmanproductions.trafficcontrol.ModItems;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.gui.GuiProxy;
 import com.clussmanproductions.trafficcontrol.item.ItemCrossingRelayTuner;
@@ -97,7 +98,8 @@ public class BlockCrossingGateGate extends Block {
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		
-		if (playerIn.getHeldItem(hand).getItem() instanceof ItemCrossingRelayTuner)
+		if (playerIn.getHeldItem(hand).getItem() instanceof ItemCrossingRelayTuner || 
+				playerIn.getHeldItemMainhand().getItem() == ModItems.screwdriver)
 		{
 			return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 		}

@@ -156,7 +156,7 @@ public abstract class BlockRelayBase extends Block implements ITileEntityProvide
 			return;
 		}
 		
-		worldIn.setBlockState(currentPos, Blocks.AIR.getDefaultState());
+		worldIn.destroyBlock(currentPos, false);
 	}
 
 	@Override
@@ -173,7 +173,9 @@ public abstract class BlockRelayBase extends Block implements ITileEntityProvide
 			return;
 		}
 		
-		if (worldIn.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock() instanceof BlockRelayBase || worldIn.getBlockState(fromPos).getBlock() instanceof BlockRelayBase)
+		if (worldIn.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock() instanceof BlockRelayBase ||
+				worldIn.getBlockState(fromPos).getBlock() instanceof BlockRelayBase ||
+				worldIn.isAirBlock(fromPos))
 		{
 			return;
 		}
