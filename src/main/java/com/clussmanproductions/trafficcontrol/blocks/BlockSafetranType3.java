@@ -57,6 +57,16 @@ public class BlockSafetranType3 extends Block implements ITileEntityProvider {
 	}
 	
 	@Override
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) 
+	{
+        if (face == EnumFacing.UP)
+        {
+            return BlockFaceShape.UNDEFINED;
+        }
+        return super.getBlockFaceShape(worldIn, state, pos, face);
+    }
+	
+	@Override
 	public int getMetaFromState(IBlockState state) {
 		return CustomAngleCalculator.rotationToMeta(state.getValue(ROTATION));
 	}

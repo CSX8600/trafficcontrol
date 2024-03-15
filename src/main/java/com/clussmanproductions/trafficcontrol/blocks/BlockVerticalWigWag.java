@@ -13,6 +13,7 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -53,6 +54,16 @@ public class BlockVerticalWigWag extends Block implements ITileEntityProvider
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(VerticalWigWagTileEntity.class, new VerticalWigWagRenderer());
 	}
+	
+	@Override
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) 
+	{
+        if (face == EnumFacing.UP)
+        {
+            return BlockFaceShape.UNDEFINED;
+        }
+        return super.getBlockFaceShape(worldIn, state, pos, face);
+    }
 	
 	@Override
 	public int getMetaFromState(IBlockState state) {

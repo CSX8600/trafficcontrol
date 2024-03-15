@@ -12,6 +12,7 @@ public class ModSounds {
 	public static SoundEvent pedButton;
 	public static SoundEvent wigWag;
 	public static SoundEvent wch_mechanical_bell;
+	public static SoundEvent screwdriver;
 	
 	public static void initSounds()
 	{
@@ -22,5 +23,6 @@ public class ModSounds {
 		pedButton = new SoundEvent(new ResourceLocation(ModTrafficControl.MODID + ":ped_button")).setRegistryName("trafficcontrol:ped_button");
 		wigWag = new SoundEvent(new ResourceLocation(ModTrafficControl.MODID + ":wigwag")).setRegistryName("trafficcontrol:wigwag");
 		wch_mechanical_bell = new SoundEvent(new ResourceLocation(ModTrafficControl.MODID + ":wch_mechanical_bell")).setRegistryName("trafficcontrol:wch_mechanical_bell");
+		screwdriver = new SoundEvent(new ResourceLocation(ModTrafficControl.MODID + ":screwdriver")).setRegistryName("trafficcontrol:screwdriver");
 	}
 }

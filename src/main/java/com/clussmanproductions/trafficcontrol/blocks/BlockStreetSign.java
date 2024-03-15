@@ -10,6 +10,7 @@ import com.clussmanproductions.trafficcontrol.util.CustomAngleCalculator;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
@@ -45,6 +46,16 @@ public class BlockStreetSign extends Block {
 	{
 		ClientRegistry.bindTileEntitySpecialRenderer(StreetSignTileEntity.class, new StreetSignRenderer());
 	}
+	
+	@Override
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) 
+	{
+        if (face == EnumFacing.UP)
+        {
+            return BlockFaceShape.UNDEFINED;
+        }
+        return super.getBlockFaceShape(worldIn, state, pos, face);
+    }
 	
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
