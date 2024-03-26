@@ -20,6 +20,7 @@ import com.clussmanproductions.trafficcontrol.tileentity.RelayTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.ShuntBorderTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.ShuntIslandTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightControlBoxTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.VerticalWigWagTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.WigWagTileEntity;
 import com.clussmanproductions.trafficcontrol.util.CustomAngleCalculator;
 
@@ -279,6 +280,18 @@ public class ItemCrossingRelayTuner extends Item {
 				else
 				{
 					player.sendMessage(new TextComponentString("Unpaired Crossing Gate from Relay Box"));
+				}
+			}
+			
+			if (te instanceof VerticalWigWagTileEntity)
+			{
+				if (relay.addOrRemoveVerticalWigWag(te.getPos()))
+				{
+					player.sendMessage(new TextComponentString("Paired Vertical Wig Wag to Relay Box"));
+				}
+				else
+				{
+					player.sendMessage(new TextComponentString("Unpaired Vertical Wig Wag from Relay Box"));
 				}
 			}
 

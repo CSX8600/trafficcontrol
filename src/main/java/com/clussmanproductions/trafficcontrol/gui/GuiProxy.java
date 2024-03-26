@@ -1,7 +1,9 @@
 package com.clussmanproductions.trafficcontrol.gui;
 
 import com.clussmanproductions.trafficcontrol.ModItems;
+import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase;
 import com.clussmanproductions.trafficcontrol.tileentity.CrossingGateGateTileEntity;
+import com.clussmanproductions.trafficcontrol.tileentity.CrossingLampsTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.SignTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.StreetSignTileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLightControlBoxTileEntity;
@@ -159,7 +161,13 @@ public class GuiProxy implements IGuiHandler {
 					return new TrafficLight6FrameGui(player.inventory, player.getHeldItemMainhand());
 				}
 				break;
-				
+			case GUI_IDs.CROSSING_GATE_LAMPS:
+				BlockPos lampPos = new BlockPos(x, y, z);
+				if (world.getBlockState(lampPos).getBlock() instanceof BlockLampBase && world.getTileEntity(lampPos) instanceof CrossingLampsTileEntity)
+				{
+					return new CrossingLampsGui((CrossingLampsTileEntity)world.getTileEntity(lampPos), ((BlockLampBase)world.getBlockState(lampPos).getBlock()).getLampRegistryName());
+				}
+				break;
 		}
 
 		return null;
@@ -179,5 +187,6 @@ public class GuiProxy implements IGuiHandler {
 		public static final int TRAFFIC_LIGHT_2_FRAME = 10;
 		public static final int TRAFFIC_LIGHT_4_FRAME = 11;
 		public static final int TRAFFIC_LIGHT_6_FRAME = 12;
+		public static final int CROSSING_GATE_LAMPS = 13;
 	}
 }

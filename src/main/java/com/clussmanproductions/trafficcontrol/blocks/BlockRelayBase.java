@@ -10,6 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -156,7 +157,7 @@ public abstract class BlockRelayBase extends Block implements ITileEntityProvide
 			return;
 		}
 		
-		worldIn.setBlockState(currentPos, Blocks.AIR.getDefaultState());
+		worldIn.destroyBlock(currentPos, false);
 	}
 
 	@Override
@@ -173,7 +174,9 @@ public abstract class BlockRelayBase extends Block implements ITileEntityProvide
 			return;
 		}
 		
-		if (worldIn.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock() instanceof BlockRelayBase)
+		if (worldIn.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock() instanceof BlockRelayBase ||
+				worldIn.getBlockState(fromPos).getBlock() instanceof BlockRelayBase ||
+				worldIn.isAirBlock(fromPos))
 		{
 			return;
 		}
@@ -191,4 +194,35 @@ public abstract class BlockRelayBase extends Block implements ITileEntityProvide
 	public boolean causesSuffocation(IBlockState state) {
 		return false;
 	}
+	
+	@Override
+	public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos) {
+		TileEntity te = worldIn.getTileEntity(pos);
+		if (te == null || !(te instanceof RelayTileEntity))
+		{
+			return 0;
+		}
+		
+		RelayTileEntity relay = (RelayTileEntity)te;
+		relay = relay.getMaster(worldIn);
+		if (relay == null)
+		{
+			return 0;
+		}
+		
+		return relay.getPowered() ? 15 : 0;
+	}
+	
+	@Override
+	public boolean hasComparatorInputOverride(IBlockState state) {
+		return true;
+	}
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) 
+	{
+        if (face == EnumFacing.UP)
+        {
+            return BlockFaceShape.UNDEFINED;
+        }
+        return super.getBlockFaceShape(worldIn, state, pos, face);
+    }
 }

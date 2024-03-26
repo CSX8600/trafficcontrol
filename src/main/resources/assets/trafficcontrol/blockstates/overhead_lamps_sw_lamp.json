@@ -1,0 +1,223 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+    	"model": "trafficcontrol:overhead_lamps_sw_lamp",
+        "textures":
+        {
+            "leftlamp": "trafficcontrol:blocks/lamp_off",
+            "rightlamp": "trafficcontrol:blocks/lamp_off"
+        }
+    },
+    "variants": {
+    	"rotation":
+        {
+            "0": 
+            {
+            	"model": "trafficcontrol:overhead_lamps_sw_support",
+            	"submodel":
+            	{ 
+            		"lamp": { "model": "trafficcontrol:overhead_lamps_sw_lamp", "transform": { "translation": [ -0.28125, 0.6875, 0.0625 ] } }
+            	}
+        	},
+	        "1": 
+	        {
+	        	"model": "trafficcontrol:overhead_lamps_sw_support", 
+	        	"submodel":
+	        	{
+	        		"lamp":
+	        		{
+		        		"model": "trafficcontrol:overhead_lamps_sw_lamp",
+		        		"transform": { "translation": [ -0.28125, 0.6875, 0.0625 ], "rotation":{ "y": 337 } }
+	        		}
+	        	}
+        	},
+	        "2": 
+	        { 
+	        	"model": "trafficcontrol:overhead_lamps_sw_support",
+	        	"submodel":
+	        	{ 
+	        		"lamp":
+	        		{ 
+	        			"model": "trafficcontrol:overhead_lamps_sw_lamp",
+	        			"transform": { "translation": [ -0.28125, 0.6875, 0.0625 ], "rotation":{ "y": 315  } }
+	        		}
+	        	}
+        	},
+	        "3": 
+	        { 
+	        	"model": "trafficcontrol:overhead_lamps_sw_support",
+	        	"submodel":
+	        	{ 
+	        		"lamp":
+	        		{ 
+	        			"model": "trafficcontrol:overhead_lamps_sw_lamp",
+	        			"transform": { "translation": [ -0.28125, 0.6875, 0.0625 ], "rotation":{ "y": 292  } }
+	        		}
+	        	}
+        	},
+	        "4": 
+	        { 
+	        	"model": "trafficcontrol:overhead_lamps_sw_support",
+	        	"submodel":
+	        	{ 
+	        		"lamp":
+	        		{ 
+	        			"model": "trafficcontrol:overhead_lamps_sw_lamp",
+	        			"transform": { "translation": [ -0.28125, 0.6875, 0.0625 ], "rotation":{ "y": 270  } }
+	        		}
+	        	}
+        	},
+	        "5": 
+	        { 
+	        	"model": "trafficcontrol:overhead_lamps_sw_support",
+	        	"submodel":
+	        	{ 
+	        		"lamp":
+	        		{ 
+	        			"model": "trafficcontrol:overhead_lamps_sw_lamp",
+	        			"transform": { "translation": [ -0.28125, 0.6875, 0.0625 ], "rotation":{ "y": 247  } }
+	        		}
+	        	}
+        	},
+	        "6": 
+	        { 
+	        	"model": "trafficcontrol:overhead_lamps_sw_support",
+	        	"submodel":
+	        	{ 
+	        		"lamp":
+	        		{ 
+	        			"model": "trafficcontrol:overhead_lamps_sw_lamp",
+	        			"transform": { "translation": [ -0.28125, 0.6875, 0.0625 ], "rotation":{ "y": 225  } }
+	        		}
+	        	}
+        	},
+	        "7": 
+	        { 
+	        	"model": "trafficcontrol:overhead_lamps_sw_support",
+	        	"submodel":
+	        	{ 
+	        		"lamp":
+	        		{ 
+	        			"model": "trafficcontrol:overhead_lamps_sw_lamp",
+	        			"transform": { "translation": [ -0.28125, 0.6875, 0.0625 ], "rotation":{ "y": 202  } }
+	        		}
+	        	}
+        	},
+	        "8": 
+	        { 
+	        	"model": "trafficcontrol:overhead_lamps_sw_support",
+	        	"submodel":
+	        	{ 
+	        		"lamp":
+	        		{ 
+	        			"model": "trafficcontrol:overhead_lamps_sw_lamp",
+	        			"transform": { "translation": [ -0.28125, 0.6875, 0.0625 ], "rotation":{ "y": 180  } }
+	        		}
+	        	}
+        	},
+	        "9": 
+	        { 
+	        	"model": "trafficcontrol:overhead_lamps_sw_support",
+	        	"submodel":
+	        	{ 
+	        		"lamp":
+	        		{ 
+	        			"model": "trafficcontrol:overhead_lamps_sw_lamp",
+	        			"transform": { "translation": [ -0.28125, 0.6875, 0.0625 ], "rotation":{ "y": 157  } }
+	        		}
+	        	}
+        	},
+	        "10": 
+	        { 
+	        	"model": "trafficcontrol:overhead_lamps_sw_support",
+	        	"submodel":
+	        	{ 
+	        		"lamp":
+	        		{ 
+	        			"model": "trafficcontrol:overhead_lamps_sw_lamp",
+	        			"transform": { "translation": [ -0.28125, 0.6875, 0.0625 ], "rotation":{ "y": 135  } }
+	        		}
+	        	}
+        	},
+	        "11": 
+	        { 
+	        	"model": "trafficcontrol:overhead_lamps_sw_support",
+	        	"submodel":
+	        	{ 
+	        		"lamp":
+	        		{ 
+	        			"model": "trafficcontrol:overhead_lamps_sw_lamp",
+	        			"transform": { "translation": [ -0.28125, 0.6875, 0.0625 ], "rotation":{ "y": 112  } }
+	        		}
+	        	}
+        	},
+	        "12": 
+	        { 
+	        	"model": "trafficcontrol:overhead_lamps_sw_support",
+	        	"submodel":
+	        	{ 
+	        		"lamp":
+	        		{ 
+	        			"model": "trafficcontrol:overhead_lamps_sw_lamp",
+	        			"transform": { "translation": [ -0.28125, 0.6875, 0.0625 ], "rotation":{ "y": 90  } }
+	        		}
+	        	}
+        	},
+	        "13": 
+	        { 
+	        	"model": "trafficcontrol:overhead_lamps_sw_support",
+	        	"submodel":
+	        	{ 
+	        		"lamp":
+	        		{ 
+	        			"model": "trafficcontrol:overhead_lamps_sw_lamp",
+	        			"transform": { "translation": [ -0.28125, 0.6875, 0.0625 ], "rotation":{ "y": 67  } }
+	        		}
+	        	}
+        	},
+	        "14": 
+	        { 
+	        	"model": "trafficcontrol:overhead_lamps_sw_support",
+	        	"submodel":
+	        	{ 
+	        		"lamp":
+	        		{ 
+	        			"model": "trafficcontrol:overhead_lamps_sw_lamp",
+	        			"transform": { "translation": [ -0.28125, 0.6875, 0.0625 ], "rotation":{ "y": 45  } }
+	        		}
+	        	}
+        	},
+	        "15": 
+	        { 
+	        	"model": "trafficcontrol:overhead_lamps_sw_support",
+	        	"submodel":
+	        	{ 
+	        		"lamp":
+	        		{ 
+	        			"model": "trafficcontrol:overhead_lamps_sw_lamp",
+	        			"transform": { "translation": [ -0.28125, 0.6875, 0.0625 ], "rotation":{ "y": 22  } }
+	        		}
+	        	}
+        	},
+        	"16": { }
+        },
+        "state":
+        {
+            "off": {},
+            "flash1":
+            {
+                "textures":
+                {
+                    "leftlamp": "trafficcontrol:blocks/red"
+                }
+            },
+            "flash2":
+            {
+                "textures":
+                {
+                     "rightlamp": "trafficcontrol:blocks/red"
+                }
+            }
+        }
+    }
+}

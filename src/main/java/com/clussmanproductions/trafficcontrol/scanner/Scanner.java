@@ -79,6 +79,10 @@ public class Scanner
 					if (lastPosition == null)
 					{
 						lastPosition = new Vec3d(request.getStartingPos());
+						
+						// Put us in a certain position by IR's standards
+						lastPosition = ImmersiveRailroadingHelper.getNextPosition(lastPosition, new Vec3d(0, 0, 0), world); 
+						
 						motion = new Vec3d(request.getStartDirection().getDirectionVec());
 					}
 					

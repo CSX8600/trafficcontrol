@@ -1,7 +1,6 @@
 package com.clussmanproductions.trafficcontrol.blocks;
 
 import java.util.Arrays;
-import java.util.HashMap;
 
 import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModItems;
@@ -14,8 +13,8 @@ import com.clussmanproductions.trafficcontrol.util.EnumTrafficLightBulbTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,12 +28,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public abstract class BlockBaseTrafficLight extends Block {
+public abstract class BlockBaseTrafficLight extends Block implements IHorizontalPoleConnectable {
 
 	public static PropertyInteger ROTATION = PropertyInteger.create("rotation", 0, 15);
 	public static PropertyBool VALIDHORIZONTALBAR = PropertyBool.create("validhorizontalbar");
@@ -96,95 +93,39 @@ public abstract class BlockBaseTrafficLight extends Block {
 		
 		if (isCardinal)
 		{
-			if (CustomAngleCalculator.isNorth(rotation))
+			EnumFacing myFacing = CustomAngleCalculator.getFacingFromRotation(rotation);
+			IBlockState otherState = worldIn.getBlockState(pos.offset(myFacing.rotateY()));
+			if (otherState.getBlock() instanceof IHorizontalPoleConnectable)
 			{
-				hasValidHorizontalBar = getValidStateForAttachableSubModels(worldIn.getBlockState(pos.west()),
-																				EnumFacing.WEST, EnumFacing.EAST) ||
-										getValidStateForAttachableSubModels(worldIn.getBlockState(pos.east()),
-																				EnumFacing.WEST, EnumFacing.EAST);
-				
-				hasValidBackBar = getValidStateForAttachableSubModels(worldIn.getBlockState(pos.north()), 
-																				EnumFacing.NORTH, EnumFacing.SOUTH);
+				hasValidHorizontalBar = ((IHorizontalPoleConnectable)otherState.getBlock()).canConnectHorizontalPole(otherState, myFacing.rotateYCCW());
 			}
-			else if (CustomAngleCalculator.isSouth(rotation))
+			
+			if (!hasValidHorizontalBar)
 			{
-				hasValidHorizontalBar = getValidStateForAttachableSubModels(worldIn.getBlockState(pos.west()),
-																EnumFacing.WEST, EnumFacing.EAST) ||
-										getValidStateForAttachableSubModels(worldIn.getBlockState(pos.east()),
-																EnumFacing.WEST, EnumFacing.EAST);
-										
-				hasValidBackBar = getValidStateForAttachableSubModels(worldIn.getBlockState(pos.south()), 
-																	EnumFacing.NORTH, EnumFacing.SOUTH);
+				otherState = worldIn.getBlockState(pos.offset(myFacing.rotateYCCW()));
+				if (otherState.getBlock() instanceof IHorizontalPoleConnectable)
+				{
+					hasValidHorizontalBar = ((IHorizontalPoleConnectable)otherState.getBlock()).canConnectHorizontalPole(otherState, myFacing.rotateY());
+				}
 			}
-			else if (CustomAngleCalculator.isWest(rotation))
+			
+			otherState = worldIn.getBlockState(pos.offset(myFacing));
+			if (otherState.getBlock() instanceof IHorizontalPoleConnectable)
 			{
-				hasValidHorizontalBar = getValidStateForAttachableSubModels(worldIn.getBlockState(pos.north()),
-																EnumFacing.NORTH, EnumFacing.SOUTH) ||
-										getValidStateForAttachableSubModels(worldIn.getBlockState(pos.south()),
-																EnumFacing.NORTH, EnumFacing.SOUTH);
-				
-				hasValidBackBar = getValidStateForAttachableSubModels(worldIn.getBlockState(pos.west()), 
-																	EnumFacing.WEST, EnumFacing.EAST);
+				hasValidBackBar = ((IHorizontalPoleConnectable)otherState.getBlock()).canConnectHorizontalPole(otherState, myFacing.getOpposite());
 			}
-			else if (CustomAngleCalculator.isEast(rotation))
+			
+			if (!hasValidBackBar)
 			{
-				hasValidHorizontalBar = getValidStateForAttachableSubModels(worldIn.getBlockState(pos.north()),
-																	EnumFacing.NORTH, EnumFacing.SOUTH) ||
-										getValidStateForAttachableSubModels(worldIn.getBlockState(pos.south()),
-																	EnumFacing.NORTH, EnumFacing.SOUTH);
-				
-					hasValidBackBar = getValidStateForAttachableSubModels(worldIn.getBlockState(pos.east()), 
-																		EnumFacing.WEST, EnumFacing.EAST);
+				otherState = worldIn.getBlockState(pos.offset(myFacing.getOpposite()));
+				if (otherState.getBlock() instanceof IHorizontalPoleConnectable)
+				{
+					hasValidBackBar = ((IHorizontalPoleConnectable)otherState.getBlock()).canConnectHorizontalPole(otherState, myFacing);
+				}
 			}
 		}
 		
 		return state.withProperty(VALIDHORIZONTALBAR, hasValidHorizontalBar).withProperty(VALIDBACKBAR, hasValidBackBar);
-	}
-	
-	public static boolean getValidStateForAttachableSubModels(IBlockState state, EnumFacing... validFacings)
-	{		
-		if (state.getBlock() == ModBlocks.horizontal_pole)
-		{
-			EnumFacing facing = state.getValue(BlockHorizontalPole.FACING);
-			
-			if (Arrays.stream(validFacings).anyMatch(f -> f.equals(facing)))
-			{
-				return true;
-			}
-		}
-		
-		if (state.getBlock() == ModBlocks.crossing_gate_pole)
-		{
-			return true;
-		}
-		
-		if (state.getBlock() instanceof BlockBaseTrafficLight)
-		{
-			int rotation = state.getValue(ROTATION);
-			if (!CustomAngleCalculator.isCardinal(rotation))
-			{
-				return false;
-			}
-			
-			final EnumFacing facing = CustomAngleCalculator.getFacingFromRotation(rotation);
-			
-			return Arrays.stream(validFacings).noneMatch(f -> f == facing); // Reverse logic because want traffic lights facing the same way
-		}
-		
-		if (state.getBlock() == ModBlocks.sign)
-		{
-			int signRotation = state.getValue(BlockSign.ROTATION);
-			if (!CustomAngleCalculator.isCardinal(signRotation))
-			{
-				return false;
-			}
-			
-			final EnumFacing facing = CustomAngleCalculator.getFacingFromRotation(signRotation);
-			
-			return Arrays.stream(validFacings).noneMatch(vf -> vf.equals(facing));
-		}
-		
-		return false; 
 	}
 	
 	private ItemStack getItemVersionOfBlock(IBlockAccess world, BlockPos pos)
@@ -313,4 +254,18 @@ public abstract class BlockBaseTrafficLight extends Block {
 		super.harvestBlock(worldIn, player, pos, state, te, stack);
 		worldIn.setBlockToAir(pos);
 	}
+	
+	@Override
+	public boolean canConnectHorizontalPole(IBlockState state, EnumFacing fromFacing) {
+		return CustomAngleCalculator.isCardinal(state.getValue(ROTATION));
+	}
+	
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) 
+	{
+        if (face == EnumFacing.UP)
+        {
+            return BlockFaceShape.UNDEFINED;
+        }
+        return super.getBlockFaceShape(worldIn, state, pos, face);
+    }
 }

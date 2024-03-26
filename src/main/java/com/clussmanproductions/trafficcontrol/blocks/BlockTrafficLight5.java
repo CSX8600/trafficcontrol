@@ -6,8 +6,10 @@ import com.clussmanproductions.trafficcontrol.item.BaseItemTrafficLightFrame;
 import com.clussmanproductions.trafficcontrol.tileentity.TrafficLight5TileEntity;
 import com.clussmanproductions.trafficcontrol.tileentity.render.TrafficLight5Renderer;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -52,5 +54,13 @@ public class BlockTrafficLight5 extends BlockBaseTrafficLight {
 	@Override
 	protected BaseItemTrafficLightFrame getItemVersionOfBlock() {
 		return ModItems.traffic_light_5_frame;
+	}
+	
+	@Override
+	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+		if (fromPos.equals(pos.offset(EnumFacing.UP)) && worldIn.getBlockState(fromPos).getBlock() == ModBlocks.traffic_light_5_upper)
+		{
+			worldIn.setBlockState(pos, state.withProperty(ROTATION, worldIn.getBlockState(fromPos).getValue(BlockTrafficLight5Upper.ROTATION)));
+		}
 	}
 }

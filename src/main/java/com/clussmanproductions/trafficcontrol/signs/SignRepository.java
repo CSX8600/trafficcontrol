@@ -109,7 +109,7 @@ public class SignRepository {
 			ModTrafficControl.logger.error("Could not process signpack base mod signpack." , ex);
 		}
 		
-		File signpackDir = new File(Loader.instance().getConfigDir(), "..\\tc_signpacks");
+		File signpackDir = new File(Loader.instance().getConfigDir(), "../tc_signpacks");
 		if (!signpackDir.exists())
 		{
 			try

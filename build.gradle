@@ -11,7 +11,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
-version = "1.0.0"
+version = "1.1.1"
 group = "com.clussmanproductions.trafficcontrol" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "trafficcontrol"
 
@@ -34,14 +34,9 @@ minecraft {
 }
 
 repositories {
-		maven { 
-			name = "GitHubPackages" 
-			url = uri("https://maven.pkg.github.com/mightypirates/opencomputers")
-			credentials {
-				username = "$mavenUser"
-				password = "$mavenPassword"
-			}
-		}
+	maven {
+		url = "https://cursemaven.com"
+	}
 }
 
 dependencies {
@@ -66,9 +61,10 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
-	compile fileTree(dir:'deps',include:'*.jar')
-	compile 'li.cil.oc:opencomputers-1.12.2-forge:1.7.7:api'
-	runtime 'li.cil.oc:opencomputers-1.12.2-forge:1.7.7'
+	provided 'curse.maven:opencomputers-223008:4630537'
+	compile 'curse.maven:immersiverailroading-277736:4970105'
+	compile 'curse.maven:umc-371784:4975229'
+	compile 'curse.maven:trackapi-282613:2825260'
 }
 
 processResources {

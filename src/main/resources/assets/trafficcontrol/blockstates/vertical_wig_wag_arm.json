@@ -1,0 +1,17 @@
+{ 
+	"forge_marker": 1,
+	"defaults":
+	{ 
+		"model": "trafficcontrol:vertical_wig_wag_arm",
+		"textures": { "lamp": "trafficcontrol:blocks/lamp_off" }
+	},
+	"variants":
+	{ 
+		"normal": { "model": "trafficcontrol:vertical_wig_wag_arm" },
+		"lamp":
+		{ 
+			"on": { "textures": { "lamp": "trafficcontrol:blocks/red" } },
+			"off": { "textures": { "lamp": "trafficcontrol:blocks/lamp_off" } }
+		}
+	}
+}

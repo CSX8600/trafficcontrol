@@ -5,6 +5,7 @@ import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -20,7 +21,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockHorizontalPole extends Block {
+public class BlockHorizontalPole extends Block implements IHorizontalPoleConnectable {
 	public static PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL); 
 	public BlockHorizontalPole()
 	{
@@ -36,6 +37,16 @@ public class BlockHorizontalPole extends Block {
 	{
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
+	
+	@Override
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) 
+	{
+        if (face == EnumFacing.UP)
+        {
+            return BlockFaceShape.UNDEFINED;
+        }
+        return super.getBlockFaceShape(worldIn, state, pos, face);
+    }
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
@@ -91,5 +102,11 @@ public class BlockHorizontalPole extends Block {
 	@Override
 	public float getAmbientOcclusionLightValue(IBlockState state) {
 		return 1;
+	}
+
+	@Override
+	public boolean canConnectHorizontalPole(IBlockState state, EnumFacing fromFacing) {
+		EnumFacing myFacing = state.getValue(FACING);
+		return myFacing.equals(fromFacing) || myFacing.getOpposite().equals(fromFacing);
 	}
 }

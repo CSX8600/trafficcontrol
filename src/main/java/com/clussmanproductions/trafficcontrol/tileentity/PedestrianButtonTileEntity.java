@@ -2,8 +2,10 @@ package com.clussmanproductions.trafficcontrol.tileentity;
 
 import java.util.HashSet;
 
+import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.google.common.collect.ImmutableList;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -79,5 +81,10 @@ public class PedestrianButtonTileEntity extends TileEntity {
 				ctrlr.addOrRemoveNorthSouthPedButton(getPos());
 			}
 		}
+	}
+	
+	@Override
+	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+		return newSate.getBlock() != ModBlocks.pedestrian_button;
 	}
 }

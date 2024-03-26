@@ -3,6 +3,8 @@ package com.clussmanproductions.trafficcontrol.tileentity;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
+import com.clussmanproductions.trafficcontrol.ModBlocks;
+import com.clussmanproductions.trafficcontrol.blocks.BlockShuntBase;
 import com.clussmanproductions.trafficcontrol.util.ImmersiveRailroadingHelper;
 
 import net.minecraft.block.state.IBlockState;
@@ -11,6 +13,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 
 public abstract class ShuntBaseTileEntity extends TileEntity {
 	private BlockPos trackOrigin = new BlockPos(0, -1, 0);
@@ -104,5 +107,10 @@ public abstract class ShuntBaseTileEntity extends TileEntity {
 	{
 		relayBoxes.remove(relayPos);
 		markDirty();
+	}
+	
+	@Override
+	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+		return !(newSate.getBlock() instanceof BlockShuntBase);
 	}
 }

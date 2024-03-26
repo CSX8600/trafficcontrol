@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.clussmanproductions.trafficcontrol.ModBlocks;
 import com.clussmanproductions.trafficcontrol.ModTrafficControl;
 import com.clussmanproductions.trafficcontrol.blocks.BlockLampBase.EnumState;
+import com.clussmanproductions.trafficcontrol.blocks.BlockRelayBase;
 import com.clussmanproductions.trafficcontrol.blocks.BlockWigWag;
 import com.clussmanproductions.trafficcontrol.scanner.IScannerSubscriber;
 import com.clussmanproductions.trafficcontrol.scanner.ScanCompleteData;
@@ -24,7 +26,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class RelayTileEntity extends TileEntity implements ITickable, IScannerSubscriber {
+public class RelayTileEntity extends TileEntity implements ITickable, IScannerSubscriber, IHasRotationProperty { // implements IHasRotationProperty to *prevent* rotation
 	
 	private boolean isMaster;
 	private boolean isPowered;
@@ -46,10 +48,14 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 	// Wig Wag information
 	private boolean alreadyNotifiedWigWags;
 	
+	// Vertical Wig Wag information
+	private boolean alreadyNotifiedVerticalWigWags;
+	
 	private ArrayList<BlockPos> crossingLampLocations = new ArrayList<BlockPos>();
 	private ArrayList<BlockPos> crossingGateLocations = new ArrayList<BlockPos>();
 	private ArrayList<BlockPos> bellLocations = new ArrayList<BlockPos>();
 	private ArrayList<BlockPos> wigWagLocations = new ArrayList<BlockPos>();
+	private ArrayList<BlockPos> verticalWigWagLocations = new ArrayList<BlockPos>();
 	private ArrayList<Tuple<BlockPos, EnumFacing>> shuntBorderOriginsAndFacing = new ArrayList<Tuple<BlockPos, EnumFacing>>();
 	private ArrayList<Tuple<BlockPos, EnumFacing>> shuntIslandOriginsAndFacing = new ArrayList<Tuple<BlockPos, EnumFacing>>();
 	private HashMap<BlockPos, Integer> invalidCrossingGates = new HashMap<>();
@@ -84,6 +90,7 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 		fillArrayListFromNBT("gate", crossingGateLocations, compound);
 		fillArrayListFromNBT("bell", bellLocations, compound);
 		fillArrayListFromNBT("wigwags", wigWagLocations, compound);
+		fillArrayListFromNBT("verticalwigwags", verticalWigWagLocations, compound);
 		
 		int i = 0;
 		while(compound.hasKey("island_pos_" + i))
@@ -144,6 +151,7 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 		
 		// Wig Wag information
 		nbt.setBoolean("alreadynotifiedwigwags", alreadyNotifiedWigWags);
+		nbt.setBoolean("alreadynotifiedverticalwigwags", alreadyNotifiedVerticalWigWags);
 
 		for (int i = 0; i < crossingLampLocations.size(); i++) {
 			BlockPos lamps = crossingLampLocations.get(i);
@@ -171,6 +179,13 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 
 			int[] wigWagPos = new int[] { wigWag.getX(), wigWag.getY(), wigWag.getZ() };
 			nbt.setIntArray("wigwags" + i, wigWagPos);
+		}
+		
+		for (int i = 0; i < verticalWigWagLocations.size(); i++) {
+			BlockPos wigWag = verticalWigWagLocations.get(i);
+
+			int[] wigWagPos = new int[] { wigWag.getX(), wigWag.getY(), wigWag.getZ() };
+			nbt.setIntArray("verticalwigwags" + i, wigWagPos);
 		}
 
 		for(int i = 0; i < shuntIslandOriginsAndFacing.size(); i++)
@@ -221,6 +236,7 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 		updateLamps();
 		markDirty = markDirty | updateBells();
 		markDirty = markDirty | notifyWigWags();
+		markDirty = markDirty | notifyVerticalWigWags();
 		markDirty = markDirty | checkRemoveInvalidItems();
 		
 		if (markDirty)
@@ -441,6 +457,39 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 		return false;
 	}
 	
+	private boolean notifyVerticalWigWags()
+	{
+		if (!alreadyNotifiedVerticalWigWags)
+		{
+			ArrayList<BlockPos> positionsToRemove = new ArrayList<BlockPos>();
+			for(BlockPos pos : verticalWigWagLocations)
+			{
+				try
+				{
+					VerticalWigWagTileEntity te = (VerticalWigWagTileEntity)world.getTileEntity(pos);
+					te.setActive(getPowered());
+					world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+				}
+				catch (Exception ex)
+				{
+					positionsToRemove.add(pos);
+				}
+			}
+			
+			for(BlockPos pos : positionsToRemove)
+			{
+				verticalWigWagLocations.remove(pos);
+				
+				ModTrafficControl.logger.error("Vertical Wig Wag at " + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + " has been unpaired due to an error");
+			}
+			
+			alreadyNotifiedVerticalWigWags = true;
+			return true;
+		}
+		
+		return false;
+	}
+	
 	private boolean checkRemoveInvalidItems()
 	{
 		boolean didRemove = false;
@@ -585,6 +634,20 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 		}
 	}
 	
+	public boolean addOrRemoveVerticalWigWag(BlockPos wigWagPos)
+	{
+		if (verticalWigWagLocations.contains(wigWagPos))
+		{
+			verticalWigWagLocations.remove(wigWagPos);
+			return false;
+		}
+		else
+		{
+			verticalWigWagLocations.add(wigWagPos);
+			return true;
+		}
+	}
+	
 	public boolean addOrRemoveShuntBorder(BlockPos trackOrigin, EnumFacing shuntFacing)
 	{
 		Tuple<BlockPos, EnumFacing> value = new Tuple<BlockPos, EnumFacing>(trackOrigin, shuntFacing);
@@ -619,11 +682,43 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 		alreadyNotifiedGates = false;
 		alreadyNotifiedBells = false;
 		alreadyNotifiedWigWags = false;
+		alreadyNotifiedVerticalWigWags = false;
 		
 		markDirty();
+		updateComparator();
+	}
+	
+	private void setAutomatedPowered(boolean automatedPowerOverride)
+	{
+		this.automatedPowerOverride = automatedPowerOverride;
+		
+		updateComparator();
+	}
+	
+	private void updateComparator()
+	{
+		EnumFacing myFacing = world.getBlockState(pos).getValue(BlockRelayBase.FACING);
+		
+		EnumFacing workingFacing = myFacing.rotateY();
+		BlockPos workingPos = pos;
+		for(int i = 0; i < 4; i++)
+		{
+			world.notifyNeighborsOfStateChange(workingPos, world.getBlockState(workingPos).getBlock(), true);
+			workingFacing = workingFacing.rotateYCCW();
+			workingPos = workingPos.offset(workingFacing);
+		}
+		
+		workingFacing = myFacing.rotateY();
+		workingPos = pos.offset(EnumFacing.UP);
+		for(int i = 0; i < 4; i++)
+		{
+			world.notifyNeighborsOfStateChange(workingPos, world.getBlockState(workingPos).getBlock(), true);
+			workingFacing = workingFacing.rotateYCCW();
+			workingPos = workingPos.offset(workingFacing);
+		}
 	}
 
-	private boolean getPowered()
+	public boolean getPowered()
 	{
 		return isPowered || automatedPowerOverride;
 	}
@@ -668,7 +763,8 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 					alreadyNotifiedBells = false;
 					alreadyNotifiedGates = false;
 					alreadyNotifiedWigWags = false;
-					automatedPowerOverride = true;
+					alreadyNotifiedVerticalWigWags = false;
+					setAutomatedPowered(true);
 				}
 				
 				scanCompleteData.cancelScanningForTileEntity();
@@ -694,7 +790,8 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 					alreadyNotifiedBells = false;
 					alreadyNotifiedGates = false;
 					alreadyNotifiedWigWags = false;
-					automatedPowerOverride = true;
+					alreadyNotifiedVerticalWigWags = false;
+					setAutomatedPowered(true);
 				}
 				
 				if (automatedPowerOverride && !scanCompleteData.getTrainMovingTowardsDestination() && world.getTotalWorldTime() - lastMovementWorldTime > 200)
@@ -717,10 +814,16 @@ public class RelayTileEntity extends TileEntity implements ITickable, IScannerSu
 			alreadyNotifiedBells = false;
 			alreadyNotifiedGates = false;
 			alreadyNotifiedWigWags = false;
-			automatedPowerOverride = false;
+			alreadyNotifiedVerticalWigWags = false;
+			setAutomatedPowered(false);
 			
 			return;
 		}
+	}
+	
+	@Override
+	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+		return !(newSate.getBlock() instanceof BlockRelayBase);
 	}
 
 }

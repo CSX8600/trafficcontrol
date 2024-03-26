@@ -9,6 +9,7 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -39,6 +40,16 @@ public class BlockSafetranMechanical extends Block implements ITileEntityProvide
 	{
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
+	
+	@Override
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) 
+	{
+        if (face == EnumFacing.UP)
+        {
+            return BlockFaceShape.UNDEFINED;
+        }
+        return super.getBlockFaceShape(worldIn, state, pos, face);
+    }
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
@@ -78,9 +89,9 @@ public class BlockSafetranMechanical extends Block implements ITileEntityProvide
 
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		double x1 = 0.4325;
+		double x1 = 0.3;
 		double z1 = 0.375;
-		double x2 = 0.5625;
+		double x2 = 0.7;
 		double z2 = 0.625;
 		
 		int rotation = state.getValue(ROTATION);
@@ -88,11 +99,11 @@ public class BlockSafetranMechanical extends Block implements ITileEntityProvide
 		
 		if (isNorthSouth)
 		{
-			return new AxisAlignedBB(x1, 0, z1, x2, 0.25, z2);
+			return new AxisAlignedBB(x1, 0, z1, x2, 0.6, z2);
 		}
 		else
 		{
-			return new AxisAlignedBB(z1, 0, x1, z2, 0.25, x2);
+			return new AxisAlignedBB(z1, 0, x1, z2, 0.6, x2);
 		}
 		
 	}
